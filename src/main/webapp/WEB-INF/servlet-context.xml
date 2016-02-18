@@ -56,10 +56,10 @@
 		<property name="basename" value="messages" />
 	</bean>
 	
-	<bean id="studentDao" class="dao.StudentDaoImpl">
+	<bean id="invoiceDao" class="dao.InvoiceDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
-	<bean id="studentService" class="service.StudentServiceImpl">
+	<bean id="invoiceService" class="service.InvoiceServiceImpl">
 	</bean>
 </beans>

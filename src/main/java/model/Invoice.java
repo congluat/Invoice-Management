@@ -2,9 +2,8 @@ package model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,7 +22,6 @@ public class Invoice implements Serializable{
 	private String name;
 	private BigDecimal amount;
 	
-	@Column(name = "Time", columnDefinition="DATETIME")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date time;
 	
@@ -34,11 +32,11 @@ public class Invoice implements Serializable{
 	
 	@ManyToOne()
 	@JoinColumn(name="CategoryId")
-	private Category category;
+	Category category;
 	
 	@ManyToOne()
 	@JoinColumn(name="UserId")
-	private User user;
+	User user;
 
 	public Integer getId() {
 		return id;
