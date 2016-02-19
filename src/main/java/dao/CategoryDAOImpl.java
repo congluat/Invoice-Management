@@ -55,12 +55,10 @@ public class CategoryDAOImpl implements CategoryDAO {
 	public List<Category> getAllCategories() {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
+		String hql="from Category";
 		
 		//fix if has error
-		List<Category> categories=null;
-		
-		String hql="from Category";
-		categories=session.createQuery(hql).list();
+		List<Category> categories=session.createQuery(hql).list();
 		tx.commit();
 		session.close();
 		return categories;

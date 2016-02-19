@@ -32,10 +32,18 @@
 	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
 	crossorigin="anonymous"></script>
 
+<!-- AngularJS -->
+
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
 
 <!-- ---------------------------My CSS----------- -->
+
+<link href="<c:url value='/resources/css/mycss.css' />" rel="stylesheet"></link>
+
+<script type="text/javascript"
+	src="<c:url value='/resources/js/category.js' />"></script>
 <!--  
-<link href="<c:url value='/resources/css/bootstrap.css' />" rel="stylesheet"></link>
 <link href="<c:url value='/resources/css/custom.css' />" rel="stylesheet"></link>
 -->
 
@@ -46,8 +54,9 @@
 </head>
 
 <body>
-
 	<jsp:include page="nav.jsp"></jsp:include>
+
+
 </body>
 
 </html>
