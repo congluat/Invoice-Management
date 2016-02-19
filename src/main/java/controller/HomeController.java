@@ -18,6 +18,6 @@ public class HomeController {
 	@RequestMapping(value = "/welcome" , method = RequestMethod.GET)
 	public String welcome() {
 		invoiceService.getAllInvoices();
-		return "index";
+		return "template";
 	}
 }
