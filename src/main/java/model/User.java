@@ -8,6 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 
 @Entity
 @Table(name="Users")
@@ -16,7 +20,11 @@ public class User implements Serializable{
 	@GeneratedValue
 	private Integer id;
 	
+	@NotEmpty
+	@Size(max=100)
 	private String name;
+	
+	@Range(min=1,max=110)
 	private Integer age;
 	
 	@OneToMany(mappedBy="user")

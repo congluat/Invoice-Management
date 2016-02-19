@@ -12,6 +12,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="Invoices")
@@ -19,7 +23,12 @@ public class Invoice implements Serializable{
 	@Id
 	@GeneratedValue
 	private Integer id;
+	
+	@NotEmpty
+	@Size(max = 100)
 	private String name;
+	
+	@Min(0)
 	private BigDecimal amount;
 	
 	@Temporal(TemporalType.TIMESTAMP)
