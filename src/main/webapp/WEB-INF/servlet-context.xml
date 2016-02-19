@@ -67,4 +67,18 @@
 
 	<bean id="invoiceService" class="service.InvoiceServiceImpl">
 	</bean>
+	
+	<bean id="categoryDao" class="dao.CategoryDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="categoryService" class="service.CategoryServiceImpl">
+	</bean>
+	
+	<bean id="userDao" class="dao.UserDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="userService" class="service.UserServiceImpl">
+	</bean>
 </beans>
