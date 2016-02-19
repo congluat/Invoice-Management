@@ -53,10 +53,13 @@
 
 </head>
 
-<body>
+<body ng-app="category">
 	<jsp:include page="nav.jsp"></jsp:include>
-
-
+	<div ng-controller="CategoryController as cateC">
+		<div ng-repeat="cate in cateC.categories">
+			<p>{{cate.name}}</p>
+		</div>
+	</div>
 </body>
 
 </html>

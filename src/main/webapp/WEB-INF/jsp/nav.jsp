@@ -15,7 +15,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#"> <img height="30em" width="30em"
+			<a class="navbar-brand" href="#"> <img height="50em" width="50em"
 				alt="Brand" src="<c:url value='/resources/logo/invoice.png' />">
 			</a>
 		</div>
