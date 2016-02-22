@@ -17,3 +17,22 @@
 	background-color: #009688;
 	color: rgba(255, 255, 255, 0.84);
 }
+
+#page-wrapper {
+	margin-top: 2em;
+}
+
+.add-button {
+	background: #337ab7;
+	position: fixed;
+	bottom: 5px;
+	right: 5px;
+}
+
+.add-button i {
+	color: #FFF;
+}
+
+.add-button:hover {
+	background: red !important;
+}

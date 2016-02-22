@@ -15,39 +15,38 @@ import service.InvoiceService;
 
 @Controller
 public class HomeController {
-	
+
 	@Autowired
 	@Qualifier("invoiceService")
 	InvoiceService invoiceService;
-	
+
 	@Autowired
 	@Qualifier("categoryService")
 	CategoryService cateService;
-	
-	
-	@RequestMapping(value = "/welcome" , method = RequestMethod.GET)
+
+	@RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
 	public String welcome() {
 		invoiceService.getAllInvoices();
 		return "home";
 	}
-	
-	@RequestMapping(value="/insert", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/insert", method = RequestMethod.GET)
 	public String insert() {
-		Category cate = new Category();		
+		Category cate = new Category();
 		cate.setName("Dien");
 		cate.setDescription("Thanh toan tien dien");
-		cate.setLogo("abc.jpg");	
+		cate.setLogo("abc.jpg");
 		List<Category> categories = cateService.getAllCategories();
 		Iterator it = categories.iterator();
 		Category category;
-		if(it.hasNext()){
+		if (it.hasNext()) {
 			category = (Category) it.next();
-			if(category.getName().equals(cate.getName())){
+			if (category.getName().equals(cate.getName())) {
 				return "error";
 			}
-		}	
+		}
 		cateService.create(cate);
 		return "home";
 	}
-	
+
 }

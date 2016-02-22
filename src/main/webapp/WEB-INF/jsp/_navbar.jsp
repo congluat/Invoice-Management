@@ -177,7 +177,7 @@
 		<!-- /.dropdown -->
 		<li class="dropdown"><a class="dropdown-toggle"
 			data-toggle="dropdown" href="#"> <i
-				class="glyphicon glyphicon-user"></i> <i
+				class="glyphicon glyphicon-user"></i> username<i
 				class="glyphicon glyphicon-menu-down"></i>
 		</a>
 			<ul class="dropdown-menu dropdown-user">
