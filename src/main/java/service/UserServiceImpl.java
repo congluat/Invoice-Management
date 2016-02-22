@@ -38,4 +38,12 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 
+	@Override
+	public User getUser() {
+		User user;
+		List<User> list = dao.getAllUsers();
+		user = list.get(0);
+		return user;
+	}
+
 }

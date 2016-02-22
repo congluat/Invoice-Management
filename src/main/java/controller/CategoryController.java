@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
@@ -15,6 +17,7 @@ import model.Category;
 import service.CategoryService;
 
 @Controller
+@RequestMapping("/Category")
 public class CategoryController {
 
 	@Autowired
@@ -27,5 +30,21 @@ public class CategoryController {
 		String json = new Gson().toJson(cateService.getAllCategories());
 		return json;
 	}
+	
+	@RequestMapping(value="/save", method = RequestMethod.GET)
+	public String InsertCate(ModelMap model) {
+		Category category = new Category();
 
+		model.addAttribute("category", category);
+		return "category";
+	}
+	
+	@RequestMapping(value="/save", method = RequestMethod.POST)
+	public String Save(@RequestParam Category category, ModelMap model) {
+		
+		cateService.create(category);
+		model.addAttribute("message", "save category success!");
+		
+		return "category";
+	}
 }
