@@ -7,8 +7,13 @@
 	color: #ddd;
 }
 
-a:hover {
+.nav>li>a:focus, .nav>li>a:hover {
 	text-decoration: none;
-	color: inherit;
-	background-color: transparent;
+	color: #009688;
+	background-color: #ccc;
+}
+
+.navbar, .navbar.navbar-default {
+	background-color: #009688;
+	color: rgba(255, 255, 255, 0.84);
 }
