@@ -17,7 +17,8 @@
 		<!--<property name="url" value="jdbc:mysql://localhost:3306/InvoiceManagement" 
 			/> -->
 		<property name="url"
-			value="jdbc:mysql://localhost:3306/InvoiceManagement" />
+			value="jdbc:mysql://localhost:3306/InvoiceManagement?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" />
+		
 		<property name="username" value="root" />
 		<property name="password" value="root" />
 	</bean>
@@ -35,6 +36,8 @@
 				<prop key="hibernate.show_sql">true</prop>
 			</props>
 		</property>
+
+
 		<property name="packagesToScan" value="model"></property>
 	</bean>
 
@@ -76,26 +79,28 @@
 			<value>org.springframework.web.servlet.view.tiles3.TilesView</value>
 		</property>
 	</bean>
-	
+
 	<bean id="tilesConfigurer"
 		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<property name="definitions">
-			<list><value>/WEB-INF/tiles.xml</value></list>
+			<list>
+				<value>/WEB-INF/tiles.xml</value>
+			</list>
 		</property>
 	</bean>
-	
-	<bean id="multipartResolver" 
+
+	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-	 	<!-- maxUploadSize=20MB -->
-	 	<property name="maxUploadSize" value="20485760"/>
+		<!-- maxUploadSize=20MB -->
+		<property name="maxUploadSize" value="20485760" />
 	</bean>
 	<!-- Configures Handler Interceptors -->
-	<mvc:interceptors>  
+	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/"/>
+			<mvc:mapping path="/*" />
 			<bean class="interceptor.CheckUserInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
-	 
-	
+
+
 </beans>

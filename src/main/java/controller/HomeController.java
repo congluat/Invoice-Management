@@ -28,7 +28,7 @@ public class HomeController {
 	@Qualifier("categoryService")
 	CategoryService cateService;
 
-	@RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/", "/welcome","/dashboard" }, method = RequestMethod.GET)
 	public String welcome() {
 		return "home";
 	}
