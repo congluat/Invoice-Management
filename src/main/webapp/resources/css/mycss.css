@@ -1,4 +1,14 @@
-.navbar-brand {
-	color: #337ab7;
-	
+.navbar .navbar-brand {
+	color: #ddd;
+	height: 40px;
+}
+
+.notibar a {
+	color: #ddd;
+}
+
+a:hover {
+	text-decoration: none;
+	color: inherit;
+	background-color: transparent;
 }

@@ -47,7 +47,7 @@ public class HomeController {
 			}
 		}	
 		cateService.create(cate);
-		return "index";
+		return "home";
 	}
 	
 }

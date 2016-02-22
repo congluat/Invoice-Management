@@ -1,6 +1,6 @@
 
 (function() {
-	var app = angular.module('category', []);
+	var app = angular.module('app', []);
 
 	app.controller('CategoryController', function($scope, $http) {
 
@@ -10,5 +10,6 @@
 		});
 
 	});
+	
 
 })();

@@ -1,0 +1,129 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'bootstrap-material-design' ]
+2 info using npm@3.3.12
+3 info using node@v5.1.0
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData bootstrap-material-design
+8 silly fetchNamedPackageData bootstrap-material-design
+9 silly mapToRegistry name bootstrap-material-design
+10 silly mapToRegistry using default registry
+11 silly mapToRegistry registry https://registry.npmjs.org/
+12 silly mapToRegistry uri https://registry.npmjs.org/bootstrap-material-design
+13 verbose request uri https://registry.npmjs.org/bootstrap-material-design
+14 verbose request no auth needed
+15 info attempt registry request try #1 at 6:40:50 PM
+16 verbose request id e87937a7c722b27d
+17 http request GET https://registry.npmjs.org/bootstrap-material-design
+18 http 200 https://registry.npmjs.org/bootstrap-material-design
+19 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+19 verbose headers   etag: '"CX71NE5HGI9M5OT675FS7IMDK"',
+19 verbose headers   'content-type': 'application/json',
+19 verbose headers   'cache-control': 'max-age=300',
+19 verbose headers   'content-length': '23839',
+19 verbose headers   'accept-ranges': 'bytes',
+19 verbose headers   date: 'Sun, 21 Feb 2016 11:40:55 GMT',
+19 verbose headers   via: '1.1 varnish',
+19 verbose headers   age: '0',
+19 verbose headers   connection: 'keep-alive',
+19 verbose headers   'x-served-by': 'cache-hkg6822-HKG',
+19 verbose headers   'x-cache': 'MISS',
+19 verbose headers   'x-cache-hits': '0',
+19 verbose headers   'x-timer': 'S1456054855.171884,VS0,VE383',
+19 verbose headers   vary: 'Accept' }
+20 silly get cb [ 200,
+20 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+20 silly get     etag: '"CX71NE5HGI9M5OT675FS7IMDK"',
+20 silly get     'content-type': 'application/json',
+20 silly get     'cache-control': 'max-age=300',
+20 silly get     'content-length': '23839',
+20 silly get     'accept-ranges': 'bytes',
+20 silly get     date: 'Sun, 21 Feb 2016 11:40:55 GMT',
+20 silly get     via: '1.1 varnish',
+20 silly get     age: '0',
+20 silly get     connection: 'keep-alive',
+20 silly get     'x-served-by': 'cache-hkg6822-HKG',
+20 silly get     'x-cache': 'MISS',
+20 silly get     'x-cache-hits': '0',
+20 silly get     'x-timer': 'S1456054855.171884,VS0,VE383',
+20 silly get     vary: 'Accept' } ]
+21 verbose get saving bootstrap-material-design to C:\Users\congl\AppData\Roaming\npm-cache\registry.npmjs.org\bootstrap-material-design\.cache.json
+22 silly install normalizeTree
+23 silly loadCurrentTree Finishing
+24 silly loadIdealTree Starting
+25 silly install loadIdealTree
+26 silly cloneCurrentTree Starting
+27 silly install cloneCurrentTreeToIdealTree
+28 silly cloneCurrentTree Finishing
+29 silly loadShrinkwrap Starting
+30 silly install loadShrinkwrap
+31 silly loadShrinkwrap Finishing
+32 silly loadAllDepsIntoIdealTree Starting
+33 silly install loadAllDepsIntoIdealTree
+34 silly resolveWithNewModule bootstrap-material-design@0.5.8 checking installable status
+35 silly cache add args [ 'bootstrap-material-design', null ]
+36 verbose cache add spec bootstrap-material-design
+37 silly cache add parsed spec Result {
+37 silly cache add   raw: 'bootstrap-material-design',
+37 silly cache add   scope: null,
+37 silly cache add   name: 'bootstrap-material-design',
+37 silly cache add   rawSpec: '',
+37 silly cache add   spec: '*',
+37 silly cache add   type: 'range' }
+38 silly addNamed bootstrap-material-design@*
+39 verbose addNamed "*" is a valid semver range for bootstrap-material-design
+40 silly addNameRange { name: 'bootstrap-material-design', range: '*', hasData: false }
+41 silly mapToRegistry name bootstrap-material-design
+42 silly mapToRegistry using default registry
+43 silly mapToRegistry registry https://registry.npmjs.org/
+44 silly mapToRegistry uri https://registry.npmjs.org/bootstrap-material-design
+45 verbose addNameRange registry:https://registry.npmjs.org/bootstrap-material-design not in flight; fetching
+46 verbose get https://registry.npmjs.org/bootstrap-material-design not expired, no request
+47 silly addNameRange number 2 { name: 'bootstrap-material-design', range: '*', hasData: true }
+48 silly addNameRange versions [ 'bootstrap-material-design', [ '0.3.0', '0.5.7', '0.5.8' ] ]
+49 silly addNamed bootstrap-material-design@0.5.8
+50 verbose addNamed "0.5.8" is a plain semver version for bootstrap-material-design
+51 silly mapToRegistry name bootstrap-material-design
+52 silly mapToRegistry using default registry
+53 silly mapToRegistry registry https://registry.npmjs.org/
+54 silly mapToRegistry uri https://registry.npmjs.org/bootstrap-material-design
+55 verbose addRemoteTarball https://registry.npmjs.org/bootstrap-material-design/-/bootstrap-material-design-0.5.8.tgz not in flight; adding
+56 verbose addRemoteTarball [ 'https://registry.npmjs.org/bootstrap-material-design/-/bootstrap-material-design-0.5.8.tgz',
+56 verbose addRemoteTarball   'c4498d9b1c2a99554d337dadbf2e9799368c9624' ]
+57 info retry fetch attempt 1 at 6:40:51 PM
+58 info attempt registry request try #1 at 6:40:51 PM
+59 http fetch GET https://registry.npmjs.org/bootstrap-material-design/-/bootstrap-material-design-0.5.8.tgz
+60 http fetch 200 https://registry.npmjs.org/bootstrap-material-design/-/bootstrap-material-design-0.5.8.tgz
+61 silly fetchAndShaCheck shasum c4498d9b1c2a99554d337dadbf2e9799368c9624
+62 silly rollbackFailedOptional Starting
+63 silly rollbackFailedOptional Finishing
+64 silly runTopLevelLifecycles Starting
+65 silly runTopLevelLifecycles Finishing
+66 silly install printInstalled
+67 verbose stack Error: shasum check failed for C:\Users\congl\AppData\Local\Temp\npm-17620-979701c5\registry.npmjs.org\bootstrap-material-design\-\bootstrap-material-design-0.5.8.tgz
+67 verbose stack Expected: c4498d9b1c2a99554d337dadbf2e9799368c9624
+67 verbose stack Actual:   afd1b2c63a61a9066b1c44ba4d842ea41b4ecf48
+67 verbose stack From:     https://registry.npmjs.org/bootstrap-material-design/-/bootstrap-material-design-0.5.8.tgz
+67 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\sha\index.js:25:8
+67 verbose stack     at ReadStream.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\sha\index.js:72:7)
+67 verbose stack     at emitNone (events.js:72:20)
+67 verbose stack     at ReadStream.emit (events.js:166:7)
+67 verbose stack     at endReadableNT (_stream_readable.js:905:12)
+67 verbose stack     at doNTCallback2 (node.js:452:9)
+67 verbose stack     at process._tickCallback (node.js:366:17)
+68 verbose cwd C:\Users\congl\workspace\invoice_group3
+69 error Windows_NT 10.0.10240
+70 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "bootstrap-material-design"
+71 error node v5.1.0
+72 error npm  v3.3.12
+73 error shasum check failed for C:\Users\congl\AppData\Local\Temp\npm-17620-979701c5\registry.npmjs.org\bootstrap-material-design\-\bootstrap-material-design-0.5.8.tgz
+73 error Expected: c4498d9b1c2a99554d337dadbf2e9799368c9624
+73 error Actual:   afd1b2c63a61a9066b1c44ba4d842ea41b4ecf48
+73 error From:     https://registry.npmjs.org/bootstrap-material-design/-/bootstrap-material-design-0.5.8.tgz
+74 error If you need help, you may report this error at:
+74 error     <https://github.com/npm/npm/issues>
+75 verbose exit [ 1, true ]

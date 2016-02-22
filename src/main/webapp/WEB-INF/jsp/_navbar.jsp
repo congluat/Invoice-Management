@@ -12,7 +12,7 @@
 	</div>
 	<!-- /.navbar-header -->
 
-	<ul class="nav navbar-top-links navbar-right">
+	<ul class="nav navbar-top-links navbar-right notibar">
 		<li class="dropdown"><a class="dropdown-toggle"
 			data-toggle="dropdown" href="#"> <i
 				class="glyphicon glyphicon-envelope"></i> <i
