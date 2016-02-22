@@ -26,7 +26,7 @@ public class HomeController {
 
 	@RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
 	public String welcome() {
-		return "category";
+		return "home";
 	}
 
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)

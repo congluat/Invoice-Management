@@ -84,6 +84,11 @@
 		</property>
 	</bean>
 	
+	<bean id="multipartResolver" 
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	 	<!-- maxUploadSize=20MB -->
+	 	<property name="maxUploadSize" value="20485760"/>
+	</bean>
 	<!-- Configures Handler Interceptors -->
 	<mvc:interceptors>  
 		<mvc:interceptor>
@@ -92,4 +97,5 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 	 
+	
 </beans>
