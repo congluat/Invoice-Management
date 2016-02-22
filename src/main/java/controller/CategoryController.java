@@ -1,15 +1,19 @@
 package controller;
 
-import java.util.List;
+import java.io.File;
+
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
@@ -23,6 +27,9 @@ public class CategoryController {
 	@Autowired
 	@Qualifier("categoryService")
 	CategoryService cateService;
+	
+	@Autowired
+	ServletContext application;
 
 	@RequestMapping(value = "/getAllCategories", method = RequestMethod.GET)
 	@ResponseBody
@@ -40,9 +47,24 @@ public class CategoryController {
 	}
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
-	public String Save(@RequestParam Category category, ModelMap model) {
+	public String Save(@ModelAttribute Category category, @RequestParam("file") MultipartFile file,
+							ModelMap model) {
+		String logo = file.getOriginalFilename();
+		category.setLogo("abc.png");
+		
+		try {
+			String path = application.getRealPath("resources/images/category/") + logo;
+			if (!logo.equals("")) {
+				file.transferTo(new File(path));
+				category.setLogo(path);
+			}
+		} catch (Exception e) {
+			category.setLogo("abc.png");
+		}
 		
 		cateService.create(category);
+		
+		model.addAttribute("category", new Category());
 		model.addAttribute("message", "save category success!");
 		
 		return "category";
