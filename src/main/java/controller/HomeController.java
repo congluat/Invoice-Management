@@ -28,10 +28,11 @@ public class HomeController {
 	@Qualifier("categoryService")
 	CategoryService cateService;
 
-	@RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/", "/welcome","/dashboard" }, method = RequestMethod.GET)
 	public String welcome(HttpServletRequest request) {
-		request.getSession().setAttribute("user", null);
-		return "category";
+		//request.getSession().setAttribute("user", null);
+		
+		return "home";
 	}
 
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)

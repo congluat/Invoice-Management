@@ -14,10 +14,10 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<!--<property name="url" value="jdbc:mysql://localhost:3306/InvoiceManagement" 
-			/> -->
 		<property name="url"
 			value="jdbc:mysql://localhost:3306/InvoiceManagement" />
+		<!--<property name="url" value="jdbc:mysql://localhost:3306/InvoiceManagement" 
+			/> -->
 		<property name="username" value="root" />
 		<property name="password" value="root" />
 	</bean>
@@ -76,20 +76,22 @@
 			<value>org.springframework.web.servlet.view.tiles3.TilesView</value>
 		</property>
 	</bean>
-	
+
 	<bean id="tilesConfigurer"
 		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<property name="definitions">
-			<list><value>/WEB-INF/tiles.xml</value></list>
+			<list>
+				<value>/WEB-INF/tiles.xml</value>
+			</list>
 		</property>
 	</bean>
-	
+
 	<!-- Configures Handler Interceptors -->
-	<mvc:interceptors>  
+	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/"/>
+			<mvc:mapping path="/*" />
 			<bean class="interceptor.CheckUserInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
-	 
+
 </beans>

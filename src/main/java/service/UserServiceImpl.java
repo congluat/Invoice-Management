@@ -16,8 +16,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void create(User user) {
+		if (!hasUser()) {
+			dao.create(user);
+		}
 
-		dao.create(user);
 	}
 
 	@Override
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean hasUser() {
-		
+
 		boolean result = false;
 		List<User> list = dao.getAllUsers();
 		if (list.size() == 0) {
@@ -40,9 +42,14 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUser() {
-		User user;
+		User user =null;
 		List<User> list = dao.getAllUsers();
-		user = list.get(0);
+		if (list.size() > 0) {
+			user = list.get(0);
+		} else {
+			user = null;
+		}
+
 		return user;
 	}
 
