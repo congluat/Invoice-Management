@@ -28,7 +28,7 @@ public class HomeController {
 	@RequestMapping(value = "/welcome" , method = RequestMethod.GET)
 	public String welcome() {
 		invoiceService.getAllInvoices();
-		return "template";
+		return "home";
 	}
 	
 	@RequestMapping(value="/insert", method = RequestMethod.GET)
