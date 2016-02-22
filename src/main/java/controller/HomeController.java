@@ -31,8 +31,7 @@ public class HomeController {
 	@RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
 	public String welcome(HttpServletRequest request) {
 		request.getSession().setAttribute("user", null);
-		invoiceService.getAllInvoices();
-		return "home";
+		return "category";
 	}
 
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)

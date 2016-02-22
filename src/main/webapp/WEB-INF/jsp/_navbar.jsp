@@ -177,8 +177,13 @@
 		<!-- /.dropdown -->
 		<li class="dropdown"><a class="dropdown-toggle"
 			data-toggle="dropdown" href="#"> <i
-				class="glyphicon glyphicon-user"></i> username<i
-				class="glyphicon glyphicon-menu-down"></i>
+				class="glyphicon glyphicon-user"></i>
+				<c:choose>
+					<c:when test="${empty sessionScope['user']}">
+						${sessionScope['user'].name}
+					</c:when>
+				</c:choose>
+				<i class="glyphicon glyphicon-menu-down"></i>
 		</a>
 			<ul class="dropdown-menu dropdown-user">
 				<li><a href="#"><i class="fa fa-user fa-fw"></i> User

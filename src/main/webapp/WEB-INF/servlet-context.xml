@@ -17,7 +17,7 @@
 		<!--<property name="url" value="jdbc:mysql://localhost:3306/InvoiceManagement" 
 			/> -->
 		<property name="url"
-			value="jdbc:mysql://20.203.139.11:3306/InvoiceManagement" />
+			value="jdbc:mysql://localhost:3306/InvoiceManagement" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
 	</bean>
@@ -40,7 +40,7 @@
 
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 
-	<context:component-scan base-package="controller, dao, service" />
+	<context:component-scan base-package="controller, dao, service, interceptor" />
 
 	<mvc:annotation-driven />
 
@@ -84,4 +84,12 @@
 		</property>
 	</bean>
 	
+	<!-- Configures Handler Interceptors -->
+	<mvc:interceptors>  
+		<mvc:interceptor>
+			<mvc:mapping path="/"/>
+			<bean class="interceptor.CheckUserInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	 
 </beans>
