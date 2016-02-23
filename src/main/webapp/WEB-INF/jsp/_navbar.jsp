@@ -207,7 +207,7 @@
 
 				<li><a href="forms.html"><i
 						class="glyphicon glyphicon-tasks"></i> Invoices</a></li>
-				<li><a href="tables.html"><i
+				<li><a href="Category/listCategories"><i
 						class="glyphicon glyphicon-tags"></i> Category</a></li>
 				<li><a href="#"><i class="glyphicon glyphicon-stats"></i>
 						Statistical Data<span class="glyphicon glyphicon-menu-down"></span></a>

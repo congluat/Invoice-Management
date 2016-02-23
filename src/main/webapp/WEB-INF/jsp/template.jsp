@@ -9,7 +9,7 @@
 <base href="${pageContext.request.contextPath}/">
 
 <meta charset="UTF-8">
-<title>{title}</title>
+<title>${title}</title>
 
 <!-- -------------Jquery------------- -->
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>

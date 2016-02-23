@@ -8,9 +8,9 @@ public interface UserService {
 
 	public boolean hasUser();
 
-	public void create(User user);
+	public boolean create(User user);
 
-	public void update(User user);
+	public boolean update(User user);
 	
 	public User getUser();
 
