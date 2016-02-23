@@ -50,8 +50,10 @@ public class CategoryController {
 
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editCategoryById(@PathVariable Integer id, ModelMap model) {
+		
 		Category cate = cateService.getById(id);
 		model.addAttribute("category", cate);
+		model.addAttribute("title", cate.getName());
 //		System.out.println("Cate:" + cate.getId() + cate.getName() + cate.getLogo() + cate.getDescription());
 //		String json = new Gson().toJson("Xin chào các bạn");
 		
@@ -73,10 +75,10 @@ public class CategoryController {
 		category.setLogo("abc.png");
 
 		try {
-			String path = application.getRealPath("resources/logo/") + logo;
+			String path = application.getRealPath("/resources/logo/") + logo;
 			if (!logo.equals("")) {
 				file.transferTo(new File(path));
-				category.setLogo(path);
+				category.setLogo(logo);
 			}
 		} catch (Exception e) {
 			category.setLogo("abc.png");

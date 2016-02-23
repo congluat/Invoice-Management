@@ -17,10 +17,11 @@
 		});
 
 		console.log("length: " + cateIds.length);
-		for (id in cateIds) {
-
-			id = parseInt(id);
-			id += 1;
+		for (i =0;i<cateIds.length;i++) {
+			console.log("id: "+cateIds[i]);
+			cateIds[i] = parseInt(cateIds[i]);
+			/* cateIds[i] += 1; */
+			id = cateIds[i];
 			console.log(id);
 			if ((id % 2) == 0) {
 				$("#" + id).css({
