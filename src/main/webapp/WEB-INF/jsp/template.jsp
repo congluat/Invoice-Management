@@ -61,7 +61,7 @@
 <link href="<c:url value='/resources/css/timeline.css' />"
 	rel="stylesheet"></link>
 <link
-	href="<c:url value='/resources/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet'/>"
+	href="<c:url value='/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet'/>"
 	type="text/css">
 <link href="<c:url value='/resources/css/mycss.css' />" rel="stylesheet"></link>
 
@@ -78,64 +78,29 @@
 
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
-
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-cookies.js"></script>
 <script type="text/javascript"
 	src="<c:url value='/resources/js/angular_app.js' />"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+
 		$('.modal').modal({
 			backdrop : 'static',
 			keyboard : false
 		})
-
 	});
 </script>
+
 
 </head>
 
 <body ng-app="app">
 
-	<%-- 	<div class="row">
-		<jsp:include page="nav.jsp"></jsp:include>
-	</div>
-	 --%>
-	<%-- 
-	
-		<jsp:include page="sidenav.jsp"></jsp:include>
- --%>
-	<div>
-		<script type="text/javascript">
-			$('#myModal').on('shown.bs.modal', function() {
-				$('#myInput').focus()
-			})
-		</script>
-		<div class="modal fade" tabindex="-1" role="dialog">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<h4 class="modal-title">Modal title</h4>
-					</div>
-					<div class="modal-body">
-						<p>One fine body&hellip;</p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Save
-							changes</button>
-					</div>
-				</div>
-				<!-- /.modal-content -->
-			</div>
-			<!-- /.modal-dialog -->
-		</div>
-		<!-- /.modal -->
-	</div>
-
 	<jsp:include page="_navbar.jsp"></jsp:include>
+
+	<jsp:include page="_modal.jsp"></jsp:include>
+
 	<div id="page-wrapper">
 
 		<tiles:insertAttribute name="body">
