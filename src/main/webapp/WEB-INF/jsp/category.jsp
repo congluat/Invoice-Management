@@ -56,7 +56,7 @@
 			style="background: black; height: 94px ;line-height: 90px">
 			<div class="panel-body row">
 
-				<div class="col-md-12 col-xs-12 content">Thêm mới</div>
+				<div class="col-md-12 col-xs-12 content">Thêm mới<br>...</div>
 
 			</div>
 		</div>
