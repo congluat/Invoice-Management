@@ -54,9 +54,6 @@ public class CategoryController {
 		Category cate = cateService.getById(id);
 		model.addAttribute("category", cate);
 		model.addAttribute("title", cate.getName());
-//		System.out.println("Cate:" + cate.getId() + cate.getName() + cate.getLogo() + cate.getDescription());
-//		String json = new Gson().toJson("Xin chào các bạn");
-		
 		
 		return "save-cate";
 	}
