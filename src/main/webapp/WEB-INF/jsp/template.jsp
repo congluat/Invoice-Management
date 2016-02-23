@@ -6,8 +6,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<base href="${pageContext.request.contextPath}/">
+
 <meta charset="UTF-8">
-<title>{title}</title>
+<title>${title}</title>
 
 <!-- -------------Jquery------------- -->
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -99,7 +101,7 @@
 
 	<jsp:include page="_navbar.jsp"></jsp:include>
 
-	<jsp:include page="_modal.jsp"></jsp:include>
+	<jsp:include page="_modalAddUser.jsp"></jsp:include>
 
 	<div id="page-wrapper">
 

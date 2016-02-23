@@ -1,5 +1,5 @@
 (function() {
-	var app = angular.module('app', []);
+	var app = angular.module('app',[]);
 
 	app
 			.controller(
@@ -12,7 +12,7 @@
 
 						this.addUser = function() {
 							// alert(this.user.name);
-							var url = 'addUser';
+							var url = 'user/addUser';
 							var data = $.param({
 								name : this.user.name,
 								age : this.user.age,
@@ -23,14 +23,17 @@
 									'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
 								}
 							}
-							
+
 							console.log(data);
 
 							$http.post(url, data, config).success(
 									function(data, status, headers, config) {
 										$scope.PostDataResponse = data;
+										$(location).attr('href', 'dashboard')
+
 									}).error(
 									function(data, status, header, config) {
+										$scope.error = "Can not save user";
 										$scope.ResponseDetails = "Data: "
 												+ data + "<hr />status: "
 												+ status + "<hr />headers: "
@@ -51,12 +54,13 @@
 
 	app.controller('UserController', function($scope, $http) {
 
-		$http.get("checkUser").success(function(response) {
+		$http.get("user/checkUser").success(function(response) {
 
 			$scope.user = response;
 
 			if (response == true) {
 				$('#myModal').modal('hide');
+
 			} else {
 				$('#myModal').modal('show');
 			}

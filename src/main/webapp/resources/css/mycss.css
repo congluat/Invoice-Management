@@ -36,3 +36,38 @@
 .add-button:hover {
 	background: red !important;
 }
+
+.center{
+	text-align: center;
+}
+
+.form-group label.control-label{
+	font-size: 16px;
+	color: #333;
+}
+
+.category-panel{
+	/* border: 2px solid; */
+	/* border-color: aqua; */
+	border-radius: 10px;
+	color:white;
+	margin: 1.5em 1.5em;
+	padding: 2px 2px;
+}
+
+.category-panel .panel-body{
+	padding: 2px 2px;
+	margin:0px 0px;
+	height: 100%;
+}
+
+.category-panel .panel-body .image{
+	padding: 3px 3px;
+}
+
+.category-panel .panel-body .content{
+	padding: 3px 3px;
+	font-size: 1.6em;
+	vertical-align: middle;
+	text-align: center;
+}

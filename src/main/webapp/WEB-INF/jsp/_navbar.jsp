@@ -7,7 +7,7 @@
 			<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
 			<span class="icon-bar"></span> <span class="icon-bar"></span>
 		</button>
-		<a class="navbar-brand" href="index.html"><i
+		<a class="navbar-brand" href="dashboard"><i
 			class="glyphicon glyphicon-home"></i> Invoice Management</a>
 	</div>
 	<!-- /.navbar-header -->
@@ -186,7 +186,7 @@
 				<i class="glyphicon glyphicon-menu-down"></i>
 		</a>
 			<ul class="dropdown-menu dropdown-user">
-				<li><a href="#"><i class="fa fa-user fa-fw"></i> User
+				<li><a href="user/profile"><i class="fa fa-user fa-fw"></i> User
 						Profile</a></li>
 				<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
 				<li class="divider"></li>
@@ -201,13 +201,13 @@
 		<div class="sidebar-nav navbar-collapse">
 			<ul class="nav" id="side-menu">
 
-				<li><a href="index.html"><i
+				<li><a href="dashboard"><i
 						class="glyphicon glyphicon-dashboard"></i> Dashboard</a></li>
 
 
 				<li><a href="forms.html"><i
 						class="glyphicon glyphicon-tasks"></i> Invoices</a></li>
-				<li><a href="tables.html"><i
+				<li><a href="Category/listCategories"><i
 						class="glyphicon glyphicon-tags"></i> Category</a></li>
 				<li><a href="#"><i class="glyphicon glyphicon-stats"></i>
 						Statistical Data<span class="glyphicon glyphicon-menu-down"></span></a>
