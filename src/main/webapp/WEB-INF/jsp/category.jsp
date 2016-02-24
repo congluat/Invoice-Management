@@ -4,7 +4,29 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
 <script type="text/javascript">
+	$(window).resize(function() {
+		var width = $(window).width();
+		if (width <= 530) {
+			$(".category-panel img").css({
+				"height" : "40px",
+				"width" : "40px",
+			});
+			$(".category-panel .content").css({
+				"font-size" : "1em",
+			});
+		} else {
+			$(".category-panel img").css({
+				"height" : "80px",
+				"width" : "80px",
+			});
+			$(".category-panel .content").css({
+				"font-size" : "1.6em",
+			});
+		}
+	});
+
 	$(document).ready(function() {
+
 		var cateIds = [];
 
 		/* cateIds = $(".category-panel").map(function(index) {
@@ -17,10 +39,11 @@
 		});
 
 		console.log("length: " + cateIds.length);
-		for (id in cateIds) {
-
-			id = parseInt(id);
-			id += 1;
+		for (i = 0; i < cateIds.length; i++) {
+			console.log("id: " + cateIds[i]);
+			cateIds[i] = parseInt(cateIds[i]);
+			/* cateIds[i] += 1; */
+			id = cateIds[i];
 			console.log(id);
 			if ((id % 2) == 0) {
 				$("#" + id).css({

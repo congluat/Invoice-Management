@@ -24,8 +24,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public void update(Category category) {
-		// TODO Auto-generated method stub
-
+		dao.update(category);
 	}
 
 	@Override

@@ -3,11 +3,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
+<script type="text/javascript">
+$(function() {
+    $("#inputFile").on("change", function()
+    {
+        var files = !!this.files ? this.files : [];
+        if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+ 
+        if (/^image/.test( files[0].type)){ // only image file
+            var reader = new FileReader(); // instance of the FileReader
+            reader.readAsDataURL(files[0]); // read the local file
+ 
+            reader.onloadend = function(){ // set image data as background of div
+                $("#imagePreview").css("background-image", "url("+this.result+")");
+            }
+        }
+    });
+});
+</script>
+<div id="categoryFromResponse"></div>
+<form:form class="form-horizontal" modelAttribute="category"
+	method="POST" enctype="multipart/form-data" id="NewCategoryForm">
+	<div class="col-md-6">
 
-
-<div class="col-md-6">
-	<form:form class="form-horizontal" modelAttribute="category"
-		method="POST" enctype="multipart/form-data">
 		<fieldset>
 			<legend>CATEGORY FORM</legend>
 			${message}
@@ -15,8 +33,8 @@
 			<div class="form-group">
 				<form:label path="name" class="col-md-2 control-label">Name</label>
 					<div class="col-md-10">
-						<form:input class="form-control" path="name" placeholder="name"
-							type="text" />
+						<form:input class="form-control" path="name" required="required"
+							placeholder="name" type="text" />
 					</div>
 			</div>
 
@@ -27,7 +45,7 @@
 						<input readonly="readonly" class="form-control"
 							placeholder="Browse..." type="text"> <input
 							id="inputFile" multiple="" name="file" type="file">
-						<form:hidden path="logo" />
+						<form:input readonly="true" path="logo" />
 					</div>
 			</div>
 			<div class="form-group">
@@ -46,5 +64,10 @@
 				</div>
 			</div>
 		</fieldset>
-	</form:form>
-</div>
+
+	</div>
+
+	<div class="col-md-6">
+	<div id="imagePreview"></div>
+	</div>
+</form:form>

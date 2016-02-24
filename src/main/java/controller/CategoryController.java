@@ -6,15 +6,18 @@ import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.condition.ProducesRequestCondition;
 
 import com.google.gson.Gson;
 
@@ -54,11 +57,24 @@ public class CategoryController {
 		Category cate = cateService.getById(id);
 		model.addAttribute("category", cate);
 		model.addAttribute("title", cate.getName());
-//		System.out.println("Cate:" + cate.getId() + cate.getName() + cate.getLogo() + cate.getDescription());
-//		String json = new Gson().toJson("Xin chào các bạn");
-		
 		
 		return "save-cate";
+	}
+	
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+	public String UpdateCategoryById(@ModelAttribute Category category,
+			 @RequestParam("file") MultipartFile file, ModelMap model) {
+		try {
+			String logo = file.getOriginalFilename();
+			String path = application.getRealPath("/resources/logo/") + logo;
+			if (!logo.equals("")) {
+				file.transferTo(new File(path));
+				category.setLogo(logo);
+			}
+		} catch (Exception e) {
+		}
+		cateService.update(category);
+		return "redirect:/Category/listCategories";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.GET)
@@ -87,8 +103,10 @@ public class CategoryController {
 		cateService.create(category);
 
 		model.addAttribute("category", new Category());
-		model.addAttribute("message", "save category success!");
+		model.addAttribute("message", "save category "+category.getName()+" success!");
 
 		return "save-cate";
 	}
+	
+	
 }
