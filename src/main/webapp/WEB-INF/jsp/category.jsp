@@ -72,6 +72,18 @@
 </script>
 
 <div class="col-md-12 col-xs-12" style="text-align: center;">
+
+	<a href="Category/save">
+		<div class="panel panel-default col-md-3 col-xs-4 category-panel"
+			style="background: black; height: 94px ;line-height: 90px">
+			<div class="panel-body row">
+
+				<div class="col-md-12 col-xs-12 content">Thêm mới<br>...</div>
+
+			</div>
+		</div>
+	</a>
+
 	<c:forEach items="${categories}" var="category">
 
 		<a href="Category/edit/${category.id}">
