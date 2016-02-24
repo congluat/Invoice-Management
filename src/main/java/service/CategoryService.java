@@ -18,4 +18,5 @@ public interface CategoryService {
 	public Category getByName(String name);
 	
 	public boolean checkCateAvailable(String name);
+	
 }

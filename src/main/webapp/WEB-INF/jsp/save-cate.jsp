@@ -2,6 +2,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+
+
 <style>
 #imagePreview {
 	width: 180px;
@@ -13,28 +15,12 @@
 }
 </style>
 <script type="text/javascript">
-
-	/* $('#NewCategoryForm').validate({
-		submitHandler : function(form) {
-			var cateName = $("#name").val();
-			$.ajax({
-				url : 'Category/checkCate/'+cateName,
-				type : 'GET',
-				success : function(response) {
-					$('#NewCategoryForm').html(response);
-				}
-			});
-		}
-	}); */
-
 	$(document).ready(function() {
-		//var link =  "url('${pageContext.request.contextPath}/resources/logo/'+"${category.logo}")" ;
 		
-		var link = '<%=request.getContextPath()%>'
-								+ "/resources/logo/${category.logo}";
-						$("#imagePreview").css("background-image",
-								"url(" + link + ")");
-					});
+		var link = '<%=request.getContextPath() %>'+"/resources/logo/${category.logo}";
+		$("#imagePreview").css("background-image", "url("+link+")");
+
+	
 	$(function() {
 		$("#inputFile").on(
 				"change",
@@ -53,55 +39,58 @@
 						}
 					}
 				});
+		
+		
+
+	});
+	
 	});
 </script>
-<div id="categoryFromResponse"></div>
-
-
-
-
 <div class="panel panel-primary">
+<div id="categoryFromResponse"></div>
 	<div class="panel-heading">
 		<h1 class="panel-title center">CATEGORY FORM</h1>
 	</div>
 	<div class="panel-body">
 		<div class="col-md-2"></div>
-		<div class="col-md-8" ng-controller="CategoryController as cateCtrl">
+		<div class="col-md-8">
 			<form:form class="form-horizontal" modelAttribute="category"
 				method="POST" enctype="multipart/form-data" id="NewCategoryForm">
 
 
 				<fieldset>
 
-					${message}
+					<h4>${message}</h4>
 					<form:input type="hidden" path="id" />
-					{{cateCtrl.error}} {{cateCtrl.cateName}}
+
 					<div class="form-group">
-						<form:label path="name" class="col-md-2 control-label">Name</form:label>
-						<div class="col-md-10">
-							<form:input class="form-control" path="name" required="required"
-								maxlength="100" placeholder="name" id="name"
-								ng-model="cateCtrl.cateName" type="text" />
-						</div>
+						<label path="name" class="col-md-2 control-label">Name</label>
+							<div class="col-md-10">
+								<form:input class="form-control" path="name" required="required" maxlength="100"
+									placeholder="name" type="text" />
+								
+								<c:if test='${not empty "${error}"}'>
+									<label style="color: red">${error}</label>
+								</c:if>
+							</div>
 					</div>
 
 					<div class="form-group">
-
 						<label for="inputFile" class="col-md-2 control-label">Logo</label>
-						<div class="col-md-10">
-							<input readonly="readonly" class="form-control"
-								placeholder="Browse..." type="text"> <input
-								id="inputFile" multiple="" name="file" type="file">
-							<form:hidden path="logo" />
-							<div id="imagePreview"></div>
-						</div>
+
+							<div class="col-md-10">
+								<input readonly="readonly" class="form-control"
+									placeholder="Browse..." type="text"> <input
+									id="inputFile" multiple="" name="file" type="file">
+								<form:hidden path="logo" />
+								<div id="imagePreview"></div>
+							</div>
 					</div>
 					<div class="form-group">
-						<form:label path="description" class="col-md-2 control-label">Description</form:label>
+						<label path="description" class="col-md-2 control-label">Description</label>
 
 						<div class="col-md-10">
-							<form:textarea path="description" class="form-control" rows="3"
-								maxlength="200" />
+							<form:textarea path="description" class="form-control" rows="3" maxlength="200"/>
 							<span class="help-block">description</span>
 						</div>
 					</div>
@@ -110,8 +99,7 @@
 
 					<div class="form-group">
 						<div class="col-md-10 col-md-offset-2">
-							<button type="submit" ng-click="cateCtrl.submit($event)"
-								class="btn btn-primary">Submit</button>
+							<button type="submit" class="btn btn-primary">Submit</button>
 						</div>
 					</div>
 
@@ -127,4 +115,4 @@
 
 	</div>
 </div>
-
+<%-- http://spring.io/blog/2010/01/25/ajax-simplifications-in-spring-3-0/--%>

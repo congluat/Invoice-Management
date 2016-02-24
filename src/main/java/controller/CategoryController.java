@@ -66,6 +66,12 @@ public class CategoryController {
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
 	public String UpdateCategoryById(@ModelAttribute Category category, @RequestParam("file") MultipartFile file,
 			ModelMap model) {
+		
+		
+		
+		
+		if (cateService.checkCateAvailable(category.getName())
+				&& (category.getId()==cateService.getByName(category.getName()).getId())) {
 		try {
 			String logo = file.getOriginalFilename();
 			String path = application.getRealPath("/resources/logo/") + logo;
@@ -77,6 +83,11 @@ public class CategoryController {
 		}
 		cateService.update(category);
 		return "redirect:/Category/listCategories";
+		}
+		else {
+			model.addAttribute("error", "Name existed!");
+			return "save-cate";
+		}
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.GET)
@@ -91,29 +102,36 @@ public class CategoryController {
 	public String Save(@ModelAttribute Category category, @RequestParam("file") MultipartFile file, ModelMap model) {
 		String logo = file.getOriginalFilename();
 		category.setLogo("abc.png");
+		if (!cateService.checkCateAvailable(category.getName())) {
+			try {
+				Date now = new Date();
+				String name = now.toString().replaceAll(" ", "").replaceAll(":", "");
+				System.out.println("name" + name);
+				logo = name + logo;
 
-		try {
-			Date now = new Date();
-			String name = now.toString().replaceAll(" ", "").replaceAll(":", "");
-			System.out.println("name" + name);
-			logo = name + logo;
+				String path = application.getRealPath("/resources/logo/") + logo;
 
-			String path = application.getRealPath("/resources/logo/") + logo;
-
-			if (!logo.equals("")) {
-				file.transferTo(new File(path));
-				category.setLogo(logo);
+				if (!logo.equals("")) {
+					file.transferTo(new File(path));
+					category.setLogo(logo);
+				}
+			} catch (Exception e) {
+				category.setLogo("abc.png");
 			}
-		} catch (Exception e) {
-			category.setLogo("abc.png");
+
+			cateService.create(category);
+
+			model.addAttribute("category", new Category());
+			model.addAttribute("message", category.getName().toUpperCase() + " category save " + " success!");
+
+			return "save-cate";
+
+		}
+		else {
+			model.addAttribute("error", "Name existed!");
+			return "save-cate";
 		}
 
-		cateService.create(category);
-
-		model.addAttribute("category", new Category());
-		model.addAttribute("message", category.getName().toUpperCase() + " category save " + " success!");
-
-		return "save-cate";
 	}
 
 	@RequestMapping(value = "/checkCate/{name}")
@@ -122,5 +140,6 @@ public class CategoryController {
 
 		return cateService.checkCateAvailable(name);
 	}
+	
 
 }

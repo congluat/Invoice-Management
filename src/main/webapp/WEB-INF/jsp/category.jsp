@@ -2,6 +2,22 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<style>
+.description {
+	background-color: #FFF;
+	opacity: 0.7;
+	color: black;
+	border-radius:10px;
+	width:70%;
+	float: right;
+	height: 104%;
+	z-index: 2;
+	overflow: hidden;
+	position: absolute;
+	top: -2px;
+	right: -10px;
+}
+</style>
 
 <script type="text/javascript">
 	
@@ -93,15 +109,16 @@
 		<a href="Category/edit/${category.id}">
 			<div class="panel panel-default col-md-3 col-xs-4 category-panel"
 				id="${category.id}">
-				<div class="panel-body row">
+				<div class="panel-body row" style="z-index: 1; position: relative;">
 					<div class="col-md-6 col-xs-6 image">
 						<img height="80px" width="80px" alt="not found"
 							src="<c:url value='/resources/logo/'/>${category.logo}"
 							onError="this.onerror=null;this.src='<c:url value='/resources/logo/abc.png'/>';">
 					</div>
 					<div class="col-md-6 col-xs-6 content">${category.name}</div>
-
+					<%-- <div class="description">${category.description}</div> --%>
 				</div>
+
 			</div>
 		</a>
 	</c:forEach>
@@ -148,3 +165,5 @@
   </fieldset>
 </form:form>
 </div> --%>
+
+<%-- http://spring.io/blog/2010/01/25/ajax-simplifications-in-spring-3-0/--%>
