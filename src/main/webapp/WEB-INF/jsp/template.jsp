@@ -13,6 +13,11 @@
 
 <!-- -------------Jquery------------- -->
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script
+	src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"></script>
+
 
 <!-- -----------------Bootstrap--------------------------  -->
 
@@ -103,7 +108,7 @@
 
 	<jsp:include page="_modalAddUser.jsp"></jsp:include>
 
-	<div id="page-wrapper" style="padding-left : 0px;padding-right: 5px">
+	<div id="page-wrapper" style="padding-left: 0px; padding-right: 5px">
 
 		<tiles:insertAttribute name="body">
 

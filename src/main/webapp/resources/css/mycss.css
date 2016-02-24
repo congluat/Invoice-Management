@@ -53,6 +53,8 @@
 	color:white;
 	margin: 1.5em 1.5em;
 	padding: 2px 2px;
+	position:relative;
+	display:inline-block;
 }
 
 .category-panel .panel-body{

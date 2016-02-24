@@ -5,7 +5,7 @@
 <style>
 .description {
 	background-color: #FFF;
-	opacity: 0.7;
+	opacity: 0.9;
 	color: black;
 	border-radius:10px;
 	width:70%;
@@ -16,10 +16,20 @@
 	position: absolute;
 	top: -2px;
 	right: -10px;
+	display:none;
 }
 </style>
 
 <script type="text/javascript">
+	$(function(){
+		$(".category-panel").hover(function () {
+		if ($(this).find(".description").is(":hidden")) {
+			$(this).find(".description").show("slide", { direction: "right" }, 100);  
+		} else {
+			$(this).find(".description").hide("slide", { direction: "right" }, 100); 
+		}});
+	});
+
 	$(window).resize(function() {
 		var width = $(window).width();
 		if (width <= 530) {
@@ -105,7 +115,7 @@
 	<c:forEach items="${categories}" var="category">
 
 		<a href="Category/edit/${category.id}">
-			<div class="panel panel-default col-md-3 col-xs-4 category-panel"
+			<div class="panel panel-default col-md-3 col-xs-4 category-panel" style="z-index: 10"
 				id="${category.id}">
 				<div class="panel-body row" style="z-index: 1; position: relative;">
 					<div class="col-md-6 col-xs-6 image">
@@ -114,7 +124,7 @@
 							onError="this.onerror=null;this.src='<c:url value='/resources/logo/abc.png'/>';">
 					</div>
 					<div class="col-md-6 col-xs-6 content">${category.name}</div>
-					<%-- <div class="description">${category.description}</div> --%>
+					<div class="description">${category.description}</div> 
 				</div>
 
 			</div>
