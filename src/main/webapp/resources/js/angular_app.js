@@ -1,5 +1,5 @@
 (function() {
-	var app = angular.module('app',[]);
+	var app = angular.module('app', []);
 
 	app
 			.controller(
@@ -45,10 +45,36 @@
 
 	app.controller('CategoryController', function($scope, $http) {
 
-		$http.get("getAllCategories").success(function(response) {
-			$scope.categories = response;
-			console.log(response);
-		});
+		// $http.get("Category/getAllCategories").success(function(response) {
+		// $scope.categories = response;
+		// console.log(response);
+		// });
+
+		$scope.cateName = "";
+		$scope.error = "";
+
+		$scope.submit = function($event) {
+			console.log($scopecateName);
+			$http.get("Category/checkCate/" + $scope.cateName).success(
+					function(response) {
+						console.log(response);
+						if (response == true) {
+							this.error = "This name is duplicate";
+
+						}
+					});
+			$event.preventDefault();
+		}
+
+		this.checkCate = function() {
+
+			// console.log(this.name);
+			/*
+			 * $http.get("Category/checkCate/" + this.name).success(
+			 * function(response) { console.log(response); this.isDuplicate =
+			 * response; });
+			 */
+		}
 
 	});
 
