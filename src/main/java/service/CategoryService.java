@@ -14,4 +14,8 @@ public interface CategoryService {
 	public List<Category> getAllCategories();
 
 	public Category getById(int id);
+	
+	public Category getByName(String name);
+	
+	public boolean checkCateAvailable(String name);
 }

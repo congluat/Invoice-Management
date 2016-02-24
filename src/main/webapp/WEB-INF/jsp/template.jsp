@@ -103,7 +103,7 @@
 
 	<jsp:include page="_modalAddUser.jsp"></jsp:include>
 
-	<div id="page-wrapper">
+	<div id="page-wrapper" style="padding-left : 0px;padding-right: 5px">
 
 		<tiles:insertAttribute name="body">
 

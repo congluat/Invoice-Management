@@ -12,10 +12,9 @@ import model.Category;
 
 @Repository
 public class CategoryDAOImpl implements CategoryDAO {
-	
+
 	private SessionFactory sessionFactory;
-	
-	
+
 	@Override
 	public void create(Category category) {
 		Session session = sessionFactory.openSession();
@@ -26,7 +25,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 	}
 
 	@Override
-	public void update(Category category) {		
+	public void update(Category category) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		session.saveOrUpdate(category);
@@ -35,7 +34,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 	}
 
 	@Override
-	public void delete(Category category) {		
+	public void delete(Category category) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		session.delete(category);
@@ -55,10 +54,10 @@ public class CategoryDAOImpl implements CategoryDAO {
 	public List<Category> getAllCategories() {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		String hql="from Category";
-		
-		//fix if has error
-		List<Category> categories=session.createQuery(hql).list();
+		String hql = "from Category";
+
+		// fix if has error
+		List<Category> categories = session.createQuery(hql).list();
 		tx.commit();
 		session.close();
 		return categories;
@@ -68,7 +67,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 	public Category getById(int id) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.openSession();
-		
+
 		Category cate = (Category) session.get(Category.class, id);
 		session.close();
 		return cate;
@@ -78,13 +77,11 @@ public class CategoryDAOImpl implements CategoryDAO {
 	public Category getByName(String name) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.openSession();
-		String hql ="from Category where name =: pname";
-		Query query = session.createQuery(hql);
-		query.setParameter("pname", name);
-		Category cate = (Category) query.uniqueResult();
+		String hql ="from Category where name = '"+name+" ' ";
+
+		Category cate = (Category) session.createQuery(hql).uniqueResult();
 		session.close();
 		return cate;
 	}
-	
 
 }

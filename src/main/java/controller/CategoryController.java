@@ -1,8 +1,10 @@
 package controller;
 
 import java.io.File;
+import java.util.Date;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,6 +24,7 @@ import org.springframework.web.servlet.mvc.condition.ProducesRequestCondition;
 import com.google.gson.Gson;
 
 import model.Category;
+import model.User;
 import service.CategoryService;
 
 @Controller
@@ -38,8 +41,7 @@ public class CategoryController {
 	@RequestMapping(value = "/getAllCategories", method = RequestMethod.GET)
 	@ResponseBody
 	public String getAllCategories() {
-		
-		
+
 		String json = new Gson().toJson(cateService.getAllCategories());
 		return json;
 	}
@@ -53,17 +55,17 @@ public class CategoryController {
 
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editCategoryById(@PathVariable Integer id, ModelMap model) {
-		
+
 		Category cate = cateService.getById(id);
 		model.addAttribute("category", cate);
 		model.addAttribute("title", cate.getName());
-		
+
 		return "save-cate";
 	}
-	
+
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
-	public String UpdateCategoryById(@ModelAttribute Category category,
-			 @RequestParam("file") MultipartFile file, ModelMap model) {
+	public String UpdateCategoryById(@ModelAttribute Category category, @RequestParam("file") MultipartFile file,
+			ModelMap model) {
 		try {
 			String logo = file.getOriginalFilename();
 			String path = application.getRealPath("/resources/logo/") + logo;
@@ -91,7 +93,13 @@ public class CategoryController {
 		category.setLogo("abc.png");
 
 		try {
+			Date now = new Date();
+			String name = now.toString().replaceAll(" ", "").replaceAll(":", "");
+			System.out.println("name" + name);
+			logo = name + logo;
+
 			String path = application.getRealPath("/resources/logo/") + logo;
+
 			if (!logo.equals("")) {
 				file.transferTo(new File(path));
 				category.setLogo(logo);
@@ -103,10 +111,16 @@ public class CategoryController {
 		cateService.create(category);
 
 		model.addAttribute("category", new Category());
-		model.addAttribute("message", "save category "+category.getName()+" success!");
+		model.addAttribute("message", category.getName().toUpperCase() + " category save " + " success!");
 
 		return "save-cate";
 	}
-	
-	
+
+	@RequestMapping(value = "/checkCate/{name}")
+	@ResponseBody
+	public boolean checkCateAvailable(@PathVariable String name, HttpServletRequest request) {
+
+		return cateService.checkCateAvailable(name);
+	}
+
 }

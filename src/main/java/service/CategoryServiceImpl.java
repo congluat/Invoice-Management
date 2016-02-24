@@ -2,6 +2,7 @@ package service;
 
 import java.util.List;
 
+import org.antlr.tool.FASerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,31 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public Category getById(int id) {
 		return dao.getById(id);
+	}
+
+	public Category getByName(String name) {
+		return dao.getByName(name);
+	}
+
+	@Override
+	public boolean checkCateAvailable(String name) {
+
+		boolean result = false;
+		try {
+
+			Category cate = null;
+			cate = getByName(name);
+			if (cate != null) {
+				result = true;
+			} else {
+				result = false;
+			}
+		} catch (Exception e) {
+			result = false;
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 
 }
