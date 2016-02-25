@@ -8,20 +8,27 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
-
 import model.Category;
 import model.Invoice;
 import model.User;
 
 @Repository
 public class InvoiceDAOImpl implements InvoiceDAO {
-	
+
 	private SessionFactory sessionFactory;
 
 	@Override
 	public List<Invoice> getAllInvoices() {
 		Session session = getSessionFactory().openSession();
 		List<Invoice> list = session.createQuery("from Invoice").list();
+		session.close();
+		return list;
+	}
+
+	@Override
+	public List<Invoice> getAllInvoices(int Uid) {
+		Session session = getSessionFactory().openSession();
+		List<Invoice> list = session.createQuery("from Invoice where UserId =" + Uid).list();
 		session.close();
 		return list;
 	}
@@ -37,9 +44,9 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 	@Override
 	public void create(Invoice invoice) {
 		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();		
-//		invoice.getCategory().getInvoices().add(invoice);
-//		invoice.getUser().getInvoices().add(invoice);
+		Transaction tx = session.beginTransaction();
+		// invoice.getCategory().getInvoices().add(invoice);
+		// invoice.getUser().getInvoices().add(invoice);
 		session.save(invoice);
 		tx.commit();
 		session.close();
@@ -49,31 +56,32 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 	public void update(Invoice invoice) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-//		Iterator<Invoice> it = invoice.getCategory().getInvoices().iterator();
-//		Invoice in;
-//		while(it.hasNext()){
-//			in = it.next();
-//			if(in.getId()==invoice.getId()){
-//				in.setAmount(invoice.getAmount());
-//				in.setComment(invoice.getComment());
-//				in.setIsWarning(invoice.getIsWarning());
-//				in.setName(invoice.getName());
-//				in.setPlace(invoice.getPlace());
-//				in.setTime(invoice.getTime());
-//			}
-//		}
-//		Iterator<Invoice> it1 = invoice.getUser().getInvoices().iterator();
-//		while(it1.hasNext()){
-//				in = it1.next();
-//			if(in.getId()==invoice.getId()){
-//				in.setAmount(invoice.getAmount());
-//				in.setComment(invoice.getComment());
-//				in.setIsWarning(invoice.getIsWarning());
-//				in.setName(invoice.getName());
-//				in.setPlace(invoice.getPlace());
-//				in.setTime(invoice.getTime());
-//			}
-//		}	
+		// Iterator<Invoice> it =
+		// invoice.getCategory().getInvoices().iterator();
+		// Invoice in;
+		// while(it.hasNext()){
+		// in = it.next();
+		// if(in.getId()==invoice.getId()){
+		// in.setAmount(invoice.getAmount());
+		// in.setComment(invoice.getComment());
+		// in.setIsWarning(invoice.getIsWarning());
+		// in.setName(invoice.getName());
+		// in.setPlace(invoice.getPlace());
+		// in.setTime(invoice.getTime());
+		// }
+		// }
+		// Iterator<Invoice> it1 = invoice.getUser().getInvoices().iterator();
+		// while(it1.hasNext()){
+		// in = it1.next();
+		// if(in.getId()==invoice.getId()){
+		// in.setAmount(invoice.getAmount());
+		// in.setComment(invoice.getComment());
+		// in.setIsWarning(invoice.getIsWarning());
+		// in.setName(invoice.getName());
+		// in.setPlace(invoice.getPlace());
+		// in.setTime(invoice.getTime());
+		// }
+		// }
 
 		session.saveOrUpdate(invoice);
 		tx.commit();
@@ -89,5 +97,4 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		return invoice;
 	}
 
-	
 }

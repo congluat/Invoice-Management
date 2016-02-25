@@ -22,6 +22,18 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
+	public List<Invoice> getAllInvoices(int Uid) {
+		List<Invoice> invoices = null;
+		try {
+			invoices = invoiceDao.getAllInvoices(Uid);
+		} catch (Exception e) {
+			invoices = null;
+		}
+
+		return invoices;
+	}
+
+	@Override
 	public void create(Invoice invoice) {
 		// TODO Auto-generated method stub
 		invoiceDao.create(invoice);
@@ -34,7 +46,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public Invoice getById(int id) {		
+	public Invoice getById(int id) {
 		return invoiceDao.findById(id);
 	}
 
