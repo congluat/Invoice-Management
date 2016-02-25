@@ -81,9 +81,14 @@
 							<div class="col-md-10">
 								<input readonly="readonly" class="form-control"
 									placeholder="Browse..." type="text"> <input
-									id="inputFile" multiple="" name="file" type="file">
+									id="inputFile" multiple="" name="file" type="file" accept="image/*">
 								<form:hidden path="logo" />
 								<div id="imagePreview"></div>
+								<div>
+								<c:if test='${not empty "${error_image}"}'>
+									<label style="color: red">${error_image}</label>
+								</c:if>
+								</div>
 							</div>
 					</div>
 					<div class="form-group">

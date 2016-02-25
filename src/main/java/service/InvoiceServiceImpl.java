@@ -21,4 +21,21 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return invoiceDao.getAllInvoices();
 	}
 
+	@Override
+	public void create(Invoice invoice) {
+		// TODO Auto-generated method stub
+		invoiceDao.create(invoice);
+	}
+
+	@Override
+	public void update(Invoice invoice) {
+		// TODO Auto-generated method stub
+		invoiceDao.update(invoice);
+	}
+
+	@Override
+	public Invoice getById(int id) {		
+		return invoiceDao.findById(id);
+	}
+
 }
