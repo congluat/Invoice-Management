@@ -205,7 +205,7 @@
 						class="glyphicon glyphicon-dashboard"></i> Dashboard</a></li>
 
 
-				<li><a href="forms.html"><i
+				<li><a href="invoices"><i
 						class="glyphicon glyphicon-tasks"></i> Invoices</a></li>
 				<li><a href="Category/listCategories"><i
 						class="glyphicon glyphicon-tags"></i> Category</a></li>

@@ -17,37 +17,45 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		
-		var link = '<%=request.getContextPath() %>'+"/resources/logo/${category.logo}";
-		$("#imagePreview").css("background-image", "url("+link+")");
+		var link = '<%=request.getContextPath()%>'
+								+ "/resources/logo/${category.logo}";
+						$("#imagePreview").css("background-image",
+								"url(" + link + ")");
 
-	
-	$(function() {
-		$("#inputFile").on(
-				"change",
-				function() {
-					var files = !!this.files ? this.files : [];
-					if (!files.length || !window.FileReader)
-						return; // no file selected, or no FileReader support
+						$(function() {
+							$("#inputFile")
+									.on(
+											"change",
+											function() {
+												var files = !!this.files ? this.files
+														: [];
+												if (!files.length
+														|| !window.FileReader)
+													return; // no file selected, or no FileReader support
 
-					if (/^image/.test(files[0].type)) { // only image file
-						var reader = new FileReader(); // instance of the FileReader
-						reader.readAsDataURL(files[0]); // read the local file
+												if (/^image/
+														.test(files[0].type)) { // only image file
+													var reader = new FileReader(); // instance of the FileReader
+													reader
+															.readAsDataURL(files[0]); // read the local file
 
-						reader.onloadend = function() { // set image data as background of div
-							$("#imagePreview").css("background-image",
-									"url(" + this.result + ")");
-						}
-					}
-				});
-		
-		
+													reader.onloadend = function() { // set image data as background of div
+														$("#imagePreview")
+																.css(
+																		"background-image",
+																		"url("
+																				+ this.result
+																				+ ")");
+													}
+												}
+											});
 
-	});
-	
-	});
+						});
+
+					});
 </script>
 <div class="panel panel-primary">
-<div id="categoryFromResponse"></div>
+	<div id="categoryFromResponse"></div>
 	<div class="panel-heading">
 		<h1 class="panel-title center">CATEGORY FORM</h1>
 	</div>
@@ -65,44 +73,53 @@
 
 					<div class="form-group">
 						<label path="name" class="col-md-2 control-label">Name</label>
-							<div class="col-md-10">
-								<form:input class="form-control" path="name" required="required" maxlength="100"
-									placeholder="name" type="text" />
-								
-								<c:if test='${not empty "${error}"}'>
-									<label style="color: red">${error}</label>
-								</c:if>
-							</div>
+						<div class="col-md-10">
+							<form:input class="form-control" path="name" required="required"
+								maxlength="100" placeholder="name" type="text" />
+
+							<c:if test='${not empty "${error}"}'>
+								<label style="color: red">${error}</label>
+							</c:if>
+						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="inputFile" class="col-md-2 control-label">Logo</label>
 
-							<div class="col-md-10">
-								<input readonly="readonly" class="form-control"
-									placeholder="Browse..." type="text"> <input
-									id="inputFile" multiple="" name="file" type="file" accept="image/*">
-								<form:hidden path="logo" />
-								<div id="imagePreview"></div>
-								<div>
+						<div class="col-md-10">
+							<input readonly="readonly" class="form-control"
+								placeholder="Browse..." type="text"> <input
+								id="inputFile" multiple="" name="file" type="file"
+								accept="image/*">
+							<form:hidden path="logo" />
+							<div id="imagePreview"></div>
+							<div>
 								<c:if test='${not empty "${error_image}"}'>
 									<label style="color: red">${error_image}</label>
 								</c:if>
-								</div>
 							</div>
+						</div>
 					</div>
 					<div class="form-group">
 						<label path="description" class="col-md-2 control-label">Description</label>
 
 						<div class="col-md-10">
-							<form:textarea path="description" class="form-control" rows="3" maxlength="200"/>
+							<form:textarea path="description" class="form-control" rows="3"
+								maxlength="200" />
 							<span class="help-block">description</span>
 						</div>
 					</div>
 
 					<div class="form-group">
-						<div class="col-md-10 col-md-offset-2">
-							<button type="submit" class="btn btn-primary">Submit</button>
+
+						<div class="col-md-2"></div>
+
+						<div class="col-md-5">
+							<a href="dashboard" class="btn  btn-raised btn-warning"">Cancel</a>
+						</div>
+
+						<div class="col-md-5">
+							<button type="submit" class="btn btn-raised btn-success">Submit</button>
 						</div>
 					</div>
 
