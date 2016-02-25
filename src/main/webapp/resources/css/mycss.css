@@ -22,50 +22,91 @@
 	margin-top: 2em;
 }
 
-.add-button {
-	background: #337ab7;
+.add-button-area {
 	position: fixed;
 	bottom: 5px;
 	right: 5px;
+	height: 100px;
+	width: 100px;
+}
+
+.add-button-area a i {
+	color: white;
+	vertical-align: middle;
+}
+
+#add-button {
+	background: #337ab7;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+}
+
+.addCate {
+	position: absolute;
+	background-color: #009688;
+	right: 20px;
+	bottom: 70px;
+	display: none;
+	right: 20px;
+}
+
+.addCate:hover {
+	opacity: 0.8 !important;
+}
+
+.addInvoice {
+	position: absolute;
+	background-color: #3f51b5;
+	right: 70px;
+	bottom: 20px;
+	display: none;
+}
+
+.addInvoice:hover {
+	opacity: 0.8 !important;
 }
 
 .add-button i {
 	color: #FFF;
 }
 
-.add-button:hover {
+#add-button:hover {
 	background: red !important;
 }
 
-.center{
+.center {
 	text-align: center;
 }
 
-.form-group label.control-label{
+.form-group label.control-label {
 	font-size: 16px;
 	color: #333;
 }
 
-.category-panel{
+.category-panel {
 	/* border: 2px solid; */
 	/* border-color: aqua; */
 	border-radius: 10px;
-	color:white;
+	color: white;
 	margin: 1.5em 1.5em;
 	padding: 2px 2px;
+	position: relative;
+	display: inline-block;
+	overflow: hidden;
 }
 
-.category-panel .panel-body{
+.category-panel .panel-body {
 	padding: 2px 2px;
-	margin:0px 0px;
+	margin: 0px 0px;
 	height: 100%;
 }
 
-.category-panel .panel-body .image{
+.category-panel .panel-body .image {
 	padding: 3px 3px;
 }
 
-.category-panel .panel-body .content{
+.category-panel .panel-body .content {
 	padding: 3px 3px;
 	font-size: 1.6em;
 	vertical-align: middle;

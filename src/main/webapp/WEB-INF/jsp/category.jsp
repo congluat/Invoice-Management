@@ -7,20 +7,30 @@
 	background-color: #FFF;
 	opacity: 0.7;
 	color: black;
-	border-radius:10px;
-	width:70%;
+	border-radius: 10px;
+	width: 60%;
 	float: right;
 	height: 104%;
-	z-index: 2;
 	overflow: hidden;
 	position: absolute;
 	top: -2px;
-	right: -10px;
+	right: -5px;
+	display: none;
 }
 </style>
 
 <script type="text/javascript">
-	
+	$(function() {
+		$(".category-panel").mouseenter(function() {
+			$(this).find(".description").show("slide", {
+				direction : "right"
+			}, 100);
+		}).mouseleave(function() {
+			$(this).find(".description").hide("slide", {
+				direction : "right"
+			}, 100);
+		});
+	});
 
 	$(window).resize(function() {
 		var width = $(window).width();
@@ -93,11 +103,11 @@
 
 	<a href="Category/save">
 		<div class="panel panel-default col-md-3 col-xs-4 category-panel"
-			style="background: black; height: 94px; line-height: 90px">
+			style="background: white; border: 1px solid #009688; height: 94px; line-height: 90px">
 			<div class="panel-body row">
-
 				<div class="col-md-12 col-xs-12 content">
-					Thêm mới<br>...
+					<span class="glyphicon glyphicon-plus"
+						style="font-size: 3em; color: #009688" aria-hidden="true"></span>
 				</div>
 
 			</div>
@@ -109,14 +119,14 @@
 		<a href="Category/edit/${category.id}">
 			<div class="panel panel-default col-md-3 col-xs-4 category-panel"
 				id="${category.id}">
-				<div class="panel-body row" style="z-index: 1; position: relative;">
+				<div class="panel-body row"; position:relative;">
 					<div class="col-md-6 col-xs-6 image">
 						<img height="80px" width="80px" alt="not found"
 							src="<c:url value='/resources/logo/'/>${category.logo}"
 							onError="this.onerror=null;this.src='<c:url value='/resources/logo/abc.png'/>';">
 					</div>
 					<div class="col-md-6 col-xs-6 content">${category.name}</div>
-					<%-- <div class="description">${category.description}</div> --%>
+					<div class="description">${category.description}</div>
 				</div>
 
 			</div>

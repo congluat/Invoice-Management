@@ -13,6 +13,11 @@
 
 <!-- -------------Jquery------------- -->
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script
+	src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"></script>
+
 
 <!-- -----------------Bootstrap--------------------------  -->
 
@@ -94,7 +99,26 @@
 	});
 </script>
 
-
+<script type="text/javascript">
+	$(function() {
+		$(".add-button-area").mouseenter(function() {
+			console.log("mouse hover");
+			$(this).find(".addCate").show("slide", {
+				direction : "down"
+			}, 100);
+			$(this).find(".addInvoice").show("slide", {
+				direction : "right"
+			}, 100);
+		}).mouseleave(function() {
+			$(this).find(".addCate").hide("slide", {
+				direction : "down"
+			}, 100);
+			$(this).find(".addInvoice").hide("slide", {
+				direction : "right"
+			}, 100);
+		});
+	});
+</script>
 </head>
 
 <body ng-app="app">
@@ -103,15 +127,24 @@
 
 	<jsp:include page="_modalAddUser.jsp"></jsp:include>
 
-	<div id="page-wrapper" style="padding-left : 0px;padding-right: 5px">
+	<div id="page-wrapper" style="padding-left: 0px; padding-right: 5px">
 
 		<tiles:insertAttribute name="body">
 
 		</tiles:insertAttribute>
-		<button type="button"
-			class="btn btn-primary btn-circle btn-xl add-button">
-			<i class="glyphicon glyphicon-plus"></i>
-		</button>
+
+
+		<div class="add-button-area">
+			<a href="#" id="add-button" class="btn btn-primary btn-circle btn-lg">
+				<i class="glyphicon glyphicon-plus"></i>
+			</a> <a href="#" class="btn btn-primary btn-circle btn-lg addCate"> <i
+				class="glyphicon glyphicon-tasks"></i>
+			</a> <a href="#" class="btn btn-primary btn-circle btn-lg addInvoice">
+				<i class="glyphicon glyphicon-tags"></i>
+			</a>
+		</div>
+
+
 	</div>
 
 </body>

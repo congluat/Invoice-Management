@@ -1,6 +1,14 @@
 (function() {
 	var app = angular.module('app', []);
 
+	app.controller('DashboardController',function($http){
+		
+		this.getTotalInvoices = function($http){
+			
+		}
+	});
+	
+	
 	app
 			.controller(
 					'AddUserController',
