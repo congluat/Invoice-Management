@@ -1,30 +1,27 @@
 package controller;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.condition.ProducesRequestCondition;
-
 import com.google.gson.Gson;
 
 import model.Category;
-import model.User;
 import service.CategoryService;
 
 @Controller
@@ -67,7 +64,15 @@ public class CategoryController {
 	public String UpdateCategoryById(@ModelAttribute Category category, @RequestParam("file") MultipartFile file,
 			ModelMap model) {
 		
-		
+		try(InputStream input = file.getInputStream()){			
+			if(ImageIO.read(input)==null){
+				model.addAttribute("error_image", "file image invalid");
+				return "save-cate";
+			}
+		}catch(Exception e){
+			model.addAttribute("error_image", "file image invalid");
+			return "save-cate";
+		}
 		
 		
 		if (cateService.checkCateAvailable(category.getName())
@@ -93,7 +98,7 @@ public class CategoryController {
 	@RequestMapping(value = "/save", method = RequestMethod.GET)
 	public String InsertCate(ModelMap model) {
 		Category category = new Category();
-
+		
 		model.addAttribute("category", category);
 		return "save-cate";
 	}
@@ -101,6 +106,17 @@ public class CategoryController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String Save(@ModelAttribute Category category, @RequestParam("file") MultipartFile file, ModelMap model) {
 		String logo = file.getOriginalFilename();
+		
+		try(InputStream input = file.getInputStream()){			
+			if(ImageIO.read(input)==null){
+				model.addAttribute("error_image", "file image invalid");
+				return "save-cate";
+			}
+		}catch(Exception e){
+			model.addAttribute("error_image", "file image invalid");
+			return "save-cate";
+		}
+				
 		category.setLogo("abc.png");
 		if (!cateService.checkCateAvailable(category.getName())) {
 			try {
