@@ -101,5 +101,6 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 
-
+	<!-- Configure the multipart resolver -->
+	
 </beans>
