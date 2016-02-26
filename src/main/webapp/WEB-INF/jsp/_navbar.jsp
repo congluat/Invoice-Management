@@ -1,6 +1,6 @@
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation"
-	style="margin-bottom: 0">
+	style="margin-bottom: 0; z-index: 0">
 	<div class="navbar-header">
 		<button type="button" class="navbar-toggle" data-toggle="collapse"
 			data-target=".navbar-collapse">
@@ -205,7 +205,7 @@
 						class="glyphicon glyphicon-dashboard"></i> Dashboard</a></li>
 
 
-				<li><a href="invoices"><i
+				<li><a href="Invoice/"><i
 						class="glyphicon glyphicon-tasks"></i> Invoices</a></li>
 				<li><a href="Category/listCategories"><i
 						class="glyphicon glyphicon-tags"></i> Category</a></li>

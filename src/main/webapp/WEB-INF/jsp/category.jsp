@@ -25,6 +25,7 @@
 			$(this).find(".description").show("slide", {
 				direction : "right"
 			}, 100);
+
 		}).mouseleave(function() {
 			$(this).find(".description").hide("slide", {
 				direction : "right"
