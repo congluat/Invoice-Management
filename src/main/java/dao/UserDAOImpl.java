@@ -24,20 +24,30 @@ public class UserDAOImpl implements UserDAO {
 	public void create(User user) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		session.save(user);
-		tx.commit();
-		session.close();
-
+		try {
+			session.save(user);
+			tx.commit();
+		} catch (Exception e) {
+			tx.rollback();
+		}
+		finally {
+			session.close();
+		}
 	}
 
 	@Override
 	public void update(User user) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		session.saveOrUpdate(user);
-		tx.commit();
-		session.close();
-
+		try {
+			session.saveOrUpdate(user);
+			tx.commit();
+		} catch (Exception e) {
+			tx.rollback();
+		}
+		finally {
+			session.close();
+		}		
 	}
 
 	@Override
