@@ -53,10 +53,10 @@
 
 	app.controller('CategoryController', function($scope, $http) {
 
-		// $http.get("Category/getAllCategories").success(function(response) {
-		// $scope.categories = response;
-		// console.log(response);
-		// });
+		 $http.get("Category/getAllCategories").success(function(response) {
+		 
+		 console.log(response);
+		 });
 
 		$scope.cateName = "";
 		$scope.error = "";

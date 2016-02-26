@@ -100,7 +100,7 @@
 	});
 </script>
 
-<div class="col-md-12 col-xs-12" style="text-align: center;">
+<div class="col-md-12 col-xs-12" style="text-align: center;" ng-controller="CategoryController as cateCtrl">
 
 	<a href="Category/save">
 		<div class="panel panel-default col-md-3 col-xs-4 category-panel"
