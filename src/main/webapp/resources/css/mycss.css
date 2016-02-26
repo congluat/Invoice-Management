@@ -40,6 +40,7 @@
 	position: absolute;
 	bottom: 0px;
 	right: 0px;
+	z-index: 0;
 }
 
 .addCate {
@@ -49,10 +50,12 @@
 	bottom: 70px;
 	display: none;
 	right: 20px;
+	z-index: 2;
 }
 
 .addCate:hover {
 	opacity: 0.8 !important;
+	z-index: 2;
 }
 
 .addInvoice {
@@ -61,10 +64,12 @@
 	right: 70px;
 	bottom: 20px;
 	display: none;
+	z-index: 2;
 }
 
 .addInvoice:hover {
 	opacity: 0.8 !important;
+	z-index: 2;
 }
 
 .add-button i {
@@ -111,4 +116,63 @@
 	font-size: 1.6em;
 	vertical-align: middle;
 	text-align: center;
+}
+
+.list-invoices {
+	margin: auto 20px;
+	width: auto;
+	text-align: center;
+}
+
+.list-invoices a {
+	text-decoration: none;
+}
+
+.list-invoices ul li {
+	list-style: none;
+	list-style-type: none;
+}
+
+.warning {
+	background-color: #ff5722;
+	color: white;
+}
+
+.invoice-tab {
+	margin: 1em;
+	min-height: 70px;
+	padding: 0px;
+	z-index: 20px;
+}
+
+.well {
+	-moz-box-shadow: 10px 10px 5px #888;
+	-webkit-box-shadow: 10px 10px 5px #888;
+	box-shadow: 10px 3px 20px #888;
+	border-radius: 15px;
+	border: none;
+	height: 100% !important;
+	-moz-box-shadow: 10px 10px 5px #888;
+	padding: 7px;
+	min-height: 70px;
+}
+
+.transition {
+	-webkit-transform: scale(1.6);
+	-moz-transform: scale(1.6);
+	-o-transform: scale(1.6);
+	transform: scale(1.6);
+	z-index: 50px;
+	
+}
+
+.invoice-tab {
+	-webkit-transition: all .4s ease-in-out;
+	-moz-transition: all .4s ease-in-out;
+	-o-transition: all .4s ease-in-out;
+	-ms-transition: all .4s ease-in-out;
+}
+
+.more-info{
+	display: none;
 }

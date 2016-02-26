@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -38,6 +40,9 @@ public class Invoice implements Serializable{
 	private Boolean isWarning;
 	private String place;
 	//private Integer CategoryId;
+	
+	@OneToMany(mappedBy="invoice")
+	Collection<Photo> photos;
 	
 	@ManyToOne()
 	@JoinColumn(name="CategoryId")
@@ -117,6 +122,14 @@ public class Invoice implements Serializable{
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Collection<Photo> getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(Collection<Photo> photos) {
+		this.photos = photos;
 	}
 	
 	

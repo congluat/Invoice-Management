@@ -1,5 +1,6 @@
 CREATE DATABASE InvoiceManagement;
 
+DROP DATABASE InvoiceManagement;
 
 USE InvoiceManagement;
 
@@ -12,10 +13,11 @@ CREATE TABLE Users(
 
 CREATE TABLE Categories(
 	Id INT NOT NULL AUTO_INCREMENT,
-	Name NVARCHAR(100) NOT NULL UNIQUE,
+	Name NVARCHAR(100) NOT NULL,
 	Description NVARCHAR(200),
 	Logo NVARCHAR(200),
-	PRIMARY KEY (Id)
+	PRIMARY KEY (Id),
+    UNIQUE KEY(Name)
 );
 
 
@@ -32,4 +34,12 @@ CREATE TABLE Invoices(
 	PRIMARY KEY (Id),
 	CONSTRAINT FK_invoice_cate FOREIGN KEY(CategoryId) REFERENCES Categories(Id),
 	CONSTRAINT FK_invoice_user FOREIGN KEY(UserId) REFERENCES Users(Id)
+);
+
+CREATE TABLE Photos(
+	Id INT NOT NULL AUTO_INCREMENT,
+    InvoiceId INT NOT NULL,
+    Photo NVARCHAR(200) NOT NULL,
+    PRIMARY KEY (Id),
+    CONSTRAINT FK_invoicephotos_Invoice FOREIGN KEY(InvoiceId) REFERENCES Invoices(Id)
 );

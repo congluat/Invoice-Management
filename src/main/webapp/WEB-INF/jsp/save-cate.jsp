@@ -115,7 +115,7 @@
 						<div class="col-md-2"></div>
 
 						<div class="col-md-5">
-							<a href="dashboard" class="btn  btn-raised btn-warning"">Cancel</a>
+							<a href="Category/listCategories" class="btn  btn-raised btn-warning"">Cancel</a>
 						</div>
 
 						<div class="col-md-5">
