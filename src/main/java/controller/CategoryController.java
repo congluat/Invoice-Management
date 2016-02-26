@@ -63,36 +63,7 @@ public class CategoryController {
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
 	public String UpdateCategoryById(@ModelAttribute Category category, @RequestParam("file") MultipartFile file,
 			ModelMap model) {
-		
-		try(InputStream input = file.getInputStream()){			
-			if(ImageIO.read(input)==null){
-				model.addAttribute("error_image", "file image invalid");
-				return "save-cate";
-			}
-		}catch(Exception e){
-			model.addAttribute("error_image", "file image invalid");
-			return "save-cate";
-		}
-		
-		
-		if (cateService.checkCateAvailable(category.getName())
-				&& (category.getId()==cateService.getByName(category.getName()).getId())) {
-		try {
-			String logo = file.getOriginalFilename();
-			String path = application.getRealPath("/resources/logo/") + logo;
-			if (!logo.equals("")) {
-				file.transferTo(new File(path));
-				category.setLogo(logo);
-			}
-		} catch (Exception e) {
-		}
-		cateService.update(category);
-		return "redirect:/Category/listCategories";
-		}
-		else {
-			model.addAttribute("error", "Name existed!");
-			return "save-cate";
-		}
+		return cateService.update(category, file, model);
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.GET)
@@ -105,48 +76,8 @@ public class CategoryController {
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String Save(@ModelAttribute Category category, @RequestParam("file") MultipartFile file, ModelMap model) {
-		String logo = file.getOriginalFilename();
 		
-		try(InputStream input = file.getInputStream()){			
-			if(ImageIO.read(input)==null){
-				model.addAttribute("error_image", "file image invalid");
-				return "save-cate";
-			}
-		}catch(Exception e){
-			model.addAttribute("error_image", "file image invalid");
-			return "save-cate";
-		}
-				
-		category.setLogo("abc.png");
-		if (!cateService.checkCateAvailable(category.getName())) {
-			try {
-				Date now = new Date();
-				String name = now.toString().replaceAll(" ", "").replaceAll(":", "");
-				System.out.println("name" + name);
-				logo = name + logo;
-
-				String path = application.getRealPath("/resources/logo/") + logo;
-
-				if (!logo.equals("")) {
-					file.transferTo(new File(path));
-					category.setLogo(logo);
-				}
-			} catch (Exception e) {
-				category.setLogo("abc.png");
-			}
-
-			cateService.create(category);
-
-			model.addAttribute("category", new Category());
-			model.addAttribute("message", category.getName().toUpperCase() + " category save " + " success!");
-
-			return "save-cate";
-
-		}
-		else {
-			model.addAttribute("error", "Name existed!");
-			return "save-cate";
-		}
+		return cateService.create(category, file, model);
 
 	}
 

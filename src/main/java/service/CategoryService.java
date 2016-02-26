@@ -2,12 +2,15 @@ package service;
 
 import java.util.List;
 
+import org.springframework.ui.ModelMap;
+import org.springframework.web.multipart.MultipartFile;
+
 import model.Category;
 
 public interface CategoryService {
-	public void create(Category category);
+	public String create(Category category, MultipartFile file, ModelMap model);
 
-	public void update(Category category);
+	public String update(Category category, MultipartFile file, ModelMap model);
 
 	public void delete(Category category);
 

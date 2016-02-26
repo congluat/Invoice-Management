@@ -35,23 +35,4 @@ public class HomeController {
 		return "home";
 	}
 
-	@RequestMapping(value = "/insert", method = RequestMethod.GET)
-	public String insert() {
-		Category cate = new Category();
-		cate.setName("Dien");
-		cate.setDescription("Thanh toan tien dien");
-		cate.setLogo("abc.jpg");
-		List<Category> categories = cateService.getAllCategories();
-		Iterator it = categories.iterator();
-		Category category;
-		if (it.hasNext()) {
-			category = (Category) it.next();
-			if (category.getName().equals(cate.getName())) {
-				return "error";
-			}
-		}
-		cateService.create(cate);
-		return "home";
-	}
-
 }
