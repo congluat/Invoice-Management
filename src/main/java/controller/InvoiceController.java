@@ -2,6 +2,7 @@ package controller;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -41,21 +42,18 @@ public class InvoiceController {
 		return "invoices";
 	}
 
-	@RequestMapping("/save")
-	public String create(HttpSession session) {
-		Category cate = cateService.getById(1);
+	@RequestMapping(value="/save", method = RequestMethod.GET)
+	public String create(HttpSession session, ModelMap model) {
 		Invoice invoice = new Invoice();
-		invoice.setCategory(cate);
-		invoice.setName("name");
-		invoice.setUser((User) session.getAttribute("user"));
-		invoice.setAmount(BigDecimal.valueOf(520.0));
-		invoice.setComment("comment");
-		invoice.setIsWarning(true);
-		invoice.setPlace("place");
-		invoice.setTime(new Date());
-
-		invoiceService.create(invoice);
-		return "home";
+		User user = (User) session.getAttribute("user");
+		invoice.setUser(user);
+		
+		List<Category> categories = cateService.getAllCategories();
+		
+		model.addAttribute("invoice", invoice);
+		model.addAttribute("categories", categories);
+		
+		return "save-invoice";
 	}
 
 	@RequestMapping(value = "/edit/{id}")
