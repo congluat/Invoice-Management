@@ -42,7 +42,7 @@ public class FileUploadController {
 				fileNames.add(fileName);
 				//Handle file content - multipartFile.getInputStream()
 				
-				String path = application.getRealPath("/resources/logo/") + fileName;
+				String path = application.getRealPath("/resources/images/") + fileName;
 			
 				if (!fileName.equals("")) {
 					multipartFile.transferTo(new File(path));				

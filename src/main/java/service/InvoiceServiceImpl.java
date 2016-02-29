@@ -36,9 +36,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public void create(Invoice invoice) {
+	public Boolean create(Invoice invoice) {
 		// TODO Auto-generated method stub
-		invoiceDao.create(invoice);
+		return invoiceDao.create(invoice);
 	}
 
 	@Override

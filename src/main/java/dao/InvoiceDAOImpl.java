@@ -46,16 +46,16 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 	}
 
 	@Override
-	public void create(Invoice invoice) {
+	public Boolean create(Invoice invoice) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		try {
 			session.save(invoice);
 			tx.commit();
+			return true;
 		} catch (Exception e) {
 			tx.rollback();
-		} finally {
-			session.close();
+			return false;
 		}
 	}
 

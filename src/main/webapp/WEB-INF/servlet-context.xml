@@ -17,7 +17,7 @@
 		<!--<property name="url" value="jdbc:mysql://20.203.139.12:3306/InvoiceManagement?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" 
 			/> -->
 		<property name="url"
-			value="jdbc:mysql://localhost:3306/InvoiceManagement?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" />
+			value="jdbc:mysql://20.203.139.12:3306/InvoiceManagement?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
 	</bean>
@@ -31,8 +31,8 @@
 				<prop key="hibernate.dialect">
 					org.hibernate.dialect.MySQL5Dialect
 				</prop>
-				<prop key="hibernate.format_sql">true</prop>
-				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">false</prop>
+				<prop key="hibernate.show_sql">false</prop>
 			</props>
 		</property>
 

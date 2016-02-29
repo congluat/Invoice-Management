@@ -10,7 +10,7 @@ public interface InvoiceService {
 	public List<Invoice> getAllInvoices();
 	public List<Invoice> getAllInvoices(int Uid);
 	public Invoice getById(int id);
-	public void create(Invoice invoice);
+	public Boolean create(Invoice invoice);
 	public void update(Invoice invoice);
 	public List<Invoice> getAllInvoicesByMonth(Date date);
 	public Map<String, List<Invoice>> getInvoicesGroupbyMonth();
