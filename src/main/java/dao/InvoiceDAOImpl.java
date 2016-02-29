@@ -1,17 +1,20 @@
 package dao;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
+import java.util.HashMap;
+
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
-import model.Category;
 import model.Invoice;
-import model.User;
 
 @Repository
 public class InvoiceDAOImpl implements InvoiceDAO {
@@ -51,10 +54,9 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 			tx.commit();
 		} catch (Exception e) {
 			tx.rollback();
+		} finally {
+			session.close();
 		}
-		finally {
-			session.close();	
-		}		
 	}
 
 	@Override
@@ -66,11 +68,11 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 			tx.commit();
 		} catch (Exception e) {
 			tx.rollback();
-		}
-		finally {
+		} finally {
 			session.close();
-		}	
+		}
 	}
+
 	@Override
 	public Invoice findById(int id) {
 		Session session = sessionFactory.openSession();
@@ -82,8 +84,52 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 	@Override
 	public List<Invoice> getAllInvoicesByMonth(Date date) {
 		Session session = sessionFactory.openSession();
-		String hql = "FROM Invoice WHERE MONTH(Time) = "+date.getMonth();
-		return null;
+		int month = date.getMonth() + 1;
+		int year = date.getYear() + 1900;
+		String hql = "FROM Invoice WHERE MONTH(Time) = " + month + " AND YEAR(Time) = " + year;
+		List<Invoice> list = session.createQuery(hql).list();
+		session.close();
+		return list;
+	}
+
+	@Override
+	public Map<String, List<Invoice>> getInvoicesGroupbyMonth() {
+		Session session = sessionFactory.openSession();
+
+		List<Date> months = getAllDayMonth();
+
+		Map<String, List<Invoice>> map = new HashMap<>();
+
+		for (Date month : months) {
+			int m = month.getMonth() + 1;
+			int y = month.getYear() + 1900;
+			System.out.println(m + "/" + y);
+
+			String hql = "FROM Invoice WHERE month(Time)=" + m + " AND year(Time)=" + y + " ORDER BY Time DESC";
+			List<Invoice> list = session.createQuery(hql).list();
+			map.put(m + "/" + y, list);
+		}
+
+		session.close();
+
+		return map;
+	}
+
+	@Override
+	public List<Date> getAllDayMonth() {
+		Session session = sessionFactory.openSession();
+		String hql = "from Invoice group by month(Time), year(time) ORDER BY TIME DESC";
+
+		List<Invoice> invoices = session.createQuery(hql).list();
+		List<Date> months = new ArrayList<>();
+		DateFormat df = new SimpleDateFormat("MM/yyyy");
+
+		for (Invoice invoice : invoices) {
+			months.add(invoice.getTime());
+		}
+
+		session.close();
+		return months;
 	}
 
 }

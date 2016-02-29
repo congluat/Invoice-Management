@@ -44,7 +44,7 @@ public class Invoice implements Serializable{
 	private String place;
 	//private Integer CategoryId;
 	
-	@OneToMany(mappedBy="invoice", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="invoice",fetch=FetchType.EAGER)
 	Collection<Photo> photos;
 	
 	@ManyToOne()

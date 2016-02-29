@@ -2,6 +2,7 @@ package dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import model.Category;
 import model.Invoice;
@@ -14,5 +15,6 @@ public interface InvoiceDAO {
 	public void create(Invoice invoice);
 	public void update(Invoice invoice);
 	public List<Invoice> getAllInvoicesByMonth(Date date);
-	
+	public Map<String, List<Invoice>> getInvoicesGroupbyMonth();
+	public List<Date> getAllDayMonth();
 }

@@ -1,6 +1,8 @@
 package service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -50,4 +52,17 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return invoiceDao.findById(id);
 	}
 
+	@Override
+	public List<Invoice> getAllInvoicesByMonth(Date date) {
+
+		return invoiceDao.getAllInvoicesByMonth(date);
+	}
+
+	public Map<String, List<Invoice>> getInvoicesGroupbyMonth() {
+		return invoiceDao.getInvoicesGroupbyMonth();
+	}
+
+	public List<Date> getAllDayMonth() {
+		return invoiceDao.getAllDayMonth();
+	}
 }
