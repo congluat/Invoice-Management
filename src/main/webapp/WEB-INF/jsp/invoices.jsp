@@ -109,11 +109,27 @@
 		</table>
 	</div> --%>
 <script type="text/javascript">
+	$(function() {
+		$(".timeline-panel").mouseenter(function() {
+			$(this).find(".more-info").show("slide", {
+				direction : "up"
+			}, 200);
+			$(this).find(".more-info").css({
+				"z-index" : "50"
+			});
+		}).mouseleave(function() {
+			$(this).find(".more-info").hide("slide", {
+				direction : "up"
+			}, 200);
+		});
+	});
+
 	$(document).ready(function() {
 		$('.timeline li:even').addClass();
 		$('.timeline li:odd').addClass('timeline-inverted');
 	});
 </script>
+
 <style>
 .timeline>li>.timeline-panel {
 	padding: 5px 5px;
@@ -123,6 +139,7 @@
 	padding: 2px;
 }
 </style>
+
 <div style="margin-top: 10px; margin-left: 5px; margin-right: 5px">
 	<ul class="timeline">
 
@@ -158,6 +175,7 @@
 							<a href="Invoice/edit/${invoice.id}"
 								class="btn btn-danger col-md-4">Delete</a>
 						</div>
+						<div class="col-md-12 more-info">${invoice.comment}</div>
 					</div>
 
 
@@ -184,6 +202,7 @@
 							<a href="Invoice/edit/${invoice.id}"
 								class="btn btn-danger col-md-4">Delete</a>
 						</div>
+						<div class="col-md-12 more-info">${invoice.comment}</div>
 					</div>
 
 				</c:if>

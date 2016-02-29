@@ -30,8 +30,7 @@
 <!-- Bootstrap -->
 <link rel="stylesheet" type="text/css"
 	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css"
-	href="/resources/css/bootstrap-datetimepicker.min.css">
+
 <!-- Bootstrap Material Design -->
 
 <link rel="stylesheet" type="text/css"
@@ -52,14 +51,7 @@
 <script type="text/javascript">
 	$.material.init()
 </script>
-<%-- <script type="text/javascript"
-	src="<c:url value='/resources/js/bootstrap-datetimepicker.js'/>"></script>
-	
-<script type="text/javascript"
-	src="<c:url value='/resources/js/bootstrap-datetimepicker.min.js'/>"></script>
 
-<script type="text/javascript"
-	src="<c:url value='/resources/js/moment.js'/>"></script> --%>
 
 
 <!-- ---------------------------My CSS----------- -->
@@ -149,13 +141,13 @@
 
 
 		<div class="add-button-area">
-			<a href="#" id="add-button" class="btn btn-primary btn-circle btn-lg">
+			<a href="Invoice/save" id="add-button" class="btn btn-primary btn-circle btn-lg">
 				<i class="glyphicon glyphicon-plus"></i>
-			</a> <a href="#" class="btn btn-primary btn-circle btn-lg addCate"
+			</a> <a href="Category/save" class="btn btn-primary btn-circle btn-lg addCate"
 				data-toggle="tooltip" data-placement="left"
 				title="Add
 				Category"> <i class="glyphicon glyphicon-tasks"></i>
-			</a> <a href="#" class="btn btn-primary btn-circle btn-lg addInvoice"
+			</a> <a href="Invoice/save" class="btn btn-primary btn-circle btn-lg addInvoice"
 				data-toggle="tooltip" data-placement="left" title="Add Invoice">
 				<i class="glyphicon glyphicon-tags"></i>
 			</a>

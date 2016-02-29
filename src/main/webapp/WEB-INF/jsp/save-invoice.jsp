@@ -27,9 +27,16 @@
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 
+
 <script>
 
 $(document).ready(function() {
+	
+	/* var now = new Date();
+
+	$("#time").attr('value',now);
+	console.log(new Date); */
+	
 	//add more file components if Add is clicked
 	$('#addFile').click(function() {
 		var fileIndex = $('#fileTable tr').children().length;
@@ -42,7 +49,7 @@ $(document).ready(function() {
 });
 </script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 function isNumber(evt) {
     evt = (evt) ? evt : window.event;
     var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -51,12 +58,11 @@ function isNumber(evt) {
     }
     return true;
 }
-</script>
+</script> -->
 <script type="text/javascript">
 	$(document).ready(function() {
 		
-		var link = '<%=request.getContextPath()%>
-	'
+		var link = '<%=request.getContextPath()%>'
 								+ "/resources/logo/${category.logo}";
 						$("#imagePreview").css("background-image",
 								"url(" + link + ")");
@@ -93,7 +99,11 @@ function isNumber(evt) {
 
 					});
 	$(function() {
-		$("#select-time").datetimepicker();
+		$("#select-time").datetimepicker({
+            defaultDate: new Date(),
+            
+        });
+	
 	});
 </script>
 
@@ -131,14 +141,15 @@ function isNumber(evt) {
 							<label path="time" class="col-md-2 control-label">Time</label>
 							<div class="col-md-10">
 								<div class='input-group date' id='select-time'>
-									<form:input path="time" type='text' class="form-control"
-										onkeypress="return isNumber(event)" />
+									<form:input id="time" path="time" type='text'
+										class="form-control" onkeypress="return isNumber(event)" />
 									<span class="input-group-addon"> <span
 										class="glyphicon glyphicon-calendar"></span>
 									</span>
 								</div>
 							</div>
 						</div>
+						
 						<div class="form-group">
 							<label path="place" class="col-md-2 control-label">Place</label>
 							<div class="col-md-10">
@@ -148,6 +159,7 @@ function isNumber(evt) {
 								</div>
 							</div>
 						</div>
+						
 						<div class="form-group">
 							<label path="amount" class="col-md-2 control-label">Amount</label>
 							<div class="col-md-10">
@@ -157,6 +169,7 @@ function isNumber(evt) {
 								</div>
 							</div>
 						</div>
+						
 						<div class="form-group">
 							<label path="comment" class="col-md-2 control-label">Comment</label>
 
@@ -176,7 +189,7 @@ function isNumber(evt) {
 						<div class="col-md-2"></div>
 
 						<div class="col-md-5">
-							<a href="#" class="btn  btn-raised btn-warning"">Cancel</a>
+							<a href="#" class="btn  btn-raised btn-warning">Cancel</a>
 						</div>
 
 						<div class="col-md-5">

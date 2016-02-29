@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,8 +43,6 @@ public class InvoiceController {
 	@RequestMapping(value = "/getByMonth/{time}")
 	@ResponseBody
 	public List<Invoice> getByMonth(@PathVariable String time, HttpServletRequest request) throws ParseException {
-		// SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd
-		// HH:mm:ss");
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = formatter.parse(time);
 		System.out.println(time);
@@ -56,14 +55,6 @@ public class InvoiceController {
 	@RequestMapping(value = "/getByMonth")
 	@ResponseBody
 	public List<Invoice> getByMonth(HttpServletRequest request) throws ParseException {
-		// SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd
-		// HH:mm:ss");
-//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//		Date date = formatter.parse(time);
-//		System.out.println(time);
-//		System.out.println(date.toString());
-//		System.out.println("month: " + date.getMonth());
-//		System.out.println("year: " + date.getYear());
 		
 		Date date = new Date();
 		date.setMonth(2-1);
@@ -94,20 +85,9 @@ public class InvoiceController {
 	}
 
 	@RequestMapping("/save")
-	public String create(HttpSession session) {
-		Category cate = cateService.getById(1);
-		Invoice invoice = new Invoice();
-		invoice.setCategory(cate);
-		invoice.setName("name");
-		invoice.setUser((User) session.getAttribute("user"));
-		invoice.setAmount(BigDecimal.valueOf(520.0));
-		invoice.setComment("comment");
-		invoice.setIsWarning(false);
-		invoice.setPlace("place");
-		invoice.setTime(new Date());
-
-		invoiceService.create(invoice);
-		return "home";
+	public String create(@ModelAttribute Invoice invoice,HttpSession session) {
+		invoice = new Invoice();
+		return "save-invoice";
 	}
 
 	@RequestMapping(value = "/edit/{id}")
