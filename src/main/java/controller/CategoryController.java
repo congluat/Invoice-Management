@@ -1,12 +1,17 @@
 package controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,13 +24,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import com.google.gson.Gson;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import model.Category;
+import model.Invoice;
+import model.Photo;
 import service.CategoryService;
 
 @Controller
 @RequestMapping("/Category")
+@EnableWebMvc
 public class CategoryController {
 
 	@Autowired
@@ -36,11 +44,22 @@ public class CategoryController {
 	ServletContext application;
 
 	@RequestMapping(value = "/getAllCategories", method = RequestMethod.GET)
-	@ResponseBody
-	public String getAllCategories() {
+	public @ResponseBody List<Category> getAllCategories() throws IOException {
+		List<Category> list = new ArrayList<Category>();
 
-		String json = new Gson().toJson(cateService.getAllCategories());
-		return json;
+		list = cateService.getAllCategories();
+		for (Category category : list) {
+			System.out.println("category: " + category.getName());
+			for (Invoice invoice : category.getInvoices()) {
+				System.out.println("invoice: " + invoice.getName());
+				for (Photo photo : invoice.getPhotos()) {
+					System.out.println("photo: " + photo.getPhoto());
+				}
+			}
+		}
+
+		// String json = new Gson().toJson(cateService.getAllCategories());
+		return list;
 	}
 
 	@RequestMapping(value = "/listCategories", method = RequestMethod.GET)
@@ -69,14 +88,14 @@ public class CategoryController {
 	@RequestMapping(value = "/save", method = RequestMethod.GET)
 	public String InsertCate(ModelMap model) {
 		Category category = new Category();
-		
+
 		model.addAttribute("category", category);
 		return "save-cate";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String Save(@ModelAttribute Category category, @RequestParam("file") MultipartFile file, ModelMap model) {
-		
+
 		return cateService.create(category, file, model);
 
 	}
@@ -87,6 +106,5 @@ public class CategoryController {
 
 		return cateService.checkCateAvailable(name);
 	}
-	
 
 }

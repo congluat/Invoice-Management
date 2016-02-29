@@ -45,6 +45,7 @@ public class InvoiceController {
 	@RequestMapping(value="/save", method = RequestMethod.GET)
 	public String create(HttpSession session, ModelMap model) {
 		Invoice invoice = new Invoice();
+
 		User user = (User) session.getAttribute("user");
 		invoice.setUser(user);
 		
