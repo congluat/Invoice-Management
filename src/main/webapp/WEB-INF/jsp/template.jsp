@@ -10,7 +10,7 @@
 
 <meta charset="UTF-8">
 <title>${title}</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- -------------Jquery------------- -->
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <link rel="stylesheet"
@@ -30,13 +30,15 @@
 <!-- Bootstrap -->
 <link rel="stylesheet" type="text/css"
 	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
+<link rel="stylesheet" type="text/css"
+	href="/resources/css/bootstrap-datetimepicker.min.css">
 <!-- Bootstrap Material Design -->
 
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/resources/dist/css/ripples.min.css'/>">
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/resources/dist/css/bootstrap-material-design.css'/>">
+
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
 	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
@@ -50,8 +52,14 @@
 <script type="text/javascript">
 	$.material.init()
 </script>
+<%-- <script type="text/javascript"
+	src="<c:url value='/resources/js/bootstrap-datetimepicker.js'/>"></script>
+	
+<script type="text/javascript"
+	src="<c:url value='/resources/js/bootstrap-datetimepicker.min.js'/>"></script>
 
-
+<script type="text/javascript"
+	src="<c:url value='/resources/js/moment.js'/>"></script> --%>
 
 
 <!-- ---------------------------My CSS----------- -->
@@ -91,6 +99,7 @@
 	src="<c:url value='/resources/js/angular_app.js' />"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$.material.init();
 
 		$('.modal').modal({
 			backdrop : 'static',
@@ -132,14 +141,22 @@
 		<tiles:insertAttribute name="body">
 
 		</tiles:insertAttribute>
+		<script type="text/javascript">
+			$(function() {
+				$('[data-toggle="tooltip"]').tooltip()
+			})
+		</script>
 
 
 		<div class="add-button-area">
 			<a href="#" id="add-button" class="btn btn-primary btn-circle btn-lg">
 				<i class="glyphicon glyphicon-plus"></i>
-			</a> <a href="#" class="btn btn-primary btn-circle btn-lg addCate"> <i
-				class="glyphicon glyphicon-tasks"></i>
-			</a> <a href="#" class="btn btn-primary btn-circle btn-lg addInvoice">
+			</a> <a href="#" class="btn btn-primary btn-circle btn-lg addCate"
+				data-toggle="tooltip" data-placement="left"
+				title="Add
+				Category"> <i class="glyphicon glyphicon-tasks"></i>
+			</a> <a href="#" class="btn btn-primary btn-circle btn-lg addInvoice"
+				data-toggle="tooltip" data-placement="left" title="Add Invoice">
 				<i class="glyphicon glyphicon-tags"></i>
 			</a>
 		</div>

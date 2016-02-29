@@ -100,10 +100,10 @@
 	});
 </script>
 
-<div class="col-md-12 col-xs-12" style="text-align: center;">
+<div class="col-md-12 col-xs-12 container" style="text-align: center;" ng-controller="CategoryController as cateCtrl">
 
 	<a href="Category/save">
-		<div class="panel panel-default col-md-3 col-xs-4 category-panel"
+		<div class="panel panel-default col-md-3 col-xs-10 category-panel"
 			style="background: white; border: 1px solid #009688; height: 94px; line-height: 90px">
 			<div class="panel-body row">
 				<div class="col-md-12 col-xs-12 content">
@@ -118,7 +118,7 @@
 	<c:forEach items="${categories}" var="category">
 
 		<a href="Category/edit/${category.id}">
-			<div class="panel panel-default col-md-3 col-xs-4 category-panel"
+			<div class="panel panel-default col-md-3 col-xs-10 category-panel"
 				id="${category.id}">
 				<div class="panel-body row"; position:relative;">
 					<div class="col-md-6 col-xs-6 image">

@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -14,10 +16,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name="Invoices")
@@ -30,20 +37,33 @@ public class Invoice implements Serializable{
 	@Size(max = 100)
 	private String name;
 	
-	@Min(0)
+	@DecimalMin("0.1")
+	@DecimalMax("999999999999999.999")
+	@NotEmpty
 	private BigDecimal amount;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date time;
 	
+	@Size(max = 200)
 	private String comment;
-	private Boolean isWarning;
+	private Boolean isWarning = false;
+	
+	@Size(max = 200)
 	private String place;
 	//private Integer CategoryId;
 	
-	@OneToMany(mappedBy="invoice")
-	Collection<Photo> photos;
+	@OneToMany(mappedBy="invoice", fetch=FetchType.EAGER)
+	private Collection<Photo> photos;
 	
+	public Collection<Photo> getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(Collection<Photo> photos) {
+		this.photos = photos;
+	}
+
 	@ManyToOne()
 	@JoinColumn(name="CategoryId")
 	Category category;
@@ -75,7 +95,8 @@ public class Invoice implements Serializable{
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
-
+	
+//	@JsonSerialize(using = CustomDateSerializer.class)
 	public Date getTime() {
 		return time;
 	}
@@ -124,13 +145,6 @@ public class Invoice implements Serializable{
 		this.user = user;
 	}
 
-	public Collection<Photo> getPhotos() {
-		return photos;
-	}
-
-	public void setPhotos(Collection<Photo> photos) {
-		this.photos = photos;
-	}
 	
 	
 }

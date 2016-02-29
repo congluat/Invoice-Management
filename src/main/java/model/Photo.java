@@ -1,5 +1,8 @@
 package model;
 
+import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,9 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.web.multipart.MultipartFile;
+
 @Entity
 @Table(name="Photos")
-public class Photo {
+public class Photo implements Serializable{
 	@Id
 	@GeneratedValue
 	Integer id;
@@ -18,7 +23,7 @@ public class Photo {
 	@ManyToOne()
 	@JoinColumn(name="InvoiceId")
 	Invoice invoice;
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -42,6 +47,8 @@ public class Photo {
 	public void setInvoice(Invoice invoice) {
 		this.invoice = invoice;
 	}
+
+	
 	
 	
 }

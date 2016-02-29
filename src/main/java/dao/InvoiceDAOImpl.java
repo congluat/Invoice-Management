@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -42,14 +43,16 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 	}
 
 	@Override
-	public void create(Invoice invoice) {
+	public Boolean create(Invoice invoice) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		try {
 			session.save(invoice);
 			tx.commit();
+			return true;
 		} catch (Exception e) {
 			tx.rollback();
+			return false;
 		}
 		finally {
 			session.close();	
@@ -76,6 +79,13 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		Invoice invoice = (Invoice) session.get(Invoice.class, id);
 		session.close();
 		return invoice;
+	}
+
+	@Override
+	public List<Invoice> getAllInvoicesByMonth(Date date) {
+		Session session = sessionFactory.openSession();
+		String hql = "FROM Invoice WHERE MONTH(Time) = "+date.getMonth();
+		return null;
 	}
 
 }
