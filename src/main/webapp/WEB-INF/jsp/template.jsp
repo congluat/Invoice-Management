@@ -10,7 +10,7 @@
 
 <meta charset="UTF-8">
 <title>${title}</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- -------------Jquery------------- -->
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <link rel="stylesheet"
@@ -91,6 +91,7 @@
 	src="<c:url value='/resources/js/angular_app.js' />"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$.material.init();
 
 		$('.modal').modal({
 			backdrop : 'static',
@@ -132,14 +133,22 @@
 		<tiles:insertAttribute name="body">
 
 		</tiles:insertAttribute>
+		<script type="text/javascript">
+			$(function() {
+				$('[data-toggle="tooltip"]').tooltip()
+			})
+		</script>
 
 
 		<div class="add-button-area">
 			<a href="#" id="add-button" class="btn btn-primary btn-circle btn-lg">
 				<i class="glyphicon glyphicon-plus"></i>
-			</a> <a href="#" class="btn btn-primary btn-circle btn-lg addCate"> <i
-				class="glyphicon glyphicon-tasks"></i>
-			</a> <a href="#" class="btn btn-primary btn-circle btn-lg addInvoice">
+			</a> <a href="#" class="btn btn-primary btn-circle btn-lg addCate"
+				data-toggle="tooltip" data-placement="left"
+				title="Add
+				Category"> <i class="glyphicon glyphicon-tasks"></i>
+			</a> <a href="#" class="btn btn-primary btn-circle btn-lg addInvoice"
+				data-toggle="tooltip" data-placement="left" title="Add Invoice">
 				<i class="glyphicon glyphicon-tags"></i>
 			</a>
 		</div>

@@ -18,7 +18,9 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 
 @Entity
 @Table(name="Invoices")
@@ -76,7 +78,8 @@ public class Invoice implements Serializable{
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
-
+	
+//	@JsonSerialize(using = CustomDateSerializer.class)
 	public Date getTime() {
 		return time;
 	}

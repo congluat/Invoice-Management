@@ -78,6 +78,7 @@
 
 #add-button:hover {
 	background: red !important;
+	z-index: 0;
 }
 
 .center {

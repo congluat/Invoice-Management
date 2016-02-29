@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -76,6 +77,13 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		Invoice invoice = (Invoice) session.get(Invoice.class, id);
 		session.close();
 		return invoice;
+	}
+
+	@Override
+	public List<Invoice> getAllInvoicesByMonth(Date date) {
+		Session session = sessionFactory.openSession();
+		String hql = "FROM Invoice WHERE MONTH(Time) = "+date.getMonth();
+		return null;
 	}
 
 }

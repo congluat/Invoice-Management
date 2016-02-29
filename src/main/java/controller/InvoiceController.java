@@ -50,7 +50,7 @@ public class InvoiceController {
 		invoice.setUser((User) session.getAttribute("user"));
 		invoice.setAmount(BigDecimal.valueOf(520.0));
 		invoice.setComment("comment");
-		invoice.setIsWarning(true);
+		invoice.setIsWarning(false);
 		invoice.setPlace("place");
 		invoice.setTime(new Date());
 

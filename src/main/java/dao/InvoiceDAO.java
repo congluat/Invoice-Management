@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.Date;
 import java.util.List;
 
 import model.Category;
@@ -12,6 +13,6 @@ public interface InvoiceDAO {
 	public Invoice findById(int id);
 	public void create(Invoice invoice);
 	public void update(Invoice invoice);
-	
+	public List<Invoice> getAllInvoicesByMonth(Date date);
 	
 }
