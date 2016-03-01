@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,41 +20,42 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-@Table(name="Invoices")
-public class Invoice implements Serializable{
+@Table(name = "Invoices")
+public class Invoice implements Serializable {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
+
 	@NotEmpty
 	@Size(max = 100)
 	private String name;
-	
+
 	@DecimalMin("0.1")
 	@DecimalMax("999999999999999.999")
 	@NotEmpty
 	private BigDecimal amount;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date time;
-	
+
 	@Size(max = 200)
 	private String comment;
 	private Boolean isWarning = false;
-	
+
 	@Size(max = 200)
 	private String place;
-	//private Integer CategoryId;
-	
-	@OneToMany(mappedBy="invoice", fetch=FetchType.EAGER)
+	// private Integer CategoryId;
+
+	@OneToMany(mappedBy = "invoice", fetch = FetchType.EAGER)
 	private Collection<Photo> photos;
-	
+
 	public Collection<Photo> getPhotos() {
 		return photos;
 	}
@@ -65,11 +65,11 @@ public class Invoice implements Serializable{
 	}
 
 	@ManyToOne()
-	@JoinColumn(name="CategoryId")
+	@JoinColumn(name = "CategoryId")
 	Category category;
-	
+
 	@ManyToOne()
-	@JoinColumn(name="UserId")
+	@JoinColumn(name = "UserId")
 	User user;
 
 	public Integer getId() {
@@ -95,8 +95,7 @@ public class Invoice implements Serializable{
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
-	
-//	@JsonSerialize(using = CustomDateSerializer.class)
+
 	public Date getTime() {
 		return time;
 	}
@@ -129,6 +128,7 @@ public class Invoice implements Serializable{
 		this.place = place;
 	}
 
+
 	public Category getCategory() {
 		return category;
 	}
@@ -136,6 +136,7 @@ public class Invoice implements Serializable{
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+
 
 	public User getUser() {
 		return user;
@@ -145,6 +146,4 @@ public class Invoice implements Serializable{
 		this.user = user;
 	}
 
-	
-	
 }

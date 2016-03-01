@@ -12,24 +12,28 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-@Table(name="Categories")
+@Table(name = "Categories")
 public class Category implements Serializable {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
+
 	@NotEmpty
 	@Size(max = 100)
 	private String name;
-	
+
 	@Size(max = 200)
 	private String description;
-	
+
 	@Size(max = 200)
 	private String logo;
-	
-	@OneToMany(mappedBy="category", fetch=FetchType.EAGER)
+
+	@OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
+	@JsonIgnore
 	Collection<Invoice> invoices;
 
 	public Integer getId() {
@@ -63,14 +67,14 @@ public class Category implements Serializable {
 	public void setLogo(String logo) {
 		this.logo = logo;
 	}
-
+	
+	@JsonIgnore
 	public Collection<Invoice> getInvoices() {
 		return invoices;
 	}
-
+	
 	public void setInvoices(Collection<Invoice> invoices) {
 		this.invoices = invoices;
 	}
-	
-	
+
 }
