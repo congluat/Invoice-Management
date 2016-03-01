@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import model.Category;
-import model.FileUploadForm;
+
 import model.Invoice;
 import model.Photo;
 import model.User;
@@ -69,14 +69,13 @@ public class InvoiceController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String create(@Valid Invoice invoice, BindingResult result, ModelMap model,
-			@ModelAttribute("uploadForm") FileUploadForm uploadForm) throws IllegalStateException, IOException {
+	public String create(@Valid Invoice invoice, BindingResult result, ModelMap model) throws IllegalStateException, IOException {
 		// System.out.println(invoice.getTime());
 		if (result.hasErrors()) {
 			model.addAttribute("categories", cateService.getAllCategories());
 			return "save-invoice";
 		}
-		invoice.setIsWarning(false);
+		/*invoice.setIsWarning(false);
 		if (invoiceService.create(invoice) == true) {
 			List<MultipartFile> files = uploadForm.getFiles();
 
@@ -101,7 +100,7 @@ public class InvoiceController {
 			}
 			model.addAttribute("files", fileNames);
 			return "file_upload_success";
-		}
+		}*/
 		return "home";
 	}
 

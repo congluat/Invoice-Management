@@ -1,18 +1,11 @@
 package controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;

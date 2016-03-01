@@ -84,6 +84,13 @@
 	<bean id="userService" class="service.UserServiceImpl">
 	</bean>
 
+	<bean id="photoDao" class="dao.PhotoDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="photoService" class="service.PhotoServiceImpl">
+	</bean>
+	
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="viewClass">
