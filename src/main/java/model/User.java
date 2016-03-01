@@ -13,6 +13,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="Users")
 public class User implements Serializable{
@@ -28,6 +30,7 @@ public class User implements Serializable{
 	private Integer age;
 	
 	@OneToMany(mappedBy="user")
+	
 	Collection<Invoice> invoices;
 	
 	public Integer getId() {
@@ -48,6 +51,8 @@ public class User implements Serializable{
 	public void setAge(Integer age) {
 		this.age = age;
 	}
+	
+	@JsonIgnore
 	public Collection<Invoice> getInvoices() {
 		return invoices;
 	}

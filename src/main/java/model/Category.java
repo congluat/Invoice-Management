@@ -13,6 +13,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Categories")
 public class Category implements Serializable {
@@ -31,6 +33,7 @@ public class Category implements Serializable {
 	private String logo;
 
 	@OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
+	@JsonIgnore
 	Collection<Invoice> invoices;
 
 	public Integer getId() {
@@ -64,11 +67,12 @@ public class Category implements Serializable {
 	public void setLogo(String logo) {
 		this.logo = logo;
 	}
-
+	
+	@JsonIgnore
 	public Collection<Invoice> getInvoices() {
 		return invoices;
 	}
-
+	
 	public void setInvoices(Collection<Invoice> invoices) {
 		this.invoices = invoices;
 	}

@@ -96,16 +96,20 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 	public Map<String, List<Invoice>> getInvoicesGroupbyMonth() {
 		Session session = sessionFactory.openSession();
 
-		List<Date> months = getAllDayMonth();
+		List<String> months = getAllDayMonth();
 
 		Map<String, List<Invoice>> map = new HashMap<>();
 
-		for (Date month : months) {
-			int m = month.getMonth() + 1;
-			int y = month.getYear() + 1900;
+		for (String month : months) {
+			
+			String[] date = month.split("-");
+			
+			int m = Integer.valueOf(date[0]);
+			int y = Integer.valueOf(date[1]);
 			System.out.println(m + "/" + y);
 
-			String hql = "FROM Invoice WHERE month(Time)=" + m + " AND year(Time)=" + y + " ORDER BY Time DESC";
+			String hql = "FROM Invoice WHERE month(Time)=" + m + " AND year(Time)=" + y
+					+ " ORDER BY YEAR(Time), MONTH(Time) DESC";
 			List<Invoice> list = session.createQuery(hql).list();
 			map.put(m + "/" + y, list);
 		}
@@ -116,16 +120,20 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 	}
 
 	@Override
-	public List<Date> getAllDayMonth() {
+	public List<String> getAllDayMonth() {
 		Session session = sessionFactory.openSession();
-		String hql = "from Invoice group by month(Time), year(time) ORDER BY TIME DESC";
+		String hql = "select Month(Time) as month, Year(Time) as year from Invoice group by month(Time), year(time) ORDER BY Year(Time) DESC";
 
-		List<Invoice> invoices = session.createQuery(hql).list();
-		List<Date> months = new ArrayList<>();
-		DateFormat df = new SimpleDateFormat("MM/yyyy");
+		List<String> months = new ArrayList<>();
+		//DateFormat df = new SimpleDateFormat("MM/yyyy");
+		List<Object[]> objects = session.createQuery(hql).list();
 
-		for (Invoice invoice : invoices) {
-			months.add(invoice.getTime());
+		for (Object[] result : objects) {
+			String month = result[0].toString();
+			String year = result[1].toString();
+			System.out.println(month);
+			System.out.println(year);
+			months.add(month+"-"+year);
 		}
 
 		session.close();

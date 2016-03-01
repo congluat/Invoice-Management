@@ -16,5 +16,5 @@ public interface InvoiceDAO {
 	public void update(Invoice invoice);
 	public List<Invoice> getAllInvoicesByMonth(Date date);
 	public Map<String, List<Invoice>> getInvoicesGroupbyMonth();
-	public List<Date> getAllDayMonth();
+	public List<String> getAllDayMonth();
 }

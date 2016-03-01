@@ -1,14 +1,59 @@
 (function() {
 	var app = angular.module('app', []);
 
-	app.controller('DashboardController',function($http){
+	app.controller('InvoiceController', function($scope, $http) {
+
+		var now = new Date();
+		var month = parseInt(now.getMonth()) + 1;
+		var year = parseInt(now.getYear()) + 1900;
+		console.log("month " + month);
+		console.log("year " + year);
+
+		$scope.invoices = [];
+		$scope.month = '';
 		
-		this.getTotalInvoices = function($http){
-			
+		$http.get("Invoice/getByMonth/" + month + "-" + year).success(
+				function(response) {
+				
+					// $scope.invoices.push(response);
+					$scope.invoices = response;
+					console.log("invoice ");
+					console.log($scope.invoices[0]);
+
+				});
+
+		this.getInvoiceByMonth = function() {
+
+			$http.get("Invoice/getByMonth/").success(function(response) {
+				console.log(response);
+
+				$('.timeline > li:even').addClass();
+				$('.timeline > li:odd').addClass('timeline-inverted');
+				$(".timeline-panel").mouseenter(function() {
+					$(this).find(".more-info").show("slide", {
+						direction : "up"
+					}, 200);
+					$(this).find(".more-info").css({
+						"z-index" : "50"
+					});
+				}).mouseleave(function() {
+					$(this).find(".more-info").hide("slide", {
+						direction : "up"
+					}, 200);
+				});
+			});
+
+		};
+
+	});
+
+	app.controller('DashboardController', function($http) {
+
+		this.getTotalInvoices = function($http) {
+
 		}
 	});
-	
-	
+
 	app
 			.controller(
 					'AddUserController',
@@ -53,10 +98,10 @@
 
 	app.controller('CategoryController', function($scope, $http) {
 
-		 $http.get("Category/getAllCategories").success(function(response) {
-		 
-		 console.log(response);
-		 });
+		$http.get("Category/getAllCategories").success(function(response) {
+
+			console.log(response);
+		});
 
 		$scope.cateName = "";
 		$scope.error = "";

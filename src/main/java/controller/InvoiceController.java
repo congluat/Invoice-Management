@@ -43,7 +43,7 @@ public class InvoiceController {
 	@RequestMapping(value = "/getByMonth/{time}")
 	@ResponseBody
 	public List<Invoice> getByMonth(@PathVariable String time, HttpServletRequest request) throws ParseException {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat formatter = new SimpleDateFormat("MM-yyyy");
 		Date date = formatter.parse(time);
 		System.out.println(time);
 		System.out.println(date.toString());
@@ -66,13 +66,14 @@ public class InvoiceController {
 	@RequestMapping(value = "/getGroupByMonth")
 	@ResponseBody
 	public Map<String, List<Invoice>> getGroupByMonth(HttpServletRequest request) throws ParseException {
-	
+		Map<String, List<Invoice>> map = invoiceService.getInvoicesGroupbyMonth();
+		
 		return invoiceService.getInvoicesGroupbyMonth();
 	}
 	
 	@RequestMapping(value = "/getAllDayMonth")
 	@ResponseBody
-	public List<Date> getAllDayMonth(HttpServletRequest request) throws ParseException {
+	public List<String> getAllDayMonth(HttpServletRequest request) throws ParseException {
 	
 		return invoiceService.getAllDayMonth();
 	}

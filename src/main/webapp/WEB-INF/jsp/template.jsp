@@ -124,9 +124,9 @@
 
 <body ng-app="app">
 
-	<jsp:include page="_navbar.jsp"></jsp:include>
+ 	<jsp:include page="_navbar.jsp"></jsp:include>
 
-	<jsp:include page="_modalAddUser.jsp"></jsp:include>
+<%--	<jsp:include page="_modalAddUser.jsp"></jsp:include> --%>
 
 	<div id="page-wrapper" style="padding-left: 0px; padding-right: 5px">
 

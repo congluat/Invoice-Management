@@ -62,7 +62,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return invoiceDao.getInvoicesGroupbyMonth();
 	}
 
-	public List<Date> getAllDayMonth() {
+	public List<String> getAllDayMonth() {
 		return invoiceDao.getAllDayMonth();
 	}
 }
