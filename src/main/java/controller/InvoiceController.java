@@ -89,24 +89,21 @@ public class InvoiceController {
 		model.addAttribute("invoices", invoiceService.getAllInvoices(user.getId()));
 		return "invoices";
 	}
-	@RequestMapping("/create")
-	public String save(ModelMap model){
+	@RequestMapping(value ="/save" , method = RequestMethod.GET )
+	public String create(ModelMap model){
 		Invoice invoice = new Invoice();
 		model.addAttribute("invoice",invoice);
 		return "save-invoice";
 	}
 
 	@RequestMapping(value = "/save")
-	public String create(HttpSession session,ModelMap model) {
-		Invoice invoice = new Invoice();
-		Category cate = cateService.getById(1);
-		invoice.setComment("aaaaaaaa");
-		invoice.setName("aaaaa");
-		invoice.setPlace("aaaaaaaaaa");
-		invoice.setAmount(BigDecimal.valueOf(10000.0d));
-		invoice.setTime(new Date());
+	public String create(@Valid Invoice invoice, BindingResult result, ModelMap model,HttpSession session) throws IllegalStateException, IOException {
+		if (result.hasErrors()) {
+			return "save-invoice";
+		}	
+		Category cate = cateService.getById(1);		
 		invoice.setCategory(cate);
-		invoice.setUser((User) session.getAttribute("user"));
+		invoice.setUser((User) session.getAttribute("user"));	
 		invoiceService.create(invoice);
 	    session.setAttribute("invoice", invoice);
 		return "_modalAddImages";

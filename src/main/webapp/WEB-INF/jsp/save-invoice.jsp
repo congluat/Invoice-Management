@@ -29,19 +29,21 @@
 
 
 <script type="text/javascript">
-function isNumber(evt) {
-    evt = (evt) ? evt : window.event;
-    var charCode = (evt.which) ? evt.which : evt.keyCode;
-    if (charCode >= 32 && charCode <= 254) {
-        return false;
-    }
-    return true;
-}
+	function isNumber(evt) {
+		evt = (evt) ? evt : window.event;
+		var charCode = (evt.which) ? evt.which : evt.keyCode;
+		if (charCode >= 32 && charCode <= 254) {
+			return false;
+		}
+		return true;
+	}
 </script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
-	$(function() {
-		$("#select-time").datetimepicker();
+		$(function() {
+			$("#select-time").datetimepicker();
+		});
 	});
 </script>
 
@@ -82,7 +84,7 @@ function isNumber(evt) {
 							<label path="time" class="col-md-2 control-label">Time</label>
 							<div class="col-md-10">
 								<div class='input-group date' id='select-time'>
-									<form:input path="time" type='text' class="form-control"
+									<form:input required ="required" path="time" type='text' class="form-control"
 										onkeypress="return isNumber(event)" />
 									<span class="input-group-addon"> <span
 										class="glyphicon glyphicon-calendar"></span>
@@ -121,7 +123,7 @@ function isNumber(evt) {
 							</div>
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 
 						<div class="col-md-2"></div>

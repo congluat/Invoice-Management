@@ -60,7 +60,7 @@ public class FileUploadController {
 	private void saveFileToLocalDisk(MultipartFile multipartFile) throws IOException, FileNotFoundException {
 		Date now = new Date();
 		String name = now.toString().replaceAll(" ", "").replaceAll(":", "");
-		String fileName = multipartFile.getOriginalFilename()+name;
+		String fileName = name + multipartFile.getOriginalFilename();
 		// Handle file content - multipartFile.getInputStream()
 		String path = application.getRealPath("/resources/images/") + fileName;
 		System.out.println(path);
