@@ -44,12 +44,14 @@ public class FileUploadController {
 		// Getting uploaded files from the request object
 		Map<String, MultipartFile> fileMap = request.getFileMap();
 		Invoice invoice = (Invoice) session.getAttribute("invoice");	
+		Date now = new Date();
+		String name = now.toString().replaceAll(" ", "").replaceAll(":", "");
 		// Iterate through the map
 		for (MultipartFile multipartFile : fileMap.values()) {
 			// Save the file to local disk
-			saveFileToLocalDisk(multipartFile);
+			saveFileToLocalDisk(multipartFile,name);
 
-			Photo fileInfo = getUploadedFileInfo(multipartFile);
+			Photo fileInfo = getUploadedFileInfo(multipartFile,name);
 			
 			// Save the file info to database
 			saveFileToDatabase(fileInfo, invoice);
@@ -57,9 +59,7 @@ public class FileUploadController {
 		session.removeAttribute("invoice");		
 	}
 
-	private void saveFileToLocalDisk(MultipartFile multipartFile) throws IOException, FileNotFoundException {
-		Date now = new Date();
-		String name = now.toString().replaceAll(" ", "").replaceAll(":", "");
+	private void saveFileToLocalDisk(MultipartFile multipartFile,String name) throws IOException, FileNotFoundException {	
 		String fileName = name + multipartFile.getOriginalFilename();
 		// Handle file content - multipartFile.getInputStream()
 		String path = application.getRealPath("/resources/images/") + fileName;
@@ -68,9 +68,9 @@ public class FileUploadController {
 			multipartFile.transferTo(new File(path));
 	}
 
-	private Photo getUploadedFileInfo(MultipartFile multipartFile) throws IOException {
+	private Photo getUploadedFileInfo(MultipartFile multipartFile,String name) throws IOException {
 		Photo photo = new Photo();
-		photo.setPhoto(multipartFile.getOriginalFilename());
+		photo.setPhoto(name+multipartFile.getOriginalFilename());
 		return photo;
 	}
 

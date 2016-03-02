@@ -59,7 +59,7 @@
 							<h4 class="timeline-title">{{i.name}}</h4>
 							<p>
 								<small class="text-muted"><i class="fa fa-clock-o"></i>
-									{{i.time | date:"MM/dd/yyyy 'at' h:mma"}} at {{i.place}}</small>
+									{{i.time | date:"dd/MM/yyyy 'at' h:mma"}} at {{i.place}}</small>
 							</p>
 						</div>
 
@@ -68,12 +68,16 @@
 						</div>
 					</div>
 					<div class="col-md-2">
-						<a href="Invoice/edit/{{i.id}" class="btn btn-success">Edit</a>
+						<a href="Invoice/edit/{{i.id}}" class="btn btn-success">Edit</a>
 					</div>
 					<div class="col-md-2">
-						<a href="Invoice/edit/{{i.id}" class="btn btn-danger">Delete</a>
+						<a href="Invoice/edit/{{i.id}}" class="btn btn-danger">Delete</a>
 					</div>
-					<div class="col-md-12 more-info">{{i.comment}}</div></li>
+					<div class="col-md-12 more-info">{{i.comment}}
+					<div ng-repeat="img in i.photos">
+						<img class="col-md-4" alt="not found" ng-src="<c:url value='/resources/images/'/>{{img.photo}}">
+					</div>
+					</div></li>
 
 		</ul>
 

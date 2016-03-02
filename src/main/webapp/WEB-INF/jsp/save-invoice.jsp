@@ -42,7 +42,9 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$(function() {
-			$("#select-time").datetimepicker();
+			$("#select-time").datetimepicker({
+				defaultDate : new Date()
+			});
 		});
 	});
 </script>
@@ -84,8 +86,8 @@
 							<label path="time" class="col-md-2 control-label">Time</label>
 							<div class="col-md-10">
 								<div class='input-group date' id='select-time'>
-									<form:input required ="required" path="time" type='text' class="form-control"
-										onkeypress="return isNumber(event)" />
+									<form:input required="required" path="time" type='text'
+										class="form-control" onkeypress="return isNumber(event)" />
 									<span class="input-group-addon"> <span
 										class="glyphicon glyphicon-calendar"></span>
 									</span>
