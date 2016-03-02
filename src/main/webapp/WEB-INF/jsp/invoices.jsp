@@ -13,7 +13,7 @@
 }
 </style>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	$(document).ready(function() {
 		$(function() {
 			$(".timeline-panel").mouseenter(function() {
@@ -34,7 +34,7 @@
 		$('.timeline > li:even').addClass();
 		$('.timeline > li:odd').addClass('timeline-inverted');
 	});
-</script>
+</script> -->
 
 <div style="margin-top: 10px; margin-left: 5px; margin-right: 5px">
 	<div ng-controller="InvoiceController">
