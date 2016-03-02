@@ -14,21 +14,22 @@
 </style>
 
 <script type="text/javascript">
-	$(function() {
-		$(".timeline-panel").mouseenter(function() {
-			$(this).find(".more-info").show("slide", {
-				direction : "up"
-			}, 200);
-			$(this).find(".more-info").css({
-				"z-index" : "50"
+	$(document).ready(function() {
+		$(function() {
+			$(".timeline-panel").mouseenter(function() {
+				$(this).find(".more-info").show("slide", {
+					direction : "up"
+				}, 200);
+				$(this).find(".more-info").css({
+					"z-index" : "50"
+				});
+			}).mouseleave(function() {
+				$(this).find(".more-info").hide("slide", {
+					direction : "up"
+				}, 200);
 			});
-		}).mouseleave(function() {
-			$(this).find(".more-info").hide("slide", {
-				direction : "up"
-			}, 200);
 		});
 	});
-
 	$(document).ready(function() {
 		$('.timeline > li:even').addClass();
 		$('.timeline > li:odd').addClass('timeline-inverted');

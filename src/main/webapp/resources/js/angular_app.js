@@ -10,17 +10,37 @@
 		console.log("year " + year);
 
 		$scope.invoices = [];
-		$scope.month = '';
-		
+		$scope.month = month + "/" + year;
+
 		$http.get("Invoice/getByMonth/" + month + "-" + year).success(
 				function(response) {
-				
+
 					// $scope.invoices.push(response);
 					$scope.invoices = response;
 					console.log("invoice ");
 					console.log($scope.invoices[0]);
 
 				});
+
+		$scope.load = function() {
+			$(".timeline-panel").mouseenter(function() {
+				$(this).find(".more-info").show("slide", {
+					direction : "up"
+				}, 200);
+				$(this).find(".more-info").css({
+					"z-index" : "50"
+				});
+			}).mouseleave(function() {
+				$(this).find(".more-info").hide("slide", {
+					direction : "up"
+				}, 200);
+			});
+			$('.timeline > li:even').addClass();
+			$('.timeline > li:odd').addClass('timeline-inverted');
+		};
+
+		// don't forget to call the load function
+		$scope.load();
 
 		this.getInvoiceByMonth = function() {
 
