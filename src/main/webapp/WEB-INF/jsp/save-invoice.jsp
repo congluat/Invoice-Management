@@ -89,20 +89,20 @@
 								<script type="text/javascript">
 									$(document).ready(function() {
 
-									 	var strTime = '${invoice.time}' + '';
-										var time = moment().format(strTime);
-										console.log(new Date(time));
+									 	var strTime = '${invoice.time}';
+										var time = moment(strTime).format('DD/MM/YYYY hh:mm A');
+										console.log("strTime: "+strTime);
+										console.log("time: "+time);
 
 										$(function() {
 											$("#select-time").datetimepicker({
-												defaultDate : '20/20'
-
+										
+												defaultDate :time
 											});
 											
 										});
-										 $("#timeInput").val(time);
-										 $("#timeInput").val(time);
-										 $("#timeInput").val('aaaaaaaaaaaa');
+										$("#timeInput").val(time);
+										$("#timeInput").attr("value",time);
 									});
 									/* $("#select-time").ready(function() {
 																										
@@ -122,7 +122,7 @@
 
 								<div class='input-group date' id='select-time'>
 									<form:input id="timeInput" required="required" path="time"
-										type='text' class="form-control" readonly="true"
+										type='text' class="form-control"
 										onkeypress="return isNumber(event)" />
 									<span class="input-group-addon"> <span
 										class="glyphicon glyphicon-calendar"></span>
