@@ -13,7 +13,7 @@
 }
 </style>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	$(document).ready(function() {
 		$(function() {
 			$(".timeline-panel").mouseenter(function() {
@@ -34,7 +34,7 @@
 		$('.timeline > li:even').addClass();
 		$('.timeline > li:odd').addClass('timeline-inverted');
 	});
-</script>
+</script> -->
 
 <div style="margin-top: 10px; margin-left: 5px; margin-right: 5px">
 	<div ng-controller="InvoiceController">
@@ -59,7 +59,7 @@
 							<h4 class="timeline-title">{{i.name}}</h4>
 							<p>
 								<small class="text-muted"><i class="fa fa-clock-o"></i>
-									{{i.time | date:"MM/dd/yyyy 'at' h:mma"}} at {{i.place}}</small>
+									{{i.time | date:"dd/MM/yyyy 'at' h:mma"}} at {{i.place}}</small>
 							</p>
 						</div>
 
@@ -68,12 +68,16 @@
 						</div>
 					</div>
 					<div class="col-md-2">
-						<a href="Invoice/edit/{{i.id}" class="btn btn-success">Edit</a>
+						<a href="Invoice/edit/{{i.id}}" class="btn btn-success">Edit</a>
 					</div>
 					<div class="col-md-2">
-						<a href="Invoice/edit/{{i.id}" class="btn btn-danger">Delete</a>
+						<a href="Invoice/edit/{{i.id}}" class="btn btn-danger">Delete</a>
 					</div>
-					<div class="col-md-12 more-info">{{i.comment}}</div></li>
+					<div class="col-md-12 more-info">{{i.comment}}
+					<div ng-repeat="img in i.photos">
+						<img class="col-md-4" alt="not found" ng-src="<c:url value='/resources/images/'/>{{img.photo}}">
+					</div>
+					</div></li>
 
 		</ul>
 
