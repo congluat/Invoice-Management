@@ -20,9 +20,9 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-6">
 	 <div class="input-group input-group-lg">
-	  	<span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-search"></i></span>
+	  	<span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-search" style="color:#009688; vertical-align: middle;"></i></span>
 	  	<input id="search" text" class="form-control" name="searchFor" 
-			      			ng-model="searchString" placeholder="Search for invoices...">
+			      			ng-model="searchString" placeholder="Search for invoices..." aria-describedby="sizing-addon1">
 	</div>
  </div><!-- /.col-lg-6 -->
 
