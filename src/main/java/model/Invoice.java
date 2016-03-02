@@ -37,9 +37,9 @@ public class Invoice implements Serializable {
 	@Size(max = 100)
 	private String name;
 
-	@DecimalMin("0.1")
+	/*@DecimalMin("0.1")
 	@DecimalMax("999999999999999.999")
-	@NotEmpty
+	@NotEmpty*/
 	private BigDecimal amount;
 
 	@Temporal(TemporalType.TIMESTAMP)

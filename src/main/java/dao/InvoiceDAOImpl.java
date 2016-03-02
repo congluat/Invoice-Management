@@ -55,6 +55,7 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 			return true;
 		} catch (Exception e) {
 			tx.rollback();
+			e.printStackTrace();
 			return false;
 		}
 	}
