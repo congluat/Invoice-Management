@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -95,9 +97,7 @@ public class InvoiceController {
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String create(@Valid Invoice invoice, BindingResult result, ModelMap model) throws IllegalStateException, IOException {
-		// System.out.println(invoice.getTime());
 		if (result.hasErrors()) {
-			model.addAttribute("categories", cateService.getAllCategories());
 			return "save-invoice";
 		}
 		/*invoice.setIsWarning(false);
@@ -138,5 +138,11 @@ public class InvoiceController {
 		invoice.setUser((User) session.getAttribute("user"));
 		invoiceService.update(invoice);
 		return "home";
+	}
+	
+	@ModelAttribute("categories")
+	public Collection<Category> getcategories() {
+		List<Category> categories = cateService.getAllCategories();
+		return categories;
 	}
 }
