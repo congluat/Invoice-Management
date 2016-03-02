@@ -15,16 +15,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Invoices")
@@ -37,9 +34,8 @@ public class Invoice implements Serializable {
 	@Size(max = 100)
 	private String name;
 
-	@DecimalMin("0.1")
-	@DecimalMax("999999999999999.999")
-	@NotEmpty
+	@Digits(integer = 15, fraction = 3)
+	@NotNull
 	private BigDecimal amount;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -54,6 +50,7 @@ public class Invoice implements Serializable {
 	// private Integer CategoryId;
 
 	@OneToMany(mappedBy = "invoice", fetch = FetchType.EAGER)
+	@Cascade(CascadeType.DELETE)
 	private Collection<Photo> photos;
 
 	public Collection<Photo> getPhotos() {
@@ -128,7 +125,6 @@ public class Invoice implements Serializable {
 		this.place = place;
 	}
 
-
 	public Category getCategory() {
 		return category;
 	}
@@ -136,7 +132,6 @@ public class Invoice implements Serializable {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-
 
 	public User getUser() {
 		return user;

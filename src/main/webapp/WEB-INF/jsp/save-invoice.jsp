@@ -29,63 +29,15 @@
 
 
 <script type="text/javascript">
-function isNumber(evt) {
-    evt = (evt) ? evt : window.event;
-    var charCode = (evt.which) ? evt.which : evt.keyCode;
-    if (charCode >= 32 && charCode <= 254) {
-        return false;
-    }
-    return true;
-}
+	function isNumber(evt) {
+		evt = (evt) ? evt : window.event;
+		var charCode = (evt.which) ? evt.which : evt.keyCode;
+		if (charCode >= 32 && charCode <= 254) {
+			return false;
+		}
+		return true;
+	}
 </script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		
-		var link = '<%=request.getContextPath()%>'
-								+ "/resources/logo/${category.logo}";
-						$("#imagePreview").css("background-image",
-								"url(" + link + ")");
-
-						$(function() {
-							$("#inputFile")
-									.on(
-											"change",
-											function() {
-												var files = !!this.files ? this.files
-														: [];
-												if (!files.length
-														|| !window.FileReader)
-													return; // no file selected, or no FileReader support
-
-												if (/^image/
-														.test(files[0].type)) { // only image file
-													var reader = new FileReader(); // instance of the FileReader
-													reader
-															.readAsDataURL(files[0]); // read the local file
-
-													reader.onloadend = function() { // set image data as background of div
-														$("#imagePreview")
-																.css(
-																		"background-image",
-																		"url("
-																				+ this.result
-																				+ ")");
-													}
-												}
-											});
-
-						});
-
-					});
-	$(function() {
-		$("#select-time").datetimepicker();
-	});
-</script>
-
-<link rel="stylesheet" type="text/css"
-	href='<c:url value="/resources/libs/bootstrap-dialog/css/bootstrap-dialog.min.css"/>'>
-<link rel="stylesheet" type="text/css"
-	href='<c:url value="/resources/css/style.css"/>'>
 
 
 
@@ -118,16 +70,66 @@ function isNumber(evt) {
 								<form:errors path="name" class="help-inline" />
 							</div>
 						</div>
+
 						<div class="form-group">
+
+							<c:if test="${!edit}">
+								<script type="text/javascript">
+									$(document).ready(function() {
+										$(function() {
+											$("#select-time").datetimepicker({
+												defaultDate : new Date()
+											});
+										});
+									});
+								</script>
+							</c:if>
+
+							<c:if test="${edit}">
+								<script type="text/javascript">
+									$(document).ready(function() {
+
+									 	var strTime = '${invoice.time}';
+										var time = moment(strTime).format('MM/DD/YYYY hh:mm A');
+										console.log("strTime: "+strTime);
+										console.log("time: "+time);
+
+										$(function() {
+											$("#select-time").datetimepicker({
+										
+												defaultDate :time
+											});
+											
+										});
+										$("#timeInput").val(time);
+										$("#timeInput").attr("value",time);
+									});
+									/* $("#select-time").ready(function() {
+																										
+											var time = '${invoice.time}';
+											console.log(new Date(time+''));
+											$(function() {
+												$("#select-time").datetimepicker({
+													defaultDate : moment().format(time)
+												});
+											});
+																				
+									}); */
+								</script>
+							</c:if>
 							<label path="time" class="col-md-2 control-label">Time</label>
 							<div class="col-md-10">
+
 								<div class='input-group date' id='select-time'>
-									<form:input path="time" type='text' class="form-control"
+									<form:input id="timeInput" required="required" path="time"
+										type='text' class="form-control"
 										onkeypress="return isNumber(event)" />
 									<span class="input-group-addon"> <span
 										class="glyphicon glyphicon-calendar"></span>
 									</span>
 								</div>
+
+
 							</div>
 						</div>
 						<div class="form-group">
@@ -160,8 +162,18 @@ function isNumber(evt) {
 								</div>
 							</div>
 						</div>
+						<div class="form-group">
+							<c:forEach items="${invoice.photos}" var="p">
+								<img height="80px" width="80px" alt="not found"
+									src="<c:url value='/resources/images/'/>${p.photo}"
+									onError="this.onerror=null;this.src='<c:url value='/resources/logo/abc.png'/>';">
+							</c:forEach>
+							<c:if test="${edit}">
+								<a href="<c:url value="Upload/show/${invoice.id}" />">Upload</a>
+							</c:if>
+						</div>
 					</div>
-					
+
 					<div class="form-group">
 
 						<div class="col-md-2"></div>
@@ -176,42 +188,10 @@ function isNumber(evt) {
 					</div>
 				</fieldset>
 			</form:form>
-		<div class="panel panel-default">
-						<div class="panel-heading text-center"></div>
-						<div class="panel-body">
-							<div>
-								<form id="dropzone-form" action="Upload/upload" class="dropzone"
-									enctype="multipart/form-data">
-									<div class="dz-default dz-message file-dropzone text-center ">
-
-										<span class="glyphicon glyphicon-paperclip"></span> <span>
-											Drag and drop images here</span><br> <span>OR</span><br> <span>Browse</span>
-									</div>
-									<!-- this is were the previews should be shown. -->
-									<div class="dropzone-previews"></div>
-								</form>
-								<hr>
-								<button id="upload-button" class="btn btn-primary">
-									<span class="glyphicon glyphicon-upload"></span> Upload
-								</button>
-								<a class="btn btn-warning pull-right" href="dashboard">Cancel
-								</a>
-							</div>
-						</div>
-					</div>
 		</div>
 		<div class="col-md-2"></div>
 
 	</div>
 </div>
-<script type="text/javascript"
-	src='<c:url value="/resources/libs/jquery/jquery-2.1.1.js"/>'></script>
-<script type="text/javascript"
-	src='<c:url value="/resources/libs/bootstrap-3.1.1/js/bootstrap.js"/>'></script>
-<script type="text/javascript"
-	src='<c:url value="/resources/libs/bootstrap-dialog/js/bootstrap-dialog.min.js"/>'></script>
-<script type="text/javascript"
-	src='<c:url value="/resources/libs/dropzone.js"/>'></script>
-<script type="text/javascript"
-	src='<c:url value="/resources/js/app.js"/>'></script>
+
 <%-- http://spring.io/blog/2010/01/25/ajax-simplifications-in-spring-3-0/--%>

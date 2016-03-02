@@ -1,7 +1,5 @@
 package dao;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -55,6 +53,7 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 			return true;
 		} catch (Exception e) {
 			tx.rollback();
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -74,6 +73,21 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 	}
 
 	@Override
+	public void delete(Invoice invoice) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		try {
+			session.delete(invoice);
+			tx.commit();
+		} catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+	}
+	
+	@Override
 	public Invoice findById(int id) {
 		Session session = sessionFactory.openSession();
 		Invoice invoice = (Invoice) session.get(Invoice.class, id);
@@ -86,7 +100,8 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		Session session = sessionFactory.openSession();
 		int month = date.getMonth() + 1;
 		int year = date.getYear() + 1900;
-		String hql = "FROM Invoice WHERE MONTH(Time) = " + month + " AND YEAR(Time) = " + year;
+		String hql = "FROM Invoice WHERE MONTH(Time) = " + month + " AND YEAR(Time) = " + year
+				+ " Order by DAY(Time) DESC";
 		List<Invoice> list = session.createQuery(hql).list();
 		session.close();
 		return list;
@@ -101,9 +116,9 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		Map<String, List<Invoice>> map = new HashMap<>();
 
 		for (String month : months) {
-			
+
 			String[] date = month.split("-");
-			
+
 			int m = Integer.valueOf(date[0]);
 			int y = Integer.valueOf(date[1]);
 			System.out.println(m + "/" + y);
@@ -125,7 +140,7 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		String hql = "select Month(Time) as month, Year(Time) as year from Invoice group by month(Time), year(time) ORDER BY Year(Time) DESC";
 
 		List<String> months = new ArrayList<>();
-		//DateFormat df = new SimpleDateFormat("MM/yyyy");
+		// DateFormat df = new SimpleDateFormat("MM/yyyy");
 		List<Object[]> objects = session.createQuery(hql).list();
 
 		for (Object[] result : objects) {
@@ -133,7 +148,7 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 			String year = result[1].toString();
 			System.out.println(month);
 			System.out.println(year);
-			months.add(month+"-"+year);
+			months.add(month + "-" + year);
 		}
 
 		session.close();
