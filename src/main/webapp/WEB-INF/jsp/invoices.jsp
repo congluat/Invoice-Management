@@ -3,6 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
+
+
+  
+  
 <style>
 .timeline>li>.timeline-panel {
 	padding: 5px 5px;
@@ -12,6 +16,15 @@
 	padding: 2px;
 }
 </style>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-6">
+	 <div class="input-group input-group-lg">
+	  	<span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-search"></i></span>
+	  	<input id="search" text" class="form-control" name="searchFor" 
+			      			ng-model="searchString" placeholder="Search for invoices...">
+	</div>
+ </div><!-- /.col-lg-6 -->
 
 <!-- <script type="text/javascript">
 	$(document).ready(function() {
@@ -36,15 +49,19 @@
 	});
 </script> -->
 
+
+
+
 <div style="margin-top: 10px; margin-left: 5px; margin-right: 5px">
 	<div ng-controller="InvoiceController">
 
 
 		<h1>{{month}}</h1>
+		
 
 		<ul class="timeline">
 
-			<li ng-repeat="i in invoices"><img class="timeline-badge"
+			<li ng-repeat="i in invoices | searchFor:searchString"><img class="timeline-badge"
 				height="50px" width="50px" alt="not found"
 				ng-src="<c:url value='/resources/logo/'/>{{i.category.logo}}"
 				onError="this.onerror=null;this.src='<c:url value='/resources/logo/abc.png'/>';">
