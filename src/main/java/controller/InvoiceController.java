@@ -91,41 +91,41 @@ public class InvoiceController {
 		return "save-invoice";
 	}
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String create(@Valid Invoice invoice, BindingResult result, ModelMap model) throws IllegalStateException, IOException {
-		// System.out.println(invoice.getTime());
-		if (result.hasErrors()) {
-			model.addAttribute("categories", cateService.getAllCategories());
-			return "save-invoice";
-		}
-		/*invoice.setIsWarning(false);
-		if (invoiceService.create(invoice) == true) {
-			List<MultipartFile> files = uploadForm.getFiles();
-
-			List<String> fileNames = new ArrayList<String>();
-
-			if (null != files && files.size() > 0) {
-				for (MultipartFile multipartFile : files) {
-
-					String fileName = multipartFile.getOriginalFilename();
-					Photo photo = new Photo();
-					photo.setPhoto(fileName);
-					invoice.getPhotos().add(photo);
-					fileNames.add(fileName);
-					// Handle file content - multipartFile.getInputStream()
-
-					String path = application.getRealPath("/resources/images/") + fileName;
-
-					if (!fileName.equals("")) {
-						multipartFile.transferTo(new File(path));
-					}
-				}
-			}
-			model.addAttribute("files", fileNames);
-			return "file_upload_success";
-		}*/
-		return "home";
-	}
+//	@RequestMapping(value = "/save", method = RequestMethod.POST)
+//	public String create(@Valid Invoice invoice, BindingResult result, ModelMap model) throws IllegalStateException, IOException {
+//		// System.out.println(invoice.getTime());
+//		if (result.hasErrors()) {
+//			model.addAttribute("categories", cateService.getAllCategories());
+//			return "save-invoice";
+//		}
+//		/*invoice.setIsWarning(false);
+//		if (invoiceService.create(invoice) == true) {
+//			List<MultipartFile> files = uploadForm.getFiles();
+//
+//			List<String> fileNames = new ArrayList<String>();
+//
+//			if (null != files && files.size() > 0) {
+//				for (MultipartFile multipartFile : files) {
+//
+//					String fileName = multipartFile.getOriginalFilename();
+//					Photo photo = new Photo();
+//					photo.setPhoto(fileName);
+//					invoice.getPhotos().add(photo);
+//					fileNames.add(fileName);
+//					// Handle file content - multipartFile.getInputStream()
+//
+//					String path = application.getRealPath("/resources/images/") + fileName;
+//
+//					if (!fileName.equals("")) {
+//						multipartFile.transferTo(new File(path));
+//					}
+//				}
+//			}
+//			model.addAttribute("files", fileNames);
+//			return "file_upload_success";
+//		}*/
+//		return "home";
+//	}
 
 	@RequestMapping(value = "/edit/{id}")
 	public String update(HttpSession session, @PathVariable Integer id) {

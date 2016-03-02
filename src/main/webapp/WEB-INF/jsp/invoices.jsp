@@ -58,7 +58,7 @@
 							<h4 class="timeline-title">{{i.name}}</h4>
 							<p>
 								<small class="text-muted"><i class="fa fa-clock-o"></i>
-									{{i.time | date:"MM/dd/yyyy 'at' h:mma"}} at {{i.place}}</small>
+									{{i.time | date:"dd/MM/yyyy 'at' h:mma"}} at {{i.place}}</small>
 							</p>
 						</div>
 
