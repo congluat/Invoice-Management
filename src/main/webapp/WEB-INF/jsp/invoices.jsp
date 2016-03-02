@@ -40,10 +40,12 @@
 
 
 		<h1>{{month}}</h1>
+		
+		<input type="text" name="searchFor" ng-model="searchString" placeholder="Enter your invoice">
 
 		<ul class="timeline">
 
-			<li ng-repeat="i in invoices"><img class="timeline-badge"
+			<li ng-repeat="i in invoices | searchFor:searchString"><img class="timeline-badge"
 				height="50px" width="50px" alt="not found"
 				ng-src="<c:url value='/resources/logo/'/>{{i.category.logo}}"
 				onError="this.onerror=null;this.src='<c:url value='/resources/logo/abc.png'/>';">
