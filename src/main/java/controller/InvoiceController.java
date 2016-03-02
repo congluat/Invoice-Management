@@ -1,7 +1,6 @@
-package controller;
+ package controller;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -13,11 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.apache.http.HttpRequest;
-import org.hibernate.engine.spi.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -94,10 +90,11 @@ public class InvoiceController {
 	public String create(ModelMap model) {
 		Invoice invoice = new Invoice();
 		model.addAttribute("invoice", invoice);
+		model.addAttribute("edit",false);
 		return "save-invoice";
 	}
 
-	@RequestMapping(value = "/save")
+	@RequestMapping(value = "/save" , method=RequestMethod.POST )
 	public String create(@Valid Invoice invoice, BindingResult result, ModelMap model, HttpSession session)
 			throws IllegalStateException, IOException {
 		if (result.hasErrors()) {
@@ -108,29 +105,24 @@ public class InvoiceController {
 		invoice.setUser((User) session.getAttribute("user"));
 		invoiceService.create(invoice);
 		session.setAttribute("invoice", invoice);
+	    model.addAttribute("edit",false);
 		return "_modalAddImages";
 	}
-
-	/*
-	 * @RequestMapping(value = "/save", method = RequestMethod.POST) public
-	 * String create(@Valid Invoice invoice, BindingResult result, ModelMap
-	 * model,HttpSession session, @PathVariable Integer id) throws
-	 * IllegalStateException, IOException { if (result.hasErrors()) { return
-	 * "save-invoice"; } Category cate = cateService.getById(2); invoice =
-	 * invoiceService.getById(id);
-	 * invoice.setAmount(BigDecimal.valueOf(1000.0)); invoice.setCategory(cate);
-	 * invoice.setUser((User) session.getAttribute("user"));
-	 * invoiceService.create(invoice); model.addAttribute("invoice",invoice);
-	 * return "_modelAddUser"; }
-	 */
-
-	@RequestMapping(value = "/edit/{id}")
-	public String update(HttpSession session, @PathVariable Integer id) {
-		Category cate = cateService.getById(2);
+	
+	@RequestMapping(value = "/edit/{id}" , method = RequestMethod.GET)
+	public String update(@PathVariable Integer id, ModelMap model) {
 		Invoice invoice = invoiceService.getById(id);
-		invoice.setAmount(BigDecimal.valueOf(1000));
-		invoice.setCategory(cate);
-		invoice.setUser((User) session.getAttribute("user"));
+		model.addAttribute("invoice",invoice);
+		model.addAttribute("edit",true);
+		return "save-invoice";
+	}
+
+	@RequestMapping(value = "/edit/{id}",method=RequestMethod.POST)
+	public String update(@ModelAttribute Invoice invoice , ModelMap model , BindingResult result) {
+		if (result.hasErrors()) {
+			return "save-invoice";
+		}					
+		model.addAttribute("edit",true);
 		invoiceService.update(invoice);
 		return "home";
 	}
