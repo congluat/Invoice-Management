@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.http.HttpRequest;
 import org.hibernate.engine.spi.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -87,48 +89,40 @@ public class InvoiceController {
 		model.addAttribute("invoices", invoiceService.getAllInvoices(user.getId()));
 		return "invoices";
 	}
-
-	@RequestMapping("/save")
-	public String create(@ModelAttribute Invoice invoice,HttpSession session) {
-		invoice = new Invoice();
+	@RequestMapping(value ="/save" , method = RequestMethod.GET )
+	public String create(ModelMap model){
+		Invoice invoice = new Invoice();
+		model.addAttribute("invoice",invoice);
 		return "save-invoice";
 	}
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String create(@Valid Invoice invoice, BindingResult result, ModelMap model) throws IllegalStateException, IOException {
-		// System.out.println(invoice.getTime());
+	@RequestMapping(value = "/save")
+	public String create(@Valid Invoice invoice, BindingResult result, ModelMap model,HttpSession session) throws IllegalStateException, IOException {
 		if (result.hasErrors()) {
-			model.addAttribute("categories", cateService.getAllCategories());
+			return "save-invoice";
+		}	
+		Category cate = cateService.getById(1);		
+		invoice.setCategory(cate);
+		invoice.setUser((User) session.getAttribute("user"));	
+		invoiceService.create(invoice);
+	    session.setAttribute("invoice", invoice);
+		return "_modalAddImages";
+	}
+
+	/*@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String create(@Valid Invoice invoice, BindingResult result, ModelMap model,HttpSession session, @PathVariable Integer id) throws IllegalStateException, IOException {
+		if (result.hasErrors()) {
 			return "save-invoice";
 		}
-		/*invoice.setIsWarning(false);
-		if (invoiceService.create(invoice) == true) {
-			List<MultipartFile> files = uploadForm.getFiles();
-
-			List<String> fileNames = new ArrayList<String>();
-
-			if (null != files && files.size() > 0) {
-				for (MultipartFile multipartFile : files) {
-
-					String fileName = multipartFile.getOriginalFilename();
-					Photo photo = new Photo();
-					photo.setPhoto(fileName);
-					invoice.getPhotos().add(photo);
-					fileNames.add(fileName);
-					// Handle file content - multipartFile.getInputStream()
-
-					String path = application.getRealPath("/resources/images/") + fileName;
-
-					if (!fileName.equals("")) {
-						multipartFile.transferTo(new File(path));
-					}
-				}
-			}
-			model.addAttribute("files", fileNames);
-			return "file_upload_success";
-		}*/
-		return "home";
-	}
+		Category cate = cateService.getById(2);
+		invoice = invoiceService.getById(id);
+		invoice.setAmount(BigDecimal.valueOf(1000.0));
+		invoice.setCategory(cate);
+		invoice.setUser((User) session.getAttribute("user"));
+		invoiceService.create(invoice);
+		model.addAttribute("invoice",invoice);
+		return "_modelAddUser";
+	}*/
 
 	@RequestMapping(value = "/edit/{id}")
 	public String update(HttpSession session, @PathVariable Integer id) {
@@ -139,5 +133,11 @@ public class InvoiceController {
 		invoice.setUser((User) session.getAttribute("user"));
 		invoiceService.update(invoice);
 		return "home";
+	}
+	
+	@ModelAttribute("categories")
+	public Collection<Category> getcategories() {
+		List<Category> categories = cateService.getAllCategories();
+		return categories;
 	}
 }

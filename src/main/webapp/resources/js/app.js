@@ -51,7 +51,7 @@ $(document).ready(function() {
 			// displaying the uploaded files information in a Bootstrap dialog
 			this.on("successmultiple", function(files, serverResponse) {
 				//showInformationDialog(files, serverResponse);
-				window.setTimeout("window.location.href='dashboard'",980);
+				window.setTimeout("window.location.href='Invoice/get-all-invoices'",980);
 			});
 			/*this.on("complete", function (file) {
 				window.location.href='dashboard';

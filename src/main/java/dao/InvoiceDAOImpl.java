@@ -55,6 +55,7 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 			return true;
 		} catch (Exception e) {
 			tx.rollback();
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -86,7 +87,8 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		Session session = sessionFactory.openSession();
 		int month = date.getMonth() + 1;
 		int year = date.getYear() + 1900;
-		String hql = "FROM Invoice WHERE MONTH(Time) = " + month + " AND YEAR(Time) = " + year;
+		String hql = "FROM Invoice WHERE MONTH(Time) = " + month + " AND YEAR(Time) = " + year
+				+ " Order by DAY(Time) DESC";
 		List<Invoice> list = session.createQuery(hql).list();
 		session.close();
 		return list;
@@ -101,9 +103,9 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		Map<String, List<Invoice>> map = new HashMap<>();
 
 		for (String month : months) {
-			
+
 			String[] date = month.split("-");
-			
+
 			int m = Integer.valueOf(date[0]);
 			int y = Integer.valueOf(date[1]);
 			System.out.println(m + "/" + y);
@@ -125,7 +127,7 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		String hql = "select Month(Time) as month, Year(Time) as year from Invoice group by month(Time), year(time) ORDER BY Year(Time) DESC";
 
 		List<String> months = new ArrayList<>();
-		//DateFormat df = new SimpleDateFormat("MM/yyyy");
+		// DateFormat df = new SimpleDateFormat("MM/yyyy");
 		List<Object[]> objects = session.createQuery(hql).list();
 
 		for (Object[] result : objects) {
@@ -133,7 +135,7 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 			String year = result[1].toString();
 			System.out.println(month);
 			System.out.println(year);
-			months.add(month+"-"+year);
+			months.add(month + "-" + year);
 		}
 
 		session.close();

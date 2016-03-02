@@ -17,7 +17,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -37,9 +39,8 @@ public class Invoice implements Serializable {
 	@Size(max = 100)
 	private String name;
 
-	@DecimalMin("0.1")
-	@DecimalMax("999999999999999.999")
-	@NotEmpty
+	@Digits(integer =15,fraction =3)
+	@NotNull
 	private BigDecimal amount;
 
 	@Temporal(TemporalType.TIMESTAMP)
