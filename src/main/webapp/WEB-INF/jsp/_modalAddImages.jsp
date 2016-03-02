@@ -1,5 +1,4 @@
 <%@ page pageEncoding="utf-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
@@ -17,14 +16,14 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title" id="myModalLabel">New User</h4>
+					<h4 class="modal-title" id="myModalLabel">Upload Images</h4>
 				</div>
 				
 		<div class="panel panel-default">
 			<div class="panel-heading text-center"></div>
 			<div class="panel-body">
 				<div>				
-					<form:form modelAttribute="invoice" id="dropzone-form" action="Upload/upload" class="dropzone" enctype="multipart/form-data">
+					<form id="dropzone-form" action="Upload/upload" class="dropzone" enctype="multipart/form-data">
 						<div
 							class="dz-default dz-message file-dropzone text-center ">
 
@@ -34,12 +33,12 @@
 						</div>
 						<!-- this is were the previews should be shown. -->
 						<div class="dropzone-previews"></div>
-					</form:form>
+					</form>
 					<hr>
 					<button id="upload-button" class="btn btn-primary">
 						<span class="glyphicon glyphicon-upload"></span> Upload
 					</button>
-					<a class="btn btn-warning pull-right" href="Invoice/get-all-invoices">Cancel
+					<a class="btn btn-warning pull-right" href="Invoice/get-all-invoices">Done
 					</a>
 				</div>
 			</div>

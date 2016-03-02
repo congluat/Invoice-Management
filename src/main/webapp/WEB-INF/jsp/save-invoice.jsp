@@ -39,18 +39,6 @@
 	}
 </script>
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		$(function() {
-			$("#select-time").datetimepicker({
-				defaultDate : new Date()
-			});
-		});
-	});
-</script>
-
-
-
 
 
 <div class="panel panel-primary">
@@ -82,16 +70,66 @@
 								<form:errors path="name" class="help-inline" />
 							</div>
 						</div>
+
 						<div class="form-group">
+
+							<c:if test="${!edit}">
+								<script type="text/javascript">
+									$(document).ready(function() {
+										$(function() {
+											$("#select-time").datetimepicker({
+												defaultDate : new Date()
+											});
+										});
+									});
+								</script>
+							</c:if>
+
+							<c:if test="${edit}">
+								<script type="text/javascript">
+									$(document).ready(function() {
+
+									 	var strTime = '${invoice.time}' + '';
+										var time = moment().format(strTime);
+										console.log(new Date(time));
+
+										$(function() {
+											$("#select-time").datetimepicker({
+												defaultDate : '20/20'
+
+											});
+											
+										});
+										 $("#timeInput").val(time);
+										 $("#timeInput").val(time);
+										 $("#timeInput").val('aaaaaaaaaaaa');
+									});
+									/* $("#select-time").ready(function() {
+																										
+											var time = '${invoice.time}';
+											console.log(new Date(time+''));
+											$(function() {
+												$("#select-time").datetimepicker({
+													defaultDate : moment().format(time)
+												});
+											});
+																				
+									}); */
+								</script>
+							</c:if>
 							<label path="time" class="col-md-2 control-label">Time</label>
 							<div class="col-md-10">
+
 								<div class='input-group date' id='select-time'>
-									<form:input required="required" path="time" type='text'
-										class="form-control" onkeypress="return isNumber(event)" />
+									<form:input id="timeInput" required="required" path="time"
+										type='text' class="form-control" readonly="true"
+										onkeypress="return isNumber(event)" />
 									<span class="input-group-addon"> <span
 										class="glyphicon glyphicon-calendar"></span>
 									</span>
 								</div>
+
+
 							</div>
 						</div>
 						<div class="form-group">
@@ -123,6 +161,16 @@
 									<form:errors path="comment" class="help-inline" />
 								</div>
 							</div>
+						</div>
+						<div class="form-group">
+							<c:forEach items="${invoice.photos}" var="p">
+								<img height="80px" width="80px" alt="not found"
+									src="<c:url value='/resources/images/'/>${p.photo}"
+									onError="this.onerror=null;this.src='<c:url value='/resources/logo/abc.png'/>';">
+							</c:forEach>
+							<c:if test="${edit}">
+								<a href="<c:url value="Upload/show/${invoice.id}" />">Upload</a>
+							</c:if>
 						</div>
 					</div>
 
