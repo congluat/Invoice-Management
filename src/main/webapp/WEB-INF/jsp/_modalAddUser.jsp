@@ -6,7 +6,7 @@
 <div ng-controller="UserController as userCtrl">
 
 	<!-- Modal -->
-	<div class="modal" id="myModal" tabindex="-1" role="dialog"
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -22,8 +22,8 @@
 							<label for="inputName" class="col-sm-2 control-label">Name
 							</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" required="required" id="name"
-									ng-model="addUserCtrl.user.name" />
+								<input type="text" class="form-control" required="required"
+									id="name" ng-model="addUserCtrl.user.name" />
 
 							</div>
 						</div>
@@ -31,8 +31,8 @@
 							<label for="inputAge" class="col-sm-2 control-label">Age
 							</label>
 							<div class="col-sm-10">
-								<input type="number" class="form-control" required="required" id="age"
-									ng-model="addUserCtrl.user.age" />
+								<input type="number" class="form-control" required="required"
+									id="age" ng-model="addUserCtrl.user.age" />
 
 							</div>
 						</div>

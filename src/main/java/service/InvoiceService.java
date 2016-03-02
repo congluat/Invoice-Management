@@ -16,6 +16,8 @@ public interface InvoiceService {
 	public Boolean create(Invoice invoice);
 
 	public void update(Invoice invoice);
+	
+	public void delete(Invoice invoice);
 
 	public List<Invoice> getAllInvoicesByMonth(Date date);
 

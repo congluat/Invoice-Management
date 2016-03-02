@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -48,6 +50,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
+	public void delete(Invoice invoice) {
+		invoiceDao.delete(invoice);
+	}
+
+	@Override
 	public Invoice getById(int id) {
 		return invoiceDao.findById(id);
 	}
@@ -65,4 +72,5 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public List<String> getAllDayMonth() {
 		return invoiceDao.getAllDayMonth();
 	}
+
 }

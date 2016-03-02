@@ -1,7 +1,6 @@
 <%@ page pageEncoding="utf-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
 <style>
 .timeline>li>.timeline-panel {
@@ -13,28 +12,40 @@
 }
 </style>
 
-<!-- <script type="text/javascript">
-	$(document).ready(function() {
-		$(function() {
-			$(".timeline-panel").mouseenter(function() {
-				$(this).find(".more-info").show("slide", {
-					direction : "up"
-				}, 200);
-				$(this).find(".more-info").css({
-					"z-index" : "50"
-				});
-			}).mouseleave(function() {
-				$(this).find(".more-info").hide("slide", {
-					direction : "up"
-				}, 200);
-			});
+
+
+<script type="text/javascript">
+	console.log("Helooooo invoicesssssssssss");
+
+	$(".timeline-panel").mouseenter(function() {
+		$(this).find(".more-info").show("slide", {
+			direction : "up"
+		}, 200);
+		$(this).find(".more-info").css({
+			"z-index" : "50"
 		});
+	}).mouseleave(function() {
+		$(this).find(".more-info").hide("slide", {
+			direction : "up"
+		}, 200);
 	});
-	$(document).ready(function() {
-		$('.timeline > li:even').addClass();
-		$('.timeline > li:odd').addClass('timeline-inverted');
+
+	$('.timeline > li:even').addClass();
+	$('.timeline > li:odd').addClass('timeline-inverted');
+
+	$(".deleteButton").click(function() {
+		var id = $(this).parents("li").attr("id");
+
+		console.log(id);
+		//console.log("Delete button clicked");
+		//var url = $('#deleteButton').data('href');
+		var url = "<c:url value='Invoice/delete/'/>" + id;
+
+		console.log(url);
+		$('#confirm-delete .btn-ok').attr('href', url);
+
 	});
-</script> -->
+</script>
 
 <div style="margin-top: 10px; margin-left: 5px; margin-right: 5px">
 	<div ng-controller="InvoiceController">
@@ -44,8 +55,8 @@
 
 		<ul class="timeline">
 
-			<li ng-repeat="i in invoices"><img class="timeline-badge"
-				height="50px" width="50px" alt="not found"
+			<li id="{{i.id}}" ng-repeat="i in invoices"><img
+				class="timeline-badge" height="50px" width="50px" alt="not found"
 				ng-src="<c:url value='/resources/logo/'/>{{i.category.logo}}"
 				onError="this.onerror=null;this.src='<c:url value='/resources/logo/abc.png'/>';">
 
@@ -71,18 +82,38 @@
 						<a href="Invoice/edit/{{i.id}}" class="btn btn-success">Edit</a>
 					</div>
 					<div class="col-md-2">
-						<a href="Invoice/edit/{{i.id}}" class="btn btn-danger">Delete</a>
+						<a class="btn btn-danger deleteButton" data-toggle="modal"
+							data-target="#confirm-delete">Delete</a>
 					</div>
-					<div class="col-md-12 more-info">{{i.comment}}
-					<div ng-repeat="img in i.photos">
-						<img class="col-md-4" alt="not found" ng-src="<c:url value='/resources/images/'/>{{img.photo}}">
+					<div class="modal fade" id="confirm-delete" tabindex="-1"
+						role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">Confirm</div>
+								<div class="modal-body">...</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">Cancel</button>
+									<a class="btn btn-danger btn-ok" href="Invoice/delete/{{i.id}}">Delete</a>
+								</div>
+							</div>
+						</div>
 					</div>
+					<div class="col-md-12 more-info">
+						{{i.comment}}
+						<div ng-repeat="img in i.photos">
+							<img class="col-md-4" alt="not found"
+								ng-src="<c:url value='/resources/images/'/>{{img.photo}}">
+						</div>
 					</div></li>
 
 		</ul>
 
 	</div>
 </div>
+
+
+
 <%-- 
 <div style="margin-top: 10px; margin-left: 5px; margin-right: 5px">
 

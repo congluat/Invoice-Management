@@ -56,15 +56,15 @@ public class InvoiceController {
 		System.out.println("year: " + date.getYear());
 		return invoiceService.getAllInvoicesByMonth(date);
 	}
-	
+
 	@RequestMapping(value = "/getByMonth")
 	@ResponseBody
 	public List<Invoice> getByMonth(HttpServletRequest request) throws ParseException {
-		
+
 		Date date = new Date();
-		date.setMonth(2-1);
-		date.setYear(2016-1900);
-		
+		date.setMonth(2 - 1);
+		date.setYear(2016 - 1900);
+
 		return invoiceService.getAllInvoicesByMonth(date);
 	}
 
@@ -72,14 +72,14 @@ public class InvoiceController {
 	@ResponseBody
 	public Map<String, List<Invoice>> getGroupByMonth(HttpServletRequest request) throws ParseException {
 		Map<String, List<Invoice>> map = invoiceService.getInvoicesGroupbyMonth();
-		
+
 		return invoiceService.getInvoicesGroupbyMonth();
 	}
-	
+
 	@RequestMapping(value = "/getAllDayMonth")
 	@ResponseBody
 	public List<String> getAllDayMonth(HttpServletRequest request) throws ParseException {
-	
+
 		return invoiceService.getAllDayMonth();
 	}
 
@@ -89,40 +89,40 @@ public class InvoiceController {
 		model.addAttribute("invoices", invoiceService.getAllInvoices(user.getId()));
 		return "invoices";
 	}
-	@RequestMapping(value ="/save" , method = RequestMethod.GET )
-	public String create(ModelMap model){
+
+	@RequestMapping(value = "/save", method = RequestMethod.GET)
+	public String create(ModelMap model) {
 		Invoice invoice = new Invoice();
-		model.addAttribute("invoice",invoice);
+		model.addAttribute("invoice", invoice);
 		return "save-invoice";
 	}
 
 	@RequestMapping(value = "/save")
-	public String create(@Valid Invoice invoice, BindingResult result, ModelMap model,HttpSession session) throws IllegalStateException, IOException {
-		if (result.hasErrors()) {
-			return "save-invoice";
-		}	
-		Category cate = cateService.getById(1);		
-		invoice.setCategory(cate);
-		invoice.setUser((User) session.getAttribute("user"));	
-		invoiceService.create(invoice);
-	    session.setAttribute("invoice", invoice);
-		return "_modalAddImages";
-	}
-
-	/*@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String create(@Valid Invoice invoice, BindingResult result, ModelMap model,HttpSession session, @PathVariable Integer id) throws IllegalStateException, IOException {
+	public String create(@Valid Invoice invoice, BindingResult result, ModelMap model, HttpSession session)
+			throws IllegalStateException, IOException {
 		if (result.hasErrors()) {
 			return "save-invoice";
 		}
-		Category cate = cateService.getById(2);
-		invoice = invoiceService.getById(id);
-		invoice.setAmount(BigDecimal.valueOf(1000.0));
+		Category cate = cateService.getById(1);
 		invoice.setCategory(cate);
 		invoice.setUser((User) session.getAttribute("user"));
 		invoiceService.create(invoice);
-		model.addAttribute("invoice",invoice);
-		return "_modelAddUser";
-	}*/
+		session.setAttribute("invoice", invoice);
+		return "_modalAddImages";
+	}
+
+	/*
+	 * @RequestMapping(value = "/save", method = RequestMethod.POST) public
+	 * String create(@Valid Invoice invoice, BindingResult result, ModelMap
+	 * model,HttpSession session, @PathVariable Integer id) throws
+	 * IllegalStateException, IOException { if (result.hasErrors()) { return
+	 * "save-invoice"; } Category cate = cateService.getById(2); invoice =
+	 * invoiceService.getById(id);
+	 * invoice.setAmount(BigDecimal.valueOf(1000.0)); invoice.setCategory(cate);
+	 * invoice.setUser((User) session.getAttribute("user"));
+	 * invoiceService.create(invoice); model.addAttribute("invoice",invoice);
+	 * return "_modelAddUser"; }
+	 */
 
 	@RequestMapping(value = "/edit/{id}")
 	public String update(HttpSession session, @PathVariable Integer id) {
@@ -134,7 +134,14 @@ public class InvoiceController {
 		invoiceService.update(invoice);
 		return "home";
 	}
-	
+
+	@RequestMapping(value = "/delete/{id}")
+	public String delete(HttpSession session, @PathVariable Integer id) {
+		Invoice invoice = invoiceService.getById(id);
+		invoiceService.delete(invoice);
+		return "redirect:/Invoice/";
+	}
+
 	@ModelAttribute("categories")
 	public Collection<Category> getcategories() {
 		List<Category> categories = cateService.getAllCategories();

@@ -22,45 +22,11 @@
 
 				});
 
-		$scope.load = function() {
-			$(".timeline-panel").mouseenter(function() {
-				$(this).find(".more-info").show("slide", {
-					direction : "up"
-				}, 200);
-				$(this).find(".more-info").css({
-					"z-index" : "50"
-				});
-			}).mouseleave(function() {
-				$(this).find(".more-info").hide("slide", {
-					direction : "up"
-				}, 200);
-			});
-			$('.timeline > li:even').addClass();
-			$('.timeline > li:odd').addClass('timeline-inverted');
-		};
-
-		// don't forget to call the load function
-		$scope.load();
-
 		this.getInvoiceByMonth = function() {
 
 			$http.get("Invoice/getByMonth/").success(function(response) {
 				console.log(response);
 
-				$('.timeline > li:even').addClass();
-				$('.timeline > li:odd').addClass('timeline-inverted');
-				$(".timeline-panel").mouseenter(function() {
-					$(this).find(".more-info").show("slide", {
-						direction : "up"
-					}, 200);
-					$(this).find(".more-info").css({
-						"z-index" : "50"
-					});
-				}).mouseleave(function() {
-					$(this).find(".more-info").hide("slide", {
-						direction : "up"
-					}, 200);
-				});
 			});
 
 		};
@@ -142,11 +108,13 @@
 		this.checkCate = function() {
 
 			// console.log(this.name);
-			/*
-			 * $http.get("Category/checkCate/" + this.name).success(
-			 * function(response) { console.log(response); this.isDuplicate =
-			 * response; });
-			 */
+
+			$http.get("Category/checkCate/" + this.name).success(
+					function(response) {
+						console.log(response);
+						this.isDuplicate = response;
+					});
+
 		}
 
 	});
@@ -159,10 +127,10 @@
 
 			if (response == true) {
 				$('#myModal').modal('hide');
-
 			} else {
 				$('#myModal').modal('show');
 			}
+
 			console.log(response);
 
 		});
