@@ -26,7 +26,7 @@
 					<button id="upload-button" class="btn btn-primary">
 						<span class="glyphicon glyphicon-upload"></span> Upload
 					</button>
-					<a class="btn btn-warning pull-right" href="dashboard">Cancel
+					<a class="btn btn-warning pull-right" href="Invoice/get-all-invoices">Cancel
 					</a>
 				</div>
 			</div>
