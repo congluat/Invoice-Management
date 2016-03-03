@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import model.Category;
 import model.Invoice;
 
 public interface InvoiceDAO {
@@ -24,4 +25,6 @@ public interface InvoiceDAO {
 	public Map<String, List<Invoice>> getInvoicesGroupbyMonth();
 
 	public List<String> getAllDayMonth();
+	
+	public List<Invoice> getTop10(Category category);
 }

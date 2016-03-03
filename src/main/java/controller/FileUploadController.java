@@ -17,6 +17,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -46,31 +48,7 @@ public class FileUploadController {
 		session.setAttribute("invoice", invoice);	
 		return "_modalEditImages";
 	}
-	
-	@RequestMapping(value="/edit" , method = RequestMethod.POST)
-	public void editPhoto(HttpSession session ,MultipartHttpServletRequest request,
-			HttpServletResponse response ) throws FileNotFoundException, IOException{
-		Map<String, MultipartFile> fileMap = request.getFileMap();		
-		Invoice invoice = (Invoice) session.getAttribute("invoice");
-
-		Date now = new Date();
-		String name = now.toString().replaceAll(" ", "").replaceAll(":", "");
-		// Iterate through the map
-		for (MultipartFile multipartFile : fileMap.values()) {
-			// Save the file to local disk
-			saveFileToLocalDisk(multipartFile,name);
-
-			Photo fileInfo = getUploadedFileInfo(multipartFile,name);
-			
-			// Save the file info to database
-			saveFileToDatabase(fileInfo, invoice);
-		}
-
-		session.removeAttribute("invoice");	
 		
-	}
-	
-	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public void upload(MultipartHttpServletRequest request, HttpServletResponse response,
 			 ModelMap model , HttpSession session) throws IOException {
@@ -110,6 +88,13 @@ public class FileUploadController {
 	private void saveFileToDatabase(Photo uploadedFile, Invoice invoice) {
 		uploadedFile.setInvoice(invoice);
 		photoService.create(uploadedFile);
+	}
+	
+	@RequestMapping(value="/delete")
+	@ResponseBody
+	public void delete(@RequestParam("id") Integer id){
+		Photo photo = photoService.findById(id);
+		photoService.delete(photo);		
 	}
 
 }

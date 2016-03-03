@@ -48,10 +48,10 @@ $(document).ready(function() {
 			});
 
 			// displaying the uploaded files information in a Bootstrap dialog
-			this.on("successmultiple", function(files, serverResponse) {
+			/*this.on("successmultiple", function(files, serverResponse) {
 				//showInformationDialog(files, serverResponse);
 				window.setTimeout("window.location.href='Invoice/get-all-invoices'",980);
-			});			
+			});			*/
 		}
 	}
 });
