@@ -53,12 +53,8 @@
 					ng-src="<c:url value='/resources/logo/'/>{{i.category.logo}}"
 					onError="this.onerror=null;this.src='<c:url value='/resources/logo/abc.png'/>';">
 
-					<%-- <c:if test="{{i.isWarning}">
-					<div class="timeline-panel" style="background-color: #ffecb3">
-					</c:if> <c:if test="{{!invoice.isWarning}}">	
-					</c:if> --%>
-					<div class="timeline-panel" ng-mouseenter="hover(i)"
-						ng-mouseleave="hover(i)">
+					<div class="timeline-panel" ng-class="{'isWarning': i.isWarning}"
+						ng-mouseenter="hover(i)" ng-mouseleave="hover(i)">
 						<div class="col-md-8">
 							<div class="timeline-heading">
 								<h4 class="timeline-title">{{i.name}}</h4>
@@ -83,7 +79,8 @@
 							role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 							<div class="vertical-alignment-helper">
 								<div class="modal-dialog vertical-align-center">
-									<div class="modal-content" style="width: 400px; border-radius:10px;">
+									<div class="modal-content"
+										style="width: 400px; border-radius: 10px;">
 										<div class="modal-header">Confirm</div>
 										<div class="modal-body">Do you want to delete</div>
 										<div class="modal-footer">

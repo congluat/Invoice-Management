@@ -19,30 +19,39 @@
 			searchString = searchString.toLowerCase();
 
 			// Using the forEach helper method to loop through the array
-			angular.forEach(arr, function(item) {
+			angular
+					.forEach(arr,
+							function(item) {
 
-				if ((item.name.toLowerCase().indexOf(searchString) != -1)) {
-					result.push(item);
-				}
+								if ((item.name.toLowerCase().indexOf(
+										searchString) != -1)) {
+									result.push(item);
+								}
 
-				var time = new Date(item.time);
-				time = time;
-				time = $filter('date')(time, "dd/MM/yyyy");
-				time = time.toLowerCase();
-				// console.log(time);
-				if ((time.indexOf(searchString) != -1)) {
+								var time = new Date(item.time);
+								time = time;
+								time = $filter('date')(time, "dd/MM/yyyy");
+								time = time.toLowerCase();
+								// console.log(time);
+								if ((time.indexOf(searchString) != -1)) {
 
-					// console.log(searchString);
-					result.push(item);
-				}
-				if ((item.comment.toLowerCase().indexOf(searchString) != -1)) {
-					result.push(item);
-				}
-				if ((item.place.toLowerCase().indexOf(searchString) != -1)) {
-					result.push(item);
-				}
+									// console.log(searchString);
+									result.push(item);
+								}
+								if ((item.comment.toLowerCase().indexOf(
+										searchString) != -1)) {
+									result.push(item);
+								}
+								if ((item.place.toLowerCase().indexOf(
+										searchString) != -1)) {
+									result.push(item);
+								}
+								if ((item.category.name.toLowerCase().indexOf(
+										searchString) != -1)) {
+									result.push(item);
+								}
 
-			});
+							});
 
 			return result;
 		};

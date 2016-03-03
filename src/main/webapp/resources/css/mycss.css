@@ -200,3 +200,7 @@
 	margin: 0 auto;
 	pointer-events: all;
 }
+
+.isWarning {
+	background-color: #ffecb3;
+}

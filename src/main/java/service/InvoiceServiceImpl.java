@@ -98,10 +98,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return invoiceDao.getTop10(category);
 	}
 	
-	@Override
-	public List<Invoice> getInvoiceAttribute(String attribute) {
-		return invoiceDao.getInvoiceAttribute(attribute);
-	}
+//	@Override
+//	public List<Invoice> getInvoiceAttribute(String attribute) {
+//		return invoiceDao.getInvoiceAttribute(attribute);
+//	}
 
 	@Override
 	public boolean checkIsWarning(BigDecimal amount, Category category) {
