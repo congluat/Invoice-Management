@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -157,5 +158,17 @@ public class InvoiceController {
 	public Collection<Category> getcategories() {
 		List<Category> categories = cateService.getAllCategories();
 		return categories;
+	}
+	
+	@RequestMapping(value = "/search/{id}", method = RequestMethod.GET)
+	public String Search(@PathVariable String id, ModelMap model) {
+		List<Invoice> invoices = new ArrayList<Invoice>();
+		System.out.println(id);
+		invoices = invoiceService.getInvoiceAttribute(id);
+		System.out.println(invoices.size());
+		model.addAttribute("invoices", invoices);
+		model.addAttribute("title", "Invoices");
+		return "invoices_new";
+		
 	}
 }

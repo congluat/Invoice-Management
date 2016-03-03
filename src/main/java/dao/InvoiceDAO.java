@@ -29,4 +29,6 @@ public interface InvoiceDAO {
 	public List<Invoice> getTop10IsNotWarning(Category category);
 	
 	public List<Invoice> getTop10(Category category);
+	
+	public List<Invoice> getInvoiceAttribute(String attribute);
 }

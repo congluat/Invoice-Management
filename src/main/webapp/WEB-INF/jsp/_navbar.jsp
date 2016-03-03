@@ -10,6 +10,56 @@
 		<a class="navbar-brand" href="dashboard"><i
 			class="glyphicon glyphicon-home"></i> Invoice Management</a>
 	</div>
+	
+	<!-- /.search-function -->
+	
+            <div class="ui-widget col-xs-2" style="margin-top: 6px; margin-left: 10px">
+                
+                <input class="form-control" id="invoice" placeholder="Search Invoice(s) ..."/>
+            </div>
+        
+	
+	<script>
+	
+</script>
+	
+	<script>
+	$(document).ready(function() {
+	    $(function() {
+	        $("#invoice").autocomplete({
+	        	
+	            source: function(request, response) {
+	                $.ajax({
+	                    url: "/InvoiceManagement/getSearchValue",
+	                    type: "POST",
+	                    data: { term: request.term },
+
+	                    dataType: "json",
+
+	                    success: function(data) {
+	                    	response($.map(data, function(v,i){
+	                    	    return {
+	                    	                label: v.name,
+	                    	                value: v.name
+	                    	               };
+	                    	}));
+	                    	
+	                    	
+	                    }
+	               });              
+	            } ,
+	        	
+	            select: function(event, ui) {
+	            	var page = document.getElementById('invoice').value;
+	            	window.location = "Invoice/search/" + page;
+	            },
+	        	
+	        
+	        });
+	    });
+	});
+	</script>	
+	
 	<!-- /.navbar-header -->
 
 	<ul class="nav navbar-top-links navbar-right notibar">
