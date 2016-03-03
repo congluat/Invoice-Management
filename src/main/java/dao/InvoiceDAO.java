@@ -27,4 +27,6 @@ public interface InvoiceDAO {
 	public List<String> getAllDayMonth();
 	
 	public List<Invoice> getTop10(Category category);
+	
+	public List<Invoice> getInvoiceAttribute(String attribute);
 }

@@ -168,5 +168,14 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		session.close();
 		return list;		
 	}
+	
+	@Override
+	public List<Invoice> getInvoiceAttribute(String attribute) {
+		Session session = sessionFactory.openSession();	
+		String hql = "FROM Invoice where name LIKE '%"+attribute+"%'";		
+		List<Invoice> invoices = session.createQuery(hql).list();		
+		session.close();
+		return invoices;
+	}
 
 }
