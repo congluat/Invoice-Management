@@ -1,5 +1,6 @@
 package service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -26,5 +27,13 @@ public interface InvoiceService {
 
 	public List<String> getAllDayMonth();
 	
+	public List<Invoice> getTop10IsNotWarning(Category category);
+	
+	public double calAverage(Category category);
+	
 	public List<Invoice> getTop10(Category category);
+	
+	public boolean checkIsWarning(BigDecimal amount , Category category);
+	
+	
 }

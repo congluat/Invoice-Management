@@ -1,6 +1,8 @@
 package service;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -75,8 +77,50 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
+	public List<Invoice> getTop10IsNotWarning(Category category) {
+		return invoiceDao.getTop10IsNotWarning(category);
+	}
+
+	@Override
+	public double calAverage(Category category) {
+		List<Invoice> list = getTop10IsNotWarning(category);
+		BigDecimal avg = BigDecimal.valueOf(0.0d);
+		Iterator it = list.iterator();	
+		while(it.hasNext()){
+			Invoice invoice = (Invoice) it.next();
+			avg = avg.add(invoice.getAmount());
+		}
+		return Double.parseDouble(avg.divide(BigDecimal.valueOf(list.size())).toString());
+	}
+
+	@Override
 	public List<Invoice> getTop10(Category category) {
 		return invoiceDao.getTop10(category);
 	}
 
+	@Override
+	public boolean checkIsWarning(BigDecimal amount, Category category) {
+		double amountDouble = Double.parseDouble(amount.toString());
+		double avg = calAverage(category)*1.7;		
+		// kiem tra invoice
+		if(amountDouble > (avg)){	//invoice co the bi canh bao		
+			List<Invoice> list = invoiceDao.getTop10(category);
+			System.out.println(list.size());
+			if(list.size()<10){
+				return true;
+			}
+			Iterator it = list.iterator();	
+			while(it.hasNext()){
+				Invoice invoice = (Invoice) it.next();
+				if(invoice.getIsWarning() == false ){ // xuat hien 1 invoice ko hop le
+					//ko phai invoice thu 11 , bat canh bao
+					return true;
+				}
+			}		
+			//la invoice thu 11 , tat canh bao
+			return false;
+		}		
+		//invoice ko bi canh bao
+		return false;
+	}
 }

@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -93,6 +94,15 @@ public class InvoiceController {
 		return "invoices";
 	}
 
+	@RequestMapping(value = { "/get-all-invoices/{amount}/{cateId}" }, method = RequestMethod.GET)
+	@ResponseBody
+	public boolean getAllInvoices(HttpServletRequest request, @PathVariable BigDecimal amount,
+			@PathVariable int cateId) {
+		// User user = (User) request.getSession().getAttribute("user");
+		Category category = cateService.getById(cateId);
+		return invoiceService.checkIsWarning(amount, category);
+	}
+
 	@RequestMapping(value = "/save", method = RequestMethod.GET)
 	public String create(ModelMap model) {
 		Invoice invoice = new Invoice();
@@ -107,9 +117,10 @@ public class InvoiceController {
 		if (result.hasErrors()) {
 			return "save-invoice";
 		}
-		Category cate = cateService.getById(1);
+		Category cate = invoice.getCategory();		
 		invoice.setCategory(cate);
 		invoice.setUser((User) session.getAttribute("user"));
+		invoice.setIsWarning(invoiceService.checkIsWarning(invoice.getAmount(), cate));
 		invoiceService.create(invoice);
 		session.setAttribute("invoice", invoice);
 		model.addAttribute("edit", false);
@@ -130,6 +141,7 @@ public class InvoiceController {
 			return "save-invoice";
 		}
 		model.addAttribute("edit", true);
+		invoice.setIsWarning(invoiceService.checkIsWarning(invoice.getAmount(), invoice.getCategory()));
 		invoiceService.update(invoice);
 		return "home";
 	}

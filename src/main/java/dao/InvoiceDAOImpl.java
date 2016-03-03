@@ -158,6 +158,18 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 	}
 
 	@Override
+	public List<Invoice> getTop10IsNotWarning(Category category) {
+		Session session = sessionFactory.openSession();
+		List<Invoice> list;
+		String hql =" from Invoice where isWarning = false and CategoryId = :id order by(Time) DESC ";
+		Query query = session.createQuery(hql);
+		query.setMaxResults(10);
+		list = query.setParameter("id", category.getId()).list();
+		session.close();
+		return list;		
+	}
+
+	@Override
 	public List<Invoice> getTop10(Category category) {
 		Session session = sessionFactory.openSession();
 		List<Invoice> list;
@@ -166,7 +178,7 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		query.setMaxResults(10);
 		list = query.setParameter("id", category.getId()).list();
 		session.close();
-		return list;		
+		return list;	
 	}
 
 }
