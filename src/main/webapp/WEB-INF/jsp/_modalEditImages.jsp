@@ -23,7 +23,7 @@
 			<div class="panel-heading text-center"></div>
 			<div class="panel-body">
 				<div>				
-					<form:form modelAttribute ="invoice" id="dropzone-form" action="Upload/edit" class="dropzone" enctype="multipart/form-data">
+					<form:form modelAttribute ="invoice" id="dropzone-form" action="Upload/upload" class="dropzone" enctype="multipart/form-data">
 						<div
 							class="dz-default dz-message file-dropzone text-center ">
 

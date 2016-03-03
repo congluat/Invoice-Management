@@ -18,5 +18,15 @@ public class PhotoServiceImpl implements PhotoService{
 	public void create(Photo photo) {
 		dao.saveFile(photo);
 	}
+
+	@Override
+	public Photo findById(Integer id) {	
+		return dao.getById(id);
+	}
+
+	@Override
+	public void delete(Photo photo) {
+		dao.deleteFile(photo);	
+	}
 	
 }

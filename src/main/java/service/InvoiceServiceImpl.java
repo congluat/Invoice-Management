@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import dao.InvoiceDAO;
+import model.Category;
 import model.Invoice;
 
 @Service
@@ -71,6 +72,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	public List<String> getAllDayMonth() {
 		return invoiceDao.getAllDayMonth();
+	}
+
+	@Override
+	public List<Invoice> getTop10(Category category) {
+		return invoiceDao.getTop10(category);
 	}
 
 }

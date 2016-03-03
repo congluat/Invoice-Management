@@ -85,6 +85,8 @@ public class InvoiceController {
 		model.addAttribute("invoices", invoiceService.getAllInvoices(user.getId()));
 		return "invoices";
 	}
+	
+	
 
 	@RequestMapping(value = "/save", method = RequestMethod.GET)
 	public String create(ModelMap model) {

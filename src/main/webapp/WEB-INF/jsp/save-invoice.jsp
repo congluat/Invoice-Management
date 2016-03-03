@@ -28,6 +28,7 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 
 
+
 <script type="text/javascript">
 	function isNumber(evt) {
 		evt = (evt) ? evt : window.event;
@@ -38,7 +39,26 @@
 		return true;
 	}
 </script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".onclickdelete").click(function() {
+			var photoid = $(this).parents("div").attr("id");
 
+			$.ajax({
+				url : "Upload/delete",
+				type : 'post',
+				data : {
+					id : photoid
+				},
+				success : function(result) {
+					console.log('delete' + photoid);
+					$('#' + photoid).parents(".col-md-2").remove();
+				}
+
+			});
+		});
+	});
+</script>
 
 
 <div class="panel panel-primary">
@@ -87,23 +107,34 @@
 
 							<c:if test="${edit}">
 								<script type="text/javascript">
-									$(document).ready(function() {
+									$(document)
+											.ready(
+													function() {
 
-									 	var strTime = '${invoice.time}';
-										var time = moment(strTime).format('MM/DD/YYYY hh:mm A');
-										console.log("strTime: "+strTime);
-										console.log("time: "+time);
+														var strTime = '${invoice.time}';
+														var time = moment(
+																strTime)
+																.format(
+																		'MM/DD/YYYY hh:mm A');
+														console.log("strTime: "
+																+ strTime);
+														console.log("time: "
+																+ time);
 
-										$(function() {
-											$("#select-time").datetimepicker({
-										
-												defaultDate :time
-											});
-											
-										});
-										$("#timeInput").val(time);
-										$("#timeInput").attr("value",time);
-									});
+														$(function() {
+															$("#select-time")
+																	.datetimepicker(
+																			{
+
+																				defaultDate : time
+																			});
+
+														});
+														$("#timeInput").val(
+																time);
+														$("#timeInput").attr(
+																"value", time);
+													});
 									/* $("#select-time").ready(function() {
 																										
 											var time = '${invoice.time}';
@@ -162,14 +193,29 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group" id="thisdiv">
 							<c:forEach items="${invoice.photos}" var="p">
-								<img height="80px" width="80px" alt="not found"
-									src="<c:url value='/resources/images/'/>${p.photo}"
-									onError="this.onerror=null;this.src='<c:url value='/resources/logo/abc.png'/>';">
+								<div class="col-md-2">
+									<div class="col-md-12">
+
+										<img height="80px" width="80px" alt="not found"
+											src="<c:url value='/resources/images/'/>${p.photo}"
+											onError="this.onerror=null;this.src='<c:url value='/resources/logo/abc.png'/>';">
+									</div>
+									<div class="col-md-12" style="text-align: center;" id='${p.id}'>
+										<a class="onclickdelete">Delete</a>
+									</div>
+
+
+								</div>
 							</c:forEach>
+
 							<c:if test="${edit}">
-								<a href="<c:url value="Upload/show/${invoice.id}" />">Upload</a>
+								<a class="col-md-2" style="padding-top: 14px"
+									href="<c:url value="Upload/show/${invoice.id}" />"><span
+									style="font-size: 45px; vertical-align: middle"
+									class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+
 							</c:if>
 						</div>
 					</div>

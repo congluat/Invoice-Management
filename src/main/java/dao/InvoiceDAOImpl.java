@@ -7,11 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
+import model.Category;
 import model.Invoice;
 
 @Repository
@@ -153,6 +155,18 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 
 		session.close();
 		return months;
+	}
+
+	@Override
+	public List<Invoice> getTop10(Category category) {
+		Session session = sessionFactory.openSession();
+		List<Invoice> list;
+		String hql =" from Invoice where CategoryId = :id order by(Time) DESC ";
+		Query query = session.createQuery(hql);
+		query.setMaxResults(10);
+		list = query.setParameter("id", category.getId()).list();
+		session.close();
+		return list;		
 	}
 
 }
