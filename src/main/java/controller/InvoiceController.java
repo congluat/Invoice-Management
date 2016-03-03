@@ -1,4 +1,4 @@
- package controller;
+package controller;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -97,11 +97,11 @@ public class InvoiceController {
 	public String create(ModelMap model) {
 		Invoice invoice = new Invoice();
 		model.addAttribute("invoice", invoice);
-		model.addAttribute("edit",false);
+		model.addAttribute("edit", false);
 		return "save-invoice";
 	}
 
-	@RequestMapping(value = "/save" , method=RequestMethod.POST )
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String create(@Valid Invoice invoice, BindingResult result, ModelMap model, HttpSession session)
 			throws IllegalStateException, IOException {
 		if (result.hasErrors()) {
@@ -112,24 +112,24 @@ public class InvoiceController {
 		invoice.setUser((User) session.getAttribute("user"));
 		invoiceService.create(invoice);
 		session.setAttribute("invoice", invoice);
-	    model.addAttribute("edit",false);
+		model.addAttribute("edit", false);
 		return "_modalAddImages";
 	}
-	
-	@RequestMapping(value = "/edit/{id}" , method = RequestMethod.GET)
+
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String update(@PathVariable Integer id, ModelMap model) {
 		Invoice invoice = invoiceService.getById(id);
-		model.addAttribute("invoice",invoice);
-		model.addAttribute("edit",true);
+		model.addAttribute("invoice", invoice);
+		model.addAttribute("edit", true);
 		return "save-invoice";
 	}
 
-	@RequestMapping(value = "/edit/{id}",method=RequestMethod.POST)
-	public String update(@ModelAttribute Invoice invoice , ModelMap model , BindingResult result) {
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+	public String update(@ModelAttribute Invoice invoice, ModelMap model, BindingResult result) {
 		if (result.hasErrors()) {
 			return "save-invoice";
-		}					
-		model.addAttribute("edit",true);
+		}
+		model.addAttribute("edit", true);
 		invoiceService.update(invoice);
 		return "home";
 	}

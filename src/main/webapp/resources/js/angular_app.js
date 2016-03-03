@@ -3,14 +3,13 @@
 
 	// Create the instant search filter
 
-	app.filter('searchFor', function($filter) {
+	app.filter('searchFor', function($filter, $http) {
 
 		// All filters must return a function. The first parameter
 		// is the data that is to be filtered, and the second is an
 		// argument that may be passed with a colon (searchFor:searchString)
 
 		return function(arr, searchString) {
-
 			if (!searchString) {
 				return arr;
 			}
@@ -25,15 +24,15 @@
 				if ((item.name.toLowerCase().indexOf(searchString) != -1)) {
 					result.push(item);
 				}
-				
+
 				var time = new Date(item.time);
 				time = time;
 				time = $filter('date')(time, "dd/MM/yyyy");
 				time = time.toLowerCase();
-				//console.log(time);
-				if((time.indexOf(searchString) != -1)){
-					
-					//console.log(searchString);
+				// console.log(time);
+				if ((time.indexOf(searchString) != -1)) {
+
+					// console.log(searchString);
 					result.push(item);
 				}
 				if ((item.comment.toLowerCase().indexOf(searchString) != -1)) {
@@ -70,17 +69,50 @@
 		console.log("year " + year);
 
 		$scope.invoices = [];
+		$scope.listByMonth = false;
 		$scope.month = month + "/" + year;
 
 		$http.get("Invoice/getByMonth/" + month + "-" + year).success(
 				function(response) {
-
+					$scope.listByMonth = true;
 					// $scope.invoices.push(response);
 					$scope.invoices = response;
 					console.log("invoice ");
 					console.log($scope.invoices[0]);
 
 				});
+
+		$scope.onSearchChange = function(searchString) {
+
+			console.log("search: " + searchString);
+			console.log("list by month: " + $scope.listByMonth);
+			if ($scope.listByMonth == true && searchString.length != 0) {
+				$scope.month = "Search";
+				$http.get("Invoice/getAllInvoices").success(function(response) {
+					$scope.listByMonth = false;
+					// $scope.invoices.push(response);
+					$scope.invoices = response;
+					console.log("on change ");
+					console.log($scope.invoices);
+
+				});
+			} else {
+				if (searchString.length == 0) {
+					$scope.month = month + "/" + year;
+					$http.get("Invoice/getByMonth/" + month + "-" + year)
+							.success(function(response) {
+								$scope.listByMonth = true;
+								// $scope.invoices.push(response);
+								$scope.invoices = response;
+								console.log("invoice ");
+								console.log($scope.invoices[0]);
+
+							});
+				}
+
+			}
+
+		};
 
 		this.getInvoiceByMonth = function() {
 
@@ -90,8 +122,6 @@
 			});
 
 		};
-
-		
 
 		// Search Invoice
 

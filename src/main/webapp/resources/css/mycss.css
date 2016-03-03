@@ -164,7 +164,6 @@
 	-o-transform: scale(1.6);
 	transform: scale(1.6);
 	z-index: 50px;
-	
 }
 
 .invoice-tab {
@@ -174,8 +173,30 @@
 	-ms-transition: all .4s ease-in-out;
 }
 
-.more-info{
+.more-info {
 	display: none;
 }
 
+.vertical-alignment-helper {
+	display: table;
+	height: 100%;
+	width: 100%;
+	pointer-events: none;
+	/* This makes sure that we can still click outside of the modal to close it */
+}
 
+.vertical-align-center {
+	/* To center vertically */
+	display: table-cell;
+	vertical-align: middle;
+	pointer-events: none;
+}
+
+.modal-content {
+	/* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+	width: inherit;
+	height: inherit;
+	/* To center horizontally */
+	margin: 0 auto;
+	pointer-events: all;
+}
