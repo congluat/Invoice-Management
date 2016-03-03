@@ -16,25 +16,19 @@
 }
 </style>
 
-<<<<<<< HEAD
-<div class="row">
-  <div class="col-md-6 col-md-offset-6">
-	 <div class="input-group input-group-lg">
-	  	<span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-search" style="color:#009688; vertical-align: middle;"></i></span>
-	  	<input id="search" text" class="form-control" name="searchFor" 
-			      			ng-model="searchString" placeholder="Search for invoices..." aria-describedby="sizing-addon1">
-=======
-<div class="row" style="margin-top: 10px; margin-left: 5px; margin-right: 5px">
-	<div class="col-md-6 col-md-offset-6">
+<div class="col-md-6 col-md-offset-6">
 		<div class="input-group input-group-lg">
 			<span class="input-group-addon" id="sizing-addon1"><i
-				class="glyphicon glyphicon-search"></i></span> <input id="search"
-				text" class="form-control" name="searchFor" ng-model="searchString"
-				placeholder="Search for invoices...">
+				class="glyphicon glyphicon-search"></i></span> 
+		    <input id="search"
+				type="text" class="form-control" name="searchFor" ng-model="searchString"
+				placeholder="Search for invoices..." >
 		</div>
->>>>>>> 667b76f95f5263786402bc28a92687adfc72805b
 	</div>
-	<!-- /.col-lg-6 -->
+	<!-- /.col-md-6 -->
+
+<div class="row" style="margin-top: 10px; margin-left: 5px; margin-right: 5px">
+	
 
 	<script type="text/javascript">
 		$(document).ready(function() {
