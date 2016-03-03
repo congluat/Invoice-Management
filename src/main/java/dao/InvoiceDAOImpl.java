@@ -73,6 +73,21 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 	}
 
 	@Override
+	public void delete(Invoice invoice) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		try {
+			session.delete(invoice);
+			tx.commit();
+		} catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+	}
+	
+	@Override
 	public Invoice findById(int id) {
 		Session session = sessionFactory.openSession();
 		Invoice invoice = (Invoice) session.get(Invoice.class, id);

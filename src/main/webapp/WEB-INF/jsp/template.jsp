@@ -48,10 +48,11 @@
 <script type="text/javascript"
 	src="<c:url value='/resources/dist/js/ripples.min.js'/>"></script>
 
+	<!--
 <script type="text/javascript">
 	$.material.init()
 </script>
-
+-->
 
 
 <!-- ---------------------------My CSS----------- -->
@@ -89,14 +90,15 @@
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-cookies.js"></script>
 <script type="text/javascript"
 	src="<c:url value='/resources/js/angular_app.js' />"></script>
+	
 <script type="text/javascript">
 	$(document).ready(function() {
-		$.material.init();
-
+		<!--$.material.init();-->
+/* 
 		$('.modal').modal({
 			backdrop : 'static',
 			keyboard : false
-		})
+		}) */
 	});
 </script>
 
@@ -126,7 +128,7 @@
 
  	<jsp:include page="_navbar.jsp"></jsp:include>
 
-<%--	<jsp:include page="_modalAddUser.jsp"></jsp:include> --%>
+	<jsp:include page="_modalAddUser.jsp"></jsp:include>
 
 	<div id="page-wrapper" style="padding-left: 0px; padding-right: 5px">
 

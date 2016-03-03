@@ -19,6 +19,8 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -32,7 +34,7 @@ public class Invoice implements Serializable {
 	@Size(max = 100)
 	private String name;
 
-	@Digits(integer =15,fraction =3)
+	@Digits(integer = 15, fraction = 3)
 	@NotNull
 	private BigDecimal amount;
 
@@ -48,6 +50,7 @@ public class Invoice implements Serializable {
 	// private Integer CategoryId;
 
 	@OneToMany(mappedBy = "invoice", fetch = FetchType.EAGER)
+	@Cascade(CascadeType.DELETE)
 	private Collection<Photo> photos;
 
 	public Collection<Photo> getPhotos() {
@@ -122,7 +125,6 @@ public class Invoice implements Serializable {
 		this.place = place;
 	}
 
-
 	public Category getCategory() {
 		return category;
 	}
@@ -130,7 +132,6 @@ public class Invoice implements Serializable {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-
 
 	public User getUser() {
 		return user;
