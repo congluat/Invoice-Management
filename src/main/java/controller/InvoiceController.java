@@ -79,14 +79,19 @@ public class InvoiceController {
 		return invoiceService.getAllDayMonth();
 	}
 
+	/*@RequestMapping(value = { "/", "/get-all-invoices" }, method = RequestMethod.GET)
+	public String getAllInvoices(HttpServletRequest request, ModelMap model) {
+		User user = (User) request.getSession().getAttribute("user");
+		model.addAttribute("invoices", invoiceService.getAllInvoices(user.getId()));
+		return "invoices";
+	}*/
+	
 	@RequestMapping(value = { "/", "/get-all-invoices" }, method = RequestMethod.GET)
 	public String getAllInvoices(HttpServletRequest request, ModelMap model) {
 		User user = (User) request.getSession().getAttribute("user");
 		model.addAttribute("invoices", invoiceService.getAllInvoices(user.getId()));
 		return "invoices";
 	}
-	
-	
 
 	@RequestMapping(value = "/save", method = RequestMethod.GET)
 	public String create(ModelMap model) {
