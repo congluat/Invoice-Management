@@ -103,6 +103,7 @@
 										});
 										$("#timeInput").val(time);
 										$("#timeInput").attr("value",time);
+										$("#timeInput").val(time);
 									});
 									/* $("#select-time").ready(function() {
 																										
