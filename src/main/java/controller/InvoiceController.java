@@ -79,13 +79,13 @@ public class InvoiceController {
 		return invoiceService.getAllDayMonth();
 	}
 
-	/*@RequestMapping(value = { "/", "/get-all-invoices" }, method = RequestMethod.GET)
-	public String getAllInvoices(HttpServletRequest request, ModelMap model) {
+	@RequestMapping(value = "/getAllInvoices")
+	@ResponseBody
+	public List<Invoice> getAllInvoices(HttpServletRequest request) throws ParseException {
 		User user = (User) request.getSession().getAttribute("user");
-		model.addAttribute("invoices", invoiceService.getAllInvoices(user.getId()));
-		return "invoices";
-	}*/
-	
+		return invoiceService.getAllInvoices(user.getId());
+	}
+
 	@RequestMapping(value = { "/", "/get-all-invoices" }, method = RequestMethod.GET)
 	public String getAllInvoices(HttpServletRequest request, ModelMap model) {
 		User user = (User) request.getSession().getAttribute("user");
