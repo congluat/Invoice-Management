@@ -9,13 +9,20 @@ import model.Photo;
 public class PhotoDAOImpl implements PhotoDAO {
 
 	private SessionFactory sessionFactory;
-	
+
 	@Override
 	public void saveFile(Photo photo) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		session.save(photo);
-		tx.commit();
+		try {
+
+			session.save(photo);
+			tx.commit();
+		} catch (Exception e) {
+			tx.rollback();
+		} finally {
+			session.close();
+		}
 	}
 
 	public SessionFactory getSessionFactory() {
