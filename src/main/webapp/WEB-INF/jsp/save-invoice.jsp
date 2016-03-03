@@ -90,7 +90,7 @@
 									$(document).ready(function() {
 
 									 	var strTime = '${invoice.time}';
-										var time = moment(strTime).format('DD/MM/YYYY hh:mm A');
+										var time = moment(strTime).format('MM/DD/YYYY hh:mm A');
 										console.log("strTime: "+strTime);
 										console.log("time: "+time);
 

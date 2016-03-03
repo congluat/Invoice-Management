@@ -16,7 +16,7 @@
 }
 </style>
 
-<div class="row">
+<div class="row" style="margin-top: 10px; margin-left: 5px; margin-right: 5px">
 	<div class="col-md-6 col-md-offset-6">
 		<div class="input-group input-group-lg">
 			<span class="input-group-addon" id="sizing-addon1"><i
@@ -49,9 +49,6 @@
 			}, 200);
 		});
 
-		$('.timeline > li:even').addClass();
-		$('.timeline > li:odd').addClass('timeline-inverted');
-
 		$(".deleteButton").click(function() {
 			var id = $(this).parents("li").attr("id");
 
@@ -69,7 +66,7 @@
 
 
 
-	<div style="margin-top: 10px; margin-left: 5px; margin-right: 5px">
+	<div class="col-md-12">
 		<div ng-controller="InvoiceController">
 
 
@@ -78,7 +75,7 @@
 
 			<ul class="timeline">
 
-				<li ng-repeat="i in invoices | searchFor:searchString"><img
+				<li ng-repeat="i in invoices | searchFor:searchString" ng-class-odd="'timeline-inverted'" ><img
 					class="timeline-badge" height="50px" width="50px" alt="not found"
 					ng-src="<c:url value='/resources/logo/'/>{{i.category.logo}}"
 					onError="this.onerror=null;this.src='<c:url value='/resources/logo/abc.png'/>';">
@@ -87,7 +84,7 @@
 					<div class="timeline-panel" style="background-color: #ffecb3">
 					</c:if> <c:if test="{{!invoice.isWarning}}">	
 					</c:if> --%>
-					<div class="timeline-panel">
+					<div class="timeline-panel" ng-mouseenter="hover(i)" ng-mouseleave="hover(i)">
 						<div class="col-md-8">
 							<div class="timeline-heading">
 								<h4 class="timeline-title">{{i.name}}</h4>
@@ -123,7 +120,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-12 more-info">
+						<div class="col-md-12 more-info" showonhoverparent>
 							{{i.comment}}
 							<div ng-repeat="img in i.photos">
 								<img class="col-md-4" alt="not found"

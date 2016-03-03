@@ -1,17 +1,17 @@
 (function() {
 	var app = angular.module('app', []);
-	
+
 	// Create the instant search filter
 
-	app.filter('searchFor', function(){
+	app.filter('searchFor', function($filter) {
 
 		// All filters must return a function. The first parameter
 		// is the data that is to be filtered, and the second is an
 		// argument that may be passed with a colon (searchFor:searchString)
 
-		return function(arr, searchString){
+		return function(arr, searchString) {
 
-			if(!searchString){
+			if (!searchString) {
 				return arr;
 			}
 
@@ -20,10 +20,26 @@
 			searchString = searchString.toLowerCase();
 
 			// Using the forEach helper method to loop through the array
-			angular.forEach(arr, function(item){
+			angular.forEach(arr, function(item) {
 
-				if((item.name.toLowerCase().indexOf(searchString) != -1)
-						){
+				if ((item.name.toLowerCase().indexOf(searchString) != -1)) {
+					result.push(item);
+				}
+				
+				var time = new Date(item.time);
+				time = time;
+				time = $filter('date')(time, "dd/MM/yyyy");
+				time = time.toLowerCase();
+				//console.log(time);
+				if((time.indexOf(searchString) != -1)){
+					
+					//console.log(searchString);
+					result.push(item);
+				}
+				if ((item.comment.toLowerCase().indexOf(searchString) != -1)) {
+					result.push(item);
+				}
+				if ((item.place.toLowerCase().indexOf(searchString) != -1)) {
 					result.push(item);
 				}
 
@@ -33,7 +49,18 @@
 		};
 
 	});
-
+	app.directive('showonhoverparent', function() {
+		return {
+			link : function(scope, element, attrs) {
+				element.parent().bind('mouseenter', function() {
+					element.show();
+				});
+				element.parent().bind('mouseleave', function() {
+					element.hide();
+				});
+			}
+		};
+	});
 	app.controller('InvoiceController', function($scope, $http) {
 
 		var now = new Date();
@@ -63,10 +90,10 @@
 			});
 
 		};
+
 		
-		//Search Invoice
-		
-		
+
+		// Search Invoice
 
 	});
 
