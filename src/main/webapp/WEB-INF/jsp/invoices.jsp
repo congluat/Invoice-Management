@@ -85,10 +85,10 @@
 								<p>{{i.amount|currency}}</p>
 							</div>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-2 col-xs-2">
 							<a href="Invoice/edit/{{i.id}}" class="btn btn-success">Edit</a>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-2 col-xs-2">
 							<a class="btn btn-danger deleteButton" data-toggle="modal"
 								data-target="#confirm-delete" ng-click="deleteFunc(i.id)">Delete</a>
 						</div>
