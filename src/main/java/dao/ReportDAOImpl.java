@@ -1,7 +1,9 @@
 package dao;
 
+import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -35,6 +37,22 @@ public class ReportDAOImpl implements ReportDAO {
 		query.addEntity(Invoice.class);
 		query.setParameter("cateId", cateId);
 		query.setParameter("month", nofMonth);
+		List<Invoice> invoiceList = query.list();
+		session.close();
+		return invoiceList;
+	}
+
+
+	@Override
+	public List<Invoice> getInvoiceD2D(Integer cateId, String startdate, String endate) {
+		Session session = sessionFactory.openSession();
+		String hql = "FROM Invoice Where category.id =:cateId "
+				+" AND time BETWEEN :startdate AND :endate"
+				+" Order By time ASC";
+		Query query = session.createQuery(hql);
+		query.setParameter("cateId", cateId);
+		query.setParameter("startdate",new Date(startdate));
+		query.setParameter("endate", new Date(endate));
 		List<Invoice> invoiceList = query.list();
 		session.close();
 		return invoiceList;

@@ -1,5 +1,7 @@
 package service;
 
+
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,11 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public List<Invoice> getInoiveByCateMonths(Integer cateId, int nofMonth) {
 		return reportDao.getInvoiceByCateandMonths(cateId, nofMonth);
+	}
+
+	@Override
+	public List<Invoice> getInvoiceD2D(Integer cateId, String startdate, String endate) {
+		return reportDao.getInvoiceD2D(cateId, startdate, endate);
 	}
 
 }

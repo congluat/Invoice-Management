@@ -283,5 +283,54 @@
 		});
 
 	});
-
+	
+	
+	
+	app.controller('myCtrl', function ($scope, $http){
+		$scope.showtable = false;
+		$scope.getInvoice = function (){
+			$http.get("Report/cateM?category="+$scope.category + "&month=" + $scope.month)
+						.then(function(response){
+							$scope.sum = 0;
+							data = response.data;
+							if (data.length > 0) {
+								$scope.cateName = data[0].category.name;
+								$scope.showtable = true;
+								$scope.invoices = data;
+								$scope.count = data.length;
+								$(data).each(function(i,item) {
+									$scope.sum += item.amount;
+								})
+							} else {
+								$scope.showtable = false;
+								$scope.count = 0;
+								$scope.sum = 0;
+							}
+						});
+		}
+		
+		$scope.getInvoiced2d = function (){
+			$http.get("Report/cateMd2d?cateId="+$scope.category 
+					+"&startdate=" + $scope.startdate + "&endate=" + $scope.endate)
+						.then(function (response) {
+							$scope.sum = 0;
+							data = response.data;
+							if (data.length > 0) {
+								$scope.cateName = data[0].category.name;
+								$scope.showtable = true;
+								$scope.invoices = data;
+								$scope.count = data.length;
+								$(data).each(function(i,item) {
+									$scope.sum += item.amount;
+								})
+							} else {
+								$scope.showtable = false;
+								$scope.count = 0;
+								$scope.sum = 0;
+							}
+						})
+		}
+	});
+	
+	
 })();
