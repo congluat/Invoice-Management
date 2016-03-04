@@ -37,7 +37,7 @@ public class HomeController {
 	
 	@RequestMapping(value = { "/getSearchValue" }, method = RequestMethod.POST, produces = "application/json")
 
-	public @ResponseBody List<Invoice> getEmployees(@RequestParam String term, HttpServletResponse response) {
+	public @ResponseBody List<Invoice> getInvoices(@RequestParam String term, HttpServletResponse response) {
 		return suggestSearchResult(term);
 	}
 
