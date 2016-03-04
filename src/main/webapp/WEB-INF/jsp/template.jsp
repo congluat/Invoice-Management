@@ -12,15 +12,31 @@
 <title>${title}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- -------------Jquery------------- -->
-<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="<c:url value='/resources/js/jquery-1.12.0.min.js'/>"></script>
 <link rel="stylesheet"
-	href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<script
-	src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"></script>
+	href="<c:url value='/resources/css/jquery-ui.css'/>">
+<script src="<c:url value='/resources/js/jquery-ui.min.js'/>"></script>
 
 
 <!-- -----------------Bootstrap--------------------------  -->
 
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+	crossorigin="anonymous">
+<!-- 
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+	integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+	crossorigin="anonymous">
+ -->
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+	crossorigin="anonymous"></script>
 <!-- Material Design fonts -->
 <link rel="stylesheet" type="text/css"
 	href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
@@ -28,8 +44,6 @@
 	href="//fonts.googleapis.com/icon?family=Material+Icons">
 
 <!-- Bootstrap -->
-<link rel="stylesheet" type="text/css"
-	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
 <!-- Bootstrap Material Design -->
 
@@ -38,17 +52,12 @@
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/resources/dist/css/bootstrap-material-design.css'/>">
 
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-	crossorigin="anonymous"></script>
-
 <script type="text/javascript"
 	src="<c:url value='/resources/dist/js/material.min.js'/>"></script>
 <script type="text/javascript"
 	src="<c:url value='/resources/dist/js/ripples.min.js'/>"></script>
 
-	<!--
+<!--
 <script type="text/javascript">
 	$.material.init()
 </script>
@@ -90,15 +99,16 @@
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-cookies.js"></script>
 <script type="text/javascript"
 	src="<c:url value='/resources/js/angular_app.js' />"></script>
-	
+
 <script type="text/javascript">
 	$(document).ready(function() {
-		<!--$.material.init();-->
-/* 
-		$('.modal').modal({
-			backdrop : 'static',
-			keyboard : false
-		}) */
+		<!--$.material.init();
+		-->
+		/* 
+		 $('.modal').modal({
+		 backdrop : 'static',
+		 keyboard : false
+		 }) */
 	});
 </script>
 
@@ -126,7 +136,7 @@
 
 <body ng-app="app">
 
- 	<jsp:include page="_navbar.jsp"></jsp:include>
+	<jsp:include page="_navbar.jsp"></jsp:include>
 
 	<jsp:include page="_modalAddUser.jsp"></jsp:include>
 
@@ -143,13 +153,16 @@
 
 
 		<div class="add-button-area">
-			<a href="Invoice/save" id="add-button" class="btn btn-primary btn-circle btn-lg">
-				<i class="glyphicon glyphicon-plus"></i>
-			</a> <a href="Category/save" class="btn btn-primary btn-circle btn-lg addCate"
+			<a href="Invoice/save" id="add-button"
+				class="btn btn-primary btn-circle btn-lg"> <i
+				class="glyphicon glyphicon-plus"></i>
+			</a> <a href="Category/save"
+				class="btn btn-primary btn-circle btn-lg addCate"
 				data-toggle="tooltip" data-placement="left"
 				title="Add
 				Category"> <i class="glyphicon glyphicon-tasks"></i>
-			</a> <a href="Invoice/save" class="btn btn-primary btn-circle btn-lg addInvoice"
+			</a> <a href="Invoice/save"
+				class="btn btn-primary btn-circle btn-lg addInvoice"
 				data-toggle="tooltip" data-placement="left" title="Add Invoice">
 				<i class="glyphicon glyphicon-tags"></i>
 			</a>

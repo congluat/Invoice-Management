@@ -96,7 +96,7 @@
 						<div class="col-md-12 more-info" showonhoverparent>
 							{{i.comment}}
 							<div ng-repeat="img in i.photos">
-								<img class="col-md-4" alt="not found"
+								<img class="col-md-4 col-xs-4" alt="not found"
 									ng-src="<c:url value='/resources/images/'/>{{img.photo}}">
 							</div>
 						</div></li>

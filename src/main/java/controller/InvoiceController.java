@@ -118,7 +118,7 @@ public class InvoiceController {
 		if (result.hasErrors()) {
 			return "save-invoice";
 		}
-		Category cate = invoice.getCategory();		
+		Category cate = invoice.getCategory();
 		invoice.setCategory(cate);
 		invoice.setUser((User) session.getAttribute("user"));
 		invoice.setIsWarning(invoiceService.checkIsWarning(invoice.getAmount(), cate));
@@ -159,16 +159,14 @@ public class InvoiceController {
 		List<Category> categories = cateService.getAllCategories();
 		return categories;
 	}
-	
-//	@RequestMapping(value = "/search/{id}", method = RequestMethod.GET)
-//	public String Search(@PathVariable String id, ModelMap model) {
-//		List<Invoice> invoices = new ArrayList<Invoice>();
-//		System.out.println(id);
-//		invoices = invoiceService.getInvoiceAttribute(id);
-//		System.out.println(invoices.size());
-//		model.addAttribute("invoices", invoices);
-//		model.addAttribute("title", "Invoices");
-//		return "invoices_new";
-//		
-//	}
+
+	@RequestMapping(value = "/search/{id}", method = RequestMethod.GET)
+	public String Search(@PathVariable String id, ModelMap model) {
+		List<Invoice> invoices = new ArrayList<Invoice>();
+		// invoices = invoiceService.getInvoiceAttribute(id);
+		model.addAttribute("invoices", invoices);
+		model.addAttribute("title", "Invoices");
+		return "invoices_new";
+
+	}
 }

@@ -3,6 +3,50 @@
 
 	// Create the instant search filter
 
+	app.controller("HomeController", function($scope, $http) {
+
+		var now = new Date();
+		var month = parseInt(now.getMonth()) + 1;
+		var year = parseInt(now.getYear()) + 1900;
+
+		$scope.getTotalAmount = function() {
+
+			$http.get("getAmountThisMonth/" + month + "-" + year).success(
+					function(response) {
+						console.log(response);
+						response = response + '';
+						console.log("length: " + response.length);
+						if (response.length >= 9) {
+							response = response.substring(0,
+									response.length - 6);
+							response = response + " billions";
+						} else if (response.length >= 6) {
+							response = response.substring(0,
+									response.length - 6);
+							response = response + " milions";
+						} else if (response.length >= 3) {
+							response = response.substring(0,
+									response.length - 3);
+							response = response + " thousands";
+						}
+
+						$scope.amount = response;
+
+					});
+
+		};
+
+		$scope.getToltalInvoiceThisMonth = function() {
+
+			$http.get("Invoice/getByMonth/" + month + "-" + year).success(
+					function(response) {
+
+						$scope.month = response.length;
+					});
+		};
+
+	});
+
 	app.filter('searchFor', function($filter, $http) {
 
 		// All filters must return a function. The first parameter
