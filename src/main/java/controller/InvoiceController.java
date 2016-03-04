@@ -150,8 +150,8 @@ public class InvoiceController {
 	
 	@RequestMapping(value = "/search/{id}", method = RequestMethod.GET)
 	public String Search(@PathVariable String id, ModelMap model) {
-		List<Invoice> invoices = new ArrayList<Invoice>();		
-		invoices = invoiceService.getInvoiceAttribute(id);	
+		List<Invoice> invoices = new ArrayList<Invoice>();
+		invoices = invoiceService.getInvoiceAttribute(id);
 		model.addAttribute("invoices", invoices);
 		model.addAttribute("title", "Invoices");
 		return "invoices_new";
