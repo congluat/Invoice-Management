@@ -40,7 +40,24 @@
 
 		<div class="col-md-12">
 
-
+			<div class="modal fade" id="confirm-delete" tabindex="-1"
+				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="vertical-alignment-helper">
+					<div class="modal-dialog vertical-align-center">
+						<div class="modal-content"
+							style="width: 400px; border-radius: 10px;">
+							<div class="modal-header">Confirm</div>
+							<div class="modal-body">Do you want to delete</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Cancel</button>
+								<a class="btn btn-danger btn-ok" style="margin-top: 0px"
+									href="Invoice/delete/{{deleteId}}">Delete</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
 			<h1>{{month}}</h1>
 
@@ -68,31 +85,14 @@
 								<p>{{i.amount|currency}}</p>
 							</div>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-2 col-xs-2">
 							<a href="Invoice/edit/{{i.id}}" class="btn btn-success">Edit</a>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-2 col-xs-2">
 							<a class="btn btn-danger deleteButton" data-toggle="modal"
-								data-target="#confirm-delete">Delete</a>
+								data-target="#confirm-delete" ng-click="deleteFunc(i.id)">Delete</a>
 						</div>
-						<div class="modal fade" id="confirm-delete" tabindex="-1"
-							role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-							<div class="vertical-alignment-helper">
-								<div class="modal-dialog vertical-align-center">
-									<div class="modal-content"
-										style="width: 400px; border-radius: 10px;">
-										<div class="modal-header">Confirm</div>
-										<div class="modal-body">Do you want to delete</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default"
-												data-dismiss="modal">Cancel</button>
-											<a class="btn btn-danger btn-ok" style="margin-top: 0px"
-												href="Invoice/delete/{{i.id}}">Delete</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+
 						<div class="col-md-12 more-info" showonhoverparent>
 							{{i.comment}}
 							<div ng-repeat="img in i.photos">

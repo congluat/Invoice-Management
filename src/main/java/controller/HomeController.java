@@ -6,17 +6,14 @@ import java.util.ArrayList;
 
 import java.util.Date;
 
-import java.util.Comparator;
-
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Required;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,41 +56,28 @@ public class HomeController{
 		return amount;
 	}
 
-	// @RequestMapping(value = { "/getSearchValue" }, method =
-	// RequestMethod.POST, produces = "application/json")
-	//
-	// public @ResponseBody List<Invoice> getEmployees(@RequestParam String
-	// term, HttpServletResponse response) {
-	// return suggestSearchResult(term);
-	// }
-	//
-	// private List<Invoice> suggestSearchResult(String empName) {
-	//
-	// //List<Category> result = new ArrayList<Category>();
-	// List<Invoice> result = new ArrayList<Invoice>();
-	// result = invoiceService.getInvoiceAttribute(empName);
-	// // iterate a list and filter by tagName
-	// return result;
-	// }
+	@RequestMapping(value = { "/getSearchValue" }, method = RequestMethod.POST, produces = "application/json")
 
 	public @ResponseBody List<Invoice> getInvoices(@RequestParam String term, HttpServletResponse response) {
-		return suggestSearchResult(term);
-	}
 
-	private List<Invoice> suggestSearchResult(String empName) {
+ 		return suggestSearchResult(term);
 
-		// List<Category> result = new ArrayList<Category>();
-		List<Invoice> result = new ArrayList<Invoice>();
-		// result = invoiceService.getInvoiceAttribute(empName);
-		
-		for (int i = result.size()-2; i >= 0; i--) {
-			   if (result.get(i).getName().equals(result.get(i+1).getName()))
-			          result.remove(i+1);
-			  }
-		
-		
-		// iterate a list and filter by tagName
-		return result;
-	}
+ 	}
+
+ 	private List<Invoice> suggestSearchResult(String empName) {
+
+ 		 
+
+ 		//List<Category> result = new ArrayList<Category>();
+
+ 		List<Invoice> result = new ArrayList<Invoice>();
+
+ 		result = invoiceService.getInvoiceAttribute(empName);
+
+ 		// iterate a list and filter by tagName
+
+ 		return result;
+
+ 	}
 
 }

@@ -18,7 +18,7 @@
 						console.log("length: " + response.length);
 						if (response.length >= 9) {
 							response = response.substring(0,
-									response.length - 6);
+									response.length - 9);
 							response = response + " billions";
 						} else if (response.length >= 6) {
 							response = response.substring(0,
@@ -114,6 +114,11 @@
 		};
 	});
 	app.controller('InvoiceController', function($scope, $http) {
+
+		$scope.deleteFunc = function(id) {
+			$scope.deleteId = id;
+
+		};
 
 		var now = new Date();
 		var month = parseInt(now.getMonth()) + 1;
