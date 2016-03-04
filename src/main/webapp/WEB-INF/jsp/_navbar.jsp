@@ -10,56 +10,59 @@
 		<a class="navbar-brand" href="dashboard"><i
 			class="glyphicon glyphicon-home"></i> Invoice Management</a>
 	</div>
-	
+
 	<!-- /.search-function -->
-	
-            <div class="ui-widget col-xs-2" style="margin-top: 6px; margin-left: 17px">
-                
-                <input class="form-control" id="invoice" placeholder="Search Invoice(s) ..."/>
-            </div>
-        
-	
-	<script>
-	
-</script>
-	
-	<script>
-	$(document).ready(function() {
-	    $(function() {
-	        $("#invoice").autocomplete({
-	        	
-	            source: function(request, response) {
-	                $.ajax({
-	                    url: "/InvoiceManagement/getSearchValue",
-	                    type: "POST",
-	                    data: { term: request.term },
 
-	                    dataType: "json",
+	<div class="ui-widget col-xs-2"
+		style="margin-top: 6px; margin-left: 17px">
 
-	                    success: function(data) {
-	                    	response($.map(data, function(v,i){
-	                    	    return {
-	                    	                label: v.name,
-	                    	                value: v.name
-	                    	               };
-	                    	}));
-	                    	
-	                    	
-	                    }
-	               });              
-	            } ,
-	        	
-	            select: function(event, ui) {
-	            	var page = document.getElementById('invoice').value;
-	            	window.location = "Invoice/search/" + page;
-	            },
-	        	
-	        
-	        });
-	    });
-	});
-	</script>	
-	
+		<input class="form-control" id="invoice"
+			placeholder="Search Invoice(s) ..." />
+	</div>
+
+
+	<script>
+		
+	</script>
+
+	<script>
+		$(document).ready(function() {
+			$(function() {
+				$("#invoice").autocomplete({
+
+					source : function(request, response) {
+						$.ajax({
+							url : "/InvoiceManagement/getSearchValue",
+							type : "POST",
+							data : {
+								term : request.term
+							},
+
+							dataType : "json",
+
+							success : function(data) {
+								response($.map(data, function(v, i) {
+									return {
+										label : v.name,
+										value : v.id
+									};
+								}));
+
+							}
+						});
+					},
+
+					select : function(event, ui) {
+
+						var page = document.getElementById('invoice').value;
+						window.location = "Invoice/edit/" + ui.item.value;
+					},
+
+				});
+			});
+		});
+	</script>
+
 	<!-- /.navbar-header -->
 
 	<ul class="nav navbar-top-links navbar-right notibar">
@@ -227,17 +230,15 @@
 		<!-- /.dropdown -->
 		<li class="dropdown"><a class="dropdown-toggle"
 			data-toggle="dropdown" href="#"> <i
-				class="glyphicon glyphicon-user"></i>
-				<c:choose>
+				class="glyphicon glyphicon-user"></i> <c:choose>
 					<c:when test="${empty sessionScope['user']}">
 						${sessionScope['user'].name}
 					</c:when>
-				</c:choose>
-				<i class="glyphicon glyphicon-menu-down"></i>
+				</c:choose> <i class="glyphicon glyphicon-menu-down"></i>
 		</a>
 			<ul class="dropdown-menu dropdown-user">
-				<li><a href="user/profile"><i class="fa fa-user fa-fw"></i> User
-						Profile</a></li>
+				<li><a href="user/profile"><i class="fa fa-user fa-fw"></i>
+						User Profile</a></li>
 				<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
 				<li class="divider"></li>
 				<li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i>
@@ -255,8 +256,8 @@
 						class="glyphicon glyphicon-dashboard"></i> Dashboard</a></li>
 
 
-				<li><a href="Invoice/"><i
-						class="glyphicon glyphicon-tasks"></i> Invoices</a></li>
+				<li><a href="Invoice/"><i class="glyphicon glyphicon-tasks"></i>
+						Invoices</a></li>
 				<li><a href="Category/listCategories"><i
 						class="glyphicon glyphicon-tags"></i> Category</a></li>
 				<li><a href="#"><i class="glyphicon glyphicon-stats"></i>

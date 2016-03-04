@@ -128,4 +128,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 		//invoice ko bi canh bao
 		return false;
 	}
+	
+
+	@Override
+	public List<Invoice> getInvoiceAttribute(String attribute) {
+		return invoiceDao.getInvoiceAttribute(attribute);
+	}
 }

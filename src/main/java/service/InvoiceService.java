@@ -18,7 +18,7 @@ public interface InvoiceService {
 	public Boolean create(Invoice invoice);
 
 	public void update(Invoice invoice);
-	
+
 	public void delete(Invoice invoice);
 
 	public List<Invoice> getAllInvoicesByMonth(Date date);
@@ -26,14 +26,15 @@ public interface InvoiceService {
 	public Map<String, List<Invoice>> getInvoicesGroupbyMonth();
 
 	public List<String> getAllDayMonth();
-	
+
 	public List<Invoice> getTop10IsNotWarning(Category category);
-	
+
 	public double calAverage(Category category);
-	
+
 	public List<Invoice> getTop10(Category category);
-	
-	public boolean checkIsWarning(BigDecimal amount , Category category);
-	
-	
+
+	public boolean checkIsWarning(BigDecimal amount, Category category);
+
+	public List<Invoice> getInvoiceAttribute(String attribute);
+
 }
