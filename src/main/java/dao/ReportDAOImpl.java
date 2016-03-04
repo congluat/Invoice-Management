@@ -2,7 +2,7 @@ package dao;
 
 import java.util.List;
 
-import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +27,16 @@ public class ReportDAOImpl implements ReportDAO {
 	@Override
 	public List<Invoice> getInvoiceByCateandMonths(Integer cateId, int nofMonth) {
 		Session session = sessionFactory.openSession();
-		//String hql = "FROM Invoice Where category.id =:cateId"
-			//	+ " and MONTH(time) between :startMonth AND :endMonth ";
-		String hql = "FROM Invoice Where category.id =:cateId";
-			//+ " and time between DATE_SUB(current_date(), INTERVAL 7 DAY) AND current_date() ";
+		String sql = "Select * FROM Invoices Where categoryId =:cateId"
+				+ " AND Date(time) between DATE_SUB(current_date(), INTERVAL :month MONTH) AND current_date() "
+				+ " Order By time ASC";
 		
-		Query query = session.createQuery(hql);
+		SQLQuery query = session.createSQLQuery(sql);
+		query.addEntity(Invoice.class);
 		query.setParameter("cateId", cateId);
-		//query.setParameter("startMonth",4 );
-		//query.setParameter("endMonth", 9);
-		
+		query.setParameter("month", nofMonth);
 		List<Invoice> invoiceList = query.list();
+		session.close();
 		return invoiceList;
 	}
 

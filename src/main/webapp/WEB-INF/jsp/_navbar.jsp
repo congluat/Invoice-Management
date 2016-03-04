@@ -13,7 +13,7 @@
 	
 	<!-- /.search-function -->
 	
-            <div class="ui-widget col-xs-2" style="margin-top: 6px; margin-left: 10px">
+            <div class="ui-widget col-xs-2" style="margin-top: 6px; margin-left: 17px">
                 
                 <input class="form-control" id="invoice" placeholder="Search Invoice(s) ..."/>
             </div>
