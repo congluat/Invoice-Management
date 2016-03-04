@@ -28,13 +28,15 @@ public class ReportDAOImpl implements ReportDAO {
 	public List<Invoice> getInvoiceByCateandMonths(Integer cateId, int nofMonth) {
 		Session session = sessionFactory.openSession();
 		String sql = "Select * FROM Invoices Where categoryId =:cateId"
-				+ " AND Date(time) between DATE_SUB(current_date(), INTERVAL :month MONTH) AND current_date() ";
+				+ " AND Date(time) between DATE_SUB(current_date(), INTERVAL :month MONTH) AND current_date() "
+				+ " Order By time ASC";
 		
 		SQLQuery query = session.createSQLQuery(sql);
 		query.addEntity(Invoice.class);
 		query.setParameter("cateId", cateId);
 		query.setParameter("month", nofMonth);
 		List<Invoice> invoiceList = query.list();
+		session.close();
 		return invoiceList;
 	}
 

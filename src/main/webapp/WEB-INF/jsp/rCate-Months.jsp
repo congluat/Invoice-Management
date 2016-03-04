@@ -16,16 +16,25 @@ function getInvoice() {
 		dataType: 'json',
 		success: function(response) {
 			var content = '';
+			var count = 0;
+			var sum = 0;
+			var cateName ='';
 			$(response).each(function(index,item){
-				content += '<tr><td>'+(index+1)+'</td>'
+				cateName = item.category.name;
+				count = index + 1;
+				content += '<tr><td>'+count+'</td>'
 								+'<td>'+item.name+'</td>'
 								+'<td>'+item.amount+'</td>'
-								+'<td>'+item.time+'</td>'
+								+'<td>'+formatDate(new Date(item.time))+'</td>'
 								+'<td>'+item.place+'</td>'
 								+'<td>'+item.comment+'</td></tr>';
+				sum += item.amount;
 			})
 			
 			$('.table tbody').html(content);
+			$('#select').html('Select Category: <b>' + cateName + '</b><br>Number of Month: <b>' + month +'</b>');
+			$('#count').html('<strong>COUNT: </strong>'+count);
+			$('#sum').html('<strong>SUM: </strong>' + formatCurrency(sum));
 		},
 		error:function (xhr, ajaxOptions, thrownError){
 		    if(xhr.status==400) {
@@ -34,7 +43,24 @@ function getInvoice() {
 		}
 	})
 }	
-		
+function formatDate(date) {
+	  var hours = date.getHours();
+	  var minutes = date.getMinutes();
+	  var ampm = hours >= 12 ? 'pm' : 'am';
+	  hours = hours % 12;
+	  hours = hours ? hours : 12; // the hour '0' should be '12'
+	  minutes = minutes < 10 ? '0'+minutes : minutes;
+	  var strTime = hours + ':' + minutes + ' ' + ampm;
+	  return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
+	}
+function formatCurrency(total) {
+    var neg = false;
+    if(total < 0) {
+        neg = true;
+        total = Math.abs(total);
+    }
+    return (neg ? "-$" : '$') + parseFloat(total, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString();
+}	
 </script>
 
 <div class="container">
@@ -48,7 +74,7 @@ function getInvoice() {
     </c:forEach>
   </select>
 </div>
-Input Before of Month: <input type="text" id="month">
+Input Number of Month: <input type="number" id="month" value="1">
 <br>
 <button type="button" onclick="getInvoice()" class="btn btn-primary">SEARCH</button>
 </div>
@@ -56,7 +82,10 @@ Input Before of Month: <input type="text" id="month">
 
 
 <div class="row col-md-10">
-  <h2>Table</h2>                                                                                      
+  <h2>Invoice Infomation</h2>
+  <div id="select"></div>
+  <div id="count"></div>
+  <div id="sum"></div>                                                                                      
   <div class="table-responsive">          
   <table class="table">
     <thead>
