@@ -9,14 +9,17 @@ import dao.ReportDAO;
 import model.Invoice;
 
 public class ReportServiceImpl implements ReportService {
-	
+
 	@Autowired
 	@Qualifier("reportDao")
 	ReportDAO reportDao;
-	
+
 	@Override
 	public List<Invoice> getInoiveByCateMonths(Integer cateId, int nofMonth) {
 		return reportDao.getInvoiceByCateandMonths(cateId, nofMonth);
 	}
 
+	public List<Object[]> getCategoryByMonth(int month, int year) {
+		return reportDao.getCategoryByMonth(month, year);
+	}
 }

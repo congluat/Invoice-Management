@@ -1,29 +1,41 @@
 <script type="text/javascript"
 	src="https://www.gstatic.com/charts/loader.js"></script>
 
+<script
+	src="http://bouil.github.io/angular-google-chart/ng-google-chart.js"></script>
 <script type="text/javascript">
-	google.charts.load('current', {
-		packages : [ 'corechart' ]
-	});
-	google.charts.setOnLoadCallback(drawChart);
-
-	function drawChart() {
-		// Define the chart to be drawn.
-		var data = new google.visualization.DataTable();
-		data.addColumn('string', 'Element');
-		data.addColumn('number', 'Percentage');
-		data.addRows([ [ 'Nitrogen', 0.78 ], [ 'Oxygen', 0.21 ],
-				[ 'Other', 0.01 ] ]);
-
-		// Instantiate and draw the chart.
-		var chart = new google.visualization.PieChart(document
-				.getElementById('myPieChart'));
-		chart.draw(data, null);
-	}
+	/* 	google.charts.load('current', {
+	 packages : [ 'corechart' ]
+	 });
+	 google.charts.setOnLoadCallback(drawChart); */
 </script>
+
 <script type="text/javascript">
-	
+	/* 	$(window).resize(function() {
+	 drawChart();
+	 }); */
 </script>
-<div>
-	<div id="myPieChart" />
+
+<style>
+.drawChartDiv {
+	min-height: 500px;
+	height: 100%;
+	width: 100%;
+	margin: auto;
+	background: #fff;
+	text-align: center
+}
+
+.chartWrapper {
+	min-height: 500px;
+	height: 100%;
+	width: 100%;
+	margin: auto;
+	background: #fff;
+	text-align: center
+}
+</style>
+<div class="chartWrapper" ng-controller=ChartController>
+	<div google-chart chart="chartObject"
+		style="height: 600px; width: 100%;"></div>
 </div>
