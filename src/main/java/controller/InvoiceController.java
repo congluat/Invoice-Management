@@ -5,7 +5,9 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -160,13 +162,100 @@ public class InvoiceController {
 		return categories;
 	}
 
-	@RequestMapping(value = "/search/{id}", method = RequestMethod.GET)
-	public String Search(@PathVariable String id, ModelMap model) {
+	@RequestMapping(value = "/search/{empname}/{attribute}", method = RequestMethod.GET)
+	public String Search(@PathVariable String empname, @PathVariable String attribute, ModelMap model) {
 		List<Invoice> invoices = new ArrayList<Invoice>();
-		// invoices = invoiceService.getInvoiceAttribute(id);
+		if(attribute.equals("Name")||attribute.equals("Place"))
+			invoices = sortList(invoiceService.getInvoiceAttribute(attribute, empname), empname, attribute);
+		if(attribute.equals("Amount")||attribute.equals("IsWarning")||attribute.equals("Time"))
+			invoices = invoiceService.getInvoiceAttribute(attribute, empname);
 		model.addAttribute("invoices", invoices);
 		model.addAttribute("title", "Invoices");
 		return "invoices_new";
 
+	}
+	
+	private List<Invoice> sortList(List<Invoice> tmp, String empname, String attribute){
+		List<Invoice> invoices = new ArrayList<Invoice>();	
+		String[] str = new String[tmp.size()];
+		int i = 0;
+		for(Invoice t: tmp){
+			if(attribute.equals("Name"))
+				str[i] = t.getName();
+			if(attribute.equals("Place"))
+				str[i] = t.getPlace();
+			i++;
+		}
+		
+		Arrays.sort(str, new Comparator<String>() {
+
+		    @Override
+		    public int compare(String o1, String o2) {
+
+		            boolean o1_has_keyWord = o1.indexOf(empname.charAt(0)) == 0 && o1.contains(empname);
+		            boolean o2_has_keyWord = o2.indexOf(empname.charAt(0)) == 0 && o2.contains(empname);
+
+		        if (o1_has_keyWord && o2_has_keyWord)
+		        {
+		            if (o1.length() == o2.length())
+		            {
+		                if (o1.indexOf(empname.charAt(0)) > o2.indexOf(empname.charAt(0))){
+		                    return -1;
+		                }
+		                else if (o1.indexOf(empname.charAt(0)) == o2.indexOf(empname.charAt(0))){
+		                    return 0;
+		                }
+		                else
+		                {
+		                    return 1;
+		                }
+		            }
+		            else if (o1.length() > o2.length())
+		            {
+		                    return 1;
+		            }
+		            else 
+		            {
+		                return -1;
+		            }
+		        }
+		        else if (o1_has_keyWord && !o2_has_keyWord)
+		        {
+		            return -1;
+		        }
+		        else if (!o1_has_keyWord && o2_has_keyWord)
+		        {
+		            return 1;
+		        }
+
+
+		        return 0;
+
+		            //Code to sort array according to need
+
+		    }
+		});
+		
+		for(int j = 0; j<str.length; j++){
+			for(Invoice t: tmp){
+				if(attribute.equals("Name")){
+					if(t.getName().equals(str[j])){
+						invoices.add(t);
+						tmp.remove(t);
+						break;
+					}
+				}
+				if(attribute.equals("Place")){
+					if(t.getPlace().equals(str[j])){
+						invoices.add(t);
+						tmp.remove(t);
+						break;
+					}
+				}				
+			}
+		}
+		
+		
+		return invoices;
 	}
 }
