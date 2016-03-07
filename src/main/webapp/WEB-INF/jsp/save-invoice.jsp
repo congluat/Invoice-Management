@@ -331,7 +331,7 @@ $(document).ready(function() {
 				<div class="panel-heading text-center"></div>
 				<div class="panel-body">
 					<div>
-						<form id="dropzone-form" action="Upload/upload"
+						<form:form modelAttribute="invoice" id="dropzone-form" action="Upload/upload/${invoice.id}"
 							class="dropzone" enctype="multipart/form-data">
 							<div class="dz-default dz-message file-dropzone text-center ">
 
@@ -340,7 +340,7 @@ $(document).ready(function() {
 							</div>
 							<!-- this is were the previews should be shown. -->
 							<div class="dropzone-previews"></div>
-						</form>
+						</form:form>
 						<hr>
 						<button id="upload-button" class="btn btn-primary">
 							<span class="glyphicon glyphicon-upload"></span> Upload
