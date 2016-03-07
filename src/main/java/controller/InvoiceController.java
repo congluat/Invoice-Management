@@ -124,8 +124,7 @@ public class InvoiceController {
 		invoice.setCategory(cate);
 		invoice.setUser((User) session.getAttribute("user"));
 		invoice.setIsWarning(invoiceService.checkIsWarning(invoice.getAmount(), cate));
-		invoiceService.create(invoice);
-		session.setAttribute("invoice", invoice);
+		invoiceService.create(invoice);	
 		model.addAttribute("edit", false);
 		return "_modalAddImages";
 	}
@@ -135,7 +134,7 @@ public class InvoiceController {
 		Invoice invoice = invoiceService.getById(id);
 		model.addAttribute("invoice", invoice);
 		model.addAttribute("edit", true);
-		session.setAttribute("invoice", invoice);
+		//session.setAttribute("invoice", invoice);
 		return "save-invoice";
 	}
 
