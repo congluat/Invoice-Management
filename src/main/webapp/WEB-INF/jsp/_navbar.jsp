@@ -11,57 +11,137 @@
 			class="glyphicon glyphicon-home"></i> Invoice Management</a>
 	</div>
 
-	<!-- /.search-function -->
-
-	<div class="ui-widget col-xs-2"
-		style="margin-top: 6px; margin-left: 17px">
-
-		<input class="form-control" id="invoice"
-			placeholder="Search Invoice(s) ..." />
-	</div>
-
-
+	<!-- /.search-function -->	
+    <div id="form" class="ui-widget col-xs-2" style="margin-top: 6px; margin-left: 20px">    	             
+        <input class="form-control" id="invoice" placeholder="Search Invoice(s) ..."/>      
+    </div>
+     <div class="ui-widget col-xs-2" style="margin-top: 6px; margin-left: 0px"> 
+        <select id="select" class="form-control">
+		  <option>Name</option>
+		  <option>Place</option>
+		  <option>Amount</option>
+		  <option>Time</option>
+		  <option>IsWarning</option>
+		</select>
+    </div> 
+	
 	<script>
-		
+	$(document).ready(function() {		
+	    $(function() {
+	
+	$("#invoice").autocomplete(
+			
+			{			   
+			    source : function(request, response) {
+			    	//alert($("#select").val());
+			        $.ajax({                            
+			        	url: "/InvoiceManagement/getSearchValue/" + $("#select").val(),
+	                    type: "POST",
+	                    data: { term: request.term },
+			            dataType : "json",
+			            success : function(data) {
+			                response($.map(data, function(item, i) {
+			                	if(i<10){
+				                	if($("#select").val() == "Name"){
+					                    return {			                    	
+					                        value : item.name,
+					                        desc : item.name
+					                    }
+				                	}
+				                	if($("#select").val() == "Place"){
+				                		return {			                    	
+					                        value : item.place,
+					                        desc : item.place
+					                    }
+				                	}	
+			                	}
+			                }));
+			            }
+			        });
+			    },
+			    focus : function(event, ui) {                   
+			        $(this).val(ui.item.name);
+			        return false;
+			    },
+			    select: function (event, ui) {
+			    	 var name = ui.item.value;
+			    	 var attribute = document.getElementById('select').value;	   
+			    	 window.location = "Invoice/search/" + name + "/" + attribute;
+	            }
+			}).data("uiAutocomplete")._renderItem = function(ul, item) {			
+				var str = item.desc;				
+				var page = document.getElementById('invoice').value;
+				var reg = new RegExp(page, "gi");
+				var res = str.replace(reg, page.fontcolor("blue").bold().fontsize(4));					
+			    return $("<li></li>").data("item.autocomplete", item).append(
+			    		res)
+			    .appendTo(ul);
+			}; 
+	    });
+	});
+	
 	</script>
-
+	
 	<script>
-		$(document).ready(function() {
-			$(function() {
-				$("#invoice").autocomplete({
+	
+	$("#form").keydown(function(event) {
+	    if (event.keyCode == 13){
+	    	var name = document.getElementById('invoice').value;
+	    	var attribute = document.getElementById('select').value;	    	
+        	window.location = "Invoice/search/" + name + "/" + attribute;
+	    }
+	        
+	});		
+	
+	/*$(document).ready(function() {
+	    $(function() {
+	        $("#invoice").autocomplete({
+	        	
+	            source: function(request, response) {
+	                $.ajax({
+	                    url: "/InvoiceManagement/getSearchValue",
+	                    type: "POST",
+	                    data: { term: request.term },
 
-					source : function(request, response) {
-						$.ajax({
-							url : "/InvoiceManagement/getSearchValue",
-							type : "POST",
-							data : {
-								term : request.term
-							},
+	                    dataType: "json",
 
-							dataType : "json",
-
-							success : function(data) {
-								response($.map(data, function(v, i) {
-									return {
-										label : v.name,
-										value : v.id
-									};
-								}));
-
-							}
-						});
-					},
-
-					select : function(event, ui) {
-
-						var page = document.getElementById('invoice').value;
-						window.location = "Invoice/edit/" + ui.item.value;
-					},
-
-				});
-			});
-		});
-	</script>
+	                    success: function(data) {
+	                    	response($.map(data, function(item){
+	                    		//if(i<5){
+	                    			//var t = v.name;
+		                    	    return {
+		                    	    	
+		                    	    			value: item.name,
+		                    	                desc: item.id
+		                    	               }
+	                    	   // };
+	                    	}));
+	                    	
+	                    	
+	                    }
+	                    
+	               });              
+	            } ,
+	        	
+	           
+	            select: function(event, ui) {
+	            	var page = document.getElementById('invoice').value;
+	            	window.location = "Invoice/search/" + page;
+	            },
+	        	
+	            
+	        
+	        }).each(function() {
+	            $(this).data('autocomplete')._renderItem = function(ul, item) {
+	            	 return $("<li></li>").data("item.autocomplete", item).append(
+	            		        "<a><strong>" + item.name + " </strong>" + item.id + "</a>")
+	            		    .appendTo(ul);
+	            };
+	        });
+	        
+	    });
+	});*/
+	</script>	
 
 	<!-- /.navbar-header -->
 

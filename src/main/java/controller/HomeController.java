@@ -56,28 +56,43 @@ public class HomeController{
 		return amount;
 	}
 
-	@RequestMapping(value = { "/getSearchValue" }, method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = { "/getSearchValue/{attribute}" }, method = RequestMethod.POST, produces = "application/json")
 
-	public @ResponseBody List<Invoice> getInvoices(@RequestParam String term, HttpServletResponse response) {
-
- 		return suggestSearchResult(term);
-
- 	}
-
- 	private List<Invoice> suggestSearchResult(String empName) {
-
- 		 
-
- 		//List<Category> result = new ArrayList<Category>();
-
- 		List<Invoice> result = new ArrayList<Invoice>();
-
- 		result = invoiceService.getInvoiceAttribute(empName);
-
- 		// iterate a list and filter by tagName
-
- 		return result;
+	public @ResponseBody List<Invoice> getInvoices(@PathVariable String attribute, @RequestParam String term, HttpServletResponse response) {
+		if(attribute.equals("Name")||attribute.equals("Place"))
+			return suggestSearchResult(attribute ,term);
+		return null;
 
  	}
+
+	private List<Invoice> suggestSearchResult(String attribute, String empName) {
+		List<Invoice> result = new ArrayList<Invoice>();
+		result = invoiceService.getInvoiceAttribute(attribute, empName);
+		System.out.println(attribute + empName);
+		
+		int count = result.size();
+		for (int i = 0; i < count; i++) {
+			for (int j = i + 1; j < count; j++) {
+				if (attribute.equals("Name")) {
+					if (result.get(i).getName().equals(result.get(j).getName())) {
+						result.remove(j--);
+						count--;
+					}
+				}
+				if (attribute.equals("Place")) {
+					if (result.get(i).getPlace().equals(result.get(j).getPlace())) {
+						result.remove(j--);
+						count--;
+					}
+				}
+			}
+		}
+		// iterate a list and filter by tagName
+		System.out.println(result.size());
+		return result;
+
+	}
+ 	
+ 	
 
 }
