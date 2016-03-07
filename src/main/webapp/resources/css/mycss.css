@@ -19,7 +19,8 @@
 }
 
 #page-wrapper {
-	margin-top: 2em;
+	margin-top: 0px;
+	padding: 20px;
 }
 
 .add-button-area {

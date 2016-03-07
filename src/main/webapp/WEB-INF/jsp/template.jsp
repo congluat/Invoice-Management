@@ -99,7 +99,8 @@
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-cookies.js"></script>
 <script type="text/javascript"
 	src="<c:url value='/resources/js/angular_app.js' />"></script>
-
+<script
+	src="http://bouil.github.io/angular-google-chart/ng-google-chart.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		<!--$.material.init();

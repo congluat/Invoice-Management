@@ -1,7 +1,77 @@
 (function() {
-	var app = angular.module('app', []);
 
-	// Create the instant search filter
+	var app = angular.module('app', [ 'googlechart' ]);
+
+	app.controller('ChartController', function($scope, $http) {
+
+		var now = new Date();
+		var month = parseInt(now.getMonth()) + 1;
+		var year = parseInt(now.getYear()) + 1900;
+
+		$scope.timeInput = month + "/" + year;
+		console.log("TimInput Init: " + $scope.timeInput);
+		$scope.timeChanged = function() {
+			console.log($("#inputDateTime").val());
+			$scope.timeInput = $("#inputDateTime").val();
+			$scope.drawChart();
+		};
+
+		$scope.$watch('timeInput', function() {
+			console.log($scope.timeInput);
+			$scope.drawChart();
+		});
+
+		$scope.drawChart = function() {
+
+			// var time = console.log($("#inputDateTime").val());
+			console.log("time" + $scope.timeInput);
+			var month = parseInt($scope.timeInput.split('/')[0]);
+			var year = parseInt($scope.timeInput.split('/')[1]);
+
+			console.log("month/year: " + month + "/" + year);
+
+			var chart1 = {};
+			chart1.type = "PieChart";
+			chart1.data = [ [ 'Component', 'amount' ] ];
+			// [ 'Component', 'amount' ]
+			$http.get("Revenue/category-in-month/" + month + "-" + year)
+					.success(function(response) {
+
+						// chart1.data = response;
+						for (var i = 0; i < response.length; i++) {
+							chart1.data.push(response[i]);
+						}
+
+						// console.log(response);
+						console.log(chart1);
+						chart1.options = {
+							displayExactValues : true,
+							/*
+							 * width : 600, height : 600,
+							 */
+							is3D : false,
+							chartArea : {
+								left : 10,
+								top : 10,
+								bottom : 0,
+								height : "100%"
+							}
+						};
+
+						chart1.formatters = {
+							number : [ {
+								columnNum : 1,
+								pattern : "$ #,##0.00"
+							} ]
+						};
+
+						$scope.chart = chart1;
+						console.log("Chart drawed");
+					});
+
+		};
+
+	});
 
 	app.controller("HomeController", function($scope, $http) {
 
@@ -46,7 +116,7 @@
 		};
 
 	});
-
+	// Create the instant search filter
 	app.filter('searchFor', function($filter, $http) {
 
 		// All filters must return a function. The first parameter
