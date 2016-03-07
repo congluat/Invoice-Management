@@ -2,6 +2,8 @@
 
 	var app = angular.module('app', [ 'googlechart' ]);
 
+	// https://github.com/angular-google-chart/angular-google-chart
+
 	app.controller('ChartController', function($scope, $http) {
 
 		var now = new Date();
@@ -20,9 +22,10 @@
 			console.log($scope.timeInput);
 			$scope.drawChart();
 		});
-
+		$scope.chartData = [];
 		$scope.drawChart = function() {
-
+			$("#content").hide();
+			$("#loading").show();
 			// var time = console.log($("#inputDateTime").val());
 			console.log("time" + $scope.timeInput);
 			var month = parseInt($scope.timeInput.split('/')[0]);
@@ -32,17 +35,19 @@
 
 			var chart1 = {};
 			chart1.type = "PieChart";
-			chart1.data = [ [ 'Component', 'amount' ] ];
+			chart1.data = [ [ 'Category', 'amount' ] ];
 			// [ 'Component', 'amount' ]
 			$http.get("Revenue/category-in-month/" + month + "-" + year)
 					.success(function(response) {
-
+						$("#loading").hide();
+						$scope.Total = 0;
 						// chart1.data = response;
 						for (var i = 0; i < response.length; i++) {
 							chart1.data.push(response[i]);
+							$scope.Total += response[i][1];
 						}
 
-						// console.log(response);
+						console.log($scope.Total);
 						console.log(chart1);
 						chart1.options = {
 							displayExactValues : true,
@@ -54,7 +59,8 @@
 								left : 10,
 								top : 10,
 								bottom : 0,
-								height : "100%"
+								height : "100%",
+								width : "100%"
 							}
 						};
 
@@ -67,6 +73,7 @@
 
 						$scope.chart = chart1;
 						console.log("Chart drawed");
+						$("#content").show();
 					});
 
 		};
@@ -86,15 +93,15 @@
 						console.log(response);
 						response = response + '';
 						console.log("length: " + response.length);
-						if (response.length >= 9) {
+						if (response.length > 9) {
 							response = response.substring(0,
 									response.length - 9);
 							response = response + " billions";
-						} else if (response.length >= 6) {
+						} else if (response.length > 6) {
 							response = response.substring(0,
 									response.length - 6);
 							response = response + " milions";
-						} else if (response.length >= 3) {
+						} else if (response.length > 3) {
 							response = response.substring(0,
 									response.length - 3);
 							response = response + " thousands";
@@ -358,54 +365,53 @@
 		});
 
 	});
-	
-	
-	
-	app.controller('myCtrl', function ($scope, $http){
+
+	app.controller('myCtrl', function($scope, $http) {
 		$scope.showtable = false;
-		$scope.getInvoice = function (){
-			$http.get("Report/cateM?category="+$scope.category + "&month=" + $scope.month)
-						.then(function(response){
-							$scope.sum = 0;
-							data = response.data;
-							if (data.length > 0) {
-								$scope.cateName = data[0].category.name;
-								$scope.showtable = true;
-								$scope.invoices = data;
-								$scope.count = data.length;
-								$(data).each(function(i,item) {
-									$scope.sum += item.amount;
-								})
-							} else {
-								$scope.showtable = false;
-								$scope.count = 0;
-								$scope.sum = 0;
-							}
-						});
+		$scope.getInvoice = function() {
+			$http.get(
+					"Report/cateM?category=" + $scope.category + "&month="
+							+ $scope.month).then(function(response) {
+				$scope.sum = 0;
+				data = response.data;
+				if (data.length > 0) {
+					$scope.cateName = data[0].category.name;
+					$scope.showtable = true;
+					$scope.invoices = data;
+					$scope.count = data.length;
+					$(data).each(function(i, item) {
+						$scope.sum += item.amount;
+					})
+				} else {
+					$scope.showtable = false;
+					$scope.count = 0;
+					$scope.sum = 0;
+				}
+			});
 		}
-		
-		$scope.getInvoiced2d = function (){
-			$http.get("Report/cateMd2d?cateId="+$scope.category 
-					+"&startdate=" + $scope.startdate + "&endate=" + $scope.endate)
-						.then(function (response) {
+
+		$scope.getInvoiced2d = function() {
+			$http.get(
+					"Report/cateMd2d?cateId=" + $scope.category + "&startdate="
+							+ $scope.startdate + "&endate=" + $scope.endate)
+					.then(function(response) {
+						$scope.sum = 0;
+						data = response.data;
+						if (data.length > 0) {
+							$scope.cateName = data[0].category.name;
+							$scope.showtable = true;
+							$scope.invoices = data;
+							$scope.count = data.length;
+							$(data).each(function(i, item) {
+								$scope.sum += item.amount;
+							})
+						} else {
+							$scope.showtable = false;
+							$scope.count = 0;
 							$scope.sum = 0;
-							data = response.data;
-							if (data.length > 0) {
-								$scope.cateName = data[0].category.name;
-								$scope.showtable = true;
-								$scope.invoices = data;
-								$scope.count = data.length;
-								$(data).each(function(i,item) {
-									$scope.sum += item.amount;
-								})
-							} else {
-								$scope.showtable = false;
-								$scope.count = 0;
-								$scope.sum = 0;
-							}
-						})
+						}
+					})
 		}
 	});
-	
-	
+
 })();

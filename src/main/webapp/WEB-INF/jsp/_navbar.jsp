@@ -11,142 +11,172 @@
 			class="glyphicon glyphicon-home"></i> Invoice Management</a>
 	</div>
 
-	<!-- /.search-function -->	
-    <div id="form" class="ui-widget col-xs-2" style="margin-top: 6px; margin-left: 20px">    	             
-        <input class="form-control" id="invoice" placeholder="Search Invoice(s) ..."/>      
-    </div>
-     <div class="ui-widget col-xs-2" style="margin-top: 6px; margin-left: 0px"> 
-        <select id="select" class="form-control">
-		  <option>Name</option>
-		  <option>Place</option>
-		  <option>Amount</option>
-		  <option>Time</option>
-		  <option>IsWarning</option>
-		</select>
-    </div> 
-	
 	<script>
-	$(document).ready(function() {		
-	    $(function() {
-	
-	$("#invoice").autocomplete(
-			
-			{			   
-			    source : function(request, response) {
-			    	//alert($("#select").val());
-			        $.ajax({                            
-			        	url: "/InvoiceManagement/getSearchValue/" + $("#select").val(),
-	                    type: "POST",
-	                    data: { term: request.term },
-			            dataType : "json",
-			            success : function(data) {
-			                response($.map(data, function(item, i) {
-			                	if(i<10){
-				                	if($("#select").val() == "Name"){
-					                    return {			                    	
-					                        value : item.name,
-					                        desc : item.name
-					                    }
-				                	}
-				                	if($("#select").val() == "Place"){
-				                		return {			                    	
-					                        value : item.place,
-					                        desc : item.place
-					                    }
-				                	}	
-			                	}
-			                }));
-			            }
-			        });
-			    },
-			    focus : function(event, ui) {                   
-			        $(this).val(ui.item.name);
-			        return false;
-			    },
-			    select: function (event, ui) {
-			    	 var name = ui.item.value;
-			    	 var attribute = document.getElementById('select').value;	   
-			    	 window.location = "Invoice/search/" + name + "/" + attribute;
-	            }
-			}).data("uiAutocomplete")._renderItem = function(ul, item) {			
-				var str = item.desc;				
-				var page = document.getElementById('invoice').value;
-				var reg = new RegExp(page, "gi");
-				var res = str.replace(reg, page.fontcolor("blue").bold().fontsize(4));					
-			    return $("<li></li>").data("item.autocomplete", item).append(
-			    		res)
-			    .appendTo(ul);
-			}; 
-	    });
-	});
-	
+		$(document)
+				.ready(
+						function() {
+							$(function() {
+
+								$("#invoice")
+										.autocomplete(
+
+												{
+													source : function(request,
+															response) {
+														//alert($("#select").val());
+														$
+																.ajax({
+																	url : "/InvoiceManagement/getSearchValue/"
+																			+ $(
+																					"#select")
+																					.val(),
+																	type : "POST",
+																	data : {
+																		term : request.term
+																	},
+																	dataType : "json",
+																	success : function(
+																			data) {
+																		response($
+																				.map(
+																						data,
+																						function(
+																								item,
+																								i) {
+																							if (i < 10) {
+																								if ($(
+																										"#select")
+																										.val() == "Name") {
+																									return {
+																										value : item.name,
+																										desc : item.name
+																									}
+																								}
+																								if ($(
+																										"#select")
+																										.val() == "Place") {
+																									return {
+																										value : item.place,
+																										desc : item.place
+																									}
+																								}
+																							}
+																						}));
+																	}
+																});
+													},
+													focus : function(event, ui) {
+														$(this).val(
+																ui.item.name);
+														return false;
+													},
+													select : function(event, ui) {
+														var name = ui.item.value;
+														var attribute = document
+																.getElementById('select').value;
+														window.location = "Invoice/search/"
+																+ name
+																+ "/"
+																+ attribute;
+													}
+												}).data("uiAutocomplete")._renderItem = function(
+										ul, item) {
+									var str = item.desc;
+									var page = document
+											.getElementById('invoice').value;
+									var reg = new RegExp(page, "gi");
+									var res = str.replace(reg, page.fontcolor(
+											"blue").bold().fontsize(4));
+									return $("<li></li>").data(
+											"item.autocomplete", item).append(
+											res).appendTo(ul);
+								};
+							});
+						});
 	</script>
-	
+
 	<script>
-	
-	$("#form").keydown(function(event) {
-	    if (event.keyCode == 13){
-	    	var name = document.getElementById('invoice').value;
-	    	var attribute = document.getElementById('select').value;	    	
-        	window.location = "Invoice/search/" + name + "/" + attribute;
-	    }
-	        
-	});		
-	
-	/*$(document).ready(function() {
-	    $(function() {
-	        $("#invoice").autocomplete({
-	        	
-	            source: function(request, response) {
-	                $.ajax({
-	                    url: "/InvoiceManagement/getSearchValue",
-	                    type: "POST",
-	                    data: { term: request.term },
+		$("#form").keydown(function(event) {
+			if (event.keyCode == 13) {
+				var name = document.getElementById('invoice').value;
+				var attribute = document.getElementById('select').value;
+				window.location = "Invoice/search/" + name + "/" + attribute;
+			}
 
-	                    dataType: "json",
+		});
 
-	                    success: function(data) {
-	                    	response($.map(data, function(item){
-	                    		//if(i<5){
-	                    			//var t = v.name;
-		                    	    return {
-		                    	    	
-		                    	    			value: item.name,
-		                    	                desc: item.id
-		                    	               }
-	                    	   // };
-	                    	}));
-	                    	
-	                    	
-	                    }
-	                    
-	               });              
-	            } ,
-	        	
-	           
-	            select: function(event, ui) {
-	            	var page = document.getElementById('invoice').value;
-	            	window.location = "Invoice/search/" + page;
-	            },
-	        	
-	            
-	        
-	        }).each(function() {
-	            $(this).data('autocomplete')._renderItem = function(ul, item) {
-	            	 return $("<li></li>").data("item.autocomplete", item).append(
-	            		        "<a><strong>" + item.name + " </strong>" + item.id + "</a>")
-	            		    .appendTo(ul);
-	            };
-	        });
-	        
-	    });
-	});*/
-	</script>	
+		/*$(document).ready(function() {
+		    $(function() {
+		        $("#invoice").autocomplete({
+		        	
+		            source: function(request, response) {
+		                $.ajax({
+		                    url: "/InvoiceManagement/getSearchValue",
+		                    type: "POST",
+		                    data: { term: request.term },
 
+		                    dataType: "json",
+
+		                    success: function(data) {
+		                    	response($.map(data, function(item){
+		                    		//if(i<5){
+		                    			//var t = v.name;
+			                    	    return {
+			                    	    	
+			                    	    			value: item.name,
+			                    	                desc: item.id
+			                    	               }
+		                    	   // };
+		                    	}));
+		                    	
+		                    	
+		                    }
+		                    
+		               });              
+		            } ,
+		        	
+		           
+		            select: function(event, ui) {
+		            	var page = document.getElementById('invoice').value;
+		            	window.location = "Invoice/search/" + page;
+		            },
+		        	
+		            
+		        
+		        }).each(function() {
+		            $(this).data('autocomplete')._renderItem = function(ul, item) {
+		            	 return $("<li></li>").data("item.autocomplete", item).append(
+		            		        "<a><strong>" + item.name + " </strong>" + item.id + "</a>")
+		            		    .appendTo(ul);
+		            };
+		        });
+		        
+		    });
+		});*/
+	</script>
+	<style>
+		.searchForm{
+			background: inherit;
+			color: #ddd;
+			border-bottom: 1px solid #ccc;
+			font-size: 18px;
+			height: 38px;
+			background-size: 0 2px, 100% 1px;
+		}
+	</style>
 	<!-- /.navbar-header -->
 
-	<ul class="nav navbar-top-links navbar-right notibar">
-		<li class="dropdown"><a class="dropdown-toggle"
+	<ul class="nav navbar-top-links navbar-right notibar row">
+		<li><input class="searchForm" id="invoice"
+			placeholder="Search Invoice(s) ..." /></li>
+		<li><select id="select" style="color: #ddd" class="form-control">
+				<option>Name</option>
+				<option>Place</option>
+				<option>Amount</option>
+				<option>Time</option>
+				<option>IsWarning</option>
+		</select></li>
+		<!-- <li class="dropdown"><a class="dropdown-toggle"
 			data-toggle="dropdown" href="#"> <i
 				class="glyphicon glyphicon-envelope"></i> <i
 				class="glyphicon glyphicon-menu-down"></i>
@@ -185,8 +215,8 @@
 				<li><a class="text-center" href="#"> <strong>Read
 							All Messages</strong> <i class="fa fa-angle-right"></i>
 				</a></li>
-			</ul> <!-- /.dropdown-messages --></li>
-		<!-- /.dropdown -->
+			</ul> /.dropdown-messages</li>
+		/.dropdown
 		<li class="dropdown"><a class="dropdown-toggle"
 			data-toggle="dropdown" href="#"> <i
 				class="glyphicon glyphicon-tasks"></i> <i
@@ -260,8 +290,8 @@
 				<li><a class="text-center" href="#"> <strong>See
 							All Tasks</strong> <i class="fa fa-angle-right"></i>
 				</a></li>
-			</ul> <!-- /.dropdown-tasks --></li>
-		<!-- /.dropdown -->
+			</ul> /.dropdown-tasks</li>
+		/.dropdown
 		<li class="dropdown"><a class="dropdown-toggle"
 			data-toggle="dropdown" href="#"> <i
 				class="glyphicon glyphicon-bell"></i> <i
@@ -306,8 +336,8 @@
 				<li><a class="text-center" href="#"> <strong>See
 							All Alerts</strong> <i class="fa fa-angle-right"></i>
 				</a></li>
-			</ul> <!-- /.dropdown-alerts --></li>
-		<!-- /.dropdown -->
+			</ul> /.dropdown-alerts</li>
+		/.dropdown -->
 		<li class="dropdown"><a class="dropdown-toggle"
 			data-toggle="dropdown" href="#"> <i
 				class="glyphicon glyphicon-user"></i> <c:choose>
@@ -319,10 +349,10 @@
 			<ul class="dropdown-menu dropdown-user">
 				<li><a href="user/profile"><i class="fa fa-user fa-fw"></i>
 						User Profile</a></li>
-				<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
+				<!-- <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
 				<li class="divider"></li>
 				<li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i>
-						Logout</a></li>
+						Logout</a></li> -->
 			</ul> <!-- /.dropdown-user --></li>
 		<!-- /.dropdown -->
 	</ul>

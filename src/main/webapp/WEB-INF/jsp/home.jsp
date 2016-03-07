@@ -6,7 +6,7 @@
 	<h1>Dashboard</h1>
 
 	<div class="col-lg-3 col-md-6">
-		<div class="panel panel-primary" ng-init="getTotalAmount()">
+		<div class="panel panel-total" ng-init="getTotalAmount()">
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-xs-3">
@@ -31,7 +31,7 @@
 
 
 	<div class="col-lg-3 col-md-6">
-		<div class="panel panel-primary" ng-init="getToltalInvoiceThisMonth()">
+		<div class="panel panel-invoice" ng-init="getToltalInvoiceThisMonth()">
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-xs-3">

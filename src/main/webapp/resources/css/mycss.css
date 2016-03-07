@@ -7,6 +7,30 @@
 	color: #ddd;
 }
 
+.panel-total {
+	background-color: #355C7D;
+}
+
+.panel-total .panel-heading {
+	background-color: #355C7D;
+}
+
+.panel-total .panel-footer {
+	color: #355C7D;
+}
+
+.panel-invoice {
+	background-color: #6C5B7B;
+}
+
+.panel-invoice .panel-heading {
+	background-color: #6C5B7B;
+}
+
+.panel-invoice .panel-footer {
+	color: #6C5B7B;
+}
+
 .nav>li>a:focus, .nav>li>a:hover {
 	text-decoration: none;
 	color: #009688;
