@@ -2,64 +2,75 @@
 
 	var app = angular.module('app', [ 'googlechart' ]);
 
-	app.controller("ChartController", function($scope, $http) {
-		$scope.chartObject = {};
+	app.controller('ChartController', function($scope, $http) {
 
-		$scope.chartObject.type = "PieChart";
+		var now = new Date();
+		var month = parseInt(now.getMonth()) + 1;
+		var year = parseInt(now.getYear()) + 1900;
 
-		$scope.onions = [ {
-			v : "Onions"
-		}, {
-			v : 3
-		}, ];
+		$scope.timeInput = month + "/" + year;
+		console.log("TimInput Init: " + $scope.timeInput);
+		$scope.timeChanged = function() {
+			console.log($("#inputDateTime").val());
+			$scope.timeInput = $("#inputDateTime").val();
+			$scope.drawChart();
+		};
 
-		$http.get("Revenue/test").success(function(response) {
-
-			$scope.chartObject.data = response;
+		$scope.$watch('timeInput', function() {
+			console.log($scope.timeInput);
+			$scope.drawChart();
 		});
 
-//		$scope.chartObject.data = {
-//			"cols" : [ {
-//				id : "t",
-//				label : "Topping",
-//				type : "string"
-//			}, {
-//				id : "s",
-//				label : "Slices",
-//				type : "number"
-//			} ],
-//			"rows" : [ {
-//				c : [ {
-//					v : "Mushrooms"
-//				}, {
-//					v : 3
-//				}, ]
-//			}, {
-//				c : $scope.onions
-//			}, {
-//				c : [ {
-//					v : "Olives"
-//				}, {
-//					v : 31
-//				} ]
-//			}, {
-//				c : [ {
-//					v : "Zucchini"
-//				}, {
-//					v : 1
-//				}, ]
-//			}, {
-//				c : [ {
-//					v : "Pepperoni"
-//				}, {
-//					v : 2
-//				}, ]
-//			} ]
-//		};
+		$scope.drawChart = function() {
 
-		$scope.chartObject.options = {
-			'title' : 'How Much Pizza I Ate Last Night'
+			// var time = console.log($("#inputDateTime").val());
+			console.log("time" + $scope.timeInput);
+			var month = parseInt($scope.timeInput.split('/')[0]);
+			var year = parseInt($scope.timeInput.split('/')[1]);
+
+			console.log("month/year: " + month + "/" + year);
+
+			var chart1 = {};
+			chart1.type = "PieChart";
+			chart1.data = [ [ 'Component', 'amount' ] ];
+			// [ 'Component', 'amount' ]
+			$http.get("Revenue/category-in-month/" + month + "-" + year)
+					.success(function(response) {
+
+						// chart1.data = response;
+						for (var i = 0; i < response.length; i++) {
+							chart1.data.push(response[i]);
+						}
+
+						// console.log(response);
+						console.log(chart1);
+						chart1.options = {
+							displayExactValues : true,
+							/*
+							 * width : 600, height : 600,
+							 */
+							is3D : false,
+							chartArea : {
+								left : 10,
+								top : 10,
+								bottom : 0,
+								height : "100%"
+							}
+						};
+
+						chart1.formatters = {
+							number : [ {
+								columnNum : 1,
+								pattern : "$ #,##0.00"
+							} ]
+						};
+
+						$scope.chart = chart1;
+						console.log("Chart drawed");
+					});
+
 		};
+
 	});
 
 	app.controller("HomeController", function($scope, $http) {
@@ -347,5 +358,54 @@
 		});
 
 	});
-
+	
+	
+	
+	app.controller('myCtrl', function ($scope, $http){
+		$scope.showtable = false;
+		$scope.getInvoice = function (){
+			$http.get("Report/cateM?category="+$scope.category + "&month=" + $scope.month)
+						.then(function(response){
+							$scope.sum = 0;
+							data = response.data;
+							if (data.length > 0) {
+								$scope.cateName = data[0].category.name;
+								$scope.showtable = true;
+								$scope.invoices = data;
+								$scope.count = data.length;
+								$(data).each(function(i,item) {
+									$scope.sum += item.amount;
+								})
+							} else {
+								$scope.showtable = false;
+								$scope.count = 0;
+								$scope.sum = 0;
+							}
+						});
+		}
+		
+		$scope.getInvoiced2d = function (){
+			$http.get("Report/cateMd2d?cateId="+$scope.category 
+					+"&startdate=" + $scope.startdate + "&endate=" + $scope.endate)
+						.then(function (response) {
+							$scope.sum = 0;
+							data = response.data;
+							if (data.length > 0) {
+								$scope.cateName = data[0].category.name;
+								$scope.showtable = true;
+								$scope.invoices = data;
+								$scope.count = data.length;
+								$(data).each(function(i,item) {
+									$scope.sum += item.amount;
+								})
+							} else {
+								$scope.showtable = false;
+								$scope.count = 0;
+								$scope.sum = 0;
+							}
+						})
+		}
+	});
+	
+	
 })();

@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -41,12 +42,31 @@ public class ReportDAOImpl implements ReportDAO {
 	@Override
 	public List<Object[]> getCategoryByMonth(int month, int year) {
 		Session session = sessionFactory.openSession();
-		String hql = "select SUM(amount), category.name  from Invoice  WHERE month(time)= :month AND year(time)= :year GROUP BY(category)";
+		String hql = "select  category.name,SUM(amount)  from Invoice  WHERE month(time)= :month AND year(time)= :year GROUP BY(category)";
 		Query query = session.createQuery(hql);
 		query.setParameter("month", month);
 		query.setParameter("year", year);
 		List<Object[]> list = query.list();
+		session.close();
 		return list;
 	}
+
+	@Override
+	public List<Invoice> getInvoiceD2D(Integer cateId, String startdate, String endate) {
+		Session session = sessionFactory.openSession();
+		String hql = "FROM Invoice Where category.id =:cateId "
+				+" AND time BETWEEN :startdate AND :endate"
+				+" Order By time ASC";
+		Query query = session.createQuery(hql);
+		query.setParameter("cateId", cateId);
+		query.setParameter("startdate",new Date(startdate));
+		query.setParameter("endate", new Date(endate));
+		List<Invoice> invoiceList = query.list();
+		session.close();
+		return invoiceList;
+	}
+
+
+	
 
 }

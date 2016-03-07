@@ -131,7 +131,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	
 
 	@Override
-	public List<Invoice> getInvoiceAttribute(String attribute) {
-		return invoiceDao.getInvoiceAttribute(attribute);
+	public List<Invoice> getInvoiceAttribute(String attribute, String empname) {
+		return invoiceDao.getInvoiceAttribute(attribute, empname);
 	}
 }

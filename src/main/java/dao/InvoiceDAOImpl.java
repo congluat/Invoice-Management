@@ -1,5 +1,7 @@
 package dao;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -182,9 +184,34 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 	}
 	
 	@Override
-	public List<Invoice> getInvoiceAttribute(String attribute) {
-		Session session = sessionFactory.openSession();	
-		String hql = "FROM Invoice where name LIKE '%"+attribute+"%'";		
+	public List<Invoice> getInvoiceAttribute(String attribute, String empname) {
+		Session session = sessionFactory.openSession();
+		String hql = null;
+		if(attribute.equals("Name")||attribute.equals("Place"))
+			hql = "FROM Invoice where "+attribute+" LIKE '%"+empname+"%'";
+		if(attribute.equals("Amount"))
+			hql = "FROM Invoice where "+attribute+" >= "+empname+" ORDER BY Amount ASC";
+		if(attribute.equals("IsWarning"))
+			hql = "FROM Invoice where "+attribute+" = "+empname+" ORDER BY Amount ASC";
+		if(attribute.equals("Time")){
+			SimpleDateFormat formatter = new SimpleDateFormat("MM-yyyy");
+			//String dateInString = "7-08-2013";
+			try {
+
+				Date date = formatter.parse(empname);
+				int month = date.getMonth()+1;
+				int year = date.getYear()+1900;
+				System.out.println("MOTH: "+month);
+				System.out.println("YEAR: "+year);
+				hql = "FROM Invoice WHERE MONTH(Time) = " + month + " AND YEAR(Time) = " + year
+						+ " Order by DAY(Time) DESC";
+				System.out.println(formatter.format(date));
+
+			} catch (ParseException e) {
+				return null;
+			}
+		}
+		System.out.println(hql);
 		List<Invoice> invoices = session.createQuery(hql).list();		
 		session.close();
 		return invoices;

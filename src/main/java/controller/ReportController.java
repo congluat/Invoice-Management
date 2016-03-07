@@ -1,10 +1,13 @@
 package controller;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import model.Category;
@@ -38,16 +42,31 @@ public class ReportController {
 	public String pageGetCateMonths(ModelMap model) {
 		List<Category> cateList = cateService.getAllCategories();
 		model.addAttribute("categories", cateList);
-		return "rCate-Months";
+		return "rCate-Months-ng";
 	}
 	
 	
 	@RequestMapping(value="/cateM", method= RequestMethod.GET)
 	@ResponseBody
 	public List<Invoice> InvoiceCatebyMonths(HttpServletRequest request) {
-		Integer category = Integer.parseInt(request.getParameter("category"));
+		Integer cateId = Integer.parseInt(request.getParameter("category"));
 		Integer month = Integer.parseInt(request.getParameter("month"));
-		List<Invoice> list = reportService.getInoiveByCateMonths(category, month);
+		List<Invoice> list = reportService.getInoiveByCateMonths(cateId, month);
+		return list;
+	}
+	
+	@RequestMapping(value="/cateMd2d", method= RequestMethod.GET)
+	@ResponseBody
+	public List<Invoice> getInvoiced2d(HttpServletRequest request,
+							@RequestParam String startdate,
+							@RequestParam String endate) throws ParseException {
+		Integer cateId = Integer.parseInt(request.getParameter("cateId"));
+//		DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+//		Date fromdate = df.parse(startdate);
+//		Date todate = df.parse(endate);
+//		System.out.println("fromdate: " + fromdate);
+		List<Invoice> list = reportService.getInvoiceD2D(cateId, startdate, endate);
+		System.out.println(list.size());
 		return list;
 	}
 	
