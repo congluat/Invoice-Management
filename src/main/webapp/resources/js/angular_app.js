@@ -361,9 +361,17 @@
 	
 	
 	
-	app.controller('myCtrl', function ($scope, $http){
+	app.controller('myCtrl', function ($scope, $http){		
 		$scope.showtable = false;
 		$scope.getInvoice = function (){
+			$scope.d2d = false;
+			if ($scope.category == null || $scope.month == null) {
+				alert("Please input category and month.");
+			}
+			else if ($scope.category < 0) {
+				alert("Month must great than 0!");
+			}
+			else {
 			$http.get("Report/cateM?category="+$scope.category + "&month=" + $scope.month)
 						.then(function(response){
 							$scope.sum = 0;
@@ -382,9 +390,11 @@
 								$scope.sum = 0;
 							}
 						});
+			}
 		}
 		
 		$scope.getInvoiced2d = function (){
+			$scope.d2d = true;
 			$http.get("Report/cateMd2d?cateId="+$scope.category 
 					+"&startdate=" + $scope.startdate + "&endate=" + $scope.endate)
 						.then(function (response) {
