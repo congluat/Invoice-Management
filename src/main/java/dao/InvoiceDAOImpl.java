@@ -194,22 +194,18 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		if(attribute.equals("IsWarning"))
 			hql = "FROM Invoice where "+attribute+" = "+empname+" ORDER BY Amount ASC";
 		if(attribute.equals("Time")){
-			SimpleDateFormat formatter = new SimpleDateFormat("MM-yyyy");
-			//String dateInString = "7-08-2013";
-			try {
-
-				Date date = formatter.parse(empname);
-				int month = date.getMonth()+1;
-				int year = date.getYear()+1900;
-				System.out.println("MOTH: "+month);
-				System.out.println("YEAR: "+year);
-				hql = "FROM Invoice WHERE MONTH(Time) = " + month + " AND YEAR(Time) = " + year
+			//System.out.println(empname);
+			String[] parts = empname.split("-");
+			if(parts.length == 3){
+				hql = "FROM Invoice WHERE DAY(Time) = " + parts[0] + " AND MONTH(Time) = " + parts[1] + " AND YEAR(Time) = " + parts[2]
 						+ " Order by DAY(Time) DESC";
-				System.out.println(formatter.format(date));
-
-			} catch (ParseException e) {
-				return null;
 			}
+			else if(parts.length == 2){
+				hql = "FROM Invoice WHERE MONTH(Time) = " + parts[0] + " AND YEAR(Time) = " + parts[1]
+						+ " Order by DAY(Time) DESC";
+			}
+			else
+				return null;			
 		}
 		System.out.println(hql);
 		List<Invoice> invoices = session.createQuery(hql).list();		
