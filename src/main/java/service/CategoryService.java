@@ -10,6 +10,8 @@ import model.Category;
 public interface CategoryService {
 	public String create(Category category, MultipartFile file, ModelMap model);
 
+	public String create(Category category);
+	
 	public String update(Category category, MultipartFile file, ModelMap model);
 
 	public void delete(Category category);
