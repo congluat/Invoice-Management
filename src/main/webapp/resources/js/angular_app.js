@@ -82,6 +82,35 @@
 
 	app.controller("HomeController", function($scope, $http) {
 
+		$scope.drawChart = function() {
+
+			$("#content").hide();
+			$("#loading").show();
+			// var time = console.log($("#inputDateTime").val());
+			var now = new Date();
+			var month = parseInt(now.getMonth()) + 1;
+			var year = parseInt(now.getYear()) + 1900;
+
+			console.log("month/year: " + month + "/" + year);
+
+			var chart1 = {};
+			chart1.type = "PieChart";
+			chart1.data = [ [ 'Category', 'amount' ] ];
+			// [ 'Component', 'amount' ]
+			$http.get("Revenue/category-in-month/" + month + "-" + year)
+					.success(function(response) {
+						$("#loading").hide();
+						$scope.Total = 0;
+						for (var i = 0; i < response.length; i++) {
+							chart1.data.push(response[i]);
+							$scope.Total += response[i][1];
+						}
+						$scope.chart = chart1;
+
+					});
+
+		};
+
 		var now = new Date();
 		var month = parseInt(now.getMonth()) + 1;
 		var year = parseInt(now.getYear()) + 1900;
