@@ -2,6 +2,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+
+<link rel="stylesheet" type="text/css"
+	href='<c:url value="/resources/libs/bootstrap-dialog/css/bootstrap-dialog.min.css"/>'>
+<link rel="stylesheet" type="text/css"
+	href='<c:url value="/resources/css/style.css"/>'>
+
 <style>
 .has-error {
 	color: red;
@@ -27,7 +33,86 @@
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 
+<script type="text/javascript">
+$(document).ready(function() {
 
+	$(".file-dropzone").on('dragover', handleDragEnter);
+	$(".file-dropzone").on('dragleave', handleDragLeave);
+	$(".file-dropzone").on('drop', handleDragLeave);
+
+	function handleDragEnter(e) {
+
+		this.classList.add('drag-over');
+	}
+
+	function handleDragLeave(e) {
+
+		this.classList.remove('drag-over');
+	}
+
+	// "dropzoneForm" is the camel-case version of the form id "dropzone-form"
+	
+	Dropzone.options.dropzoneForm = {
+
+		acceptedFiles: "image/jpeg,image/png,image/gif",
+		autoProcessQueue : false,
+		uploadMultiple : true,
+		maxFilesize : 256, // MB
+		parallelUploads : 100,
+		maxFiles : 100,
+		addRemoveLinks : true,
+		previewsContainer : ".dropzone-previews",
+
+		// The setting up of the dropzone
+		init : function() {
+
+			var myDropzone = this;
+
+			// first set autoProcessQueue = false
+			$('#upload-button').on("click", function(e) {
+
+				myDropzone.processQueue();
+			});
+
+			// customizing the default progress bar
+			this.on("uploadprogress", function(file, progress) {
+
+				progress = parseFloat(progress).toFixed(0);
+
+				var progressBar = file.previewElement.getElementsByClassName("dz-upload")[0];
+				progressBar.innerHTML = progress + "%";
+			});
+
+			// displaying the uploaded files information in a Bootstrap dialog		
+			this.on("complete", function(files) {				
+				$('#myModalEditPhoto').modal('hide');
+				var invoiceid = $(".abc").attr("id");
+				var show='';
+				$('#showimages').html(show);
+				
+				/* $('div #showimages > img').remove(); */
+				$.ajax({
+					url : "Upload/getPhoto",
+					type : 'post',
+					data : {
+						id : invoiceid
+					},
+					dataType : 'json',
+					success : function(data) {
+						 $.each(data,function (index) {																													         	
+						 	show+='<div class="col-md-2"> <div class="col-md-12"> <img alt="not found" height="80px" width="80px" src="<%= request.getContextPath()%>/resources/images/'+data[index].photo+'" /></div> <div style="text-align: center;" class="col-md-12" id ='+data[index].id+'> <a class="onclickdelete">Delete</a></div></div> ';						 	
+						 }); 
+						 $('#showimages').html(show);
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+				        alert("some error");
+				    }
+				}); 
+			});		
+		}
+	}
+});
+</script>
 
 <script type="text/javascript">
 	function isNumber(evt) {
@@ -39,11 +124,11 @@
 		return true;
 	}
 </script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$(".onclickdelete").click(function() {
-			var photoid = $(this).parents("div").attr("id");
 
+<script type="text/javascript">
+	$(document).on("click",".onclickdelete",function() {
+		
+			var photoid = $(this).parents("div").attr("id");
 			$.ajax({
 				url : "Upload/delete",
 				type : 'post',
@@ -51,12 +136,9 @@
 					id : photoid
 				},
 				success : function(result) {
-					console.log('delete' + photoid);
 					$('#' + photoid).parents(".col-md-2").remove();
 				}
-
-			});
-		});
+			});		
 	});
 </script>
 
@@ -135,17 +217,6 @@
 														$("#timeInput").attr(
 																"value", time);
 													});
-									/* $("#select-time").ready(function() {
-																										
-											var time = '${invoice.time}';
-											console.log(new Date(time+''));
-											$(function() {
-												$("#select-time").datetimepicker({
-													defaultDate : moment().format(time)
-												});
-											});
-																				
-									}); */
 								</script>
 							</c:if>
 							<label path="time" class="col-md-2 control-label">Time</label>
@@ -193,41 +264,50 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group" id="thisdiv">
-							<c:forEach items="${invoice.photos}" var="p">
-								<div class="col-md-2">
-									<div class="col-md-12">
+						<div class="abc" id ="${invoice.id}">	
+							<c:if test="${edit}">					
+							<script type="text/javascript">
+							$(document).ready(function() {							
+									var invoiceid = $(".abc").attr("id");
+									var show ='';
+									$.ajax({
+										url : "Upload/getPhoto",
+										type : 'post',
+										data : {
+											id : invoiceid
+										},
+										dataType : 'json',
+										success : function(data) {
+											 $.each(data,function (index) {																													         	
+											 	show+='<div class="col-md-2"> <div class="col-md-12"> <img alt="not found" height="80px" width="80px" src="<%= request.getContextPath()%>/resources/images/'+data[index].photo+'" /></div> <div style="text-align: center;" class="col-md-12" id ='+data[index].id+'> <a class="onclickdelete">Delete</a></div></div> ';						 	
+											 }); 
+											 $('#showimages').html(show);
+										},
+										error: function(XMLHttpRequest, textStatus, errorThrown) {
+									        alert("some error");
+									    }
+									}); 								
+							});
+							</script>
+							</c:if>
+						</div>
 
-										<img height="80px" width="80px" alt="not found"
-											src="<c:url value='/resources/images/'/>${p.photo}"
-											onError="this.onerror=null;this.src='<c:url value='/resources/logo/abc.png'/>';">
-									</div>
-									<div class="col-md-12" style="text-align: center;" id='${p.id}'>
-										<a class="onclickdelete">Delete</a>
-									</div>
-
-
-								</div>
-							</c:forEach>
-
+						<div class="form-group" id="showimages">																													
+						</div>								
+						<div>
 							<c:if test="${edit}">
-								<a class="col-md-2" style="padding-top: 14px"
-									href="<c:url value="Upload/show/${invoice.id}" />"><span
+								<a data-toggle="modal" data-target="#myModalEditPhoto"
+									class="col-md-2" style="padding-top: 14px"><span
 									style="font-size: 45px; vertical-align: middle"
 									class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
-
 							</c:if>
 						</div>
 					</div>
-
 					<div class="form-group">
-
 						<div class="col-md-2"></div>
-
 						<div class="col-md-5">
-							<a href="#" class="btn  btn-raised btn-warning"">Cancel</a>
+							<a href="#" class="btn  btn-raised btn-warning">Cancel</a>
 						</div>
-
 						<div class="col-md-5">
 							<button type="submit" class="btn btn-raised btn-success">Submit</button>
 						</div>
@@ -236,8 +316,44 @@
 			</form:form>
 		</div>
 		<div class="col-md-2"></div>
-
 	</div>
 </div>
 
-<%-- http://spring.io/blog/2010/01/25/ajax-simplifications-in-spring-3-0/--%>
+<div class="modal fade" id="myModalEditPhoto" tabindex="-1"
+	role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel">Upload Images</h4>
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading text-center"></div>
+				<div class="panel-body">
+					<div>
+						<form id="dropzone-form" action="Upload/upload"
+							class="dropzone" enctype="multipart/form-data">
+							<div class="dz-default dz-message file-dropzone text-center ">
+
+								<span class="glyphicon glyphicon-paperclip"></span> <span>
+									Drag and drop images here</span><br> <span>OR</span><br> <span>Browse</span>
+							</div>
+							<!-- this is were the previews should be shown. -->
+							<div class="dropzone-previews"></div>
+						</form>
+						<hr>
+						<button id="upload-button" class="btn btn-primary">
+							<span class="glyphicon glyphicon-upload"></span> Upload
+						</button>
+					</div>				
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript"
+	src='<c:url value="/resources/libs/bootstrap-dialog/js/bootstrap-dialog.min.js"/>'></script>
+<script type="text/javascript"
+	src='<c:url value="/resources/libs/dropzone.js"/>'></script>

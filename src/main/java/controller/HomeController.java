@@ -68,7 +68,7 @@ public class HomeController{
 	private List<Invoice> suggestSearchResult(String attribute, String empName) {
 		List<Invoice> result = new ArrayList<Invoice>();
 		result = invoiceService.getInvoiceAttribute(attribute, empName);
-		System.out.println(attribute + empName);
+		//System.out.println(attribute + empName);
 		
 		int count = result.size();
 		for (int i = 0; i < count; i++) {
@@ -88,7 +88,7 @@ public class HomeController{
 			}
 		}
 		// iterate a list and filter by tagName
-		System.out.println(result.size());
+		//System.out.println(result.size());
 		return result;
 
 	}
