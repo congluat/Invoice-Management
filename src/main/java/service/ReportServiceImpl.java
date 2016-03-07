@@ -1,6 +1,5 @@
 package service;
 
-
 import java.util.Date;
 import java.util.List;
 
@@ -28,5 +27,11 @@ public class ReportServiceImpl implements ReportService {
 
 	public List<Object[]> getCategoryByMonth(int month, int year) {
 		return reportDao.getCategoryByMonth(month, year);
+	}
+
+	@Override
+	public List<Object[]> getMoneyUsePerDay(int month, int year) {
+
+		return reportDao.getMoneyUsePerDay(month, year);
 	}
 }

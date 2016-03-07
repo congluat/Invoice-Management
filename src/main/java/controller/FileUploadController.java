@@ -3,6 +3,7 @@ package controller;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
@@ -41,13 +42,7 @@ public class FileUploadController {
 	@Qualifier("photoService")
 	PhotoService photoService;
 
-	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
-	public String displayForm(@PathVariable Integer id ,HttpSession session,ModelMap model) {
-		Invoice invoice = invoiceService.getById(id);
-		model.addAttribute("invoice",invoice);
-		session.setAttribute("invoice", invoice);	
-		return "_modalEditImages";
-	}
+	
 		
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public void upload(MultipartHttpServletRequest request, HttpServletResponse response,
@@ -96,5 +91,13 @@ public class FileUploadController {
 		Photo photo = photoService.findById(id);
 		photoService.delete(photo);		
 	}
-
+	
+	
+	@RequestMapping(value="/getPhoto",method =RequestMethod.POST)
+	@ResponseBody
+	public Collection<Photo> getPhoto(@RequestParam("id") Integer id){
+		Invoice invoice = invoiceService.getById(id);
+		return invoice.getPhotos();
+	}
+	
 }

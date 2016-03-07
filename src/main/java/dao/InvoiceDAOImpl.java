@@ -59,6 +59,8 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 			tx.rollback();
 			e.printStackTrace();
 			return false;
+		} finally {
+			session.close();
 		}
 	}
 
@@ -104,8 +106,7 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		Session session = sessionFactory.openSession();
 		int month = date.getMonth() + 1;
 		int year = date.getYear() + 1900;
-		String hql = "FROM Invoice WHERE MONTH(Time) = " + month + " AND YEAR(Time) = " + year
-				+ " Order by Time DESC";
+		String hql = "FROM Invoice WHERE MONTH(Time) = " + month + " AND YEAR(Time) = " + year + " Order by Time DESC";
 		List<Invoice> list = session.createQuery(hql).list();
 		session.close();
 		return list;
@@ -127,7 +128,8 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 			int y = Integer.valueOf(date[1]);
 			System.out.println(m + "/" + y);
 
-			String hql = "FROM Invoice WHERE month(Time)=" + m + " AND year(Time)=" + y + " ORDER BY time DESC";
+			String hql = "FROM Invoice WHERE month(Time)=" + m + " AND year(Time)=" + y
+					+ " ORDER BY YEAR(Time), MONTH(Time) DESC";
 			List<Invoice> list = session.createQuery(hql).list();
 			map.put(m + "/" + y, list);
 		}
@@ -193,22 +195,16 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		if (attribute.equals("IsWarning"))
 			hql = "FROM Invoice where " + attribute + " = " + empname + " ORDER BY Amount ASC";
 		if (attribute.equals("Time")) {
-			SimpleDateFormat formatter = new SimpleDateFormat("MM-yyyy");
-			// String dateInString = "7-08-2013";
-			try {
-
-				Date date = formatter.parse(empname);
-				int month = date.getMonth() + 1;
-				int year = date.getYear() + 1900;
-				System.out.println("MOTH: " + month);
-				System.out.println("YEAR: " + year);
-				hql = "FROM Invoice WHERE MONTH(Time) = " + month + " AND YEAR(Time) = " + year
+			// System.out.println(empname);
+			String[] parts = empname.split("-");
+			if (parts.length == 3) {
+				hql = "FROM Invoice WHERE DAY(Time) = " + parts[0] + " AND MONTH(Time) = " + parts[1]
+						+ " AND YEAR(Time) = " + parts[2] + " Order by DAY(Time) DESC";
+			} else if (parts.length == 2) {
+				hql = "FROM Invoice WHERE MONTH(Time) = " + parts[0] + " AND YEAR(Time) = " + parts[1]
 						+ " Order by DAY(Time) DESC";
-				System.out.println(formatter.format(date));
-
-			} catch (ParseException e) {
+			} else
 				return null;
-			}
 		}
 		System.out.println(hql);
 		List<Invoice> invoices = session.createQuery(hql).list();

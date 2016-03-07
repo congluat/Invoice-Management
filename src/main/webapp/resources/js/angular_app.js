@@ -1,5 +1,12 @@
 (function() {
+	"use strict";
 
+	google.setOnLoadCallback(function() {
+		angular.bootstrap(document.body, [ 'app' ]);
+	});
+	google.load('visualization', '1', {
+		packages : [ 'corechart' ]
+	});
 	var app = angular.module('app', [ 'googlechart' ]);
 
 	// https://github.com/angular-google-chart/angular-google-chart
@@ -39,7 +46,7 @@
 			// [ 'Component', 'amount' ]
 			$http.get("Revenue/category-in-month/" + month + "-" + year)
 					.success(function(response) {
-						$("#loading").hide();
+
 						$scope.Total = 0;
 						// chart1.data = response;
 						for (var i = 0; i < response.length; i++) {
@@ -73,12 +80,63 @@
 
 						$scope.chart = chart1;
 						console.log("Chart drawed");
+
 						$("#content").show();
+						$("#loading").hide();
 					});
 
 		};
 
 	});
+
+	app.controller('MyCtrl1', function($scope, $http) {
+		var now = new Date();
+		var month = parseInt(now.getMonth()) + 1;
+		var year = parseInt(now.getYear()) + 1900;
+		var tempdata = [ [ 'Day', 'Amount' ] ];
+		var data = new google.visualization.DataTable();
+
+		// google.visualization
+		// .arrayToDataTable([ [ 'Day', 'Amount' ] ]);
+		$http.get("getdialyuse/" + month + "-" + year).success(
+				function(response) {
+					console.log(response);
+					for (var i = 0; i < response.length; i++) {
+
+						tempdata.push(response[i]);
+
+					}
+					// data.addColumn('string','day');
+
+					data = google.visualization.arrayToDataTable(tempdata);
+
+					var options = {
+						hAxis : {
+							title : 'Day',
+							dataType: 'string',
+							Discrete : true
+						},
+						vAxis : {
+							title : 'Money'
+
+						},
+						title : 'Dialy Amount',
+
+						legend : {
+							position : 'top'
+						}
+
+					};
+					var chart = new google.visualization.LineChart(document
+							.getElementById('chartdiv'));
+
+					chart.draw(data, options);
+				});
+
+	});
+	app.controller('MyCtrl2', [ function() {
+
+	} ]);
 
 	app.controller("HomeController", function($scope, $http) {
 
@@ -101,6 +159,7 @@
 					.success(function(response) {
 						$("#loading").hide();
 						$scope.Total = 0;
+
 						for (var i = 0; i < response.length; i++) {
 							chart1.data.push(response[i]);
 							$scope.Total += response[i][1];

@@ -7,8 +7,12 @@
 	color: #ddd;
 }
 
+.panel {
+	
+}
+
 .panel-total {
-	background-color: #355C7D;
+	background-color: #547A82;
 }
 
 .panel-total .panel-heading {
@@ -228,4 +232,32 @@
 
 .isWarning {
 	background-color: #ffecb3;
+}
+
+.navbar, .navbar.navbar-default {
+	background-color: #474747;
+}
+
+.navbar, .navbar.navbar-default {
+	background-color: #474747;
+}
+
+.navbar {
+	background-color: #474747;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+	color: #474747;
+}
+
+a, a:hover, a:focus {
+	color: #474747;
+}
+
+.panel.panel-primary > .panel-heading {
+	background-color: #474747;
+}
+
+.navbar .dropdown-menu li > a:hover, .navbar.navbar-default .dropdown-menu li > a:hover{
+	color: #474747;
 }

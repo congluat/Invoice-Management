@@ -61,10 +61,6 @@ public class ReportController {
 							@RequestParam String startdate,
 							@RequestParam String endate) throws ParseException {
 		Integer cateId = Integer.parseInt(request.getParameter("cateId"));
-//		DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
-//		Date fromdate = df.parse(startdate);
-//		Date todate = df.parse(endate);
-//		System.out.println("fromdate: " + fromdate);
 		List<Invoice> list = reportService.getInvoiceD2D(cateId, startdate, endate);
 		System.out.println(list.size());
 		return list;

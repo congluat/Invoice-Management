@@ -131,10 +131,11 @@ public class InvoiceController {
 	}
 
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-	public String update(@PathVariable Integer id, ModelMap model) {
+	public String update(@PathVariable Integer id, ModelMap model ,HttpSession session) {
 		Invoice invoice = invoiceService.getById(id);
 		model.addAttribute("invoice", invoice);
 		model.addAttribute("edit", true);
+		session.setAttribute("invoice", invoice);
 		return "save-invoice";
 	}
 

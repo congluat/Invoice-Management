@@ -2,10 +2,17 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+
+<!-- ====================SCRIPT================ -->
+
+
 <div ng-controller="HomeController">
-	<h1>Dashboard</h1>
+
+
+	<!--====================CONTENT=============== -->
+	<h1 style="margin-left: 10px" >Dashboard</h1>
 	<div class="col-md-12 row">
-		<div class="col-lg-3 col-md-6">
+		<div class="col-lg-4 col-md-6">
 			<div class="panel panel-total" ng-init="getTotalAmount()">
 				<div class="panel-heading">
 					<div class="row">
@@ -30,7 +37,7 @@
 		</div>
 
 
-		<div class="col-lg-3 col-md-6">
+		<div class="col-lg-4 col-md-6">
 			<div class="panel panel-invoice"
 				ng-init="getToltalInvoiceThisMonth()">
 				<div class="panel-heading">
@@ -56,7 +63,7 @@
 			</div>
 		</div>
 
-		<div class="col-lg-3 col-md-6">
+		<div class="col-lg-4 col-md-6">
 			<div class="panel panel-red">
 				<div class="panel-heading">
 					<div class="row">
@@ -81,12 +88,13 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-12 row" ng-init="drawChart()">
+	<div class="col-md-12 row" style="margin-top: 50px;" ng-init="drawChart()">
 
 		<!-- <div class="col-md-7" google-chart chart="chart" style="min-width: 300px"></div> -->
 		<div class="col-md-5">
 			<table class="table table-striped">
 				<caption>Total: {{Total | currency}}</caption>
+
 				<tr>
 					<th>Category</th>
 					<th>Amount</th>
@@ -98,5 +106,7 @@
 
 			</table>
 		</div>
+		<div ng-controller="MyCtrl1" id="chartdiv" class="col-md-7"
+			style="height: 300px"></div>
 	</div>
 </div>
