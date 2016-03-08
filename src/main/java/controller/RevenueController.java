@@ -33,8 +33,8 @@ public class RevenueController {
 	}
 
 	@RequestMapping(value = "/monthly-statistic", method = RequestMethod.GET)
-	public String InvoiceCatebyMonths(HttpServletRequest request) {
-
+	public String InvoiceCatebyMonths(HttpServletRequest request, ModelMap model) {
+		model.addAttribute("title", "Revenue");
 		return "monthly-statistic";
 	}
 
