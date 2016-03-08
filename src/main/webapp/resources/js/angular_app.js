@@ -11,7 +11,7 @@
 
 	// https://github.com/angular-google-chart/angular-google-chart
 
-	app.controller('ChartController', function($scope, $http) {
+	app.controller('ChartController', function($scope, $http, $window) {
 
 		var now = new Date();
 		var month = parseInt(now.getMonth()) + 1;
@@ -23,13 +23,74 @@
 			console.log($("#inputDateTime").val());
 			$scope.timeInput = $("#inputDateTime").val();
 			$scope.drawChart();
+			$scope.drawDialyChart();
 		};
+
+		$scope.$watch(function() {
+			return $window.innerWidth;
+		}, function(value) {
+			$scope.drawChart();
+			$scope.drawDialyChart();
+		});
 
 		$scope.$watch('timeInput', function() {
 			console.log($scope.timeInput);
 			$scope.drawChart();
 		});
 		$scope.chartData = [];
+
+		$scope.drawDialyChart = function() {
+			$("#content").hide();
+			$("#loading").show();
+			var month = parseInt($scope.timeInput.split('/')[0]);
+			var year = parseInt($scope.timeInput.split('/')[1]);
+			var tempdata = [];
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Day');
+			data.addColumn('number', 'Amount');
+
+			// google.visualization
+			// .arrayToDataTable([ [ 'Day', 'Amount' ] ]);
+			$http.get("Revenue/getdialyuse/" + month + "-" + year).success(
+					function(response) {
+
+						console.log(response);
+						for (var i = 0; i < response.length; i++) {
+
+							tempdata.push(response[i]);
+
+						}
+						// data.addColumn('string','day');
+
+						// data =
+						// google.visualization.arrayToDataTable(tempdata);
+						data.addRows(tempdata);
+						var options = {
+							hAxis : {
+								title : 'Day',
+								Discrete : true
+							},
+							vAxis : {
+								title : 'Money'
+
+							},
+							title : 'Dialy Amount',
+
+							legend : {
+								position : 'top'
+							}
+
+						};
+						var chart = new google.visualization.ColumnChart(
+								document.getElementById('dialyChartDiv'));
+
+						chart.draw(data, options);
+						$("#content").show();
+						$("#loading").hide();
+					});
+
+		};
+
 		$scope.drawChart = function() {
 			$("#content").hide();
 			$("#loading").show();
@@ -89,56 +150,60 @@
 
 	});
 
-	app.controller('MyCtrl1', function($scope, $http) {
-		var now = new Date();
-		var month = parseInt(now.getMonth()) + 1;
-		var year = parseInt(now.getYear()) + 1900;
-		var tempdata = [ [ 'Day', 'Amount' ] ];
-		var data = new google.visualization.DataTable();
+	app.controller("HomeController", function($scope, $http,$window) {
+		$scope.$watch(function() {
+			return $window.innerWidth;
+		}, function(value) {
+			$scope.drawChart();
+			$scope.drawDialyChart();
+		});
+		$scope.drawDialyChart = function() {
+			var now = new Date();
+			var month = parseInt(now.getMonth()) + 1;
+			var year = parseInt(now.getYear()) + 1900;
+			var tempdata = [];
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Day');
+			data.addColumn('number', 'Amount');
+			// google.visualization
+			// .arrayToDataTable([ [ 'Day', 'Amount' ] ]);
+			$http.get("Revenue/getdialyuse/" + month + "-" + year).success(
+					function(response) {
+						console.log(response);
+						for (var i = 0; i < response.length; i++) {
 
-		// google.visualization
-		// .arrayToDataTable([ [ 'Day', 'Amount' ] ]);
-		$http.get("getdialyuse/" + month + "-" + year).success(
-				function(response) {
-					console.log(response);
-					for (var i = 0; i < response.length; i++) {
+							tempdata.push(response[i]);
 
-						tempdata.push(response[i]);
-
-					}
-					// data.addColumn('string','day');
-
-					data = google.visualization.arrayToDataTable(tempdata);
-
-					var options = {
-						hAxis : {
-							title : 'Day',
-							dataType: 'string',
-							Discrete : true
-						},
-						vAxis : {
-							title : 'Money'
-
-						},
-						title : 'Dialy Amount',
-
-						legend : {
-							position : 'top'
 						}
+						// data.addColumn('string','day');
 
-					};
-					var chart = new google.visualization.LineChart(document
-							.getElementById('chartdiv'));
+						// data =
+						// google.visualization.arrayToDataTable(tempdata);
+						data.addRows(tempdata);
+						var options = {
+							hAxis : {
+								title : 'Day',
+								dataType : 'string',
+								Discrete : true
+							},
+							vAxis : {
+								title : 'Money'
 
-					chart.draw(data, options);
-				});
+							},
+							title : 'Dialy Amount',
 
-	});
-	app.controller('MyCtrl2', [ function() {
+							legend : {
+								position : 'top'
+							}
 
-	} ]);
+						};
+						var chart = new google.visualization.LineChart(document
+								.getElementById('dialyChartDiv'));
 
-	app.controller("HomeController", function($scope, $http) {
+						chart.draw(data, options);
+					});
+
+		};
 
 		$scope.drawChart = function() {
 

@@ -144,4 +144,8 @@ caption {
 		</div>
 		<div google-chart chart="chart" class="drawChartDiv col-md-7"></div>
 	</div>
+	<div class="col-md-12">
+		<div ng-init="drawDialyChart()" id="dialyChartDiv"
+			class="drawChartDiv"></div>
+	</div>
 </div>

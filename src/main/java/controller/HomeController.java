@@ -41,12 +41,6 @@ public class HomeController {
 	@Qualifier("reportService")
 	ReportService reportService;
 
-	@RequestMapping(value = { "/getdialyuse/{month}-{year}" }, method = RequestMethod.GET)
-	@ResponseBody
-	public List<Object[]> dialyUse(@PathVariable int month, @PathVariable int year, ModelMap model) {
-		return reportService.getMoneyUsePerDay(month, year);
-	}
-
 	@RequestMapping(value = { "/", "/welcome", "/dashboard" }, method = RequestMethod.GET)
 	public String welcome(ModelMap model) {
 		model.addAttribute("title", "Dashboard");
