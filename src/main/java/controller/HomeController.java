@@ -8,7 +8,6 @@ import java.util.Date;
 
 import java.util.List;
 
-
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +24,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import model.Invoice;
 import service.CategoryService;
 import service.InvoiceService;
+import service.ReportService;
 
 @Controller
-public class HomeController{
+public class HomeController {
 
 	@Autowired
 	@Qualifier("invoiceService")
@@ -36,6 +36,10 @@ public class HomeController{
 	@Autowired
 	@Qualifier("categoryService")
 	CategoryService cateService;
+
+	@Autowired
+	@Qualifier("reportService")
+	ReportService reportService;
 
 	@RequestMapping(value = { "/", "/welcome", "/dashboard" }, method = RequestMethod.GET)
 	public String welcome(ModelMap model) {
@@ -56,20 +60,22 @@ public class HomeController{
 		return amount;
 	}
 
-	@RequestMapping(value = { "/getSearchValue/{attribute}" }, method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = {
+			"/getSearchValue/{attribute}" }, method = RequestMethod.POST, produces = "application/json")
 
-	public @ResponseBody List<Invoice> getInvoices(@PathVariable String attribute, @RequestParam String term, HttpServletResponse response) {
-		if(attribute.equals("Name")||attribute.equals("Place"))
-			return suggestSearchResult(attribute ,term);
+	public @ResponseBody List<Invoice> getInvoices(@PathVariable String attribute, @RequestParam String term,
+			HttpServletResponse response) {
+		if (attribute.equals("Name") || attribute.equals("Place"))
+			return suggestSearchResult(attribute, term);
 		return null;
 
- 	}
+	}
 
 	private List<Invoice> suggestSearchResult(String attribute, String empName) {
 		List<Invoice> result = new ArrayList<Invoice>();
 		result = invoiceService.getInvoiceAttribute(attribute, empName);
-		//System.out.println(attribute + empName);
-		
+		// System.out.println(attribute + empName);
+
 		int count = result.size();
 		for (int i = 0; i < count; i++) {
 			for (int j = i + 1; j < count; j++) {
@@ -88,11 +94,9 @@ public class HomeController{
 			}
 		}
 		// iterate a list and filter by tagName
-		//System.out.println(result.size());
+		// System.out.println(result.size());
 		return result;
 
 	}
- 	
- 	
 
 }

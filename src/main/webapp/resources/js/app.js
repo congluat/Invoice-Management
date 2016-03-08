@@ -46,12 +46,7 @@ $(document).ready(function() {
 				var progressBar = file.previewElement.getElementsByClassName("dz-upload")[0];
 				progressBar.innerHTML = progress + "%";
 			});
-
-			// displaying the uploaded files information in a Bootstrap dialog
-			/*this.on("successmultiple", function(files, serverResponse) {
-				//showInformationDialog(files, serverResponse);
-				window.setTimeout("window.location.href='Invoice/get-all-invoices'",980);
-			});			*/
+		
 		}
 	}
 });

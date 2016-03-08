@@ -54,19 +54,28 @@ public class ReportDAOImpl implements ReportDAO {
 	@Override
 	public List<Invoice> getInvoiceD2D(Integer cateId, String startdate, String endate) {
 		Session session = sessionFactory.openSession();
-		String hql = "FROM Invoice Where category.id =:cateId "
-				+" AND time BETWEEN :startdate AND :endate"
-				+" Order By time ASC";
+		String hql = "FROM Invoice Where category.id =:cateId " + " AND time BETWEEN :startdate AND :endate"
+				+ " Order By time ASC";
 		Query query = session.createQuery(hql);
 		query.setParameter("cateId", cateId);
-		query.setParameter("startdate",new Date(startdate));
+		query.setParameter("startdate", new Date(startdate));
 		query.setParameter("endate", new Date(endate));
 		List<Invoice> invoiceList = query.list();
 		session.close();
 		return invoiceList;
 	}
 
+	@Override
+	public List<Object[]> getMoneyUsePerDay(int month, int year) {
+		Session session = sessionFactory.openSession();
+		String hql = "select Day(time),SUM(amount) from Invoice  WHERE month(time)= :month AND year(time)= :year GROUP BY Day(Time) ORDER BY  Day(Time) ASC";
+		Query query = session.createQuery(hql);
+		query.setParameter("month", month);
+		query.setParameter("year", year);
+		List<Object[]> list = query.list();
+		session.close();
+		return list;
 
-	
+	}
 
 }

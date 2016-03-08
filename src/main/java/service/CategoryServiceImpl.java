@@ -23,10 +23,9 @@ public class CategoryServiceImpl implements CategoryService {
 	@Autowired
 	@Qualifier("categoryDao")
 	private CategoryDAO dao;
-	
+
 	@Autowired
 	ServletContext application;
-	
 
 	@Override
 	public void delete(Category category) {
@@ -145,6 +144,18 @@ public class CategoryServiceImpl implements CategoryService {
 			return "save-cate";
 		}
 
+	}
+
+	@Override
+	public String create(Category category) {
+		String result = "";
+		try {
+			dao.create(category);
+		} catch (Exception e) {
+			result = e.getMessage();
+		}
+
+		return result;
 	}
 
 }

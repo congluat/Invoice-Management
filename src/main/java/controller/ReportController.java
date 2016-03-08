@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,13 +62,10 @@ public class ReportController {
 							@RequestParam String startdate,
 							@RequestParam String endate) throws ParseException {
 		Integer cateId = Integer.parseInt(request.getParameter("cateId"));
-//		DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
-//		Date fromdate = df.parse(startdate);
-//		Date todate = df.parse(endate);
-//		System.out.println("fromdate: " + fromdate);
 		List<Invoice> list = reportService.getInvoiceD2D(cateId, startdate, endate);
 		System.out.println(list.size());
 		return list;
 	}
+	
 	
 }

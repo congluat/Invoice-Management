@@ -42,24 +42,18 @@ public class FileUploadController {
 	@Qualifier("photoService")
 	PhotoService photoService;
 
-	/*@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
-	public String displayForm(@PathVariable Integer id ,HttpSession session,ModelMap model) {
-		Invoice invoice = invoiceService.getById(id);
-		model.addAttribute("invoice",invoice);
-		session.setAttribute("invoice", invoice);	
-		return "_modalEditImages";
-	}*/
+	
 		
-	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public void upload(MultipartHttpServletRequest request, HttpServletResponse response,
+	@RequestMapping(value = "/upload/{id}", method = RequestMethod.POST)
+	public void upload(@PathVariable("id") Integer id , MultipartHttpServletRequest request, HttpServletResponse response,
 			 ModelMap model , HttpSession session) throws IOException {
 		// Getting uploaded files from the request object
 		Map<String, MultipartFile> fileMap = request.getFileMap();
-		Invoice invoice = (Invoice) session.getAttribute("invoice");	
-		Date now = new Date();
-		String name = now.toString().replaceAll(" ", "").replaceAll(":", "");
+		//Invoice invoice = (Invoice) session.getAttribute("invoice");	
+		Invoice invoice = invoiceService.getById(id);
+		photoService.savePhoto(fileMap, invoice);
 		// Iterate through the map
-		for (MultipartFile multipartFile : fileMap.values()) {
+	/*	for (MultipartFile multipartFile : fileMap.values()) {
 			// Save the file to local disk
 			saveFileToLocalDisk(multipartFile,name);
 
@@ -68,10 +62,10 @@ public class FileUploadController {
 			// Save the file info to database
 			saveFileToDatabase(fileInfo, invoice);
 		}
-		session.removeAttribute("invoice");		
-	}
+		//session.removeAttribute("invoice");		
+*/	}
 
-	private void saveFileToLocalDisk(MultipartFile multipartFile,String name) throws IOException, FileNotFoundException {	
+	/*private void saveFileToLocalDisk(MultipartFile multipartFile,String name) throws IOException, FileNotFoundException {	
 		String fileName = name + multipartFile.getOriginalFilename();
 		// Handle file content - multipartFile.getInputStream()
 		String path = application.getRealPath("/resources/images/") + fileName;
@@ -89,7 +83,7 @@ public class FileUploadController {
 	private void saveFileToDatabase(Photo uploadedFile, Invoice invoice) {
 		uploadedFile.setInvoice(invoice);
 		photoService.create(uploadedFile);
-	}
+	}*/
 	
 	@RequestMapping(value="/delete")
 	@ResponseBody
@@ -106,11 +100,4 @@ public class FileUploadController {
 		return invoice.getPhotos();
 	}
 	
-	@RequestMapping(value="/getPhoto/{id}")
-	@ResponseBody
-	public Collection<Photo> getphoto(@PathVariable("id") Integer id){
-		Invoice invoice = invoiceService.getById(id);
-		return invoice.getPhotos();
-	}
-
 }

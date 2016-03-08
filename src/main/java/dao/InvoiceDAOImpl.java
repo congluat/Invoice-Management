@@ -88,11 +88,11 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		} catch (Exception e) {
 			tx.rollback();
 			e.printStackTrace();
-		}finally {
+		} finally {
 			session.close();
 		}
 	}
-	
+
 	@Override
 	public Invoice findById(int id) {
 		Session session = sessionFactory.openSession();
@@ -106,8 +106,7 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		Session session = sessionFactory.openSession();
 		int month = date.getMonth() + 1;
 		int year = date.getYear() + 1900;
-		String hql = "FROM Invoice WHERE MONTH(Time) = " + month + " AND YEAR(Time) = " + year
-				+ " Order by DAY(Time) DESC";
+		String hql = "FROM Invoice WHERE MONTH(Time) = " + month + " AND YEAR(Time) = " + year + " Order by Time DESC";
 		List<Invoice> list = session.createQuery(hql).list();
 		session.close();
 		return list;
@@ -165,62 +164,50 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 	public List<Invoice> getTop10IsNotWarning(Category category) {
 		Session session = sessionFactory.openSession();
 		List<Invoice> list;
-		String hql =" from Invoice where isWarning = false and CategoryId = :id order by(Time) DESC ";
+		String hql = " from Invoice where isWarning = false and CategoryId = :id order by(Time) DESC ";
 		Query query = session.createQuery(hql);
 		query.setMaxResults(10);
 		list = query.setParameter("id", category.getId()).list();
 		session.close();
-		return list;		
+		return list;
 	}
 
 	@Override
 	public List<Invoice> getTop10(Category category) {
 		Session session = sessionFactory.openSession();
 		List<Invoice> list;
-		String hql =" from Invoice where CategoryId = :id order by(Time) DESC ";
+		String hql = " from Invoice where CategoryId = :id order by(Time) DESC ";
 		Query query = session.createQuery(hql);
 		query.setMaxResults(10);
 		list = query.setParameter("id", category.getId()).list();
 		session.close();
-		return list;	
+		return list;
 	}
-	
+
 	@Override
 	public List<Invoice> getInvoiceAttribute(String attribute, String empname) {
 		Session session = sessionFactory.openSession();
 		String hql = null;
-		if(attribute.equals("Name")||attribute.equals("Place"))
-			hql = "FROM Invoice where "+attribute+" LIKE '%"+empname+"%'";
-		if(attribute.equals("Amount")){
-			try {
-				Double.parseDouble(empname);
-				hql = "FROM Invoice where "+attribute+" >= "+empname+" ORDER BY Amount ASC";
-			} catch (NumberFormatException nfe) {
-				return null;
-			}
-		}
-		if(attribute.equals("IsWarning"))
-			if(empname.equals("1") || empname.equals("0")){
-				hql = "FROM Invoice where "+attribute+" = "+empname+" ORDER BY Amount ASC";
-			} else 
-				return null;
-				
-		if(attribute.equals("Time")){
-			//System.out.println(empname);
+		if (attribute.equals("Name") || attribute.equals("Place"))
+			hql = "FROM Invoice where " + attribute + " LIKE '%" + empname + "%'";
+		if (attribute.equals("Amount"))
+			hql = "FROM Invoice where " + attribute + " >= " + empname + " ORDER BY Amount ASC";
+		if (attribute.equals("IsWarning"))
+			hql = "FROM Invoice where " + attribute + " = " + empname + " ORDER BY Amount ASC";
+		if (attribute.equals("Time")) {
+			// System.out.println(empname);
 			String[] parts = empname.split("-");
-			if(parts.length == 3){
-				hql = "FROM Invoice WHERE DAY(Time) = " + parts[0] + " AND MONTH(Time) = " + parts[1] + " AND YEAR(Time) = " + parts[2]
-						+ " Order by DAY(Time) DESC";
-			}
-			else if(parts.length == 2){
+			if (parts.length == 3) {
+				hql = "FROM Invoice WHERE DAY(Time) = " + parts[0] + " AND MONTH(Time) = " + parts[1]
+						+ " AND YEAR(Time) = " + parts[2] + " Order by DAY(Time) DESC";
+			} else if (parts.length == 2) {
 				hql = "FROM Invoice WHERE MONTH(Time) = " + parts[0] + " AND YEAR(Time) = " + parts[1]
 						+ " Order by DAY(Time) DESC";
-			}
-			else
-				return null;			
+			} else
+				return null;
 		}
 		System.out.println(hql);
-		List<Invoice> invoices = session.createQuery(hql).list();		
+		List<Invoice> invoices = session.createQuery(hql).list();
 		session.close();
 		return invoices;
 	}
