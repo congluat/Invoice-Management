@@ -33,19 +33,15 @@
 
 		<script type="text/javascript">
 			var app = angular.module('app', invoices);
-			app.controller('InvoiceController', function ($scope) {
-	
-				  
-				
-			  
-			  
+			app.controller('InvoiceController', function($scope) {
+
 				$scope.totalDisplayed = 2;
-			  
-				$scope.loadMore = function () {
-				  $scope.totalDisplayed += 2;  
+
+				$scope.loadMore = function() {
+					$scope.totalDisplayed += 2;
 				};
-			  
-				$scope.invoices = invoices;		  
+
+				$scope.invoices = invoices;
 			});
 		</script>
 
@@ -112,7 +108,8 @@
 								<img class="col-md-4 col-xs-4" alt="not found"
 									ng-src="<c:url value='/resources/images/'/>{{img.photo}}">
 							</div>
-						</div></li>
+						</div>
+					</div></li>
 
 			</ul>
 
