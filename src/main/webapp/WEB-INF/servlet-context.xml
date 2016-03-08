@@ -128,7 +128,8 @@
 		fixed-delay="5000" /> </task:scheduled-tasks> -->
 	<bean id="CleanupImages" class="scheduledtask.CleanupImages" />
 	<task:scheduled-tasks>
-		<task:scheduled ref="CleanupImages" method="run"
-			cron="*/5 * * * * *" />
+		<!-- <task:scheduled ref="CleanupImages" method="run" cron="*/10 * * * * *" /> -->
+			<task:scheduled ref="CleanupImages" method="run"
+			cron="59 59 23 * * *" />
 	</task:scheduled-tasks>
 </beans>
