@@ -53,7 +53,6 @@
 
 
 		<div class="col-md-12">
-
 			<div class="modal fade" id="confirm-delete" tabindex="-1"
 				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="vertical-alignment-helper">
