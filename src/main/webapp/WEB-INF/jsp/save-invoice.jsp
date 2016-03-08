@@ -53,7 +53,7 @@ $(document).ready(function() {
 	// "dropzoneForm" is the camel-case version of the form id "dropzone-form"
 	
 	Dropzone.options.dropzoneForm = {
-
+		url : "Upload/upload",
 		acceptedFiles: "image/jpeg,image/png,image/gif",
 		autoProcessQueue : false,
 		uploadMultiple : true,
@@ -67,13 +67,13 @@ $(document).ready(function() {
 		init : function() {
 
 			var myDropzone = this;
-
+			
 			// first set autoProcessQueue = false
 			$('#upload-button').on("click", function(e) {
-
+				
 				myDropzone.processQueue();
 			});
-
+						
 			// customizing the default progress bar
 			this.on("uploadprogress", function(file, progress) {
 
@@ -84,7 +84,8 @@ $(document).ready(function() {
 			});
 
 			// displaying the uploaded files information in a Bootstrap dialog		
-			this.on("complete", function(files) {				
+			this.on("complete", function(files) {	
+				this.removeAllFiles(true);
 				$('#myModalEditPhoto').modal('hide');
 				var invoiceid = $(".abc").attr("id");
 				var show='';
@@ -331,7 +332,7 @@ $(document).ready(function() {
 				<div class="panel-heading text-center"></div>
 				<div class="panel-body">
 					<div>
-						<form id="dropzone-form" action="Upload/upload"
+						<form id="dropzone-form" <%-- action="Upload/upload" --%>
 							class="dropzone" enctype="multipart/form-data">
 							<div class="dz-default dz-message file-dropzone text-center ">
 

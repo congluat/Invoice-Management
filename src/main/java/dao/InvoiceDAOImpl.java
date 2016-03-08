@@ -59,6 +59,8 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 			tx.rollback();
 			e.printStackTrace();
 			return false;
+		} finally {
+			session.close();
 		}
 	}
 
@@ -189,10 +191,20 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		String hql = null;
 		if(attribute.equals("Name")||attribute.equals("Place"))
 			hql = "FROM Invoice where "+attribute+" LIKE '%"+empname+"%'";
-		if(attribute.equals("Amount"))
-			hql = "FROM Invoice where "+attribute+" >= "+empname+" ORDER BY Amount ASC";
+		if(attribute.equals("Amount")){
+			try {
+				Double.parseDouble(empname);
+				hql = "FROM Invoice where "+attribute+" >= "+empname+" ORDER BY Amount ASC";
+			} catch (NumberFormatException nfe) {
+				return null;
+			}
+		}
 		if(attribute.equals("IsWarning"))
-			hql = "FROM Invoice where "+attribute+" = "+empname+" ORDER BY Amount ASC";
+			if(empname.equals("1") || empname.equals("0")){
+				hql = "FROM Invoice where "+attribute+" = "+empname+" ORDER BY Amount ASC";
+			} else 
+				return null;
+				
 		if(attribute.equals("Time")){
 			//System.out.println(empname);
 			String[] parts = empname.split("-");

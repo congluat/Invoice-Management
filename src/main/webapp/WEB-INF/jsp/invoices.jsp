@@ -19,7 +19,7 @@
 
 <div class="row"
 	style="margin-top: 10px; margin-left: 5px; margin-right: 5px">
-	<div ng-controller="InvoiceController">
+	<div ng-controller="InvoiceController" ng-app="app">
 		<div class="col-md-6 col-md-offset-6">
 			<div class="input-group input-group-lg">
 				<span class="input-group-addon" id="sizing-addon1"><i
@@ -32,7 +32,21 @@
 		<!-- /.col-lg-6 -->
 
 		<script type="text/javascript">
-			
+			var app = angular.module('app', invoices);
+			app.controller('InvoiceController', function ($scope) {
+	
+				  
+				
+			  
+			  
+				$scope.totalDisplayed = 2;
+			  
+				$scope.loadMore = function () {
+				  $scope.totalDisplayed += 2;  
+				};
+			  
+				$scope.invoices = invoices;		  
+			});
 		</script>
 
 
@@ -64,7 +78,7 @@
 
 			<ul class="timeline">
 
-				<li ng-repeat="i in invoices | searchFor:searchString"
+				<li ng-repeat="i in invoices | limitTo:totalDisplayed"
 					ng-class-odd="'timeline-inverted'"><img class="timeline-badge"
 					height="50px" width="50px" alt="not found"
 					ng-src="<c:url value='/resources/logo/'/>{{i.category.logo}}"
