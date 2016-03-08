@@ -149,6 +149,7 @@ public class InvoiceController {
 		model.addAttribute("edit", true);
 		invoice.setIsWarning(invoiceService.checkIsWarning(invoice.getAmount(), invoice.getCategory()));
 		invoiceService.update(invoice);
+		
 		return "home";
 	}
 
