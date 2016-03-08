@@ -117,19 +117,19 @@
 
 <script type="text/javascript">
 	$(function() {
-		$(".add-button-area").mouseenter(function() {
+		$("#add-button").mouseenter(function() {
 			console.log("mouse hover");
-			$(this).find(".addCate").show("slide", {
+			$(".addCate").show("slide", {
 				direction : "down"
 			}, 100);
-			$(this).find(".addInvoice").show("slide", {
+			$(".addInvoice").show("slide", {
 				direction : "right"
 			}, 100);
 		}).mouseleave(function() {
-			$(this).find(".addCate").hide("slide", {
+			$(".addCate").hide("slide", {
 				direction : "down"
 			}, 100);
-			$(this).find(".addInvoice").hide("slide", {
+			$(".addInvoice").hide("slide", {
 				direction : "right"
 			}, 100);
 		});

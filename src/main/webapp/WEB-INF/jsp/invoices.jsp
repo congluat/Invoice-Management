@@ -51,10 +51,10 @@
 		<div class="col-md-12">
 			<div class="modal fade" id="confirm-delete" tabindex="-1"
 				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="vertical-alignment-helper">
+				<div class="vertical-alignment-helper col-md-4">
 					<div class="modal-dialog vertical-align-center">
 						<div class="modal-content"
-							style="width: 400px; border-radius: 10px;">
+							style=" border-radius: 10px;">
 							<div class="modal-header">Confirm</div>
 							<div class="modal-body">Do you want to delete</div>
 							<div class="modal-footer">
