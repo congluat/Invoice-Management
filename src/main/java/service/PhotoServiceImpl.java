@@ -20,15 +20,14 @@ public class PhotoServiceImpl implements PhotoService {
 
 	@Autowired
 	ServletContext application;
-	
+
 	@Autowired
 	@Qualifier("photoDao")
 	private PhotoDAO dao;
 
-	/*@Override
-	public void create(Photo photo) {
-		dao.saveFile(photo);
-	}*/
+	/*
+	 * @Override public void create(Photo photo) { dao.saveFile(photo); }
+	 */
 
 	@Override
 	public Photo findById(Integer id) {
@@ -64,5 +63,9 @@ public class PhotoServiceImpl implements PhotoService {
 		}
 	}
 
+	@Override
+	public List<String> getAllPhotos() {
+		return dao.getAllPhotos();
+	}
 
 }
