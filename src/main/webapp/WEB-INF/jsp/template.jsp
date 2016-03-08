@@ -125,7 +125,9 @@
 			$(".addInvoice").show("slide", {
 				direction : "right"
 			}, 100);
-		}).mouseleave(function() {
+		})
+
+		$("add-button-area").mouseleave(function() {
 			$(".addCate").hide("slide", {
 				direction : "down"
 			}, 100);
