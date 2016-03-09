@@ -1,11 +1,8 @@
 package controller;
 
 
-import java.text.DateFormat;
+
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,10 +38,10 @@ public class ReportController {
 	@Autowired
 	SessionFactory sessionFactory;
 	
-	@RequestMapping("/by-CateMonths")
+	@RequestMapping("/page")
 	public String pageGetCateMonths(ModelMap model) {
-		List<Category> cateList = cateService.getAllCategories();
-		model.addAttribute("categories", cateList);
+		List<Object[]> list = reportService.getReportDataEveryMonth();
+		model.addAttribute("datalist", list);
 		return "rCate-Months-ng";
 	}
 	
@@ -67,14 +65,25 @@ public class ReportController {
 		return list;
 	}
 	
-	@RequestMapping("/dataReport")
-	public String DataReport(ModelMap model) {
-		 
-		List<Object[]> list = reportService.getReportDataByMonth();
-		for( Object obj : list) {
-			System.out.println(obj.toString());
-		}
-		return "home";
+	@RequestMapping(value="/getReportByMonth", method= RequestMethod.GET)
+	@ResponseBody
+	public List<Object[]> getReportByMonth(@RequestParam String selectdate) {
+		int month = Integer.parseInt(selectdate.substring(0,2));
+		int year = Integer.parseInt(selectdate.substring(3));
+		return reportService.getReportDataByMonth(month, year);
+	}
+	
+	@RequestMapping(value="/getReportByYear", method= RequestMethod.GET)
+	@ResponseBody
+	public List<Object[]> getReportByYear(@RequestParam String selectyear) {
+		int year = Integer.parseInt(selectyear);
+		return reportService.getReportDataByYear(year);
+	}
+	
+	@ModelAttribute("categories")
+	public List<Category> listcates(){
+		List<Category> cateList = cateService.getAllCategories();
+		return cateList;
 	}
 	
 }

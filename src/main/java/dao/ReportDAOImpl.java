@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -80,16 +81,59 @@ public class ReportDAOImpl implements ReportDAO {
 	}
 
 	@Override
-	public List<Object[]> getReportDataByMonth() {
+	public List<Object[]> getReportDataEveryMonth() {
 		Session session = sessionFactory.openSession();
-		String hql = "Select category.name,"
-				+ " COUNT(*) as sl, "
-				+ " SUM(amount) as tong"
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		String hql = "Select category.name, MONTH(time),"
+				+ " COUNT(id) as count, "
+				+ " SUM(amount) as sum"
 				+ " FROM Invoice"
-				+ " GROUP BY category.name";
+				+ " WHERE YEAR(time) =:year "
+				+ " GROUP BY category.name, MONTH(time)"
+				+ " ORDER BY category.name ASC ,MONTH(time) ASC";
 		Query query = session.createQuery(hql);
+		query.setParameter("year", year);
+		List<Object[]> reportList = query.list();
 		session.close();
-		return query.list();
+		return reportList;
+	}
+
+	@Override
+	public List<Object[]> getReportDataByMonth(int month, int year) {
+		Session session = sessionFactory.openSession();
+		String hql ="Select category.name,"
+				+ " COUNT(id) as count,"
+				+ " SUM(amount) as sum,"
+				+ " AVG(amount) as avg"
+				+ " FROM Invoice"
+				+ " WHERE MONTH(time) =:month"
+				+ " AND YEAR(time) =:year"
+				+ " GROUP BY category.name"
+				+ " ORDER BY category.name ASC";
+		Query query = session.createQuery(hql);
+		query.setParameter("month", month);
+		query.setParameter("year", year);
+		List<Object[]> reportList = query.list();
+		session.close();
+		return reportList;
+	}
+
+	@Override
+	public List<Object[]> getReportDataByYear(int year) {
+		Session session = sessionFactory.openSession();
+		String hql ="Select category.name,"
+				+ " COUNT(id) as count,"
+				+ " SUM(amount) as sum,"
+				+ " AVG(amount) as avg"
+				+ " FROM Invoice"
+				+ " WHERE YEAR(time) =:year"
+				+ " GROUP BY category.name"
+				+ " ORDER BY category.name ASC";
+		Query query = session.createQuery(hql);
+		query.setParameter("year", year);
+		List<Object[]> reportList = query.list();
+		session.close();
+		return reportList;
 	}
 
 }

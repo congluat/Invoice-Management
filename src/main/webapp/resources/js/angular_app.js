@@ -523,6 +523,8 @@
 	app.controller('reportCtrl', function($scope, $http) {
 		$scope.showtableCM = false;
 		$scope.showtableM2M = false;
+		$scope.showtableReport = false;
+		$scope.showtableReportbyYear = false;
 		$scope.getInvoice = function() {
 			$http.get(
 					"Report/cateM?category=" + $scope.categoryCM + "&month="
@@ -542,7 +544,7 @@
 					$scope.sumCM = 0;
 				}
 			});
-		}
+		};
 
 		$scope.getInvoiced2d = function() {
 			$http.get(
@@ -563,8 +565,51 @@
 							$scope.countM2M = 0;
 							$scope.sumM2M = 0;
 						}
-					})
-		}
+					});
+		};
+		
+		$scope.getReportByMonth = function() {
+			$http.get(
+					"Report/getReportByMonth?selectdate=" + $scope.selectdate).
+					then(function(response) {
+						$scope.sumRp = 0;
+						var data = response.data;
+						if (data.length > 0) {
+							$scope.showtableReport = true;
+							$scope.dataReport = data;
+							$scope.countRp = data.length;
+							$(data).each(function(i, item) {
+								$scope.sumRp += item[2];
+							})
+						}
+					else {
+						$scope.showtableReport = false;
+						$scope.countRp = 0;
+						$scope.sumRp = 0;
+					}
+					});
+		};
+		$scope.getReportByYear = function() {
+			$http.get(
+					"Report/getReportByYear?selectyear=" + $scope.selectyear).
+					then(function(response) {
+						$scope.sumRpbyYear = 0;
+						var data = response.data;
+						if (data.length > 0) {
+							$scope.showtableReportbyYear = true;
+							$scope.dataReportbyYear = data;
+							$scope.countRpbyYear = data.length;
+							$(data).each(function(i, item) {
+								$scope.sumRpbyYear += item[2];
+							})
+						}
+					else {
+						$scope.showtableReportbyYear = false;
+						$scope.countRpbyYear = 0;
+						$scope.sumRpbyYear = 0;
+					}
+					});
+		};
 	});
 
 })();

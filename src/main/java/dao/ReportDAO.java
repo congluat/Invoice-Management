@@ -15,7 +15,13 @@ public interface ReportDAO {
 	public List<Invoice> getInvoiceD2D(Integer cateId, String startdate, String endate);
 	
 	//get data report every Month group by category
-	public List<Object[]> getReportDataByMonth();
+	public List<Object[]> getReportDataEveryMonth();
+	
+	//get data report by month and year
+	public List<Object[]> getReportDataByMonth(int month, int year);
+	
+	//get data report by year
+	public List<Object[]> getReportDataByYear(int year);
 
 	public List<Object[]> getMoneyUsePerDay(int month, int year);
 }
