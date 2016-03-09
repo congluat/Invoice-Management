@@ -165,8 +165,9 @@ public class InvoiceController {
 	@RequestMapping(value = "/search/{empname}/{attribute}", method = RequestMethod.GET)
 	public String Search(@PathVariable String empname, @PathVariable String attribute, ModelMap model) {
 		List<Invoice> invoices = new ArrayList<Invoice>();
-		if(attribute.equals("Name")||attribute.equals("Place"))
+		if(attribute.equals("Name")||attribute.equals("Place")){
 			invoices = sortList(invoiceService.getInvoiceAttribute(attribute, empname), empname, attribute);
+		}
 		if(attribute.equals("Amount")||attribute.equals("IsWarning")||attribute.equals("Time"))
 			invoices = invoiceService.getInvoiceAttribute(attribute, empname);
 		model.addAttribute("invoices", invoices);

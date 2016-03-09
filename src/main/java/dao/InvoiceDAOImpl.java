@@ -205,8 +205,7 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 						+ " Order by DAY(Time) DESC";
 			} else
 				return null;
-		}
-		System.out.println(hql);
+		}		
 		List<Invoice> invoices = session.createQuery(hql).list();
 		session.close();
 		return invoices;
