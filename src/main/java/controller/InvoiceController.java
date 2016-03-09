@@ -110,14 +110,11 @@ public class InvoiceController {
 		return "invoices";
 	}
 	
-	/*@RequestMapping(value = { "/", "/get-all-danger-invoices" }, method = RequestMethod.GET)
-	public String getAllDangerInvoices(HttpServletRequest request, ModelMap model) {
-		User user = (User) request.getSession().getAttribute("user");
-		model.addAttribute("invoices", invoiceService.getAllInvoices(user.getId()));
-		model.addAttribute("title", "Invoices");
-		return "invoices";
-	}*/
-
+	@RequestMapping(value = {"/warning" }, method = RequestMethod.GET)
+	public String getDangerInvoices(HttpServletRequest request, ModelMap model) {
+		return "invoices_danger";
+	}
+	
 	@RequestMapping(value = { "/get-all-invoices/{amount}/{cateId}" }, method = RequestMethod.GET)
 	@ResponseBody
 	public boolean getAllInvoices(HttpServletRequest request, @PathVariable BigDecimal amount,

@@ -77,7 +77,7 @@
 								title : 'Money'
 
 							},
-							title : 'Dialy Amount',
+							title : 'Daily Amount',
 
 							legend : {
 								position : 'top'
@@ -191,7 +191,7 @@
 								title : 'Money'
 
 							},
-							title : 'Dialy Amount',
+							title : 'Daily Amount',
 
 							legend : {
 								position : 'top'
@@ -379,7 +379,6 @@
 				});
 
 		$scope.onSearchChange = function(searchString) {
-
 			console.log("search: " + searchString);
 			console.log("list by month: " + $scope.listByMonth);
 			if ($scope.listByMonth == true && searchString.length != 0) {
@@ -390,7 +389,6 @@
 					$scope.invoices = response;
 					console.log("on change ");
 					console.log($scope.invoices);
-
 				});
 			} else {
 				if (searchString.length == 0) {
@@ -402,17 +400,47 @@
 								$scope.invoices = response;
 								console.log("invoice ");
 								console.log($scope.invoices[0]);
-
 							});
 				}
-
 			}
-
-		};
-
+		};		
 		this.getInvoiceByMonth = function() {
 
 			$http.get("Invoice/getByMonth/").success(function(response) {
+				console.log(response);
+			});
+		};
+		// Search Invoice
+	});
+	
+	app.controller('InvoiceDangerController', function($scope, $http) {
+
+		$scope.deleteFunc = function(id) {
+			$scope.deleteId = id;
+
+		};
+
+		var now = new Date();
+		var month = parseInt(now.getMonth()) + 1;
+		var year = parseInt(now.getYear()) + 1900;
+		console.log("month " + month);
+		console.log("year " + year);
+
+		$scope.invoices_danger = [];
+		$scope.listByMonth = false;
+		$scope.month = month + "/" + year;
+
+		$http.get("Invoice/getDangerByMonth/" + month + "-" + year).success(
+				function(response) {
+					$scope.listByMonth = true;
+					// $scope.invoices.push(response);
+					$scope.invoices_danger = response;	
+					console.log(response);
+				});
+
+		this.getInvoiceByMonth = function() {
+
+			$http.get("Invoice/getDangerByMonth/").success(function(response) {
 				console.log(response);
 
 			});
@@ -422,7 +450,7 @@
 		// Search Invoice
 
 	});
-
+	
 	app.controller('DashboardController', function($http) {
 
 		this.getTotalInvoices = function($http) {
