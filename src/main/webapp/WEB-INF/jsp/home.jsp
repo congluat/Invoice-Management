@@ -61,8 +61,7 @@
 
 
 		<div class="col-lg-4 col-md-6">
-			<div class="panel panel-invoice"
-				ng-init="getToltalInvoiceThisMonth()">
+			<div class="panel panel-invoice" ng-init="getToltalInvoiceThisMonth()">
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-xs-3">
@@ -87,7 +86,7 @@
 		</div>
 
 		<div class="col-lg-4 col-md-6">
-			<div class="panel panel-red">
+			<div class="panel panel-red" ng-init="getToltalDangerInvoiceThisMonth()">
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-xs-3">
@@ -95,12 +94,12 @@
 								class="glyphicon glyphicon-list-alt"></span>
 						</div>
 						<div class="col-xs-9 text-right">
-							<div class="huge">2</div>
+							<div class="huge">{{danger}}</div>
 							<div>Danger Invoices</div>
 						</div>
 					</div>
 				</div>
-				<a href="Invoice/">
+				<a href="Invoice/warning">
 					<div class="panel-footer">
 						<span class="pull-left">View Details</span> <span
 							class="pull-right"><i

@@ -102,7 +102,10 @@
 	src="<c:url value='/resources/js/angular_app.js' />"></script>
 <script
 	src="http://bouil.github.io/angular-google-chart/ng-google-chart.js"></script>
-
+<script type="text/javascript"
+	src="<c:url value='/resources/js/ng-cordova.js' />"></script>
+<script type="text/javascript"
+	src="<c:url value='/resources/js/cordova.js' />"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		<!--$.material.init();
@@ -117,19 +120,21 @@
 
 <script type="text/javascript">
 	$(function() {
-		$(".add-button-area").mouseenter(function() {
+		$("#add-button").mouseenter(function() {
 			console.log("mouse hover");
-			$(this).find(".addCate").show("slide", {
+			$(".addCate").show("slide", {
 				direction : "down"
 			}, 100);
-			$(this).find(".addInvoice").show("slide", {
+			$(".addInvoice").show("slide", {
 				direction : "right"
 			}, 100);
-		}).mouseleave(function() {
-			$(this).find(".addCate").hide("slide", {
+		})
+
+		$(".add-button-area").mouseleave(function() {
+			$(".addCate").hide("slide", {
 				direction : "down"
 			}, 100);
-			$(this).find(".addInvoice").hide("slide", {
+			$(".addInvoice").hide("slide", {
 				direction : "right"
 			}, 100);
 		});

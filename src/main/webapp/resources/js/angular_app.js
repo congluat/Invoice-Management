@@ -77,7 +77,7 @@
 								title : 'Money'
 
 							},
-							title : 'Dialy Amount',
+							title : 'Daily Amount',
 
 							legend : {
 								position : 'top'
@@ -191,7 +191,7 @@
 								title : 'Money'
 
 							},
-							title : 'Dialy Amount',
+							title : 'Daily Amount',
 
 							legend : {
 								position : 'top'
@@ -271,8 +271,15 @@
 
 			$http.get("Invoice/getByMonth/" + month + "-" + year).success(
 					function(response) {
-
 						$scope.month = response.length;
+					});
+		};
+		
+		$scope.getToltalDangerInvoiceThisMonth = function() {
+
+			$http.get("Invoice/getDangerByMonth/" + month + "-" + year).success(
+					function(response) {
+						$scope.danger = response.length;
 					});
 		};
 
@@ -372,7 +379,6 @@
 				});
 
 		$scope.onSearchChange = function(searchString) {
-
 			console.log("search: " + searchString);
 			console.log("list by month: " + $scope.listByMonth);
 			if ($scope.listByMonth == true && searchString.length != 0) {
@@ -383,7 +389,6 @@
 					$scope.invoices = response;
 					console.log("on change ");
 					console.log($scope.invoices);
-
 				});
 			} else {
 				if (searchString.length == 0) {
@@ -395,17 +400,47 @@
 								$scope.invoices = response;
 								console.log("invoice ");
 								console.log($scope.invoices[0]);
-
 							});
 				}
-
 			}
-
-		};
-
+		};		
 		this.getInvoiceByMonth = function() {
 
 			$http.get("Invoice/getByMonth/").success(function(response) {
+				console.log(response);
+			});
+		};
+		// Search Invoice
+	});
+	
+	app.controller('InvoiceDangerController', function($scope, $http) {
+
+		$scope.deleteFunc = function(id) {
+			$scope.deleteId = id;
+
+		};
+
+		var now = new Date();
+		var month = parseInt(now.getMonth()) + 1;
+		var year = parseInt(now.getYear()) + 1900;
+		console.log("month " + month);
+		console.log("year " + year);
+
+		$scope.invoices_danger = [];
+		$scope.listByMonth = false;
+		$scope.month = month + "/" + year;
+
+		$http.get("Invoice/getDangerByMonth/" + month + "-" + year).success(
+				function(response) {
+					$scope.listByMonth = true;
+					// $scope.invoices.push(response);
+					$scope.invoices_danger = response;	
+					console.log(response);
+				});
+
+		this.getInvoiceByMonth = function() {
+
+			$http.get("Invoice/getDangerByMonth/").success(function(response) {
 				console.log(response);
 
 			});
@@ -415,7 +450,7 @@
 		// Search Invoice
 
 	});
-
+	
 	app.controller('DashboardController', function($http) {
 
 		this.getTotalInvoices = function($http) {
@@ -423,8 +458,7 @@
 		}
 	});
 
-	app
-			.controller(
+	app.controller(
 					'AddUserController',
 					function($scope, $http) {
 						$scope.user = {
@@ -520,52 +554,96 @@
 
 	});
 
-	app.controller('myCtrl', function($scope, $http) {
-		$scope.showtable = false;
+	app.controller('reportCtrl', function($scope, $http) {
+		$scope.showtableCM = false;
+		$scope.showtableM2M = false;
+		$scope.showtableReport = false;
+		$scope.showtableReportbyYear = false;
 		$scope.getInvoice = function() {
 			$http.get(
-					"Report/cateM?category=" + $scope.category + "&month="
+					"Report/cateM?category=" + $scope.categoryCM + "&month="
 							+ $scope.month).then(function(response) {
-				$scope.sum = 0;
-				data = response.data;
+				$scope.sumCM = 0;
+				var data = response.data;
 				if (data.length > 0) {
-					$scope.cateName = data[0].category.name;
-					$scope.showtable = true;
-					$scope.invoices = data;
-					$scope.count = data.length;
+					$scope.showtableCM = true;
+					$scope.invoicesCM = data;
+					$scope.countCM = data.length;
 					$(data).each(function(i, item) {
-						$scope.sum += item.amount;
+						$scope.sumCM += item.amount;
 					})
 				} else {
-					$scope.showtable = false;
-					$scope.count = 0;
-					$scope.sum = 0;
+					$scope.showtableCM= false;
+					$scope.countCM = 0;
+					$scope.sumCM = 0;
 				}
 			});
-		}
+		};
 
 		$scope.getInvoiced2d = function() {
 			$http.get(
-					"Report/cateMd2d?cateId=" + $scope.category + "&startdate="
+					"Report/cateMd2d?cateId=" + $scope.categoryM2M + "&startdate="
 							+ $scope.startdate + "&endate=" + $scope.endate)
 					.then(function(response) {
-						$scope.sum = 0;
-						data = response.data;
+						$scope.sumM2M = 0;
+						var data = response.data;
 						if (data.length > 0) {
-							$scope.cateName = data[0].category.name;
-							$scope.showtable = true;
-							$scope.invoices = data;
-							$scope.count = data.length;
+							$scope.showtableM2M = true;
+							$scope.invoicesM2M = data;
+							$scope.countM2M = data.length;
 							$(data).each(function(i, item) {
-								$scope.sum += item.amount;
+								$scope.sumM2M += item.amount;
 							})
 						} else {
-							$scope.showtable = false;
-							$scope.count = 0;
-							$scope.sum = 0;
+							$scope.showtableM2M = false;
+							$scope.countM2M = 0;
+							$scope.sumM2M = 0;
 						}
-					})
-		}
+					});
+		};
+		
+		$scope.getReportByMonth = function() {
+			$http.get(
+					"Report/getReportByMonth?selectdate=" + $scope.selectdate).
+					then(function(response) {
+						$scope.sumRp = 0;
+						var data = response.data;
+						if (data.length > 0) {
+							$scope.showtableReport = true;
+							$scope.dataReport = data;
+							$scope.countRp = data.length;
+							$(data).each(function(i, item) {
+								$scope.sumRp += item[2];
+							})
+						}
+					else {
+						$scope.showtableReport = false;
+						$scope.countRp = 0;
+						$scope.sumRp = 0;
+					}
+					});
+		};
+		$scope.getReportByYear = function() {
+			$http.get(
+					"Report/getReportByYear?selectyear=" + $scope.selectyear).
+					then(function(response) {
+						$scope.sumRpbyYear = 0;
+						var data = response.data;
+						if (data.length > 0) {
+							$scope.showtableReportbyYear = true;
+							$scope.dataReportbyYear = data;
+							$scope.countRpbyYear = data.length;
+							$(data).each(function(i, item) {
+								$scope.sumRpbyYear += item[2];
+							})
+						}
+					else {
+						$scope.showtableReportbyYear = false;
+						$scope.countRpbyYear = 0;
+						$scope.sumRpbyYear = 0;
+					}
+					});
+		};
 	});
 
 })();

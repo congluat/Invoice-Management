@@ -1,6 +1,6 @@
 package dao;
 
-import java.util.Date;
+
 import java.util.List;
 
 import model.Invoice;
@@ -13,6 +13,15 @@ public interface ReportDAO {
 
 	// get list invoice by category and d2d
 	public List<Invoice> getInvoiceD2D(Integer cateId, String startdate, String endate);
+	
+	//get data report every Month group by category
+	public List<Object[]> getReportDataEveryMonth();
+	
+	//get data report by month and year
+	public List<Object[]> getReportDataByMonth(int month, int year);
+	
+	//get data report by year
+	public List<Object[]> getReportDataByYear(int year);
 
 	public List<Object[]> getMoneyUsePerDay(int month, int year);
 }
