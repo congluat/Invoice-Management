@@ -56,6 +56,18 @@ public class InvoiceController {
 		System.out.println("year: " + date.getYear());
 		return invoiceService.getAllInvoicesByMonth(date);
 	}
+	
+	@RequestMapping(value = "/getDangerByMonth/{time}")
+	@ResponseBody
+	public List<Invoice> getDangerByMonth(@PathVariable String time, HttpServletRequest request) throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("MM-yyyy");
+		Date date = formatter.parse(time);
+		System.out.println(time);
+		System.out.println(date.toString());
+		System.out.println("month: " + date.getMonth());
+		System.out.println("year: " + date.getYear());
+		return invoiceService.getAllDangerInvoicesByMonth(date);
+	}
 
 	@RequestMapping(value = "/getByMonth")
 	@ResponseBody
@@ -97,6 +109,14 @@ public class InvoiceController {
 		model.addAttribute("title", "Invoices");
 		return "invoices";
 	}
+	
+	/*@RequestMapping(value = { "/", "/get-all-danger-invoices" }, method = RequestMethod.GET)
+	public String getAllDangerInvoices(HttpServletRequest request, ModelMap model) {
+		User user = (User) request.getSession().getAttribute("user");
+		model.addAttribute("invoices", invoiceService.getAllInvoices(user.getId()));
+		model.addAttribute("title", "Invoices");
+		return "invoices";
+	}*/
 
 	@RequestMapping(value = { "/get-all-invoices/{amount}/{cateId}" }, method = RequestMethod.GET)
 	@ResponseBody

@@ -143,4 +143,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public List<Invoice> getInvoiceAttribute(String attribute, String empname) {
 		return invoiceDao.getInvoiceAttribute(attribute, empname);
 	}
+
+	@Override
+	public List<Invoice> getAllDangerInvoicesByMonth(Date date) {
+		// TODO Auto-generated method stub
+		return invoiceDao.getAllDangerInvoicesByMonth(date);
+	}
 }
