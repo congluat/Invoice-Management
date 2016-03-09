@@ -271,8 +271,15 @@
 
 			$http.get("Invoice/getByMonth/" + month + "-" + year).success(
 					function(response) {
-
 						$scope.month = response.length;
+					});
+		};
+		
+		$scope.getToltalDangerInvoiceThisMonth = function() {
+
+			$http.get("Invoice/getDangerByMonth/" + month + "-" + year).success(
+					function(response) {
+						$scope.danger = response.length;
 					});
 		};
 
@@ -423,8 +430,7 @@
 		}
 	});
 
-	app
-			.controller(
+	app.controller(
 					'AddUserController',
 					function($scope, $http) {
 						$scope.user = {

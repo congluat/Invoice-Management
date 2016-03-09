@@ -22,6 +22,8 @@ public interface InvoiceService {
 	public void delete(Invoice invoice);
 
 	public List<Invoice> getAllInvoicesByMonth(Date date);
+	
+	public List<Invoice> getAllDangerInvoicesByMonth(Date date);
 
 	public Map<String, List<Invoice>> getInvoicesGroupbyMonth();
 
