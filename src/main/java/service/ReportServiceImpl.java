@@ -40,4 +40,9 @@ public class ReportServiceImpl implements ReportService {
 		}
 		return list;
 	}
+
+	@Override
+	public List<Object[]> getReportDataByMonth() {
+		return reportDao.getReportDataByMonth();
+	}
 }
