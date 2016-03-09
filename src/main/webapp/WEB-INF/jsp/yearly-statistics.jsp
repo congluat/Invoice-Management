@@ -23,21 +23,7 @@
 </script>
 <script type="text/javascript">
 	$(function() {
-		$('#datetimepicker10').datetimepicker({
-			viewMode : 'months',
-			format : 'MM/YYYY',
-			defaultDate : new Date()
-
-		});
-
-		$("#datetimepicker10").on("dp.change", function(e) {
-			//console.log(e.date._i);
-			$("#inputDateTime").value = e.date._i;
-
-			$("#inputDateTime").attr("value", e.date._i);
-			$("#inputDateTime").value = " ";
-			$("#inputDateTime").value = e.date._i;
-		});
+		
 	});
 </script>
 <style>
@@ -99,17 +85,17 @@ caption {
 	min-width: 500px;
 }
 </style>
-<div class="chartWrapper" ng-controller="MonthlyStatisticController"
+<div class="chartWrapper" ng-controller="YearlyStatisticController"
 	ng-init="drawChart()">
 
 	<div class="row">
 		<div class="col-md-6" style="height: 130px;">
 			<div class="form-group">
 				<div class='input-group date' id='datetimepicker10'>
-					<input id="inputDateTime" type='text' class="form-control"
-						ng-model="timeInput" value="" onkeypress="return isNumber(event)"
-						ng-change="timeChanged()" /> <span class="input-group-addon">
-						<span class="glyphicon glyphicon-calendar"> </span>
+					<input type="number" class="form-control"
+						ng-model="timeInput" value="2016" onkeypress="return isNumber(event)"
+						ng-change="timeChanged()" />
+						
 					</span>
 				</div>
 

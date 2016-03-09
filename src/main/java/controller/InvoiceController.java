@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import model.Category;
@@ -56,7 +58,7 @@ public class InvoiceController {
 		System.out.println("year: " + date.getYear());
 		return invoiceService.getAllInvoicesByMonth(date);
 	}
-	
+
 	@RequestMapping(value = "/getDangerByMonth/{time}")
 	@ResponseBody
 	public List<Invoice> getDangerByMonth(@PathVariable String time, HttpServletRequest request) throws ParseException {
@@ -67,6 +69,12 @@ public class InvoiceController {
 		System.out.println("month: " + date.getMonth());
 		System.out.println("year: " + date.getYear());
 		return invoiceService.getAllDangerInvoicesByMonth(date);
+	}
+
+	@RequestMapping(value = "/searchAnyString", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public List<Invoice> searchAnyString(@RequestParam("keyword") String keyword, HttpServletRequest request) {
+		return invoiceService.searchAnyString(keyword);
 	}
 
 	@RequestMapping(value = "/getByMonth")
@@ -109,14 +117,15 @@ public class InvoiceController {
 		model.addAttribute("title", "Invoices");
 		return "invoices";
 	}
-	
-	/*@RequestMapping(value = { "/", "/get-all-danger-invoices" }, method = RequestMethod.GET)
-	public String getAllDangerInvoices(HttpServletRequest request, ModelMap model) {
-		User user = (User) request.getSession().getAttribute("user");
-		model.addAttribute("invoices", invoiceService.getAllInvoices(user.getId()));
-		model.addAttribute("title", "Invoices");
-		return "invoices";
-	}*/
+
+	/*
+	 * @RequestMapping(value = { "/", "/get-all-danger-invoices" }, method =
+	 * RequestMethod.GET) public String getAllDangerInvoices(HttpServletRequest
+	 * request, ModelMap model) { User user = (User)
+	 * request.getSession().getAttribute("user"); model.addAttribute("invoices",
+	 * invoiceService.getAllInvoices(user.getId())); model.addAttribute("title",
+	 * "Invoices"); return "invoices"; }
+	 */
 
 	@RequestMapping(value = { "/get-all-invoices/{amount}/{cateId}" }, method = RequestMethod.GET)
 	@ResponseBody
@@ -146,17 +155,17 @@ public class InvoiceController {
 		invoice.setCategory(cate);
 		invoice.setUser((User) session.getAttribute("user"));
 		invoice.setIsWarning(invoiceService.checkIsWarning(invoice.getAmount(), cate));
-		invoiceService.create(invoice);	
+		invoiceService.create(invoice);
 		model.addAttribute("edit", false);
 		return "_modalAddImages";
 	}
 
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-	public String update(@PathVariable Integer id, ModelMap model ,HttpSession session) {
+	public String update(@PathVariable Integer id, ModelMap model, HttpSession session) {
 		Invoice invoice = invoiceService.getById(id);
 		model.addAttribute("invoice", invoice);
 		model.addAttribute("edit", true);
-		//session.setAttribute("invoice", invoice);
+		// session.setAttribute("invoice", invoice);
 		model.addAttribute("title", invoice.getName());
 		return "save-invoice";
 	}
@@ -169,7 +178,7 @@ public class InvoiceController {
 		model.addAttribute("edit", true);
 		invoice.setIsWarning(invoiceService.checkIsWarning(invoice.getAmount(), invoice.getCategory()));
 		invoiceService.update(invoice);
-		
+
 		return "redirect:/Invoice/";
 	}
 
@@ -189,98 +198,83 @@ public class InvoiceController {
 	@RequestMapping(value = "/search/{empname}/{attribute}", method = RequestMethod.GET)
 	public String Search(@PathVariable String empname, @PathVariable String attribute, ModelMap model) {
 		List<Invoice> invoices = new ArrayList<Invoice>();
-		if(attribute.equals("Name")||attribute.equals("Place")){
+		if (attribute.equals("Name") || attribute.equals("Place")) {
 			invoices = sortList(invoiceService.getInvoiceAttribute(attribute, empname), empname, attribute);
 		}
-		if(attribute.equals("Amount")||attribute.equals("IsWarning")||attribute.equals("Time"))
+		if (attribute.equals("Amount") || attribute.equals("IsWarning") || attribute.equals("Time"))
 			invoices = invoiceService.getInvoiceAttribute(attribute, empname);
 		model.addAttribute("invoices", invoices);
 		model.addAttribute("title", "Invoices");
 		return "invoices_new";
 
 	}
-	
-	private List<Invoice> sortList(List<Invoice> tmp, String empname, String attribute){
-		List<Invoice> invoices = new ArrayList<Invoice>();	
+
+	private List<Invoice> sortList(List<Invoice> tmp, String empname, String attribute) {
+		List<Invoice> invoices = new ArrayList<Invoice>();
 		String[] str = new String[tmp.size()];
 		int i = 0;
-		for(Invoice t: tmp){
-			if(attribute.equals("Name"))
+		for (Invoice t : tmp) {
+			if (attribute.equals("Name"))
 				str[i] = t.getName();
-			if(attribute.equals("Place"))
+			if (attribute.equals("Place"))
 				str[i] = t.getPlace();
 			i++;
 		}
-		
+
 		Arrays.sort(str, new Comparator<String>() {
 
-		    @Override
-		    public int compare(String o1, String o2) {
+			@Override
+			public int compare(String o1, String o2) {
 
-		            boolean o1_has_keyWord = o1.indexOf(empname.charAt(0)) == 0 && o1.contains(empname);
-		            boolean o2_has_keyWord = o2.indexOf(empname.charAt(0)) == 0 && o2.contains(empname);
+				boolean o1_has_keyWord = o1.indexOf(empname.charAt(0)) == 0 && o1.contains(empname);
+				boolean o2_has_keyWord = o2.indexOf(empname.charAt(0)) == 0 && o2.contains(empname);
 
-		        if (o1_has_keyWord && o2_has_keyWord)
-		        {
-		            if (o1.length() == o2.length())
-		            {
-		                if (o1.indexOf(empname.charAt(0)) > o2.indexOf(empname.charAt(0))){
-		                    return -1;
-		                }
-		                else if (o1.indexOf(empname.charAt(0)) == o2.indexOf(empname.charAt(0))){
-		                    return 0;
-		                }
-		                else
-		                {
-		                    return 1;
-		                }
-		            }
-		            else if (o1.length() > o2.length())
-		            {
-		                    return 1;
-		            }
-		            else 
-		            {
-		                return -1;
-		            }
-		        }
-		        else if (o1_has_keyWord && !o2_has_keyWord)
-		        {
-		            return -1;
-		        }
-		        else if (!o1_has_keyWord && o2_has_keyWord)
-		        {
-		            return 1;
-		        }
+				if (o1_has_keyWord && o2_has_keyWord) {
+					if (o1.length() == o2.length()) {
+						if (o1.indexOf(empname.charAt(0)) > o2.indexOf(empname.charAt(0))) {
+							return -1;
+						} else if (o1.indexOf(empname.charAt(0)) == o2.indexOf(empname.charAt(0))) {
+							return 0;
+						} else {
+							return 1;
+						}
+					} else if (o1.length() > o2.length()) {
+						return 1;
+					} else {
+						return -1;
+					}
+				} else if (o1_has_keyWord && !o2_has_keyWord) {
+					return -1;
+				} else if (!o1_has_keyWord && o2_has_keyWord) {
+					return 1;
+				}
 
+				return 0;
 
-		        return 0;
+				// Code to sort array according to need
 
-		            //Code to sort array according to need
-
-		    }
+			}
 		});
-		
-		for(int j = 0; j<str.length; j++){
-			for(Invoice t: tmp){
-				if(attribute.equals("Name")){
-					if(t.getName().equals(str[j])){
+
+		for (int j = 0; j < str.length; j++) {
+			for (Invoice t : tmp) {
+				if (attribute.equals("Name")) {
+					if (t.getName().equals(str[j])) {
 						invoices.add(t);
 						tmp.remove(t);
 						break;
 					}
 				}
-				if(attribute.equals("Place")){
-					if(t.getPlace().equals(str[j])){
+				if (attribute.equals("Place")) {
+					if (t.getPlace().equals(str[j])) {
 						invoices.add(t);
 						tmp.remove(t);
 						break;
 					}
-				}				
+				}
 			}
 		}
-		
-		
+
 		return invoices;
 	}
 }

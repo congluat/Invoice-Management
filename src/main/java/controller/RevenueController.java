@@ -43,4 +43,10 @@ public class RevenueController {
 	public List<Object[]> dialyUse(@PathVariable int month, @PathVariable int year, ModelMap model) {
 		return reportService.getMoneyUsePerDay(month, year);
 	}
+
+	@RequestMapping(value = "/yearly-statistics", method = RequestMethod.GET)
+	public String InvoiceYearStatistic(HttpServletRequest request, ModelMap model) {
+		model.addAttribute("title", "Revenue");
+		return "yearly-statistics";
+	}
 }

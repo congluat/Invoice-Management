@@ -41,5 +41,5 @@ CREATE TABLE Photos(
     InvoiceId INT NOT NULL,
     Photo NVARCHAR(200) NOT NULL,
     PRIMARY KEY (Id),
-    CONSTRAINT FK_invoicephotos_Invoice FOREIGN KEY(InvoiceId) REFERENCES Invoices(Id)
+    CONSTRAINT FK_invoicephotos_Invoice FOREIGN KEY(InvoiceId) REFERENCES Invoices(Id) ON DELETE CASCADE
 );

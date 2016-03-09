@@ -22,15 +22,19 @@
 	<div ng-controller="InvoiceController" ng-app="app">
 		<div class="col-md-6 col-md-offset-6">
 			<div class="input-group input-group-lg">
+
 				<span class="input-group-addon" id="sizing-addon1"><i
 					class="glyphicon glyphicon-search"></i></span> <input id="search"
-					text" class="form-control" name="searchFor" ng-model="searchString"
+					type="text" class="form-control" name="searchFor"
+					ng-model="searchString"
 					placeholder="Search by Name, Time and Place..."
-					ng-change="onSearchChange(searchString)">
+					ng-change="onSearchChange(searchString)"
+					ng-model-options="{debounce: 500}">
+
 			</div>
 		</div>
 		<!-- /.col-lg-6 -->
-
+		<!-- 
 		<script type="text/javascript">
 			var app = angular.module('app', invoices);
 			app.controller('InvoiceController', function($scope) {
@@ -43,7 +47,7 @@
 
 				$scope.invoices = invoices;
 			});
-		</script>
+		</script> -->
 
 
 
@@ -53,8 +57,7 @@
 				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="vertical-alignment-helper col-md-4">
 					<div class="modal-dialog vertical-align-center">
-						<div class="modal-content"
-							style=" border-radius: 10px;">
+						<div class="modal-content" style="border-radius: 10px;">
 							<div class="modal-header">Confirm</div>
 							<div class="modal-body">Do you want to delete</div>
 							<div class="modal-footer">
@@ -73,9 +76,10 @@
 
 			<ul class="timeline">
 
-				<li ng-repeat="i in invoices | limitTo:totalDisplayed"
-					ng-class-odd="'timeline-inverted'"><img class="timeline-badge"
-					height="50px" width="50px" alt="not found"
+				<!-- <li ng-repeat="i in invoices | limitTo:totalDisplayed"> -->
+
+				<li ng-repeat="i in invoices" ng-class-odd="'timeline-inverted'"><img
+					class="timeline-badge" height="50px" width="50px" alt="not found"
 					ng-src="<c:url value='/resources/logo/'/>{{i.category.logo}}"
 					onError="this.onerror=null;this.src='<c:url value='/resources/logo/abc.png'/>';">
 
