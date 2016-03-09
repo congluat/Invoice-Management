@@ -48,6 +48,7 @@
 	<context:component-scan base-package="controller, dao, service, interceptor,scheduledtask" />
 
 	<mvc:annotation-driven />
+	
 	<!-- <mvc:annotation-driven> <mvc:message-converters register-defaults="true"> 
 		<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"> 
 		<property name="objectMapper" ref="accomodationObjectMapper" /> </bean> </mvc:message-converters> 
@@ -92,10 +93,11 @@
 	<bean id="reportService" class="service.ReportServiceImpl">
 	</bean>
 	
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManagement">
-	  <property name="dataSource" ref="dataSourceOrg" />
-	</bean>
-		
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+         <constructor-arg ref="dataSource"/>
+     </bean>
+	
+	
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
@@ -133,7 +135,8 @@
 		fixed-delay="5000" /> </task:scheduled-tasks> -->
 	<bean id="CleanupImages" class="scheduledtask.CleanupImages" />
 	<task:scheduled-tasks>
-		<task:scheduled ref="CleanupImages" method="run"
-			cron="*/5 * * * * *" />
+		<!-- <task:scheduled ref="CleanupImages" method="run" cron="*/10 * * * * *" /> -->
+			<task:scheduled ref="CleanupImages" method="run"
+			cron="59 59 23 * * *" />
 	</task:scheduled-tasks>
 </beans>

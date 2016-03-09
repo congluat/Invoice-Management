@@ -34,9 +34,9 @@ public class ReportService2Test {
 		
 		assertNotNull(listOfInvoice2);
 		
-		List<Invoice> listOfMoney = reportService.getInvoiceD2D(1, "3/2/2015", "3/3/205");
+		List<Invoice> listOfInvoice3 = reportService.getInvoiceD2D(1, "3/2/2015", "3/3/205");
 		
-		assertNotNull(listOfMoney);
+		assertNotNull(listOfInvoice3);
 		
 	}
 

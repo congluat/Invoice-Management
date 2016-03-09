@@ -2,11 +2,19 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
 
 <script type="text/javascript">
-$(function() {
-    $(".datepicker").datepicker();
-  })
+	$(function() {
+		$(".datepicker").datepicker();
+		$(".datepicker_select").datepicker({
+			dateFormat: 'mm/yy'
+		});
+		$(".datepicker_selectyear").datepicker({
+			dateFormat: 'yy'
+		});	
+		datepicker_selectyear
+	})
 </script>
 <style type="text/css">
 .red {
@@ -16,7 +24,8 @@ $(function() {
 .black {
 	color: black;
 }
-#select{
+
+#select {
 	font-weight: bold;
 }
 </style>
@@ -29,12 +38,155 @@ $(function() {
 			<div class="panel-heading">
 				<h4 class="panel-title">
 					<a data-toggle="collapse" data-parent="#accordion"
-						href="#collapseOne">Report follow Category and number of Month
-						before</a>
+						href="#collapseOne">Report current</a>
 				</h4>
 			</div>
 			<div id="collapseOne" class="panel-collapse collapse in">
+					<div class="panel-body">
+				<table class="table">
+					<tr>
+						<th>CateName</th>
+						<th>Month</th>
+						<th>Count</th>
+						<th>SUM</th>
+					</tr>
+					<c:forEach var="array" items="${datalist}">
+						<tr>
+							<td>${array[0]}</td>
+							<td>${array[1]}</td>
+							<td>${array[2]}</td>
+							<td><fmt:formatNumber value="${array[3]}"
+									minFractionDigits="2" maxFractionDigits="2" /></td>
+						</tr>
+					</c:forEach>
+				</table>
+			</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion"
+						href="#collapse_y">Search report by year</a>
+				</h4>
+			</div>
+			<div id="collapse_y" class="panel-collapse collapse">
 				<div class="panel-body">
+					<div class="col-md-3">
+						<div class="form-group">
+							<label>Choose time: </label> <input type="text"
+								class="form-control datepicker_selectyear" ng-model="selectyear">
+						</div>
+						<div class="form-group">
+							<button type="button" ng-click="getReportByYear()"
+								class="btn btn-primary">SEARCH</button>
+						</div>
+					</div>
+					<div class="row" ng-show="showtableReportbyYear">
+						<h2>TABLE REPORT</h2>
+						<div class="table-responsive" style="border-left: 1px solid #ddd">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>CateName</th>
+										<th>Number of invoice</th>
+										<th>SUMARY</th>
+										<th>AVEGARE</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="data in dataReportbyYear">
+										<td>{{$index+1}}</td>
+										<td>{{data[0]}}</td>
+										<td>{{data[1]}}</td>
+										<td>{{data[2]}}</td>
+										<td>{{data[3]}}</td>
+									</tr>
+									<tr>
+										<td colspan=3></td>
+										<td><strong>Number of Category: </strong></td>
+										<td><strong>{{countRpbyYear}}</strong></td>
+									</tr>
+									<tr>
+										<td style="border-top: 1px solid #FFF" colspan=3></td>
+										<td><strong>SUM: </strong></td>
+										<td><strong>{{sumRpbyYear | currency}}</strong></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion"
+						href="#collapse">Search report by month</a>
+				</h4>
+			</div>
+			<div id="collapse" class="panel-collapse collapse">
+				<div class="panel-body">
+					<div class="col-md-3">
+						<div class="form-group">
+							<label>Choose time: </label> <input type="text"
+								class="form-control datepicker_select" ng-model="selectdate">
+						</div>
+						<div class="form-group">
+							<button type="button" ng-click="getReportByMonth()"
+								class="btn btn-primary">SEARCH</button>
+						</div>
+					</div>
+					<div class="row" ng-show="showtableReport">
+						<h2>TABLE REPORT</h2>
+						<div class="table-responsive" style="border-left: 1px solid #ddd">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>CateName</th>
+										<th>Number of invoice</th>
+										<th>SUMARY</th>
+										<th>AVEGARE</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="data in dataReport">
+										<td>{{$index+1}}</td>
+										<td>{{data[0]}}</td>
+										<td>{{data[1]}}</td>
+										<td>{{data[2]}}</td>
+										<td>{{data[3]}}</td>
+									</tr>
+									<tr>
+										<td colspan=3></td>
+										<td><strong>Number of Category: </strong></td>
+										<td><strong>{{countRp}}</strong></td>
+									</tr>
+									<tr>
+										<td style="border-top: 1px solid #FFF" colspan=3></td>
+										<td><strong>SUM: </strong></td>
+										<td><strong>{{sumRp | currency}}</strong></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+			<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion"
+					href="#collapseThree">Report follow Category and number of Month
+						before</a>
+			</h4>
+		</div>
+		<div id="collapseThree" class="panel-collapse collapse">
+			<div class="panel-body">
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="sel1">Select list:</label> <select
@@ -45,13 +197,12 @@ $(function() {
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="sel1">Input Number of Month before: </label>
-						<input type="number" name="month"
-							value="1" ng-model="month">
+							<label for="sel1">Input Number of Month before: </label> <input
+								type="number" name="month" value="1" ng-model="month">
 						</div>
 						<div class="form-group">
-						<button type="button" ng-click="getInvoice()"
-							class="btn btn-primary">SEARCH</button>
+							<button type="button" ng-click="getInvoice()"
+								class="btn btn-primary">SEARCH</button>
 						</div>
 					</div>
 					<div class="row" ng-show="showtableCM">
@@ -96,8 +247,9 @@ $(function() {
 						</div>
 					</div>
 				</div>
-			</div>
 		</div>
+	</div>
+		
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h4 class="panel-title">
@@ -127,8 +279,8 @@ $(function() {
 								class="form-control datepicker" ng-model="endate">
 						</div>
 						<div class="form-group">
-						<button type="button" ng-click="getInvoiced2d()"
-							class="btn btn-primary">SEARCH</button>
+							<button type="button" ng-click="getInvoiced2d()"
+								class="btn btn-primary">SEARCH</button>
 						</div>
 					</div>
 					<div class="row" ng-show="showtableM2M">
@@ -176,25 +328,7 @@ $(function() {
 			</div>
 		</div>
 	</div>
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h4 class="panel-title">
-				<a data-toggle="collapse" data-parent="#accordion"
-					href="#collapseThree">Collapsible Group Item #3</a>
-			</h4>
-		</div>
-		<div id="collapseThree" class="panel-collapse collapse">
-			<div class="panel-body">Lorem ipsum dolor sit amet, consectetur
-				adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-				dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-				exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-				esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-				cupidatat non proident, sunt in culpa qui officia deserunt mollit
-				anim id est laborum.</div>
-		</div>
-	</div>
-	
+
 </div>
 
 
