@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css"
 	href='<c:url value="/resources/css/style.css"/>'>
 	
-<div ng-controller="UserController as userCtrl">
+
 
 	<!-- Modal -->
 	<div class="modal-fade" id="myModal" tabindex="-1" role="dialog"
@@ -47,12 +47,8 @@
 			</div>
 		</div>
 	</div>
-</div>
 
-	<script type="text/javascript"
-		src='<c:url value="/resources/libs/jquery/jquery-2.1.1.js"/>'></script>
-	<script type="text/javascript"
-		src='<c:url value="/resources/libs/bootstrap-3.1.1/js/bootstrap.js"/>'></script>
+
 	<script type="text/javascript"
 		src='<c:url value="/resources/libs/bootstrap-dialog/js/bootstrap-dialog.min.js"/>'></script>
 	<script type="text/javascript"
