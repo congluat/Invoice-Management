@@ -85,50 +85,59 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public double calAverage(Category category) {
 		List<Invoice> list = getTop10IsNotWarning(category);
 		BigDecimal avg = BigDecimal.valueOf(0.0d);
-		Iterator it = list.iterator();	
-		while(it.hasNext()){
+		Iterator it = list.iterator();
+		while (it.hasNext()) {
 			Invoice invoice = (Invoice) it.next();
 			avg = avg.add(invoice.getAmount());
 		}
-		return Double.parseDouble(avg.divide(BigDecimal.valueOf(list.size())).toString());
+		//chua co invoice nao` trong category nay
+		int listSize = list.size();
+		if (listSize == 0) {
+			listSize = 1;
+		}
+		return Double.parseDouble(avg.divide(BigDecimal.valueOf(listSize)).toString());
 	}
 
 	@Override
 	public List<Invoice> getTop10(Category category) {
 		return invoiceDao.getTop10(category);
 	}
-	
-//	@Override
-//	public List<Invoice> getInvoiceAttribute(String attribute) {
-//		return invoiceDao.getInvoiceAttribute(attribute);
-//	}
+
+	// @Override
+	// public List<Invoice> getInvoiceAttribute(String attribute) {
+	// return invoiceDao.getInvoiceAttribute(attribute);
+	// }
 
 	@Override
 	public boolean checkIsWarning(BigDecimal amount, Category category) {
 		double amountDouble = Double.parseDouble(amount.toString());
-		double avg = calAverage(category)*1.7;		
+		double avg = calAverage(category) * 1.7;
+		//la invoice dau` tien trong category
+		if (avg == 0) {
+			return false;
+		} else
 		// kiem tra invoice
-		if(amountDouble > (avg)){	//invoice co the bi canh bao		
+		if (amountDouble > (avg)) { // invoice co the bi canh bao
 			List<Invoice> list = invoiceDao.getTop10(category);
 			System.out.println(list.size());
-			if(list.size()<10){
+			if (list.size() < 10) {
 				return true;
 			}
-			Iterator it = list.iterator();	
-			while(it.hasNext()){
+			Iterator it = list.iterator();
+			while (it.hasNext()) {
 				Invoice invoice = (Invoice) it.next();
-				if(invoice.getIsWarning() == false ){ // xuat hien 1 invoice ko hop le
-					//ko phai invoice thu 11 , bat canh bao
+				if (invoice.getIsWarning() == false) { // xuat hien 1 invoice ko
+														// hop le
+					// ko phai invoice thu 11 , bat canh bao
 					return true;
 				}
-			}		
-			//la invoice thu 11 , tat canh bao
+			}
+			// la invoice thu 11 , tat canh bao
 			return false;
-		}		
-		//invoice ko bi canh bao
+		}
+		// invoice ko bi canh bao
 		return false;
 	}
-	
 
 	@Override
 	public List<Invoice> getInvoiceAttribute(String attribute, String empname) {

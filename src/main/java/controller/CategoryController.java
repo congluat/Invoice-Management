@@ -83,6 +83,7 @@ public class CategoryController {
 		Category category = new Category();
 
 		model.addAttribute("category", category);
+		model.addAttribute("title", "Add category");
 		return "save-cate";
 	}
 

@@ -7,6 +7,34 @@
 	color: #ddd;
 }
 
+.panel {
+	
+}
+
+.panel-total {
+	background-color: #547A82;
+}
+
+.panel-total .panel-heading {
+	background-color: #355C7D;
+}
+
+.panel-total .panel-footer {
+	color: #355C7D;
+}
+
+.panel-invoice {
+	background-color: #6C5B7B;
+}
+
+.panel-invoice .panel-heading {
+	background-color: #6C5B7B;
+}
+
+.panel-invoice .panel-footer {
+	color: #6C5B7B;
+}
+
 .nav>li>a:focus, .nav>li>a:hover {
 	text-decoration: none;
 	color: #009688;
@@ -204,4 +232,32 @@
 
 .isWarning {
 	background-color: #ffecb3;
+}
+
+.navbar, .navbar.navbar-default {
+	background-color: #474747;
+}
+
+.navbar, .navbar.navbar-default {
+	background-color: #474747;
+}
+
+.navbar {
+	background-color: #474747;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+	color: #474747;
+}
+
+a, a:hover, a:focus {
+	color: #474747;
+}
+
+.panel.panel-primary > .panel-heading {
+	background-color: #474747;
+}
+
+.navbar .dropdown-menu li > a:hover, .navbar.navbar-default .dropdown-menu li > a:hover{
+	color: #474747;
 }
