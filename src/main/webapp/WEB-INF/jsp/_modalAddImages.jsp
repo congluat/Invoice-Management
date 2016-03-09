@@ -8,6 +8,10 @@
 <link rel="stylesheet" type="text/css"
 	href='<c:url value="/resources/css/style.css"/>'>
 	
+<<<<<<< HEAD
+
+=======
+>>>>>>> 9f2c2f6e6c74bb75ddb2eec0700b2df1475f9adb
 
 	<!-- Modal -->
 	<div class="modal-fade" id="myModal" tabindex="-1" role="dialog"
@@ -47,6 +51,10 @@
 		</div>
 	</div>
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 9f2c2f6e6c74bb75ddb2eec0700b2df1475f9adb
 	<script type="text/javascript"
 		src='<c:url value="/resources/libs/bootstrap-dialog/js/bootstrap-dialog.min.js"/>'></script>
 	<script type="text/javascript"

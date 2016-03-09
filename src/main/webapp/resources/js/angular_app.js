@@ -271,8 +271,15 @@
 
 			$http.get("Invoice/getByMonth/" + month + "-" + year).success(
 					function(response) {
-
 						$scope.month = response.length;
+					});
+		};
+		
+		$scope.getToltalDangerInvoiceThisMonth = function() {
+
+			$http.get("Invoice/getDangerByMonth/" + month + "-" + year).success(
+					function(response) {
+						$scope.danger = response.length;
 					});
 		};
 
@@ -423,8 +430,7 @@
 		}
 	});
 
-	app
-			.controller(
+	app.controller(
 					'AddUserController',
 					function($scope, $http) {
 						$scope.user = {
@@ -520,49 +526,48 @@
 
 	});
 
-	app.controller('myCtrl', function($scope, $http) {
-		$scope.showtable = false;
+	app.controller('reportCtrl', function($scope, $http) {
+		$scope.showtableCM = false;
+		$scope.showtableM2M = false;
 		$scope.getInvoice = function() {
 			$http.get(
-					"Report/cateM?category=" + $scope.category + "&month="
+					"Report/cateM?category=" + $scope.categoryCM + "&month="
 							+ $scope.month).then(function(response) {
-				$scope.sum = 0;
-				data = response.data;
+				$scope.sumCM = 0;
+				var data = response.data;
 				if (data.length > 0) {
-					$scope.cateName = data[0].category.name;
-					$scope.showtable = true;
-					$scope.invoices = data;
-					$scope.count = data.length;
+					$scope.showtableCM = true;
+					$scope.invoicesCM = data;
+					$scope.countCM = data.length;
 					$(data).each(function(i, item) {
-						$scope.sum += item.amount;
+						$scope.sumCM += item.amount;
 					})
 				} else {
-					$scope.showtable = false;
-					$scope.count = 0;
-					$scope.sum = 0;
+					$scope.showtableCM= false;
+					$scope.countCM = 0;
+					$scope.sumCM = 0;
 				}
 			});
 		}
 
 		$scope.getInvoiced2d = function() {
 			$http.get(
-					"Report/cateMd2d?cateId=" + $scope.category + "&startdate="
+					"Report/cateMd2d?cateId=" + $scope.categoryM2M + "&startdate="
 							+ $scope.startdate + "&endate=" + $scope.endate)
 					.then(function(response) {
-						$scope.sum = 0;
-						data = response.data;
+						$scope.sumM2M = 0;
+						var data = response.data;
 						if (data.length > 0) {
-							$scope.cateName = data[0].category.name;
-							$scope.showtable = true;
-							$scope.invoices = data;
-							$scope.count = data.length;
+							$scope.showtableM2M = true;
+							$scope.invoicesM2M = data;
+							$scope.countM2M = data.length;
 							$(data).each(function(i, item) {
-								$scope.sum += item.amount;
+								$scope.sumM2M += item.amount;
 							})
 						} else {
-							$scope.showtable = false;
-							$scope.count = 0;
-							$scope.sum = 0;
+							$scope.showtableM2M = false;
+							$scope.countM2M = 0;
+							$scope.sumM2M = 0;
 						}
 					})
 		}

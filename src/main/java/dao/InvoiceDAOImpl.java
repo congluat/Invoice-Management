@@ -113,6 +113,17 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 	}
 
 	@Override
+	public List<Invoice> getAllDangerInvoicesByMonth(Date date) {
+		Session session = sessionFactory.openSession();
+		int month = date.getMonth() + 1;
+		int year = date.getYear() + 1900;
+		String hql = "FROM Invoice WHERE isWarning = true AND MONTH(Time) = " + month + " AND YEAR(Time) = " + year + " Order by Time DESC";
+		List<Invoice> list = session.createQuery(hql).list();
+		session.close();
+		return list;
+	}
+	
+	@Override
 	public Map<String, List<Invoice>> getInvoicesGroupbyMonth() {
 		Session session = sessionFactory.openSession();
 
@@ -205,8 +216,7 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 						+ " Order by DAY(Time) DESC";
 			} else
 				return null;
-		}
-		System.out.println(hql);
+		}		
 		List<Invoice> invoices = session.createQuery(hql).list();
 		session.close();
 		return invoices;

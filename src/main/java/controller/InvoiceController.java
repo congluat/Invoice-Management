@@ -56,6 +56,18 @@ public class InvoiceController {
 		System.out.println("year: " + date.getYear());
 		return invoiceService.getAllInvoicesByMonth(date);
 	}
+	
+	@RequestMapping(value = "/getDangerByMonth/{time}")
+	@ResponseBody
+	public List<Invoice> getDangerByMonth(@PathVariable String time, HttpServletRequest request) throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("MM-yyyy");
+		Date date = formatter.parse(time);
+		System.out.println(time);
+		System.out.println(date.toString());
+		System.out.println("month: " + date.getMonth());
+		System.out.println("year: " + date.getYear());
+		return invoiceService.getAllDangerInvoicesByMonth(date);
+	}
 
 	@RequestMapping(value = "/getByMonth")
 	@ResponseBody
@@ -97,6 +109,14 @@ public class InvoiceController {
 		model.addAttribute("title", "Invoices");
 		return "invoices";
 	}
+	
+	/*@RequestMapping(value = { "/", "/get-all-danger-invoices" }, method = RequestMethod.GET)
+	public String getAllDangerInvoices(HttpServletRequest request, ModelMap model) {
+		User user = (User) request.getSession().getAttribute("user");
+		model.addAttribute("invoices", invoiceService.getAllInvoices(user.getId()));
+		model.addAttribute("title", "Invoices");
+		return "invoices";
+	}*/
 
 	@RequestMapping(value = { "/get-all-invoices/{amount}/{cateId}" }, method = RequestMethod.GET)
 	@ResponseBody
@@ -150,7 +170,7 @@ public class InvoiceController {
 		invoice.setIsWarning(invoiceService.checkIsWarning(invoice.getAmount(), invoice.getCategory()));
 		invoiceService.update(invoice);
 		
-		return "home";
+		return "redirect:/Invoice/";
 	}
 
 	@RequestMapping(value = "/delete/{id}")
@@ -169,8 +189,9 @@ public class InvoiceController {
 	@RequestMapping(value = "/search/{empname}/{attribute}", method = RequestMethod.GET)
 	public String Search(@PathVariable String empname, @PathVariable String attribute, ModelMap model) {
 		List<Invoice> invoices = new ArrayList<Invoice>();
-		if(attribute.equals("Name")||attribute.equals("Place"))
+		if(attribute.equals("Name")||attribute.equals("Place")){
 			invoices = sortList(invoiceService.getInvoiceAttribute(attribute, empname), empname, attribute);
+		}
 		if(attribute.equals("Amount")||attribute.equals("IsWarning")||attribute.equals("Time"))
 			invoices = invoiceService.getInvoiceAttribute(attribute, empname);
 		model.addAttribute("invoices", invoices);
