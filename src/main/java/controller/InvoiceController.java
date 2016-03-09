@@ -150,7 +150,7 @@ public class InvoiceController {
 		invoice.setIsWarning(invoiceService.checkIsWarning(invoice.getAmount(), invoice.getCategory()));
 		invoiceService.update(invoice);
 		
-		return "home";
+		return "redirect:/Invoice/";
 	}
 
 	@RequestMapping(value = "/delete/{id}")
