@@ -127,7 +127,7 @@
 			}, 100);
 		})
 
-		$("add-button-area").mouseleave(function() {
+		$(".add-button-area").mouseleave(function() {
 			$(".addCate").hide("slide", {
 				direction : "down"
 			}, 100);
