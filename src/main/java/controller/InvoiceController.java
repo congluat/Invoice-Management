@@ -94,6 +94,7 @@ public class InvoiceController {
 	public String getAllInvoices(HttpServletRequest request, ModelMap model) {
 		User user = (User) request.getSession().getAttribute("user");
 		model.addAttribute("invoices", invoiceService.getAllInvoices(user.getId()));
+		model.addAttribute("title", "Invoices");
 		return "invoices";
 	}
 
@@ -111,6 +112,7 @@ public class InvoiceController {
 		Invoice invoice = new Invoice();
 		model.addAttribute("invoice", invoice);
 		model.addAttribute("edit", false);
+		model.addAttribute("title", "Add Invoice");
 		return "save-invoice";
 	}
 
@@ -135,6 +137,7 @@ public class InvoiceController {
 		model.addAttribute("invoice", invoice);
 		model.addAttribute("edit", true);
 		//session.setAttribute("invoice", invoice);
+		model.addAttribute("title", invoice.getName());
 		return "save-invoice";
 	}
 
@@ -146,6 +149,7 @@ public class InvoiceController {
 		model.addAttribute("edit", true);
 		invoice.setIsWarning(invoiceService.checkIsWarning(invoice.getAmount(), invoice.getCategory()));
 		invoiceService.update(invoice);
+		
 		return "home";
 	}
 

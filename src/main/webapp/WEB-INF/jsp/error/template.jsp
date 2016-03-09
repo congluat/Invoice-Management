@@ -54,8 +54,7 @@
 
 <script type="text/javascript"
 	src="<c:url value='/resources/dist/js/material.min.js'/>"></script>
-<script type="text/javascript"
-	src="<c:url value='/resources/dist/js/ripples.min.js'/>"></script>
+
 
 <!--
 <script type="text/javascript">
@@ -65,30 +64,10 @@
 
 
 <!-- ---------------------------My CSS----------- -->
-
-<%-- 
-<link href="<c:url value='/resources/css/simple-sidebar.css' />"
-	rel="stylesheet"></link>
-	 --%>
-
-<link href="<c:url value='/resources/css/sb-admin-2.css' />"
-	rel="stylesheet"></link>
-<link href="<c:url value='/resources/css/metisMenu.css' />"
-	rel="stylesheet"></link>
-<link href="<c:url value='/resources/css/timeline.css' />"
-	rel="stylesheet"></link>
 <link
 	href="<c:url value='/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet'/>"
 	type="text/css">
-<link href="<c:url value='/resources/css/mycss.css' />" rel="stylesheet"></link>
 
-<!---------------------------- MY JS--------------- -->
-
-
-<script type="text/javascript"
-	src="<c:url value='/resources/js/sb-admin-2.js' />"></script>
-<script type="text/javascript"
-	src="<c:url value='/resources/js/metisMenu.js' />"></script>
 
 
 <!-- --------------------AngularJS-------------------- -->
@@ -100,79 +79,16 @@
 <script src="https://www.google.com/jsapi" type="text/javascript"></script>
 <script type="text/javascript"
 	src="<c:url value='/resources/js/angular_app.js' />"></script>
-<script
-	src="http://bouil.github.io/angular-google-chart/ng-google-chart.js"></script>
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		<!--$.material.init();
-		-->
-		/* 
-		 $('.modal').modal({
-		 backdrop : 'static',
-		 keyboard : false
-		 }) */
-	});
-</script>
-
-<script type="text/javascript">
-	$(function() {
-		$("#add-button").mouseenter(function() {
-			console.log("mouse hover");
-			$(".addCate").show("slide", {
-				direction : "down"
-			}, 100);
-			$(".addInvoice").show("slide", {
-				direction : "right"
-			}, 100);
-		})
-
-		$(".add-button-area").mouseleave(function() {
-			$(".addCate").hide("slide", {
-				direction : "down"
-			}, 100);
-			$(".addInvoice").hide("slide", {
-				direction : "right"
-			}, 100);
-		});
-	});
-</script>
 </head>
 
 <body ng-app="app">
-
-	<jsp:include page="_navbar.jsp"></jsp:include>
-
-	<jsp:include page="_modalAddUser.jsp"></jsp:include>
 
 	<div id="page-wrapper" style="padding-left: 0px; padding-right: 5px">
 
 		<tiles:insertAttribute name="body">
 
 		</tiles:insertAttribute>
-		<script type="text/javascript">
-			$(function() {
-				$('[data-toggle="tooltip"]').tooltip()
-			})
-		</script>
-
-
-		<div class="add-button-area">
-			<a href="Invoice/save" id="add-button"
-				class="btn btn-primary btn-circle btn-lg"> <i
-				class="glyphicon glyphicon-plus"></i>
-			</a> <a href="Category/save"
-				class="btn btn-primary btn-circle btn-lg addCate"
-				data-toggle="tooltip" data-placement="left"
-				title="Add
-				Category"> <i class="glyphicon glyphicon-tasks"></i>
-			</a> <a href="Invoice/save"
-				class="btn btn-primary btn-circle btn-lg addInvoice"
-				data-toggle="tooltip" data-placement="left" title="Add Invoice">
-				<i class="glyphicon glyphicon-tags"></i>
-			</a>
-		</div>
-
 
 	</div>
 

@@ -26,15 +26,21 @@ public class RevenueController {
 
 	@RequestMapping(value = "/category-in-month/{month}-{year}", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Object[]> chart(ModelMap model,@PathVariable int month, @PathVariable int year ) {
+	public List<Object[]> chart(ModelMap model, @PathVariable int month, @PathVariable int year) {
 		model.addAttribute("data", reportService.getCategoryByMonth(month, year));
 		List<Object[]> list = reportService.getCategoryByMonth(month, year);
 		return list;
 	}
 
 	@RequestMapping(value = "/monthly-statistic", method = RequestMethod.GET)
-	public String InvoiceCatebyMonths(HttpServletRequest request) {
-	
+	public String InvoiceCatebyMonths(HttpServletRequest request, ModelMap model) {
+		model.addAttribute("title", "Revenue");
 		return "monthly-statistic";
+	}
+
+	@RequestMapping(value = { "/getdialyuse/{month}-{year}" }, method = RequestMethod.GET)
+	@ResponseBody
+	public List<Object[]> dialyUse(@PathVariable int month, @PathVariable int year, ModelMap model) {
+		return reportService.getMoneyUsePerDay(month, year);
 	}
 }

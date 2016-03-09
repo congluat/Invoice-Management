@@ -448,7 +448,7 @@
 				<li><a href="Invoice/"><i class="glyphicon glyphicon-tasks"></i>
 						Invoices</a></li>
 				<li><a href="Category/listCategories"><i
-						class="glyphicon glyphicon-tags"></i> Category</a></li>
+						class="glyphicon glyphicon-tags"></i> Categories</a></li>
 				<li><a href="#"><i class="glyphicon glyphicon-stats"></i>
 						Statistical Data<span class="glyphicon glyphicon-menu-down"></span></a>
 					<ul class="nav nav-second-level">

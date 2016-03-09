@@ -3,15 +3,38 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
-<!-- ====================SCRIPT================ -->
 
+
+<style>
+.drawChartDiv {
+	min-height: 300px;
+	height: 100%;
+	/* width: 100%; */
+	margin: 0px 0px;
+	background: #fff;
+	text-align: center;
+}
+
+.chartWrapper {
+	min-height: 100%;
+	height: 100%;
+	/* width: 100%; */
+	margin: 0px 0px;
+	padding-top: 10px;
+	padding-left: 10px;
+	background: #fff;
+	text-align: center;
+	vertical-align: middle;
+	background: #fff;
+}
+</style>
 
 <div ng-controller="HomeController">
 
 
 	<!--====================CONTENT=============== -->
-	<h1 style="margin-left: 10px" >Dashboard</h1>
-	<div class="col-md-12 row">
+	<h1 style="margin-left: 10px">Dashboard</h1>
+	<div class="col-md-12">
 		<div class="col-lg-4 col-md-6">
 			<div class="panel panel-total" ng-init="getTotalAmount()">
 				<div class="panel-heading">
@@ -88,7 +111,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-12 row" style="margin-top: 50px;" ng-init="drawChart()">
+	<div class="col-md-12" style="margin-top: 50px; background-color: #FFF"
+		ng-init="drawChart()">
 
 		<!-- <div class="col-md-7" google-chart chart="chart" style="min-width: 300px"></div> -->
 		<div class="col-md-5">
@@ -106,7 +130,9 @@
 
 			</table>
 		</div>
-		<div ng-controller="MyCtrl1" id="chartdiv" class="col-md-7"
-			style="height: 300px"></div>
+		<div class="col-md-7">
+			<div ng-init="drawDialyChart()" id="dialyChartDiv"
+				class="drawChartDiv"></div>
+		</div>
 	</div>
 </div>

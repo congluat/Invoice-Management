@@ -1,5 +1,6 @@
 package service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +32,12 @@ public class ReportServiceImpl implements ReportService {
 
 	@Override
 	public List<Object[]> getMoneyUsePerDay(int month, int year) {
+		List<Object[]> list = reportDao.getMoneyUsePerDay(month, year);
+		List<Object[]> result = new ArrayList<>();
+		for (Object[] object : list) {
+			object[0] = object[0].toString();
 
-		return reportDao.getMoneyUsePerDay(month, year);
+		}
+		return list;
 	}
 }
