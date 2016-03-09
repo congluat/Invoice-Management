@@ -54,8 +54,9 @@ public class ReportDAOImpl implements ReportDAO {
 	@Override
 	public List<Invoice> getInvoiceD2D(Integer cateId, String startdate, String endate) {
 		Session session = sessionFactory.openSession();
-		String hql = "FROM Invoice Where category.id =:cateId " + " AND time BETWEEN :startdate AND :endate"
-				+ " Order By time ASC";
+		String hql = "FROM Invoice Where category.id =:cateId " 
+						+ " AND time BETWEEN :startdate AND :endate"
+						+ " Order By time ASC";
 		Query query = session.createQuery(hql);
 		query.setParameter("cateId", cateId);
 		query.setParameter("startdate", new Date(startdate));
@@ -76,6 +77,19 @@ public class ReportDAOImpl implements ReportDAO {
 		session.close();
 		return list;
 
+	}
+
+	@Override
+	public List<Object[]> getReportDataByMonth() {
+		Session session = sessionFactory.openSession();
+		String hql = "Select category.name,"
+				+ " COUNT(*) as sl, "
+				+ " SUM(amount) as tong"
+				+ " FROM Invoice"
+				+ " GROUP BY category.name";
+		Query query = session.createQuery(hql);
+		session.close();
+		return query.list();
 	}
 
 }

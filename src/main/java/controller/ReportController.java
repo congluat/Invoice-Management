@@ -4,6 +4,7 @@ package controller;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -63,9 +64,17 @@ public class ReportController {
 							@RequestParam String endate) throws ParseException {
 		Integer cateId = Integer.parseInt(request.getParameter("cateId"));
 		List<Invoice> list = reportService.getInvoiceD2D(cateId, startdate, endate);
-		System.out.println(list.size());
 		return list;
 	}
 	
+	@RequestMapping("/dataReport")
+	public String DataReport(ModelMap model) {
+		 
+		List<Object[]> list = reportService.getReportDataByMonth();
+		for( Object obj : list) {
+			System.out.println(obj.toString());
+		}
+		return "home";
+	}
 	
 }
