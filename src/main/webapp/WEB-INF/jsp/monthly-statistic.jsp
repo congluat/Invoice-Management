@@ -119,13 +119,9 @@ caption {
 			<div class="form-group">
 
 				<a ng-click="timeChanged()" class="btn btn-success">Update</a>
-
-
 			</div>
-
 		</div>
 	</div>
-
 	<div class="col-md-12" id="loading"></div>
 	<div class="col-md-12 row" id="content">
 		<div class="col-md-5">
@@ -139,13 +135,13 @@ caption {
 					<td>{{a[0]}}</td>
 					<td>{{a[1] | currency}}</td>
 				</tr>
-
 			</table>
 		</div>
 		<div google-chart chart="chart" class="drawChartDiv col-md-7"></div>
-	</div>
-	<div class="col-md-12">
-		<div ng-init="drawDialyChart()" id="dialyChartDiv"
-			class="drawChartDiv"></div>
+
+		<div class="col-md-12">
+			<div ng-init="drawDialyChart()" id="dialyChartDiv"
+				class="drawChartDiv"></div>
+		</div>
 	</div>
 </div>

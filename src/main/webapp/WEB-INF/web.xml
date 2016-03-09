@@ -5,11 +5,11 @@
 	version="3.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
 
 	<display-name>Spring MVC Hello</display-name>
-	<error-page>
-		<error-code>500</error-code>
-		<location>/WEB-INF/jsp/error500.jsp</location>
-	</error-page>
 
+
+	<!-- <error-page> <error-code>500</error-code> <location>/WEB-INF/jsp/error/error500.jsp</location> 
+		</error-page> -->
+		
 	<filter>
 		<filter-name>utf8</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter

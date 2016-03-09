@@ -53,7 +53,6 @@ $(document).ready(function() {
 	// "dropzoneForm" is the camel-case version of the form id "dropzone-form"
 	
 	Dropzone.options.dropzoneForm = {
-
 		acceptedFiles: "image/jpeg,image/png,image/gif",
 		autoProcessQueue : false,
 		uploadMultiple : true,
@@ -67,13 +66,13 @@ $(document).ready(function() {
 		init : function() {
 
 			var myDropzone = this;
-
+			
 			// first set autoProcessQueue = false
 			$('#upload-button').on("click", function(e) {
-
+				
 				myDropzone.processQueue();
 			});
-
+						
 			// customizing the default progress bar
 			this.on("uploadprogress", function(file, progress) {
 
@@ -84,13 +83,12 @@ $(document).ready(function() {
 			});
 
 			// displaying the uploaded files information in a Bootstrap dialog		
-			this.on("complete", function(files) {				
+			this.on("complete", function(files) {	
 				$('#myModalEditPhoto').modal('hide');
 				var invoiceid = $(".abc").attr("id");
 				var show='';
 				$('#showimages').html(show);
-				
-				/* $('div #showimages > img').remove(); */
+			
 				$.ajax({
 					url : "Upload/getPhoto",
 					type : 'post',
@@ -100,7 +98,7 @@ $(document).ready(function() {
 					dataType : 'json',
 					success : function(data) {
 						 $.each(data,function (index) {																													         	
-						 	show+='<div class="col-md-2"> <div class="col-md-12"> <img alt="not found" height="80px" width="80px" src="<%= request.getContextPath()%>/resources/images/'+data[index].photo+'" /></div> <div style="text-align: center;" class="col-md-12" id ='+data[index].id+'> <a class="onclickdelete">Delete</a></div></div> ';						 	
+						 	show+='<div class="col-md-2"> <div class="col-md-12"> <img alt="not found" height="80px" width="80px" src="<%= request.getContextPath()%>/resources/images/'+data[index].photo+'" /></div> <div style="text-align: center;" class="col-md-12" id ='+data[index].id+'> <a class="onclickdelete" data-toggle="modal" data-target="#confirm-delete">Delete</a></div></div> ';						 	
 						 }); 
 						 $('#showimages').html(show);
 					},
@@ -127,21 +125,27 @@ $(document).ready(function() {
 
 <script type="text/javascript">
 	$(document).on("click",".onclickdelete",function() {
-		
-			var photoid = $(this).parents("div").attr("id");
-			$.ajax({
-				url : "Upload/delete",
-				type : 'post',
-				data : {
-					id : photoid
-				},
-				success : function(result) {
-					$('#' + photoid).parents(".col-md-2").remove();
-				}
-			});		
+		var divid = $(this).parents("div").attr("id");
+		$("#confirm button").attr('id',divid);
 	});
-</script>
+</script> 
 
+<script type="text/javascript">
+$(document).on("click","#delete",function() {
+	$('#confirm-delete').modal('hide');
+	var photoid = $("#confirm button").attr("id");
+	$.ajax({
+		url : "Upload/delete",
+		type : 'post',
+		data : {
+			id : photoid
+		},
+		success : function(result) {
+			$('#' + photoid).parents(".col-md-2").remove();
+		}
+	});		
+});
+</script>
 
 <div class="panel panel-primary">
 	<div class="panel-heading">
@@ -279,7 +283,7 @@ $(document).ready(function() {
 										dataType : 'json',
 										success : function(data) {
 											 $.each(data,function (index) {																													         	
-											 	show+='<div class="col-md-2"> <div class="col-md-12"> <img alt="not found" height="80px" width="80px" src="<%= request.getContextPath()%>/resources/images/'+data[index].photo+'" /></div> <div style="text-align: center;" class="col-md-12" id ='+data[index].id+'> <a class="onclickdelete">Delete</a></div></div> ';						 	
+											 	show+='<div class="col-md-2"> <div class="col-md-12"> <img alt="not found" height="80px" width="80px" src="<%= request.getContextPath()%>/resources/images/'+data[index].photo+'" /></div> <div style="text-align: center;" class="col-md-12" id ='+data[index].id+'> <a class="onclickdelete" data-toggle="modal" data-target="#confirm-delete">Delete</a></div></div> ';						 	
 											 }); 
 											 $('#showimages').html(show);
 										},
@@ -352,7 +356,27 @@ $(document).ready(function() {
 	</div>
 </div>
 
-
+<div class="col-md-12">
+			<div class="modal fade" id="confirm-delete" tabindex="-1"
+				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="vertical-alignment-helper">
+					<div class="modal-dialog vertical-align-center">
+						<div class="modal-content"
+							style="width: 400px; border-radius: 10px;">
+							<div class="modal-header">Confirm</div>
+							<div class="modal-body">Do you want to delete</div>
+							
+							<div class="modal-footer" id ="confirm">
+								<button id="" type="button" class="btn btn-default"
+									data-dismiss="modal">Cancel</button>
+								<a id="delete" class="btn btn-danger btn-ok" style="margin-top: 0px">Delete</a>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+</div>
 <script type="text/javascript"
 	src='<c:url value="/resources/libs/bootstrap-dialog/js/bootstrap-dialog.min.js"/>'></script>
 <script type="text/javascript"

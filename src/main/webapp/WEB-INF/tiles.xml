@@ -8,7 +8,9 @@
 	<definition name="*" template="/WEB-INF/jsp/template.jsp">
 		<put-attribute name="body" value="/WEB-INF/jsp/{1}.jsp" />
 	</definition>
-	
+	<definition name="error/*" template="/WEB-INF/jsp/error/template.jsp">
+		<put-attribute name="body" value="/WEB-INF/jsp/error/{1}.jsp" />
+	</definition>
 
 	<!-- <definition name="admin/*" template="/views/admin/layout.jsp"> <put-attribute 
 		name="body" value="/views/admin/{1}.jsp" /> </definition> <definition name="*" 

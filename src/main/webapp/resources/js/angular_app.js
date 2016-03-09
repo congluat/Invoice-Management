@@ -20,10 +20,14 @@
 		$scope.timeInput = month + "/" + year;
 		console.log("TimInput Init: " + $scope.timeInput);
 		$scope.timeChanged = function() {
+			$("#content").hide();
+			$("#loading").show();
 			console.log($("#inputDateTime").val());
 			$scope.timeInput = $("#inputDateTime").val();
 			$scope.drawChart();
 			$scope.drawDialyChart();
+			$("#content").show();
+			$("#loading").hide();
 		};
 
 		$scope.$watch(function() {
@@ -40,8 +44,7 @@
 		$scope.chartData = [];
 
 		$scope.drawDialyChart = function() {
-			$("#content").hide();
-			$("#loading").show();
+
 			var month = parseInt($scope.timeInput.split('/')[0]);
 			var year = parseInt($scope.timeInput.split('/')[1]);
 			var tempdata = [];
@@ -92,8 +95,6 @@
 		};
 
 		$scope.drawChart = function() {
-			$("#content").hide();
-			$("#loading").show();
 			// var time = console.log($("#inputDateTime").val());
 			console.log("time" + $scope.timeInput);
 			var month = parseInt($scope.timeInput.split('/')[0]);
@@ -150,7 +151,7 @@
 
 	});
 
-	app.controller("HomeController", function($scope, $http,$window) {
+	app.controller("HomeController", function($scope, $http, $window) {
 		$scope.$watch(function() {
 			return $window.innerWidth;
 		}, function(value) {
