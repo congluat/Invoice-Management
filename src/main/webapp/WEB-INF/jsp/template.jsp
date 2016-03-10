@@ -17,7 +17,7 @@
 	href="<c:url value='/resources/css/jquery-ui.css'/>">
 <script src="<c:url value='/resources/js/jquery-ui.min.js'/>"></script>
 
-
+<script src="<c:url value='/resources/js/search_navbar.js'/>"></script>
 
 <!-- -----------------Bootstrap--------------------------  -->
 

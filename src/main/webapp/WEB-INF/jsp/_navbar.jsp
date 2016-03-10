@@ -1,9 +1,9 @@
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> --%>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
-<script src="<c:url value='/resources/js/search_navbar.js'/>"></script>
+
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation"
 	style="margin-bottom: 0; z-index: 100">
@@ -19,7 +19,8 @@
 <script>
   $(document).ready(function () {
     $('.selectpicker').selectpicker({   	
-        size : false 
+        size : false,
+        mobile : true
     });
   });
 </script>
