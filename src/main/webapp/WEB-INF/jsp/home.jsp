@@ -61,8 +61,7 @@
 
 
 		<div class="col-lg-4 col-md-6">
-			<div class="panel panel-invoice"
-				ng-init="getToltalInvoiceThisMonth()">
+			<div class="panel panel-invoice" ng-init="getToltalInvoiceThisMonth()">
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-xs-3">
@@ -100,7 +99,7 @@
 						</div>
 					</div>
 				</div>
-				<a href="Invoice/">
+				<a href="Invoice/warning">
 					<div class="panel-footer">
 						<span class="pull-left">View Details</span> <span
 							class="pull-right"><i
