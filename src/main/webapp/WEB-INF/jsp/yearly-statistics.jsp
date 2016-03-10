@@ -19,21 +19,7 @@
 		$("#inputDateTime").keydown(false);
 		/* $("#content").hide();
 		$("#loading").show(); */
-		$('#datetimepicker10').datetimepicker({
-			viewMode : 'months',
-			format : 'MM/YYYY',
-			defaultDate : new Date()
 
-		});
-
-		$("#datetimepicker10").on("dp.change", function(e) {
-			//console.log(e.date._i);
-			$("#inputDateTime").value = e.date._i;
-
-			$("#inputDateTime").attr("value", e.date._i);
-			$("#inputDateTime").value = " ";
-			$("#inputDateTime").value = e.date._i;
-		});
 	});
 </script>
 <style>
@@ -78,21 +64,17 @@ caption {
 	background: url('<c:url value='/ resources/ logo/ loading.gif '/>')
 		no-repeat center center;
 	background-size: 200px 100px;
-
 }
 </style>
-<div class="chartWrapper" ng-controller="MonthlyStatisticController"
+<div class="chartWrapper" ng-controller="YearlyStatisticController"
 	ng-init="initChart()">
 
 	<div class="row">
 		<div class="col-md-6" style="height: 130px;">
 			<div class="form-group">
 				<div class='input-group date' id='datetimepicker10'>
-					<input id="inputDateTime" type='text' class="form-control"
-						ng-model="timeInput" value="" ng-change="drawChart()" /> <span
-						class="input-group-addon"> <span
-						class="glyphicon glyphicon-calendar"> </span>
-					</span>
+					<input type="number" id='inputDateTime' class="form-control"
+						ng-model="timeInput" value="{{timeInput}}" ng-change="drawChart()" />
 				</div>
 
 			</div>
@@ -122,7 +104,7 @@ caption {
 		<div google-chart chart="chart" class="drawChartDiv col-md-7"></div>
 
 		<div class="col-md-12">
-			<div ng-init="drawDialyChart()" id="dialyChartDiv"
+			<div ng-init="drawDialyChart()" id="monthlyChartDiv"
 				class="drawChartDiv"></div>
 		</div>
 	</div>

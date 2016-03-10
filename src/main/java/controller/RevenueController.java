@@ -43,4 +43,27 @@ public class RevenueController {
 	public List<Object[]> dialyUse(@PathVariable int month, @PathVariable int year, ModelMap model) {
 		return reportService.getMoneyUsePerDay(month, year);
 	}
+
+	@RequestMapping(value = "/yearly-statistics", method = RequestMethod.GET)
+	public String InvoiceYearStatistic(HttpServletRequest request, ModelMap model) {
+		model.addAttribute("title", "Revenue");
+		return "yearly-statistics";
+	}
+
+	@RequestMapping(value = "/category-in-year/{year}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Object[]> yearChart(ModelMap model, @PathVariable int year) {
+		model.addAttribute("data", reportService.getMoneyUseInCategoryByYear(year));
+		List<Object[]> list = reportService.getMoneyUseInCategoryByYear(year);
+		return list;
+	}
+
+	@RequestMapping(value = "/get-monthly-use/{year}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Object[]> monthlyUseYearChart(ModelMap model, @PathVariable int year) {
+		model.addAttribute("data", reportService.getMoneyUseEachMonthInYear(year));
+		List<Object[]> list = reportService.getMoneyUseEachMonthInYear(year);
+		return list;
+	}
+
 }

@@ -68,9 +68,7 @@ public class ReportController {
 	@RequestMapping(value="/getReportByMonth", method= RequestMethod.GET)
 	@ResponseBody
 	public List<Object[]> getReportByMonth(@RequestParam String selectdate) {
-		int month = Integer.parseInt(selectdate.substring(0,2));
-		int year = Integer.parseInt(selectdate.substring(3));
-		return reportService.getReportDataByMonth(month, year);
+		return reportService.getReportDataByMonth(selectdate);
 	}
 	
 	@RequestMapping(value="/getReportByYear", method= RequestMethod.GET)
@@ -78,6 +76,20 @@ public class ReportController {
 	public List<Object[]> getReportByYear(@RequestParam String selectyear) {
 		int year = Integer.parseInt(selectyear);
 		return reportService.getReportDataByYear(year);
+	}
+	
+	@RequestMapping(value="/getInvoiceDetail", method= RequestMethod.GET)
+	@ResponseBody
+	public List<Invoice> getReportDetail(@RequestParam String cateName,
+										@RequestParam String time) {
+		return reportService.getReportDetail(cateName, time);
+	}
+	
+	@RequestMapping(value="/getInfo", method= RequestMethod.GET)
+	@ResponseBody
+	public List<Invoice> getReportInfo(@RequestParam String cateName,
+										@RequestParam String month) {
+		return reportService.getReportInfo(cateName, month);
 	}
 	
 	@ModelAttribute("categories")

@@ -18,13 +18,12 @@
 <script src="<c:url value='/resources/js/jquery-ui.min.js'/>"></script>
 
 
+
 <!-- -----------------Bootstrap--------------------------  -->
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
-	crossorigin="anonymous">
+	href="<c:url value='/resources/css/bootstrap.min.css'/>">
 <!-- 
 
 <link rel="stylesheet"
@@ -33,10 +32,8 @@
 	crossorigin="anonymous">
  -->
 <!-- Latest compiled and minified JavaScript -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-	crossorigin="anonymous"></script>
+<script src="<c:url value='/resources/js/bootstrap.min.js'/>"></script>
+
 <!-- Material Design fonts -->
 <link rel="stylesheet" type="text/css"
 	href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
@@ -100,12 +97,10 @@
 <script src="https://www.google.com/jsapi" type="text/javascript"></script>
 <script type="text/javascript"
 	src="<c:url value='/resources/js/angular_app.js' />"></script>
+
 <script
 	src="http://bouil.github.io/angular-google-chart/ng-google-chart.js"></script>
-<script type="text/javascript"
-	src="<c:url value='/resources/js/ng-cordova.js' />"></script>
-<script type="text/javascript"
-	src="<c:url value='/resources/js/cordova.js' />"></script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		<!--$.material.init();
@@ -147,8 +142,10 @@
 	<jsp:include page="_navbar.jsp"></jsp:include>
 
 	<jsp:include page="_modalAddUser.jsp"></jsp:include>
+	
+	
 
-	<div id="page-wrapper" style="padding-left: 0px; padding-right: 5px">
+	<div id="page-wrapper" style="padding-left: 0px">
 
 		<tiles:insertAttribute name="body">
 

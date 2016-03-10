@@ -13,7 +13,6 @@
 		$(".datepicker_selectyear").datepicker({
 			dateFormat: 'yy'
 		});	
-		datepicker_selectyear
 	})
 </script>
 <style type="text/css">
@@ -49,6 +48,7 @@
 						<th>Month</th>
 						<th>Count</th>
 						<th>SUM</th>
+						<th></th>
 					</tr>
 					<c:forEach var="array" items="${datalist}">
 						<tr>
@@ -57,6 +57,7 @@
 							<td>${array[2]}</td>
 							<td><fmt:formatNumber value="${array[3]}"
 									minFractionDigits="2" maxFractionDigits="2" /></td>
+							<td><a ng-click="info('${array[0]}',${array[1]})">Detail</a></td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -91,8 +92,8 @@
 										<th>#</th>
 										<th>CateName</th>
 										<th>Number of invoice</th>
-										<th>SUMARY</th>
 										<th>AVEGARE</th>
+										<th>SUMARY</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -100,8 +101,8 @@
 										<td>{{$index+1}}</td>
 										<td>{{data[0]}}</td>
 										<td>{{data[1]}}</td>
-										<td>{{data[2]}}</td>
-										<td>{{data[3]}}</td>
+										<td>{{data[3] | currency}}</td>
+										<td>{{data[2] | currency}}</td>
 									</tr>
 									<tr>
 										<td colspan=3></td>
@@ -148,8 +149,9 @@
 										<th>#</th>
 										<th>CateName</th>
 										<th>Number of invoice</th>
-										<th>SUMARY</th>
 										<th>AVEGARE</th>
+										<th>SUMARY</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -157,8 +159,9 @@
 										<td>{{$index+1}}</td>
 										<td>{{data[0]}}</td>
 										<td>{{data[1]}}</td>
-										<td>{{data[2]}}</td>
-										<td>{{data[3]}}</td>
+										<td>{{data[3] | currency}}</td>
+										<td>{{data[2] | currency}}</td>
+										<td><a ng-click="detail(data[0])">Detail</a></td>
 									</tr>
 									<tr>
 										<td colspan=3></td>
@@ -228,7 +231,7 @@
 										<td>{{invoice.time | date:"dd/MM/yyyy | h:mma"}}</td>
 										<td>{{invoice.place}}</td>
 										<td>{{invoice.comment}}</td>
-										<td>{{invoice.amount}}</td>
+										<td>{{invoice.amount | currency}}</td>
 
 
 									</tr>
@@ -306,7 +309,7 @@
 										<td>{{invoice.time | date:"dd/MM/yyyy | h:mma"}}</td>
 										<td>{{invoice.place}}</td>
 										<td>{{invoice.comment}}</td>
-										<td>{{invoice.amount}}</td>
+										<td>{{invoice.amount | currency}}</td>
 
 
 									</tr>
@@ -328,8 +331,9 @@
 			</div>
 		</div>
 	</div>
-
+	<jsp:include page="_modalReportDetail.jsp"></jsp:include>
 </div>
+
 
 
 
