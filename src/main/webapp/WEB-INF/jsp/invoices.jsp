@@ -7,9 +7,6 @@
 	padding: 5px 5px;
 }
 
-.btn {
-	padding: 2px;
-}
 </style>
 
 
@@ -76,11 +73,11 @@
 					ng-src="<c:url value='/resources/logo/'/>{{i.category.logo}}"
 					onError="this.onerror=null;this.src='<c:url value='/resources/logo/abc.png'/>';">
 
-					<div class="timeline-panel" ng-class="{'isWarning': i.isWarning}"
-						ng-mouseenter="hover(i)" ng-mouseleave="hover(i)">
-						<div class="col-md-8">
+					<div class="timeline-panel" ng-mouseenter="hover(i)"
+						ng-mouseleave="hover(i)">
+						<div class="col-md-10 col-xs-12">
 							<div class="timeline-heading">
-								<h4 class="timeline-title">{{i.name}}</h4>
+								<h4 class="timeline-title" ng-class="{'isWarning': i.isWarning}" >{{i.name}}</h4>
 								<p>
 									<small class="text-muted"><i class="fa fa-clock-o"></i>
 										{{i.time | date:"dd/MM/yyyy 'at' h:mma"}} at {{i.place}}</small>
@@ -91,12 +88,13 @@
 								<p>{{i.amount|currency}}</p>
 							</div>
 						</div>
-						<div class="col-md-2 col-xs-2">
-							<a href="Invoice/edit/{{i.id}}" class="btn btn-success">Edit</a>
-						</div>
-						<div class="col-md-2 col-xs-2">
-							<a class="btn btn-danger deleteButton" data-toggle="modal"
-								data-target="#confirm-delete" ng-click="deleteFunc(i.id)">Delete</a>
+						<div class="col-md-2 col-xs-12">
+							<a href="Invoice/edit/{{i.id}}" class="btn btn-success btn-lg">
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+							</a> <a class="btn btn-danger deleteButton btn-lg"
+								data-toggle="modal" data-target="#confirm-delete"
+								ng-click="deleteFunc(i.id)"> <span
+								class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
 						</div>
 
 						<div class="col-md-12 more-info" showonhoverparent>
