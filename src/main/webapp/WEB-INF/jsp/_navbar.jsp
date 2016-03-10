@@ -1,12 +1,9 @@
-<!-- Latest compiled and minified CSS -->
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
-
-<!-- Latest compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
-
-
-
-
+<script src="<c:url value='/resources/js/search_navbar.js'/>"></script>
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation"
 	style="margin-bottom: 0; z-index: 100">
@@ -22,95 +19,15 @@
 <script>
   $(document).ready(function () {
     $('.selectpicker').selectpicker({
-    	style: 'btn-default',
-        size: false
+    	style: 'btn-primary',
+        size: false,
+        mobile : true,
+        style : "background: inherit"
     });
   });
 </script>
-	<script>
-		$(document)
-				.ready(
-						function() {
-							$(function() {
-								$("#invoice")
-										.autocomplete(
 
-												{
-													source : function(request,
-															response) {
-														//alert($("#select").val());
-														$
-																.ajax({
-																	url : "/InvoiceManagement/getSearchValue/"
-																			+ $(
-																					"#select")
-																					.val(),
-																	type : "POST",
-																	data : {
-																		term : request.term
-																	},
-																	dataType : "json",
-																	success : function(
-																			data) {
-																		response($
-																				.map(
-																						data,
-																						function(
-																								item,
-																								i) {
-																							if (i < 10) {
-																								if ($(
-																										"#select")
-																										.val() == "Name") {
-																									return {
-																										value : item.name,
-																										desc : item.name
-																									}
-																								}
-																								if ($(
-																										"#select")
-																										.val() == "Place") {
-																									return {
-																										value : item.place,
-																										desc : item.place
-																									}
-																								}
-																							}
-																						}));
-																	}
-																});
-													},
-													focus : function(event, ui) {
-														$(this).val(
-																ui.item.name);
-														return false;
-													},
-													select : function(event, ui) {
-														var name = ui.item.value;
-														var attribute = document
-																.getElementById('select').value;
-														window.location = "Invoice/search/"
-																+ name
-																+ "/"
-																+ attribute;
-													}
-												}).data("uiAutocomplete")._renderItem = function(
-										ul, item) {
-									var str = item.desc;
-									var page = document
-											.getElementById('invoice').value;
-									var reg = new RegExp(page, "gi");
-									var res = str.replace(reg, page.fontcolor(
-											"blue").bold().fontsize(4));
-									return $("<li></li>").data(
-											"item.autocomplete", item).append(
-											res).appendTo(ul);
-								};
-							});
-						});
-	</script>
-
-	<style>
+<style>
 .searchForm {
 	background: inherit;
 	color: #ddd;
@@ -136,178 +53,7 @@
 
 	<!-- /.navbar-header -->
 	<ul class="nav navbar-top-links navbar-right notibar row">
-		<!-- <li id="MyEdit"></li>
-		<li id="form"><input class="searchForm" id="invoice"
-			placeholder="Search Invoice(s) ..." /></li>
-		<li><select id="select" style="color: #ddd" class="form-control">
-				<option>Name</option>
-				<option>Place</option>
-				<option>Amount</option>
-				<option>Time</option>
-				<option>IsWarning</option>
-		</select></li> -->
-		<!-- <li class="dropdown"><a class="dropdown-toggle"
-			data-toggle="dropdown" href="#"> <i
-				class="glyphicon glyphicon-envelope"></i> <i
-				class="glyphicon glyphicon-menu-down"></i>
-		</a>
-			<ul class="dropdown-menu dropdown-messages">
-				<li><a href="#">
-						<div>
-							<strong>John Smith</strong> <span class="pull-right text-muted">
-								<em>Yesterday</em>
-							</span>
-						</div>
-						<div>Lorem ipsum dolor sit amet, consectetur adipiscing
-							elit. Pellentesque eleifend...</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a href="#">
-						<div>
-							<strong>John Smith</strong> <span class="pull-right text-muted">
-								<em>Yesterday</em>
-							</span>
-						</div>
-						<div>Lorem ipsum dolor sit amet, consectetur adipiscing
-							elit. Pellentesque eleifend...</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a href="#">
-						<div>
-							<strong>John Smith</strong> <span class="pull-right text-muted">
-								<em>Yesterday</em>
-							</span>
-						</div>
-						<div>Lorem ipsum dolor sit amet, consectetur adipiscing
-							elit. Pellentesque eleifend...</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a class="text-center" href="#"> <strong>Read
-							All Messages</strong> <i class="fa fa-angle-right"></i>
-				</a></li>
-			</ul> /.dropdown-messages</li>
-		/.dropdown
-		<li class="dropdown"><a class="dropdown-toggle"
-			data-toggle="dropdown" href="#"> <i
-				class="glyphicon glyphicon-tasks"></i> <i
-				class="glyphicon glyphicon-menu-down"></i>
-		</a>
-			<ul class="dropdown-menu dropdown-tasks">
-				<li><a href="#">
-						<div>
-							<p>
-								<strong>Task 1</strong> <span class="pull-right text-muted">40%
-									Complete</span>
-							</p>
-							<div class="progress progress-striped active">
-								<div class="progress-bar progress-bar-success"
-									role="progressbar" aria-valuenow="40" aria-valuemin="0"
-									aria-valuemax="100" style="width: 40%">
-									<span class="sr-only">40% Complete (success)</span>
-								</div>
-							</div>
-						</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a href="#">
-						<div>
-							<p>
-								<strong>Task 2</strong> <span class="pull-right text-muted">20%
-									Complete</span>
-							</p>
-							<div class="progress progress-striped active">
-								<div class="progress-bar progress-bar-info" role="progressbar"
-									aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
-									style="width: 20%">
-									<span class="sr-only">20% Complete</span>
-								</div>
-							</div>
-						</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a href="#">
-						<div>
-							<p>
-								<strong>Task 3</strong> <span class="pull-right text-muted">60%
-									Complete</span>
-							</p>
-							<div class="progress progress-striped active">
-								<div class="progress-bar progress-bar-warning"
-									role="progressbar" aria-valuenow="60" aria-valuemin="0"
-									aria-valuemax="100" style="width: 60%">
-									<span class="sr-only">60% Complete (warning)</span>
-								</div>
-							</div>
-						</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a href="#">
-						<div>
-							<p>
-								<strong>Task 4</strong> <span class="pull-right text-muted">80%
-									Complete</span>
-							</p>
-							<div class="progress progress-striped active">
-								<div class="progress-bar progress-bar-danger" role="progressbar"
-									aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"
-									style="width: 80%">
-									<span class="sr-only">80% Complete (danger)</span>
-								</div>
-							</div>
-						</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a class="text-center" href="#"> <strong>See
-							All Tasks</strong> <i class="fa fa-angle-right"></i>
-				</a></li>
-			</ul> /.dropdown-tasks</li>
-		/.dropdown
-		<li class="dropdown"><a class="dropdown-toggle"
-			data-toggle="dropdown" href="#"> <i
-				class="glyphicon glyphicon-bell"></i> <i
-				class="glyphicon glyphicon-menu-down"></i></i>
-		</a>
-			<ul class="dropdown-menu dropdown-alerts">
-				<li><a href="#">
-						<div>
-							<i class="fa fa-comment fa-fw"></i> New Comment <span
-								class="pull-right text-muted small">4 minutes ago</span>
-						</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a href="#">
-						<div>
-							<i class="fa fa-twitter fa-fw"></i> 3 New Followers <span
-								class="pull-right text-muted small">12 minutes ago</span>
-						</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a href="#">
-						<div>
-							<i class="fa fa-envelope fa-fw"></i> Message Sent <span
-								class="pull-right text-muted small">4 minutes ago</span>
-						</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a href="#">
-						<div>
-							<i class="fa fa-tasks fa-fw"></i> New Task <span
-								class="pull-right text-muted small">4 minutes ago</span>
-						</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a href="#">
-						<div>
-							<i class="fa fa-upload fa-fw"></i> Server Rebooted <span
-								class="pull-right text-muted small">4 minutes ago</span>
-						</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a class="text-center" href="#"> <strong>See
-							All Alerts</strong> <i class="fa fa-angle-right"></i>
-				</a></li>
-			</ul> /.dropdown-alerts</li>
-		/.dropdown -->
+		
 		<li class="dropdown"><a class="dropdown-toggle"
 			data-toggle="dropdown" href="#"> <i
 				class="glyphicon glyphicon-user"></i> <c:choose>
@@ -319,176 +65,12 @@
 			<ul class="dropdown-menu dropdown-user">
 				<li><a href="user/profile"><i class="fa fa-user fa-fw"></i>
 						User Profile</a></li>
-				<!-- <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
-				<li class="divider"></li>
-				<li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i>
-						Logout</a></li> -->
+				
 			</ul> <!-- /.dropdown-user --></li>
 		<!-- /.dropdown -->
 	</ul>
 
-	<script>
-	$(document).on('keydown', '#form', function(event) {
-							if (event.keyCode == 13) {
-								var name = document.getElementById('invoice').value;
-								var attribute = document
-										.getElementById('select').value;
-								if (name == "") {
-									var html = [
-											'<li>',
-											'<div class="alert alert-danger alertForm" id="danger-alert">Not empty</div>',
-											'</li>', '' ].join('');
-									document.getElementById("MyEdit").innerHTML = html;
-									$("#danger-alert").show();
-									setTimeout(function() {
-										$("#danger-alert").hide();
-									}, 5000);
-								} else {
-									if (attribute == "Time") {
-										var check = isValidDate(name);
-										if (check == true) {
-											if (name.indexOf("/") >= 0) {
-												name = name
-														.replace(/[/]/g, '-');
-											}
-											window.location = "Invoice/search/"
-													+ name + "/" + attribute;
-										} else {
-											var html = [
-													'<li>',
-													'<div class="alert alert-danger alertForm" id="danger-alert">day/moth/year or month/year</div>',
-													'</li>', '' ].join('');
-											document.getElementById("MyEdit").innerHTML = html;
-											$("#danger-alert").show();
-											setTimeout(function() {
-												$("#danger-alert").hide();
-											}, 5000);
-										}
-									}
-									if (attribute == "Amount") {
-										if (isNaN(name) == false)
-											window.location = "Invoice/search/"
-													+ name + "/" + attribute;
-										else {
-											var html = [
-													'<li>',
-													'<div class="alert alert-danger alertForm" id="danger-alert">Not a number</div>',
-													'</li>', '' ].join('');
-											document.getElementById("MyEdit").innerHTML = html;
-											$("#danger-alert").show();
-											setTimeout(function() {
-												$("#danger-alert").hide();
-											}, 5000);
-										}
-									}
-									if (attribute == "Name"
-											|| attribute == "Place") {
-										if (name.indexOf("/") < 0
-												&& name.indexOf("?") < 0
-												&& name.indexOf("%") < 0) {
-											window.location = "Invoice/search/"
-													+ name + "/" + attribute;
-										} else {
-											var html = [
-													'<li>',
-													'<div class="alert alert-danger alertForm" id="danger-alert">Invalid input</div>',
-													'</li>', '' ].join('');
-											document.getElementById("MyEdit").innerHTML = html;
-											$("#danger-alert").show();
-											setTimeout(function() {
-												$("#danger-alert").hide();
-											}, 5000);
-										}
-									}
-									if (attribute == "IsWarning") {
-										if (name == 1 || name == 0) {
-											window.location = "Invoice/search/"
-													+ name + "/" + attribute;
-										} else {
-											var html = [
-													'<li>',
-													'<div class="alert alert-danger alertForm" id="danger-alert">1 or 0</div>',
-													'</li>', '' ].join('');
-											document.getElementById("MyEdit").innerHTML = html;
-											$("#danger-alert").show();
-											setTimeout(function() {
-												$("#danger-alert").hide();
-											}, 5000);
-										}
-									}
-								}
-							}
 
-						});
-
-		function isValidDate(str) {
-			var checkDate;
-			var parts = str.split('/');
-			if (parts.length != 3 && parts.length != 2) {
-				var parts = str.split('-');
-				if (parts.length != 3 && parts.length != 2)
-					checkDate = false;
-				else
-					checkDate = true;
-			}
-
-			if (checkDate == false)
-				return false;
-			else {
-				if (parts.length == 3) {
-					var day = parseInt(parts[0]);
-					var month = parseInt(parts[1]);
-					var year = parseInt(parts[2]);
-					if (isNaN(day) || isNaN(month) || isNaN(year)) {
-						return false;
-					}
-					if (day < 1 || year < 1)
-						return false;
-					if (month > 12 || month < 1)
-						return false;
-					if ((month == 1 || month == 3 || month == 5 || month == 7
-							|| month == 8 || month == 10 || month == 12)
-							&& day > 31)
-						return false;
-					if ((month == 4 || month == 6 || month == 9 || month == 11)
-							&& day > 30)
-						return false;
-					if (month == 2) {
-						if (((year % 4) == 0 && (year % 100) != 0)
-								|| ((year % 400) == 0 && (year % 100) == 0)) {
-							if (day > 29)
-								return false;
-						} else {
-							if (day > 28)
-								return false;
-						}
-					}
-					return true;
-				}
-
-				if (parts.length == 2) {
-					var month = parseInt(parts[0]);
-					var year = parseInt(parts[1]);
-					if (isNaN(month) || isNaN(year)) {
-						return false;
-					}
-					if (year < 1)
-						return false;
-					if (month > 12 || month < 1)
-						return false;
-					if ((month == 1 || month == 3 || month == 5 || month == 7
-							|| month == 8 || month == 10 || month == 12)
-							&& day > 31)
-						return false;
-					if ((month == 4 || month == 6 || month == 9 || month == 11)
-							&& day > 30)
-						return false;
-					return true;
-				}
-			}
-
-		}
-	</script>
 
 	<!-- /.navbar-top-links -->
 	<div class="navbar-default sidebar" role="navigation">
@@ -511,19 +93,19 @@
 					</ul> <!-- nav-second-level --></li>
 			</ul>
 		
-			<ul class="nav" id="side-menu">	
-				<li id="MyEdit"></li>
+			<ul class="nav" id="side-menu">			
 				<li><select id="select" style="color: black"
-					class="selectpicker">
-						<option>Name</option>
-						<option>Place</option>
-						<option>Amount</option>
-						<option>Time</option>
-						<option>IsWarning</option>
+					class="selectpicker form-control">
+						<option data-icon="glyphicon glyphicon-search">Name</option>
+						<option data-icon="glyphicon glyphicon-search">Place</option>
+						<option data-icon="glyphicon glyphicon-search">Amount</option>
+						<option data-icon="glyphicon glyphicon-search">Time</option>
+						<option data-icon="glyphicon glyphicon-search">Warning</option>
 				</select></li>
 				<li id="form"><input
 					class="form-control ng-pristine ng-untouched ng-valid ng-empty"
 					id="invoice" placeholder="Search Invoice(s) ..." /></li>
+				<li id="MyEdit"></li>
 			</ul>
 		</div>
 					

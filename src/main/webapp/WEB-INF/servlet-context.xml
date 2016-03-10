@@ -19,6 +19,9 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<!--<property name="url" value="jdbc:mysql://20.203.139.12:3306/InvoiceManagement?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" 
 			/> -->
+		<!-- <property name="url" value="jdbc:mysql://localhost:3306/invoicem_db?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" 
+			/> <property name="username" value="invoicem_root" /> <property name="password" 
+			value="root123" /> -->
 		<property name="url"
 			value="jdbc:mysql://localhost:3306/invoicem_db?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" />
 		<property name="username" value="invoicem_root" />
@@ -45,10 +48,13 @@
 
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 
-	<context:component-scan base-package="controller, dao, service, interceptor,scheduledtask" />
+	<context:component-scan
+		base-package="controller, dao, service, interceptor,scheduledtask" />
 
 	<mvc:annotation-driven />
-	
+
+
+
 	<!-- <mvc:annotation-driven> <mvc:message-converters register-defaults="true"> 
 		<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"> 
 		<property name="objectMapper" ref="accomodationObjectMapper" /> </bean> </mvc:message-converters> 
@@ -92,8 +98,8 @@
 
 	<bean id="reportService" class="service.ReportServiceImpl">
 	</bean>
-	
-	
+
+
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
@@ -131,8 +137,9 @@
 		fixed-delay="5000" /> </task:scheduled-tasks> -->
 	<bean id="CleanupImages" class="scheduledtask.CleanupImages" />
 	<task:scheduled-tasks>
-		<!-- <task:scheduled ref="CleanupImages" method="run" cron="*/10 * * * * *" /> -->
-			<task:scheduled ref="CleanupImages" method="run"
+		<!-- <task:scheduled ref="CleanupImages" method="run" cron="*/10 * * * 
+			* *" /> -->
+		<task:scheduled ref="CleanupImages" method="run"
 			cron="59 59 23 * * *" />
 	</task:scheduled-tasks>
 </beans>

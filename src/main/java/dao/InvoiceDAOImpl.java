@@ -117,12 +117,13 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		Session session = sessionFactory.openSession();
 		int month = date.getMonth() + 1;
 		int year = date.getYear() + 1900;
-		String hql = "FROM Invoice WHERE isWarning = true AND MONTH(Time) = " + month + " AND YEAR(Time) = " + year + " Order by Time DESC";
+		String hql = "FROM Invoice WHERE isWarning = true AND MONTH(Time) = " + month + " AND YEAR(Time) = " + year
+				+ " Order by Time DESC";
 		List<Invoice> list = session.createQuery(hql).list();
 		session.close();
 		return list;
 	}
-	
+
 	@Override
 	public Map<String, List<Invoice>> getInvoicesGroupbyMonth() {
 		Session session = sessionFactory.openSession();
@@ -216,8 +217,29 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 						+ " Order by DAY(Time) DESC";
 			} else
 				return null;
-		}		
+		}
 		List<Invoice> invoices = session.createQuery(hql).list();
+		session.close();
+		return invoices;
+	}
+
+	@Override
+	public List<Invoice> searchAnyString(String keyword) {
+		Session session = sessionFactory.openSession();
+
+		String hql = "FROM Invoice WHERE name LIKE '%" + keyword + "%'";
+		System.out.println(hql);
+		List<Invoice> invoices = new ArrayList<>();
+		invoices.addAll(session.createQuery(hql).list());
+		hql = "FROM Invoice WHERE category.name LIKE '%" + keyword+"%'";
+		invoices.addAll(session.createQuery(hql).list());
+		hql = "FROM Invoice WHERE Time LIKE '%"+keyword+"%'";
+		invoices.addAll(session.createQuery(hql).list());
+		hql = "FROM Invoice WHERE place LIKE '%" + keyword + "%'";
+		invoices.addAll(session.createQuery(hql).list());
+		hql = "FROM Invoice WHERE  comment LIKE '%" + keyword + "%'";
+		invoices.addAll(session.createQuery(hql).list());
+
 		session.close();
 		return invoices;
 	}

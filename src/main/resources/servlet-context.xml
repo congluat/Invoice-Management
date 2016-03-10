@@ -23,6 +23,11 @@
 			value="jdbc:mysql://20.203.139.12:3306/InvoiceManagement?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
+		<property name="hibernate.connection.useUnicode" value="true">
+		</property>
+		<property name="hibernate.connection.characterEncoding"
+			value="UTF-8">
+		</property>
 	</bean>
 
 	<!-- Hibernate session factory -->
@@ -45,7 +50,8 @@
 
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 
-	<context:component-scan base-package="controller, dao, service, interceptor,scheduledtask" />
+	<context:component-scan
+		base-package="controller, dao, service, interceptor,scheduledtask" />
 
 	<mvc:annotation-driven />
 	
@@ -92,12 +98,12 @@
 
 	<bean id="reportService" class="service.ReportServiceImpl">
 	</bean>
-	
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-         <constructor-arg ref="dataSource"/>
-     </bean>
-	
-	
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManagement">
+		<property name="dataSource" ref="dataSourceOrg" />
+	</bean>
+
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">

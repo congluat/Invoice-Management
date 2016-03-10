@@ -149,4 +149,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 		// TODO Auto-generated method stub
 		return invoiceDao.getAllDangerInvoicesByMonth(date);
 	}
+
+	@Override
+	public List<Invoice> searchAnyString(String keyword) {
+		
+		return invoiceDao.searchAnyString(keyword);
+	}
 }

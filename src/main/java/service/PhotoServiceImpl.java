@@ -45,7 +45,7 @@ public class PhotoServiceImpl implements PhotoService {
 		String name = now.toString().replaceAll(" ", "").replaceAll(":", "");
 		for (MultipartFile multipartFile : map.values()) {
 			String fileName = name + multipartFile.getOriginalFilename();
-			File f = new File(application.getRealPath("/resources/images"));
+			File f = new File(application.getRealPath("/resources/images/"));
 			if (f.exists() && f.isDirectory()) {
 
 			} else {
