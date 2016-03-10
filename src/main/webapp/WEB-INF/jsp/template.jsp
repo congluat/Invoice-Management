@@ -145,7 +145,7 @@
 	
 	
 
-	<div id="page-wrapper" style="padding-left: 0px">
+	<div id="page-wrapper" style="padding-left: 0px;overflow-x:hidden;">
 
 		<tiles:insertAttribute name="body">
 
