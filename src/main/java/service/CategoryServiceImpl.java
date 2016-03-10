@@ -129,6 +129,9 @@ public class CategoryServiceImpl implements CategoryService {
 						return "save-cate";
 					}
 					String logo = file.getOriginalFilename();
+					Date now = new Date();
+					String name = now.toString().replaceAll(" ", "").replaceAll(":", "");
+					logo = name + logo;
 					String path = application.getRealPath("/resources/logo/") + logo;
 					if (!logo.equals("")) {
 						file.transferTo(new File(path));
