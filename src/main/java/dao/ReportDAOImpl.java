@@ -130,6 +130,22 @@ public class ReportDAOImpl implements ReportDAO {
 	}
 
 	@Override
+	public List<Invoice> getReportDetail(String cateName, int month, int year) {
+		Session session = sessionFactory.openSession();
+		String hql = "FROM Invoice Where category.name =:cateName " 
+						+ " AND MONTH(time) =:month "
+						+ " AND YEAR(time) =:year "
+						+ " Order By time ASC";
+		Query query = session.createQuery(hql);
+		query.setParameter("cateName", cateName);
+		query.setParameter("month", month);
+		query.setParameter("year", year);
+		List<Invoice> invoiceList = query.list();
+		session.close();
+		return invoiceList;
+	}
+
+	@Override
 	public List<Object[]> getMoneyUseInCategoryByYear(int year) {
 		Session session = sessionFactory.openSession();
 		String hql = "select  category.name, SUM(amount)  from Invoice  WHERE year(time)= :year GROUP BY(category)";

@@ -18,6 +18,7 @@
 <script src="<c:url value='/resources/js/jquery-ui.min.js'/>"></script>
 
 
+
 <!-- -----------------Bootstrap--------------------------  -->
 
 <!-- Latest compiled and minified CSS -->
@@ -141,6 +142,8 @@
 	<jsp:include page="_navbar.jsp"></jsp:include>
 
 	<jsp:include page="_modalAddUser.jsp"></jsp:include>
+	
+	
 
 	<div id="page-wrapper" style="padding-left: 0px">
 
