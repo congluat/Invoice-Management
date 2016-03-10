@@ -191,7 +191,7 @@
 							</div>
 
 							<div class="timeline-body ">
-								<p>$${invoice.amount}</p>
+								<p>${invoice.amount}</p>
 							</div>
 						</div>
 						<div class="col-md-2">

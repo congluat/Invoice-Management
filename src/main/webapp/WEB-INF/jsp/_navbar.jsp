@@ -19,22 +19,12 @@
 <script>
   $(document).ready(function () {
     $('.selectpicker').selectpicker({   	
-        size: false,
-        mobile : true
-        //style : "background: inherit;background-color:lightgreen"
+        size : false 
     });
   });
 </script>
 
 <style>
-.searchForm {
-	background: inherit;
-	color: #ddd;
-	border-bottom: 1px solid #ccc;
-	font-size: 18px;
-	height: 38px;
-	background-size: 0 2px, 100% 1px;
-}
 
 .alertForm {
 	background: inherit;
@@ -74,8 +64,19 @@
 	<!-- /.navbar-top-links -->
 	<div class="navbar-default sidebar" role="navigation">
 		<div class="sidebar-nav navbar-collapse" style="overflow-x:hidden;">
-			<ul class="nav" id="side-menu">
-
+			<ul class="nav" id="side-menu">			
+				<li><select id="select" style="color: black"
+					class="selectpicker form-control" data-style="btn-primary">
+						<option data-icon="glyphicon glyphicon-search">Name</option>
+						<option data-icon="glyphicon glyphicon-search">Place</option>
+						<option data-icon="glyphicon glyphicon-search">Amount</option>
+						<option data-icon="glyphicon glyphicon-search">Time</option>
+				</select></li>
+				<li id="form"><input
+					class="form-control ng-pristine ng-untouched ng-valid ng-empty"
+					id="invoice" placeholder="Search Invoice(s) ..." /></li>
+				<li id="MyEdit"></li>
+			
 				<li><a href="dashboard"><i
 						class="glyphicon glyphicon-dashboard"></i>Dashboard</a></li>
 
@@ -92,20 +93,7 @@
 					</ul> <!-- nav-second-level --></li>
 			</ul>
 		
-			<ul class="nav" id="side-menu">			
-				<li><select id="select" style="color: black"
-					class="selectpicker form-control" data-style="btn-primary">
-						<option data-icon="glyphicon glyphicon-search">Name</option>
-						<option data-icon="glyphicon glyphicon-search">Place</option>
-						<option data-icon="glyphicon glyphicon-search">Amount</option>
-						<option data-icon="glyphicon glyphicon-search">Time</option>
-						<option data-icon="glyphicon glyphicon-search">Warning</option>
-				</select></li>
-				<li id="form"><input
-					class="form-control ng-pristine ng-untouched ng-valid ng-empty"
-					id="invoice" placeholder="Search Invoice(s) ..." /></li>
-				<li id="MyEdit"></li>
-			</ul>
+			
 		</div>
 					
 		<!-- /.sidebar-collapse -->
