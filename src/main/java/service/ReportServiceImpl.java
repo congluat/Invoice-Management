@@ -1,6 +1,7 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -47,12 +48,28 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
-	public List<Object[]> getReportDataByMonth(int month, int year) {
+	public List<Object[]> getReportDataByMonth(String selectdate) {
+		int month = Integer.parseInt(selectdate.substring(0,2));
+		int year = Integer.parseInt(selectdate.substring(3));
 		return reportDao.getReportDataByMonth(month, year);
 	}
 
 	@Override
 	public List<Object[]> getReportDataByYear(int year) {
 		return reportDao.getReportDataByYear(year);
+	}
+
+	@Override
+	public List<Invoice> getReportDetail(String cateName, String time) {
+		int month = Integer.parseInt(time.substring(0,2));
+		int year = Integer.parseInt(time.substring(3));
+		return reportDao.getReportDetail(cateName, month, year);
+	}
+
+	@Override
+	public List<Invoice> getReportInfo(String cateName, String month) {
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		int monthc = Integer.parseInt(month);
+		return reportDao.getReportDetail(cateName, monthc, year);
 	}
 }

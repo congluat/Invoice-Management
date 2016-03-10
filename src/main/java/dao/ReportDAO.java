@@ -22,6 +22,10 @@ public interface ReportDAO {
 	
 	//get data report by year
 	public List<Object[]> getReportDataByYear(int year);
+	
+	//get list invoice detail by category and month-year
+	public List<Invoice> getReportDetail(String cateName, int month, int year);
+	
 
 	public List<Object[]> getMoneyUsePerDay(int month, int year);
 }
