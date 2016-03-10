@@ -226,11 +226,20 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 	@Override
 	public List<Invoice> searchAnyString(String keyword) {
 		Session session = sessionFactory.openSession();
-		String hql = "FROM Invoice WHERE name LIKE '%" + keyword + "%' OR category.name LIKE '%" + keyword
-				+ "%' OR Time LIKE '%" + keyword + "%' OR place LIKE '%" + keyword + "%' OR comment LIKE '%" + keyword
-				+ "%'";
+
+		String hql = "FROM Invoice WHERE name LIKE '%" + keyword + "%'";
 		System.out.println(hql);
-		List<Invoice> invoices = session.createQuery(hql).list();
+		List<Invoice> invoices = new ArrayList<>();
+		invoices.addAll(session.createQuery(hql).list());
+		hql = "FROM Invoice WHERE category.name LIKE '%" + keyword+"%'";
+		invoices.addAll(session.createQuery(hql).list());
+		hql = "FROM Invoice WHERE Time LIKE '%"+keyword+"%'";
+		invoices.addAll(session.createQuery(hql).list());
+		hql = "FROM Invoice WHERE place LIKE '%" + keyword + "%'";
+		invoices.addAll(session.createQuery(hql).list());
+		hql = "FROM Invoice WHERE  comment LIKE '%" + keyword + "%'";
+		invoices.addAll(session.createQuery(hql).list());
+
 		session.close();
 		return invoices;
 	}

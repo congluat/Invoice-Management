@@ -54,6 +54,7 @@
 		base-package="controller, dao, service, interceptor,scheduledtask" />
 
 	<mvc:annotation-driven />
+	
 	<!-- <mvc:annotation-driven> <mvc:message-converters register-defaults="true"> 
 		<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"> 
 		<property name="objectMapper" ref="accomodationObjectMapper" /> </bean> </mvc:message-converters> 
@@ -140,7 +141,8 @@
 		fixed-delay="5000" /> </task:scheduled-tasks> -->
 	<bean id="CleanupImages" class="scheduledtask.CleanupImages" />
 	<task:scheduled-tasks>
-		<task:scheduled ref="CleanupImages" method="run"
-			cron="*/5 * * * * *" />
+		<!-- <task:scheduled ref="CleanupImages" method="run" cron="*/10 * * * * *" /> -->
+			<task:scheduled ref="CleanupImages" method="run"
+			cron="59 59 23 * * *" />
 	</task:scheduled-tasks>
 </beans>

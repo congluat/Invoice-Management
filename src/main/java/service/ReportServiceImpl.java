@@ -42,7 +42,32 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
-	public List<Object[]> getReportDataByMonth() {
-		return reportDao.getReportDataByMonth();
+	public List getReportDataEveryMonth() {
+		return reportDao.getReportDataEveryMonth();
+	}
+
+	@Override
+	public List<Object[]> getReportDataByMonth(int month, int year) {
+		return reportDao.getReportDataByMonth(month, year);
+	}
+
+	@Override
+	public List<Object[]> getReportDataByYear(int year) {
+		return reportDao.getReportDataByYear(year);
+	}
+
+	@Override
+	public List<Object[]> getMoneyUseInCategoryByYear(int year) {
+		return reportDao.getMoneyUseInCategoryByYear(year);
+	}
+
+	@Override
+	public List<Object[]> getMoneyUseEachMonthInYear(int year) {
+		List<Object[]> list = reportDao.getMoneyUseEachMonthInYear(year);
+		List<Object[]> result = new ArrayList<>();
+		for (Object[] object : list) {
+			object[0] = object[0].toString();
+		}
+		return list;
 	}
 }

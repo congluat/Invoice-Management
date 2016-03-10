@@ -71,9 +71,9 @@ public class InvoiceController {
 		return invoiceService.getAllDangerInvoicesByMonth(date);
 	}
 
-	@RequestMapping(value = "/searchAnyString", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	@RequestMapping(value = "/searchAnyString/{keyword}", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Invoice> searchAnyString(@RequestParam("keyword") String keyword, HttpServletRequest request) {
+	public List<Invoice> searchAnyString(@PathVariable String keyword, HttpServletRequest request) {
 		return invoiceService.searchAnyString(keyword);
 	}
 
@@ -116,6 +116,11 @@ public class InvoiceController {
 		model.addAttribute("invoices", invoiceService.getAllInvoices(user.getId()));
 		model.addAttribute("title", "Invoices");
 		return "invoices";
+	}
+
+	@RequestMapping(value = { "/warning" }, method = RequestMethod.GET)
+	public String getDangerInvoices(HttpServletRequest request, ModelMap model) {
+		return "invoices_danger";
 	}
 
 	/*

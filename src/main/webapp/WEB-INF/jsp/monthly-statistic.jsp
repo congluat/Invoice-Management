@@ -11,18 +11,14 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css">
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript">
-	function isNumber(evt) {
-		evt = (evt) ? evt : window.event;
-		var charCode = (evt.which) ? evt.which : evt.keyCode;
-		if (charCode >= 32 && charCode <= 254) {
-			return false;
-		}
-		return true;
-	}
-</script>
+
+<script type="text/javascript"
+	src="<c:url value='/resources/js/angular_report.js' />"></script>
 <script type="text/javascript">
 	$(function() {
+		$("#inputDateTime").keydown(false);
+		/* $("#content").hide();
+		$("#loading").show(); */
 		$('#datetimepicker10').datetimepicker({
 			viewMode : 'months',
 			format : 'MM/YYYY',
@@ -82,34 +78,20 @@ caption {
 	background: url('<c:url value='/ resources/ logo/ loading.gif '/>')
 		no-repeat center center;
 	background-size: 200px 100px;
-	width: 100px;
-	height: 100%;
-	min-height: 300px;
-	min-width: 500px;
-	background: url('<c:url value='/ resources/ logo/ loading.gif '/>')
-		no-repeat center center;
-	min-height: 300px;
-	min-width: 300px;
-	background: url('<c:url value='/ resources/ logo/ loading.gif '/>')
-		no-repeat center center;
-	background-size: 200px 100px;
-	width: 100px;
-	height: 100%;
-	min-height: 300px;
-	min-width: 500px;
+
 }
 </style>
 <div class="chartWrapper" ng-controller="MonthlyStatisticController"
-	ng-init="drawChart()">
+	ng-init="initChart()">
 
 	<div class="row">
 		<div class="col-md-6" style="height: 130px;">
 			<div class="form-group">
 				<div class='input-group date' id='datetimepicker10'>
 					<input id="inputDateTime" type='text' class="form-control"
-						ng-model="timeInput" value="" onkeypress="return isNumber(event)"
-						ng-change="timeChanged()" /> <span class="input-group-addon">
-						<span class="glyphicon glyphicon-calendar"> </span>
+						ng-model="timeInput" value="" ng-change="drawChart()" /> <span
+						class="input-group-addon"> <span
+						class="glyphicon glyphicon-calendar"> </span>
 					</span>
 				</div>
 
@@ -118,7 +100,7 @@ caption {
 		<div class="col-md-6">
 			<div class="form-group">
 
-				<a ng-click="timeChanged()" class="btn btn-success">Update</a>
+				<a ng-click="drawChart()" class="btn btn-success">Update</a>
 			</div>
 		</div>
 	</div>

@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -39,6 +40,10 @@ public class ReportDAOImpl implements ReportDAO {
 		return invoiceList;
 	}
 
+	/**
+	 * get category name and total money of that cate used, group by each month
+	 * in a year.
+	 */
 	@Override
 	public List<Object[]> getCategoryByMonth(int month, int year) {
 		Session session = sessionFactory.openSession();
@@ -51,20 +56,9 @@ public class ReportDAOImpl implements ReportDAO {
 		return list;
 	}
 
-	@Override
-	public List<Invoice> getInvoiceD2D(Integer cateId, String startdate, String endate) {
-		Session session = sessionFactory.openSession();
-		String hql = "FROM Invoice Where category.id =:cateId " 
-						+ " AND time BETWEEN :startdate AND :endate"
-						+ " Order By time ASC";
-		Query query = session.createQuery(hql);
-		query.setParameter("cateId", cateId);
-		query.setParameter("startdate", new Date(startdate));
-		query.setParameter("endate", new Date(endate));
-		List<Invoice> invoiceList = query.list();
-		session.close();
-		return invoiceList;
-	}
+	/**
+	 * get total money used each day in a month-year
+	 */
 
 	@Override
 	public List<Object[]> getMoneyUsePerDay(int month, int year) {
@@ -76,20 +70,85 @@ public class ReportDAOImpl implements ReportDAO {
 		List<Object[]> list = query.list();
 		session.close();
 		return list;
-
 	}
 
 	@Override
-	public List<Object[]> getReportDataByMonth() {
+	public List<Invoice> getInvoiceD2D(Integer cateId, String startdate, String endate) {
 		Session session = sessionFactory.openSession();
-		String hql = "Select category.name,"
-				+ " COUNT(*) as sl, "
-				+ " SUM(amount) as tong"
-				+ " FROM Invoice"
-				+ " GROUP BY category.name";
+		String hql = "FROM Invoice Where category.id =:cateId " + " AND time BETWEEN :startdate AND :endate"
+				+ " Order By time ASC";
 		Query query = session.createQuery(hql);
+		query.setParameter("cateId", cateId);
+		query.setParameter("startdate", new Date(startdate));
+		query.setParameter("endate", new Date(endate));
+		List<Invoice> invoiceList = query.list();
 		session.close();
-		return query.list();
+		return invoiceList;
+	}
+
+	@Override
+	public List<Object[]> getReportDataEveryMonth() {
+		Session session = sessionFactory.openSession();
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		String hql = "Select category.name, MONTH(time)," + " COUNT(id) as count, " + " SUM(amount) as sum"
+				+ " FROM Invoice" + " WHERE YEAR(time) =:year " + " GROUP BY category.name, MONTH(time)"
+				+ " ORDER BY category.name ASC ,MONTH(time) ASC";
+		Query query = session.createQuery(hql);
+		query.setParameter("year", year);
+		List<Object[]> reportList = query.list();
+		session.close();
+		return reportList;
+	}
+
+	@Override
+	public List<Object[]> getReportDataByMonth(int month, int year) {
+		Session session = sessionFactory.openSession();
+
+		String hql = "Select category.name," + " COUNT(id) as count," + " SUM(amount) as sum," + " AVG(amount) as avg"
+				+ " FROM Invoice" + " WHERE MONTH(time) =:month" + " AND YEAR(time) =:year" + " GROUP BY category.name"
+				+ " ORDER BY category.name ASC";
+
+		Query query = session.createQuery(hql);
+		query.setParameter("month", month);
+		query.setParameter("year", year);
+		List<Object[]> reportList = query.list();
+		session.close();
+		return reportList;
+	}
+
+	@Override
+	public List<Object[]> getReportDataByYear(int year) {
+		Session session = sessionFactory.openSession();
+		String hql = "Select category.name," + " COUNT(id) as count," + " SUM(amount) as sum," + " AVG(amount) as avg"
+				+ " FROM Invoice" + " WHERE YEAR(time) =:year" + " GROUP BY category.name"
+				+ " ORDER BY category.name ASC";
+		Query query = session.createQuery(hql);
+		query.setParameter("year", year);
+		List<Object[]> reportList = query.list();
+		session.close();
+		return reportList;
+	}
+
+	@Override
+	public List<Object[]> getMoneyUseInCategoryByYear(int year) {
+		Session session = sessionFactory.openSession();
+		String hql = "select  category.name, SUM(amount)  from Invoice  WHERE year(time)= :year GROUP BY(category)";
+		Query query = session.createQuery(hql);
+		query.setParameter("year", year);
+		List<Object[]> list = query.list();
+		session.close();
+		return list;
+	}
+
+	@Override
+	public List<Object[]> getMoneyUseEachMonthInYear(int year) {
+		Session session = sessionFactory.openSession();
+		String hql = "select Month(time),SUM(amount) from Invoice  WHERE year(time)= :year GROUP BY Month(Time) ORDER BY  Month(Time) ASC";
+		Query query = session.createQuery(hql);
+		query.setParameter("year", year);
+		List<Object[]> list = query.list();
+		session.close();
+		return list;
 	}
 
 }

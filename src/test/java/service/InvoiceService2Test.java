@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,15 +51,24 @@ public class InvoiceService2Test {
 		invoice.setTime(new Date());
 		invoice.setUser(user);
 		
+		assertNotNull(service.create(invoice));
+	}
+	
+	@Test
+	public void updateInvoice2Test() {
+		List<Invoice> invoices = service.getAllInvoices();
+		Invoice invoice = invoices.get(3);
+		invoice.setName("Tien Rac");
+		service.update(invoice);
 		
-		service.create(invoice);
-		
-		int id = service.getAllInvoices().size();
-		
-		assertEquals(new BigDecimal("2000"), service.getById(id).getAmount());
-		
-		
-
+		assertEquals("Tien Rac", service.getAllInvoices().get(3).getName());
+	}
+	
+	@Test
+	public void deleteInvoice2Test() {
+		Invoice invoice = service.getById(2);
+		service.delete(invoice);
+		assertNull(service.getById(2));
 	}
 
 }

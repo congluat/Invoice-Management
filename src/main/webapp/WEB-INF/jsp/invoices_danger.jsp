@@ -15,42 +15,27 @@
 
 <div class="row"
 	style="margin-top: 10px; margin-left: 5px; margin-right: 5px">
-	<div ng-controller="InvoiceController" ng-app="app">
+	<div ng-controller="InvoiceDangerController" ng-app="app">
 		<div class="col-md-6 col-md-offset-6">
 			<div class="input-group input-group-lg">
-
 				<span class="input-group-addon" id="sizing-addon1"><i
 					class="glyphicon glyphicon-search"></i></span> <input id="search"
-					type="text" class="form-control" name="searchFor"
-					ng-model="searchString"
-					placeholder="Search by Name, Place, Comment and Time(mm-dd-yyyy)..."
-					ng-change="onSearchChange(searchString)"
-					ng-model-options="{debounce: 500}">
-
+					text" class="form-control" name="searchFor" ng-model="searchString"
+					placeholder="Search by Name, Time and Place..."
+					ng-change="onSearchChange(searchString)">
 			</div>
 		</div>
 		<!-- /.col-lg-6 -->
-		<!-- 
-		<script type="text/javascript">
-			var app = angular.module('app', invoices);
-			app.controller('InvoiceController', function($scope) {
 
-				$scope.totalDisplayed = 2;
-
-				$scope.loadMore = function() {
-					$scope.totalDisplayed += 2;
-				};
-
-				$scope.invoices = invoices;
-			});
-		</script> -->
+		
 
 		<div class="col-md-12">
 			<div class="modal fade" id="confirm-delete" tabindex="-1"
 				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="vertical-alignment-helper col-md-4">
 					<div class="modal-dialog vertical-align-center">
-						<div class="modal-content" style="border-radius: 10px;">
+						<div class="modal-content"
+							style=" border-radius: 10px;">
 							<div class="modal-header">Confirm</div>
 							<div class="modal-body">Do you want to delete</div>
 							<div class="modal-footer">
@@ -69,10 +54,9 @@
 
 			<ul class="timeline">
 
-				<!-- <li ng-repeat="i in invoices | limitTo:totalDisplayed"> -->
-
-				<li ng-repeat="i in invoices" ng-class-odd="'timeline-inverted'"><img
-					class="timeline-badge" height="50px" width="50px" alt="not found"
+				<li ng-repeat="i in invoices_danger | limitTo:totalDisplayed"
+					ng-class-odd="'timeline-inverted'"><img class="timeline-badge"
+					height="50px" width="50px" alt="not found"
 					ng-src="<c:url value='/resources/logo/'/>{{i.category.logo}}"
 					onError="this.onerror=null;this.src='<c:url value='/resources/logo/abc.png'/>';">
 
