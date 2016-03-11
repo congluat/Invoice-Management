@@ -28,7 +28,8 @@ public class ReportDAOImpl implements ReportDAO {
 	public List<Invoice> getInvoiceByCateandMonths(Integer cateId, int nofMonth) {
 		Session session = sessionFactory.openSession();
 		String sql = "Select * FROM Invoices Where categoryId =:cateId"
-				+ " AND Date(time) between DATE_SUB(current_date(), INTERVAL :month MONTH) AND current_date() "
+				+ " AND Date(time) between DATE_SUB(current_date(), INTERVAL :month MONTH)"
+				+ " AND current_date()"
 				+ " Order By time ASC";
 
 		SQLQuery query = session.createSQLQuery(sql);
@@ -75,7 +76,8 @@ public class ReportDAOImpl implements ReportDAO {
 	@Override
 	public List<Invoice> getInvoiceD2D(Integer cateId, String startdate, String endate) {
 		Session session = sessionFactory.openSession();
-		String hql = "FROM Invoice Where category.id =:cateId " + " AND time BETWEEN :startdate AND :endate"
+		String hql = "FROM Invoice Where category.id =:cateId " 
+				+ " AND time BETWEEN :startdate AND :endate"
 				+ " Order By time ASC";
 		Query query = session.createQuery(hql);
 		query.setParameter("cateId", cateId);
@@ -90,8 +92,12 @@ public class ReportDAOImpl implements ReportDAO {
 	public List<Object[]> getReportDataEveryMonth() {
 		Session session = sessionFactory.openSession();
 		int year = Calendar.getInstance().get(Calendar.YEAR);
-		String hql = "Select category.name, MONTH(time)," + " COUNT(id) as count, " + " SUM(amount) as sum"
-				+ " FROM Invoice" + " WHERE YEAR(time) =:year " + " GROUP BY category.name, MONTH(time)"
+		String hql = "Select category.name, MONTH(time)," 
+				+ " COUNT(id) as count, " 
+				+ " SUM(amount) as sum"
+				+ " FROM Invoice" 
+				+ " WHERE YEAR(time) =:year " 
+				+ " GROUP BY category.name, MONTH(time)"
 				+ " ORDER BY category.name ASC ,MONTH(time) ASC";
 		Query query = session.createQuery(hql);
 		query.setParameter("year", year);
@@ -104,8 +110,14 @@ public class ReportDAOImpl implements ReportDAO {
 	public List<Object[]> getReportDataByMonth(int month, int year) {
 		Session session = sessionFactory.openSession();
 
-		String hql = "Select category.name," + " COUNT(id) as count," + " SUM(amount) as sum," + " AVG(amount) as avg"
-				+ " FROM Invoice" + " WHERE MONTH(time) =:month" + " AND YEAR(time) =:year" + " GROUP BY category.name"
+		String hql = "Select category.name," 
+				+ " COUNT(id) as count," 
+				+ " SUM(amount) as sum," 
+				+ " AVG(amount) as avg"
+				+ " FROM Invoice" 
+				+ " WHERE MONTH(time) =:month" 
+				+ " AND YEAR(time) =:year" 
+				+ " GROUP BY category.name"
 				+ " ORDER BY category.name ASC";
 
 		Query query = session.createQuery(hql);
@@ -119,8 +131,13 @@ public class ReportDAOImpl implements ReportDAO {
 	@Override
 	public List<Object[]> getReportDataByYear(int year) {
 		Session session = sessionFactory.openSession();
-		String hql = "Select category.name," + " COUNT(id) as count," + " SUM(amount) as sum," + " AVG(amount) as avg"
-				+ " FROM Invoice" + " WHERE YEAR(time) =:year" + " GROUP BY category.name"
+		String hql = "Select category.name," 
+				+ " COUNT(id) as count," 
+				+ " SUM(amount) as sum," 
+				+ " AVG(amount) as avg"
+				+ " FROM Invoice" 
+				+ " WHERE YEAR(time) =:year" 
+				+ " GROUP BY category.name"
 				+ " ORDER BY category.name ASC";
 		Query query = session.createQuery(hql);
 		query.setParameter("year", year);
@@ -165,6 +182,88 @@ public class ReportDAOImpl implements ReportDAO {
 		List<Object[]> list = query.list();
 		session.close();
 		return list;
+	}
+
+	@Override
+	public List<Object[]> getReportDataByDate(String selectdate) {
+		// TODO Auto-generated method stub
+		int month = Integer.parseInt(selectdate.substring( 0, 2));
+		int day = Integer.parseInt(selectdate.substring( 3, 5));
+		int year = Integer.parseInt(selectdate.substring(6));
+		Session session = sessionFactory.openSession();
+		String hql = "Select category.name," 
+				+ " COUNT(id) as count," 
+				+ " SUM(amount) as sum," 
+				+ " AVG(amount) as avg"
+				+ " FROM Invoice" 
+				+ " WHERE DAY(time) =:day"
+				+ " AND MONTH(time) =:month"
+				+ " AND YEAR(time) =:year"
+				+ " GROUP BY category.name"
+				+ " ORDER BY category.name ASC";
+		Query query = session.createQuery(hql);
+		query.setParameter("day", day);
+		query.setParameter("month", month);
+		query.setParameter("year", year);
+		List<Object[]> listReport = query.list();
+		session.close();
+		return listReport;
+	}
+
+	@Override
+	public List<Invoice> getReportDetailByDate(String cateName, int day, int month, int year) {
+		Session session = sessionFactory.openSession();
+		String hql = "FROM Invoice "
+				+ " Where category.name =:cateName "
+				+ "	AND DAY(time) =:day " 
+				+ " AND MONTH(time) =:month "
+				+ " AND YEAR(time) =:year "
+				+ " Order By time ASC";
+		Query query = session.createQuery(hql);
+		query.setParameter("cateName", cateName);
+		query.setParameter("day", day);
+		query.setParameter("month", month);
+		query.setParameter("year", year);
+		List<Invoice> invoiceList = query.list();
+		session.close();
+		return invoiceList;
+	}
+
+	@Override
+	public List<Object[]> getReportDataByd2d(String fromdate, String todate) {
+		Session session = sessionFactory.openSession();
+		String hql = "Select category.name," 
+				+ " COUNT(id) as count," 
+				+ " SUM(amount) as sum," 
+				+ " AVG(amount) as avg"
+				+ " FROM Invoice "
+				+ " Where time BETWEEN :fromdate "
+				+ " AND :todate"
+				+ "	GROUP BY category.name "
+				+ " Order By category.name ASC";
+		Query query = session.createQuery(hql);
+		query.setParameter("fromdate", new Date(fromdate));
+		query.setParameter("todate", new Date(todate));
+		List<Object[]> list = query.list();
+		session.close();
+		return list;
+	}
+
+	@Override
+	public List<Invoice> getReportDetaild2d(String cateName, String fromdate, String todate) {
+		Session session = sessionFactory.openSession();
+		String hql = "FROM Invoice "
+				+ " Where category.name =:cateName "
+				+ "	AND time BETWEEN :fromdate " 
+				+ " AND :todate "
+				+ " Order By time ASC";
+		Query query = session.createQuery(hql);
+		query.setParameter("cateName", cateName);
+		query.setParameter("fromdate", new Date(fromdate));
+		query.setParameter("todate", new Date(todate));
+		List<Invoice> invoiceList = query.list();
+		session.close();
+		return invoiceList;
 	}
 
 }

@@ -16,7 +16,7 @@
 <link rel="stylesheet"
 	href="<c:url value='/resources/css/jquery-ui.css'/>">
 <script src="<c:url value='/resources/js/jquery-ui.min.js'/>"></script>
-
+<script src="<c:url value='/resources/js/jquery.ui.datepicker.validation.js'/>"></script>
 <script src="<c:url value='/resources/js/search_navbar.js'/>"></script>
 
 <!-- -----------------Bootstrap--------------------------  -->
@@ -83,6 +83,8 @@
 
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/ngInfiniteScroll/1.2.2/ng-infinite-scroll.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-cookies.js"></script>
 <script src="https://www.google.com/jsapi" type="text/javascript"></script>

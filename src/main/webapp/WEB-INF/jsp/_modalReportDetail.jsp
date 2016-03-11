@@ -43,7 +43,7 @@ $(".modal-wide").on("show.bs.modal", function() {
 					<h3 class="modal-title">Invoice List</h3>
 					<ul style="list-style-type:none;"><h4>Selecting: </h4>
 						<li><h4>Category Name: {{cateName}}</h4></li>
-						<li><h4>Month: {{month}}</h4></li>
+						<li><h4>Time: {{month}}</h4></li>
 					</ul>
 				</div>
 				<div class="modal-body">

@@ -8,12 +8,50 @@
 	$(function() {
 		$(".datepicker").datepicker();
 		$(".datepicker_select").datepicker({
-			dateFormat: 'mm/yy'
+			dateFormat : 'mm/yy'
 		});
 		$(".datepicker_selectyear").datepicker({
-			dateFormat: 'yy'
-		});	
+			dateFormat : 'yy'
+		});
 	})
+
+						
+	function ValidateDate(dtValue, dtId) {
+
+		var dtRegex = new RegExp(/\b\d{1,2}[\/-]\d{1,2}[\/-]\d{4}\b/);
+		if (dtRegex.test(dtValue)) {
+			$("button[id='" + dtId + "']").removeAttr("disabled");
+			$('#error-'+dtId).html('');
+		} else {
+			$('#error-'+dtId).html("Format of date must be dd/mm/yyyy!");
+			$("button[id='" + dtId + "']").attr('disabled', 'disabled');
+		}
+
+	}
+	function ValidateMonth(dtValue, dtId) {
+
+		var dtRegex = new RegExp(/\b\d{1,2}[\/-]\d{4}\b/);
+		if (dtRegex.test(dtValue)) {
+			$("button[id='" + dtId + "']").removeAttr("disabled");
+			$('#error-'+dtId).html('');
+		} else {
+			$("button[id='" + dtId + "']").attr('disabled', 'disabled');
+			$('#error-'+dtId).html('Format of month must be mm/yyyy!');
+		}
+
+	}
+	function ValidateYear(dtValue, dtId) {
+
+		var dtRegex = new RegExp(/\b\d{4}\b/);
+		if (dtRegex.test(dtValue)) {
+			$("button[id='" + dtId + "']").removeAttr("disabled");
+			$('#error-'+dtId).html('');
+		} else {
+			$("button[id='" + dtId + "']").attr('disabled', 'disabled');
+			$('#error-'+dtId).html('Format of year must be yyyy!');
+		}
+
+	}
 </script>
 <style type="text/css">
 .red {
@@ -41,27 +79,150 @@
 				</h4>
 			</div>
 			<div id="collapseOne" class="panel-collapse collapse in">
-					<div class="panel-body">
-				<table class="table">
-					<tr>
-						<th>CateName</th>
-						<th>Month</th>
-						<th>Count</th>
-						<th>SUM</th>
-						<th></th>
-					</tr>
-					<c:forEach var="array" items="${datalist}">
+				<div class="panel-body">
+					<table class="table">
 						<tr>
-							<td>${array[0]}</td>
-							<td>${array[1]}</td>
-							<td>${array[2]}</td>
-							<td><fmt:formatNumber value="${array[3]}"
-									minFractionDigits="2" maxFractionDigits="2" /></td>
-							<td><a ng-click="info('${array[0]}',${array[1]})">Detail</a></td>
+							<th>CateName</th>
+							<th>Month</th>
+							<th>Count</th>
+							<th>SUM</th>
+							<th></th>
 						</tr>
-					</c:forEach>
-				</table>
+						<c:forEach var="array" items="${datalist}">
+							<tr>
+								<td>${array[0]}</td>
+								<td>${array[1]}</td>
+								<td>${array[2]}</td>
+								<td><fmt:formatNumber value="${array[3]}"
+										minFractionDigits="2" maxFractionDigits="2" /></td>
+								<td><a ng-click="info('${array[0]}',${array[1]})">Detail</a></td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
 			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion"
+						href="#collapseByDate">Search report by Date</a>
+				</h4>
+			</div>
+			<div id="collapseByDate" class="panel-collapse collapse">
+				<div class="panel-body">
+					<div class="col-md-3">
+						<div class="form-group">
+							<label>Choose Date: </label> <input type="text" id="selectdate"
+								class="form-control datepicker" ng-model="selectdate" onchange="ValidateDate(this.value,this.id)" required>
+								<div id="error-selectdate"></div>
+						</div>
+						
+						<div class="form-group">
+							<button type="button" id="selectdate" disabled ng-click="getReportByDate()"
+								class="btn btn-primary">SEARCH</button>
+						</div>
+						
+					</div>
+					<div class="row" ng-show="showtableReportByDate">
+						<h2>TABLE REPORT</h2>
+						<div class="table-responsive" style="border-left: 1px solid #ddd">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>CateName</th>
+										<th>Number of invoice</th>
+										<th>AVEGARE</th>
+										<th>SUMARY</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="data in dataReportByDate">
+										<td>{{$index+1}}</td>
+										<td>{{data[0]}}</td>
+										<td>{{data[1]}}</td>
+										<td>{{data[3] | currency}}</td>
+										<td>{{data[2] | currency}}</td>
+										<td><a ng-click="detailByDate(data[0])">Detail</a></td>
+									</tr>
+									<tr>
+										<td colspan=3></td>
+										<td><strong>Number of Category: </strong></td>
+										<td><strong>{{countRpByDate}}</strong></td>
+									</tr>
+									<tr>
+										<td style="border-top: 1px solid #FFF" colspan=3></td>
+										<td><strong>SUM: </strong></td>
+										<td><strong>{{sumRpByDate | currency}}</strong></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion"
+						href="#collapseByMonth">Search report by month</a>
+				</h4>
+			</div>
+			<div id="collapseByMonth" class="panel-collapse collapse">
+				<div class="panel-body">
+					<div class="col-md-3">
+						<div class="form-group">
+							<label>Choose Month: </label> <input type="text"
+								class="form-control datepicker_select" ng-model="selectmonth"
+								id="selectMonth" onchange="ValidateMonth(this.value,this.id)">
+								<div id="error-selectMonth"></div>
+						</div>
+						<div class="form-group">
+							<button type="button" disabled id="selectMonth" ng-click="getReportByMonth()"
+								class="btn btn-primary">SEARCH</button>
+						</div>
+					</div>
+					<div class="row" ng-show="showtableReportByMonth">
+						<h2>TABLE REPORT</h2>
+						<div class="table-responsive" style="border-left: 1px solid #ddd">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>CateName</th>
+										<th>Number of invoice</th>
+										<th>AVEGARE</th>
+										<th>SUMARY</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="data in dataReportByMonth">
+										<td>{{$index+1}}</td>
+										<td>{{data[0]}}</td>
+										<td>{{data[1]}}</td>
+										<td>{{data[3] | currency}}</td>
+										<td>{{data[2] | currency}}</td>
+										<td><a ng-click="detail(data[0])">Detail</a></td>
+									</tr>
+									<tr>
+										<td colspan=3></td>
+										<td><strong>Number of Category: </strong></td>
+										<td><strong>{{countRpByMonth}}</strong></td>
+									</tr>
+									<tr>
+										<td style="border-top: 1px solid #FFF" colspan=3></td>
+										<td><strong>SUM: </strong></td>
+										<td><strong>{{sumRpByMonth | currency}}</strong></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="panel panel-default">
@@ -76,11 +237,13 @@
 					<div class="col-md-3">
 						<div class="form-group">
 							<label>Choose time: </label> <input type="text"
-								class="form-control datepicker_selectyear" ng-model="selectyear">
+								class="form-control datepicker_selectyear" ng-model="selectyear"
+								id="selectYear" onchange="ValidateYear(this.value, this.id)">
+								<div id="error-selectYear"></div>
 						</div>
 						<div class="form-group">
 							<button type="button" ng-click="getReportByYear()"
-								class="btn btn-primary">SEARCH</button>
+								id="selectYear" class="btn btn-primary">SEARCH</button>
 						</div>
 					</div>
 					<div class="row" ng-show="showtableReportbyYear">
@@ -125,22 +288,27 @@
 			<div class="panel-heading">
 				<h4 class="panel-title">
 					<a data-toggle="collapse" data-parent="#accordion"
-						href="#collapse">Search report by month</a>
+						href="#collapsed2d">Get Report from date to date</a>
 				</h4>
 			</div>
-			<div id="collapse" class="panel-collapse collapse">
+			<div id="collapsed2d" class="panel-collapse collapse">
 				<div class="panel-body">
 					<div class="col-md-3">
 						<div class="form-group">
-							<label>Choose time: </label> <input type="text"
-								class="form-control datepicker_select" ng-model="selectdate">
+							<label>From Date: </label> <input type="text"
+								class="form-control datepicker" ng-model="fromdate">
+						</div>
+
+						<div class="form-group">
+							<label>To Date: </label> <input type="text"
+								class="form-control datepicker" ng-model="todate">
 						</div>
 						<div class="form-group">
-							<button type="button" ng-click="getReportByMonth()"
+							<button type="button" ng-click="getReportd2d()"
 								class="btn btn-primary">SEARCH</button>
 						</div>
 					</div>
-					<div class="row" ng-show="showtableReport">
+					<div class="row" ng-show="showtableReportd2d">
 						<h2>TABLE REPORT</h2>
 						<div class="table-responsive" style="border-left: 1px solid #ddd">
 							<table class="table">
@@ -155,23 +323,23 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-repeat="data in dataReport">
+									<tr ng-repeat="data in dataReportd2d">
 										<td>{{$index+1}}</td>
 										<td>{{data[0]}}</td>
 										<td>{{data[1]}}</td>
 										<td>{{data[3] | currency}}</td>
 										<td>{{data[2] | currency}}</td>
-										<td><a ng-click="detail(data[0])">Detail</a></td>
+										<td><a ng-click="detaild2d(data[0])">Detail</a></td>
 									</tr>
 									<tr>
 										<td colspan=3></td>
 										<td><strong>Number of Category: </strong></td>
-										<td><strong>{{countRp}}</strong></td>
+										<td><strong>{{countRpd2d}}</strong></td>
 									</tr>
 									<tr>
 										<td style="border-top: 1px solid #FFF" colspan=3></td>
 										<td><strong>SUM: </strong></td>
-										<td><strong>{{sumRp | currency}}</strong></td>
+										<td><strong>{{sumRpd2d | currency}}</strong></td>
 									</tr>
 								</tbody>
 							</table>
@@ -180,79 +348,7 @@
 				</div>
 			</div>
 		</div>
-			<div class="panel panel-default">
-		<div class="panel-heading">
-			<h4 class="panel-title">
-				<a data-toggle="collapse" data-parent="#accordion"
-					href="#collapseThree">Report follow Category and number of Month
-						before</a>
-			</h4>
-		</div>
-		<div id="collapseThree" class="panel-collapse collapse">
-			<div class="panel-body">
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="sel1">Select list:</label> <select
-								class="form-control" ng-model="categoryCM">
-								<c:forEach var="c" items="${categories}">
-									<option value="${c.id}" ng-value="${c.id}">${c.name}</option>
-								</c:forEach>
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="sel1">Input Number of Month before: </label> <input
-								type="number" name="month" value="1" ng-model="month">
-						</div>
-						<div class="form-group">
-							<button type="button" ng-click="getInvoice()"
-								class="btn btn-primary">SEARCH</button>
-						</div>
-					</div>
-					<div class="row" ng-show="showtableCM">
-						<h2>Invoice Infomation</h2>
-						<div class="table-responsive" style="border-left: 1px solid #ddd">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>#</th>
-										<th>Name</th>
-										<th>Time</th>
-										<th>Place</th>
-										<th>Comment</th>
-										<th>Amount</th>
 
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="invoice in invoicesCM"
-										ng-class='{red : invoice.isWarning ,black: !invoice.isWarning}'>
-										<td>{{$index+1}}</td>
-										<td>{{invoice.name}}</td>
-										<td>{{invoice.time | date:"dd/MM/yyyy | h:mma"}}</td>
-										<td>{{invoice.place}}</td>
-										<td>{{invoice.comment}}</td>
-										<td>{{invoice.amount | currency}}</td>
-
-
-									</tr>
-									<tr>
-										<td colspan=4></td>
-										<td><strong>Count: </strong></td>
-										<td><strong>{{countCM}}</strong></td>
-									</tr>
-									<tr>
-										<td style="border-top: 1px solid #FFF" colspan=4></td>
-										<td><strong>SUM: </strong></td>
-										<td><strong>{{sumCM | currency}}</strong></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-		</div>
-	</div>
-		
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h4 class="panel-title">
@@ -330,9 +426,84 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion"
+						href="#collapseThree">Report follow Category and number of
+						Month before</a>
+				</h4>
+			</div>
+			<div id="collapseThree" class="panel-collapse collapse">
+				<div class="panel-body">
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="sel1">Select list:</label> <select
+								class="form-control" ng-model="categoryCM">
+								<c:forEach var="c" items="${categories}">
+									<option value="${c.id}" ng-value="${c.id}">${c.name}</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="sel1">Input Number of Month before: </label> <input
+								type="number" name="month" value="1" ng-model="month">
+						</div>
+						<div class="form-group">
+							<button type="button" ng-click="getInvoice()"
+								class="btn btn-primary">SEARCH</button>
+						</div>
+					</div>
+					<div class="row" ng-show="showtableCM">
+						<h2>Invoice Infomation</h2>
+						<div class="table-responsive" style="border-left: 1px solid #ddd">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Name</th>
+										<th>Time</th>
+										<th>Place</th>
+										<th>Comment</th>
+										<th>Amount</th>
+
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="invoice in invoicesCM"
+										ng-class='{red : invoice.isWarning ,black: !invoice.isWarning}'>
+										<td>{{$index+1}}</td>
+										<td>{{invoice.name}}</td>
+										<td>{{invoice.time | date:"dd/MM/yyyy | h:mma"}}</td>
+										<td>{{invoice.place}}</td>
+										<td>{{invoice.comment}}</td>
+										<td>{{invoice.amount | currency}}</td>
+
+
+									</tr>
+									<tr>
+										<td colspan=4></td>
+										<td><strong>Count: </strong></td>
+										<td><strong>{{countCM}}</strong></td>
+									</tr>
+									<tr>
+										<td style="border-top: 1px solid #FFF" colspan=4></td>
+										<td><strong>SUM: </strong></td>
+										<td><strong>{{sumCM | currency}}</strong></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<jsp:include page="_modalReportDetail.jsp"></jsp:include>
+
 </div>
+
 
 
 

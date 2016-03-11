@@ -121,7 +121,7 @@ $(document).ready(function() {
 </script>
 
 <script type="text/javascript">
-	function isNumber(evt) {
+	function isValid(evt) {
 		evt = (evt) ? evt : window.event;
 		var charCode = (evt.which) ? evt.which : evt.keyCode;
 		if (charCode >= 32 && charCode <= 254) {
@@ -154,6 +154,65 @@ $(document).on("click","#delete",function() {
 	});		
 });
 </script>
+	
+<script type="text/javascript">
+function isNumber(evt) {
+	evt = (evt) ? evt : window.event;
+	var charCode = (evt.which) ? evt.which : evt.keyCode;
+	if ((charCode >= 48 && charCode <= 57) || charCode == 32 || charCode == 46 || charCode == 8) {
+		return true;
+	}
+	return false;
+}
+
+$(document).ready(function() {
+	var cateid = $.trim($("#cateId").val());
+	var money = $.trim($("#amountId").val());
+	$("#cateId").on("change",function(){
+		cateid = $.trim($("#cateId").val());
+		money = $.trim($("#amountId").val());	
+		var show='';
+		$.ajax({
+			url : "Invoice/get-all-invoices/" + money+"/"+cateid,
+			type : 'get',
+			success : function(data) {
+				if (data == true) {
+					show+='<label style="color: red">Your money is too big!</label>';
+					$("#errorname").html(show);
+					setTimeout(function() {
+						$("#errorname").html('');
+					}, 2000);
+				}				
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				alert("some error");				
+			}
+		});
+	});	
+	$("#amountId").focusout(function(){
+		money = $.trim($("#amountId").val());	
+		var show='';
+		$.ajax({
+			url : "Invoice/get-all-invoices/" + money+"/"+cateid,
+			type : 'get',
+			success : function(data) {
+				if (data == true) {
+					show+='<label style="color: red">Your money is too big!</label>';
+					$("#errorname").html(show);
+					setTimeout(function() {
+						$("#errorname").html('');
+					}, 6000);
+				}				
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				alert("some error");				
+			}
+		});
+	});
+});
+
+
+</script>
 
 <div class="panel panel-primary">
 	<div class="panel-heading">
@@ -172,7 +231,7 @@ $(document).on("click","#delete",function() {
 						<label path="name" class="col-md-2 control-label">Category</label>
 						<div class="col-md-10">
 							<form:select path="category.id" items="${categories}"
-								itemValue="id" itemLabel="name" class="form-control" />
+								itemValue="id" itemLabel="name" class="form-control" id="cateId"/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -237,7 +296,7 @@ $(document).on("click","#delete",function() {
 								<div class='input-group date' id='select-time'>
 									<form:input id="timeInput" required="required" path="time"
 										type='text' class="form-control"
-										onkeypress="return isNumber(event)" />
+										onkeypress="return isValid(event)" />
 									<span class="input-group-addon"> <span
 										class="glyphicon glyphicon-calendar"></span>
 									</span>
@@ -258,7 +317,9 @@ $(document).on("click","#delete",function() {
 						<div class="form-group">
 							<label path="amount" class="col-md-2 control-label">Amount</label>
 							<div class="col-md-10">
-								<form:input class="form-control" path="amount" />
+								<form:input id="amountId" class="form-control" path="amount" onkeypress="return isNumber(event)"/>
+								<div id="errorname">
+								</div>
 								<div class="has-error">
 									<form:errors path="amount" class="help-inline" />
 								</div>

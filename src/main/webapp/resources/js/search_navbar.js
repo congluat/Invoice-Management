@@ -32,7 +32,7 @@
 											$("#danger-alert").show();
 											setTimeout(function() {
 												$("#danger-alert").hide();
-											}, 5000);
+											}, 3000);
 										}
 									}
 									if (attribute == "Amount") {
@@ -178,11 +178,8 @@
 														term : request.term
 													},
 													dataType : "json",
-													success : function(
-															data) {
-														response($
-																.map(
-																		data,
+													success : function(data) {
+														response($.map(data,
 																		function(
 																				item,
 																				i) {

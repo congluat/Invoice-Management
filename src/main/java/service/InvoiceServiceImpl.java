@@ -84,6 +84,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public double calAverage(Category category) {
 		List<Invoice> list = getTop10IsNotWarning(category);
+		int listSize = list.size();
+		if (listSize == 0) {
+			listSize = 1;
+		}
 		BigDecimal avg = BigDecimal.valueOf(0.0d);
 		Iterator it = list.iterator();
 		while (it.hasNext()) {
@@ -91,10 +95,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 			avg = avg.add(invoice.getAmount());
 		}
 		//chua co invoice nao` trong category nay
-		int listSize = list.size();
-		if (listSize == 0) {
-			listSize = 1;
-		}
+		
 		return Double.parseDouble(avg.divide(BigDecimal.valueOf(listSize)).toString());
 	}
 
