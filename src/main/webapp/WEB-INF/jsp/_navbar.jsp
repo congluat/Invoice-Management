@@ -88,8 +88,8 @@
 				<li><a href="#"><i class="glyphicon glyphicon-stats"></i>
 						Statistical Data<span class="glyphicon glyphicon-menu-down"></span></a>
 					<ul class="nav nav-second-level">
-						<li><a href="Report/by-CateMonths"> Type 1</a></li>
-						<li><a href="Revenue/monthly-statistic">Type 2</a></li>
+						<li><a href="Report/"> Report</a></li>
+						<li><a href="Revenue/monthly-statistic">Chart</a></li>
 					</ul> <!-- nav-second-level --></li>
 			</ul>
 		

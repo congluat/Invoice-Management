@@ -38,7 +38,7 @@ public class ReportController {
 	@Autowired
 	SessionFactory sessionFactory;
 	
-	@RequestMapping("/page")
+	@RequestMapping("/")
 	public String pageGetCateMonths(ModelMap model) {
 		List<Object[]> list = reportService.getReportDataEveryMonth();
 		model.addAttribute("datalist", list);
