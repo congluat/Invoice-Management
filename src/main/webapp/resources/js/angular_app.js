@@ -402,6 +402,7 @@
 	});
 	
 	app.controller('reportCtrl', function($scope, $http) {
+
 		$scope.showtableCM = false;
 		$scope.showtableM2M = false;
 		$scope.showtableReport = false;

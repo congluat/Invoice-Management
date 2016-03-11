@@ -14,6 +14,44 @@
 			dateFormat : 'yy'
 		});
 	})
+
+						
+	function ValidateDate(dtValue, dtId) {
+
+		var dtRegex = new RegExp(/\b\d{1,2}[\/-]\d{1,2}[\/-]\d{4}\b/);
+		if (dtRegex.test(dtValue)) {
+			$("button[id='" + dtId + "']").removeAttr("disabled");
+			$('#error-'+dtId).html('');
+		} else {
+			$('#error-'+dtId).html("Format of date must be dd/mm/yyyy!");
+			$("button[id='" + dtId + "']").attr('disabled', 'disabled');
+		}
+
+	}
+	function ValidateMonth(dtValue, dtId) {
+
+		var dtRegex = new RegExp(/\b\d{1,2}[\/-]\d{4}\b/);
+		if (dtRegex.test(dtValue)) {
+			$("button[id='" + dtId + "']").removeAttr("disabled");
+			$('#error-'+dtId).html('');
+		} else {
+			$("button[id='" + dtId + "']").attr('disabled', 'disabled');
+			$('#error-'+dtId).html('Format of month must be mm/yyyy!');
+		}
+
+	}
+	function ValidateYear(dtValue, dtId) {
+
+		var dtRegex = new RegExp(/\b\d{4}\b/);
+		if (dtRegex.test(dtValue)) {
+			$("button[id='" + dtId + "']").removeAttr("disabled");
+			$('#error-'+dtId).html('');
+		} else {
+			$("button[id='" + dtId + "']").attr('disabled', 'disabled');
+			$('#error-'+dtId).html('Format of year must be yyyy!');
+		}
+
+	}
 </script>
 <style type="text/css">
 .red {
@@ -75,13 +113,16 @@
 				<div class="panel-body">
 					<div class="col-md-3">
 						<div class="form-group">
-							<label>Choose Date: </label> <input type="text"
-								class="form-control datepicker" ng-model="selectdate">
+							<label>Choose Date: </label> <input type="text" id="selectdate"
+								class="form-control datepicker" ng-model="selectdate" onchange="ValidateDate(this.value,this.id)" required>
+								<div id="error-selectdate"></div>
 						</div>
+						
 						<div class="form-group">
-							<button type="button" ng-click="getReportByDate()"
+							<button type="button" id="selectdate" disabled ng-click="getReportByDate()"
 								class="btn btn-primary">SEARCH</button>
 						</div>
+						
 					</div>
 					<div class="row" ng-show="showtableReportByDate">
 						<h2>TABLE REPORT</h2>
@@ -135,10 +176,12 @@
 					<div class="col-md-3">
 						<div class="form-group">
 							<label>Choose Month: </label> <input type="text"
-								class="form-control datepicker_select" ng-model="selectmonth">
+								class="form-control datepicker_select" ng-model="selectmonth"
+								id="selectMonth" onchange="ValidateMonth(this.value,this.id)">
+								<div id="error-selectMonth"></div>
 						</div>
 						<div class="form-group">
-							<button type="button" ng-click="getReportByMonth()"
+							<button type="button" disabled id="selectMonth" ng-click="getReportByMonth()"
 								class="btn btn-primary">SEARCH</button>
 						</div>
 					</div>
@@ -194,11 +237,13 @@
 					<div class="col-md-3">
 						<div class="form-group">
 							<label>Choose time: </label> <input type="text"
-								class="form-control datepicker_selectyear" ng-model="selectyear">
+								class="form-control datepicker_selectyear" ng-model="selectyear"
+								id="selectYear" onchange="ValidateYear(this.value, this.id)">
+								<div id="error-selectYear"></div>
 						</div>
 						<div class="form-group">
 							<button type="button" ng-click="getReportByYear()"
-								class="btn btn-primary">SEARCH</button>
+								id="selectYear" class="btn btn-primary">SEARCH</button>
 						</div>
 					</div>
 					<div class="row" ng-show="showtableReportbyYear">
@@ -456,6 +501,7 @@
 		</div>
 	</div>
 	<jsp:include page="_modalReportDetail.jsp"></jsp:include>
+
 </div>
 
 
