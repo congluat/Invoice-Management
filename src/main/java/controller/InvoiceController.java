@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,7 +25,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import model.Category;
@@ -122,20 +120,12 @@ public class InvoiceController {
 	public String getDangerInvoices(HttpServletRequest request, ModelMap model) {
 		return "invoices_danger";
 	}
-
-	/*
-	 * @RequestMapping(value = { "/", "/get-all-danger-invoices" }, method =
-	 * RequestMethod.GET) public String getAllDangerInvoices(HttpServletRequest
-	 * request, ModelMap model) { User user = (User)
-	 * request.getSession().getAttribute("user"); model.addAttribute("invoices",
-	 * invoiceService.getAllInvoices(user.getId())); model.addAttribute("title",
-	 * "Invoices"); return "invoices"; }
-	 */
+	
 
 	@RequestMapping(value = { "/get-all-invoices/{amount}/{cateId}" }, method = RequestMethod.GET)
 	@ResponseBody
-	public boolean getAllInvoices(HttpServletRequest request, @PathVariable BigDecimal amount,
-			@PathVariable int cateId) {
+	public boolean getAllInvoices(HttpServletRequest request, @PathVariable("amount") BigDecimal amount,
+			@PathVariable("cateId") Integer cateId) {
 		// User user = (User) request.getSession().getAttribute("user");
 		Category category = cateService.getById(cateId);
 		return invoiceService.checkIsWarning(amount, category);
