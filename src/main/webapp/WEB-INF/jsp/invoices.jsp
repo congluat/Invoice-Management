@@ -25,22 +25,7 @@
 					ng-model-options="{debounce: 500}">
 
 			</div>
-		</div>
-		<!-- /.col-lg-6 -->
-		<!-- 
-		<script type="text/javascript">
-			var app = angular.module('app', invoices);
-			app.controller('InvoiceController', function($scope) {
-
-				$scope.totalDisplayed = 2;
-
-				$scope.loadMore = function() {
-					$scope.totalDisplayed += 2;
-				};
-
-				$scope.invoices = invoices;
-			});
-		</script> -->
+		</div>		
 
 		<div class="col-md-12">
 			<div class="modal fade" id="confirm-delete" tabindex="-1"
@@ -63,11 +48,8 @@
 
 			<h1>{{month}}</h1>
 
-
+		<div infinite-scroll='loadMore()' infinite-scroll-distance='0'>
 			<ul class="timeline">
-
-				<!-- <li ng-repeat="i in invoices | limitTo:totalDisplayed"> -->
-
 				<li ng-repeat="i in invoices" ng-class-odd="'timeline-inverted'"><img
 					class="timeline-badge" height="50px" width="50px" alt="not found"
 					ng-src="<c:url value='/resources/logo/'/>{{i.category.logo}}"
@@ -107,7 +89,7 @@
 					</div></li>
 
 			</ul>
-
+		</div>
 
 		</div>
 	</div>

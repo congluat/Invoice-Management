@@ -54,6 +54,34 @@
 
 					});
 </script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#buttonclick").on("click", function() {
+			var catename = $.trim($("#cateName").val());
+			var show='';
+			$.ajax({
+				url : "Category/checkCate/" + catename,
+				type : 'get',
+				success : function(data) {
+					if (data == true) {
+						show+='<label style="color: red">Name existed!</label>';
+						$("#errorname").html(show);
+						setTimeout(function() {
+							$("#errorname").hide();
+						}, 3000);
+					}
+					else{
+						$("#NewCategoryForm").submit();
+					}
+						
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					alert("some error");				
+				}
+			});
+		});
+	});
+</script>
 <div class="panel panel-primary">
 	<div id="categoryFromResponse"></div>
 	<div class="panel-heading">
@@ -64,28 +92,23 @@
 		<div class="col-md-8">
 			<form:form class="form-horizontal" modelAttribute="category"
 				method="POST" enctype="multipart/form-data" id="NewCategoryForm">
-
-
 				<fieldset>
-
 					<h4>${message}</h4>
 					<form:input type="hidden" path="id" />
-
 					<div class="form-group">
 						<label path="name" class="col-md-2 control-label">Name</label>
 						<div class="col-md-10">
 							<form:input class="form-control" path="name" required="required"
-								maxlength="100" placeholder="name" type="text" />
-
+								maxlength="100" placeholder="name" type="text" id="cateName" />
+								<div id="errorname">
+								</div>
 							<c:if test='${not empty "${error}"}'>
 								<label style="color: red">${error}</label>
 							</c:if>
 						</div>
 					</div>
-
 					<div class="form-group">
 						<label for="inputFile" class="col-md-2 control-label">Logo</label>
-
 						<div class="col-md-10">
 							<input readonly="readonly" class="form-control"
 								placeholder="Browse..." type="text"> <input
@@ -110,29 +133,25 @@
 						</div>
 					</div>
 
-					<div class="form-group">
+					
+				</fieldset>
+			</form:form>
+			<div class="form-group">
 
 						<div class="col-md-2"></div>
 
 						<div class="col-md-5">
-							<a href="Category/listCategories" class="btn  btn-raised btn-warning"">Cancel</a>
+							<a href="Category/listCategories"
+								class="btn  btn-raised btn-warning"">Cancel</a>
 						</div>
 
 						<div class="col-md-5">
-							<button type="submit" class="btn btn-raised btn-success">Submit</button>
+							<button id="buttonclick" class="btn btn-raised btn-success">Submit</button>
 						</div>
-					</div>
-
-				</fieldset>
-
-
-
-
-			</form:form>
-
+			</div>
 		</div>
 		<div class="col-md-2"></div>
 
 	</div>
 </div>
-<%-- http://spring.io/blog/2010/01/25/ajax-simplifications-in-spring-3-0/--%>
+
