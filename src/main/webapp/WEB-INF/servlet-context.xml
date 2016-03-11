@@ -19,13 +19,13 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<!--<property name="url" value="jdbc:mysql://20.203.139.12:3306/InvoiceManagement?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" 
 			/> -->
-		<!-- <property name="url" value="jdbc:mysql://localhost:3306/invoicem_db?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" 
-			/> <property name="username" value="invoicem_root" /> <property name="password" 
-			value="root123" /> -->
 		<property name="url"
-			value="jdbc:mysql://20.203.139.12:3306/InvoiceManagement?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" />
+			value="jdbc:mysql://localhost:3306/InvoiceManagement?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
+		<!-- <property name="url" value="jdbc:mysql://localhost:3306/InvoiceManagement?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" 
+			/> <property name="username" value="root" /> <property name="password" value="root" 
+			/> -->
 	</bean>
 
 	<!-- Hibernate session factory -->

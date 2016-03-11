@@ -17,20 +17,14 @@
 	href="<c:url value='/resources/css/jquery-ui.css'/>">
 <script src="<c:url value='/resources/js/jquery-ui.min.js'/>"></script>
 
-
+<script src="<c:url value='/resources/js/search_navbar.js'/>"></script>
 
 <!-- -----------------Bootstrap--------------------------  -->
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="<c:url value='/resources/css/bootstrap.min.css'/>">
-<!-- 
 
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
-	integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
-	crossorigin="anonymous">
- -->
 <!-- Latest compiled and minified JavaScript -->
 <script src="<c:url value='/resources/js/bootstrap.min.js'/>"></script>
 
@@ -39,6 +33,21 @@
 	href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
 <link rel="stylesheet" type="text/css"
 	href="//fonts.googleapis.com/icon?family=Material+Icons">
+
+<%-- 
+<link href="<c:url value='/resources/css/simple-sidebar.css' />"
+	rel="stylesheet"></link>
+	 --%>
+
+<link href="<c:url value='/resources/css/sb-admin-2.css' />"
+	rel="stylesheet"></link>
+<link href="<c:url value='/resources/css/metisMenu.css' />"
+	rel="stylesheet"></link>
+<link href="<c:url value='/resources/css/timeline.css' />"
+	rel="stylesheet"></link>
+<link
+	href="<c:url value='/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet'/>"
+	type="text/css">
 
 <!-- Bootstrap -->
 
@@ -61,23 +70,6 @@
 -->
 
 
-<!-- ---------------------------My CSS----------- -->
-
-<%-- 
-<link href="<c:url value='/resources/css/simple-sidebar.css' />"
-	rel="stylesheet"></link>
-	 --%>
-
-<link href="<c:url value='/resources/css/sb-admin-2.css' />"
-	rel="stylesheet"></link>
-<link href="<c:url value='/resources/css/metisMenu.css' />"
-	rel="stylesheet"></link>
-<link href="<c:url value='/resources/css/timeline.css' />"
-	rel="stylesheet"></link>
-<link
-	href="<c:url value='/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet'/>"
-	type="text/css">
-<link href="<c:url value='/resources/css/mycss.css' />" rel="stylesheet"></link>
 
 <!---------------------------- MY JS--------------- -->
 
@@ -87,6 +79,9 @@
 <script type="text/javascript"
 	src="<c:url value='/resources/js/metisMenu.js' />"></script>
 
+
+<!-- ---------------------------My CSS----------- -->
+<link href="<c:url value='/resources/css/mycss.css' />" rel="stylesheet"></link>
 
 <!-- --------------------AngularJS-------------------- -->
 
@@ -142,10 +137,10 @@
 	<jsp:include page="_navbar.jsp"></jsp:include>
 
 	<jsp:include page="_modalAddUser.jsp"></jsp:include>
-	
-	
 
-	<div id="page-wrapper" style="padding-left: 0px">
+
+
+	<div id="page-wrapper" style="padding-left: 0px;overflow-x:hidden;">
 
 		<tiles:insertAttribute name="body">
 

@@ -1,9 +1,9 @@
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> --%>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
-<script src="<c:url value='/resources/js/search_navbar.js'/>"></script>
+
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation"
 	style="margin-bottom: 0; z-index: 100">
@@ -18,24 +18,14 @@
 	</div>
 <script>
   $(document).ready(function () {
-    $('.selectpicker').selectpicker({
-    	style: 'btn-primary',
-        size: false,
-        mobile : true,
-        style : "background: inherit"
+    $('.selectpicker').selectpicker({   	
+        size : false,
+        mobile : true
     });
   });
 </script>
 
 <style>
-.searchForm {
-	background: inherit;
-	color: #ddd;
-	border-bottom: 1px solid #ccc;
-	font-size: 18px;
-	height: 38px;
-	background-size: 0 2px, 100% 1px;
-}
 
 .alertForm {
 	background: inherit;
@@ -74,11 +64,22 @@
 
 	<!-- /.navbar-top-links -->
 	<div class="navbar-default sidebar" role="navigation">
-		<div class="sidebar-nav navbar-collapse">
-			<ul class="nav" id="side-menu">
-
+		<div class="sidebar-nav navbar-collapse" style="overflow-x:hidden;">
+			<ul class="nav" id="side-menu">			
+				<li><select id="select" style="color: black"
+					class="selectpicker form-control" data-style="btn-primary">
+						<option data-icon="glyphicon glyphicon-search">Name</option>
+						<option data-icon="glyphicon glyphicon-search">Place</option>
+						<option data-icon="glyphicon glyphicon-search">Amount</option>
+						<option data-icon="glyphicon glyphicon-search">Time</option>
+				</select></li>
+				<li id="form"><input
+					class="form-control ng-pristine ng-untouched ng-valid ng-empty"
+					id="invoice" placeholder="Search Invoice(s) ..." /></li>
+				<li id="MyEdit"></li>
+			
 				<li><a href="dashboard"><i
-						class="glyphicon glyphicon-dashboard"></i> Dashboard</a></li>
+						class="glyphicon glyphicon-dashboard"></i>Dashboard</a></li>
 
 
 				<li><a href="Invoice/"><i class="glyphicon glyphicon-tasks"></i>
@@ -93,20 +94,7 @@
 					</ul> <!-- nav-second-level --></li>
 			</ul>
 		
-			<ul class="nav" id="side-menu">			
-				<li><select id="select" style="color: black"
-					class="selectpicker form-control">
-						<option data-icon="glyphicon glyphicon-search">Name</option>
-						<option data-icon="glyphicon glyphicon-search">Place</option>
-						<option data-icon="glyphicon glyphicon-search">Amount</option>
-						<option data-icon="glyphicon glyphicon-search">Time</option>
-						<option data-icon="glyphicon glyphicon-search">Warning</option>
-				</select></li>
-				<li id="form"><input
-					class="form-control ng-pristine ng-untouched ng-valid ng-empty"
-					id="invoice" placeholder="Search Invoice(s) ..." /></li>
-				<li id="MyEdit"></li>
-			</ul>
+			
 		</div>
 					
 		<!-- /.sidebar-collapse -->

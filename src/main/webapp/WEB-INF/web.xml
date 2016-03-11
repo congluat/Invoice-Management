@@ -9,7 +9,11 @@
 
 	<!-- <error-page> <error-code>500</error-code> <location>/WEB-INF/jsp/error/error500.jsp</location> 
 		</error-page> -->
-
+	<weblogic-web-app>
+		<container-descriptor>
+			<show-archived-real-path-enabled>true</show-archived-real-path-enabled>
+		</container-descriptor>
+	</weblogic-web-app>
 	<filter>
 		<filter-name>utf8</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter
