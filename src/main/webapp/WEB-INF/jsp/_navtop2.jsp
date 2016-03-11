@@ -39,7 +39,7 @@
 <section>
 	<header>
 		<nav class="rad-navigation">
-			<div class="rad-logo-container">
+			<div class="rad-logo-container rad-nav-min">
 				<a href="dashboard" class="rad-logo"><i class=" fa fa-recycle"></i>
 					Invoice</a> <a href="#" class="rad-toggle-btn pull-right nav-pull-button"><i
 					class="fa fa-bars"></i></a>

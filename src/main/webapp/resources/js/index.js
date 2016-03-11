@@ -1,6 +1,10 @@
 $(document)
 		.ready(
 				function() {
+					/*$(".rad-logo-container").addClass("rad-nav-min");
+					$(".rad-sidebar").addClass("rad-nav-min");
+					$(".rad-body-wrapper").addClass("rad-nav-min");*/
+
 					$(".nav-pull-button").on("click", function(e) {
 						e.preventDefault();
 

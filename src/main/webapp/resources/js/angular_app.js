@@ -7,7 +7,7 @@
 	google.load('visualization', '1', {
 		packages : [ 'corechart' ]
 	});
-	var app = angular.module('app', [ 'googlechart' , 'infinite-scroll']);
+	var app = angular.module('app', [ 'googlechart' ]);
 
 	
 

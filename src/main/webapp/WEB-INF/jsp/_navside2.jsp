@@ -1,5 +1,5 @@
 <aside>
-	<nav class="rad-sidebar">
+	<nav class="rad-sidebar rad-nav-min">
 		<ul>
 			<li><a href="dashboard" target="_self"> <i
 					class="fa fa-dashboard"><span class="icon-bg rad-bg-success"></span></i>

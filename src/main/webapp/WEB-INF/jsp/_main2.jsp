@@ -5,7 +5,7 @@
 
 <main>
 <section>
-	<div class="rad-body-wrapper">
+	<div class="rad-body-wrapper rad-nav-min">
 		<div class="container-fluid">
 			
 			<tiles:insertAttribute name="body"></tiles:insertAttribute>
