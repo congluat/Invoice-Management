@@ -50,12 +50,10 @@ public class CategoryController {
 				}
 			}
 		}
-
-		// String json = new Gson().toJson(cateService.getAllCategories());
 		return list;
 	}
 
-	@RequestMapping(value = "/listCategories", method = RequestMethod.GET)
+	@RequestMapping(value = {"/", "/listCategories"}, method = RequestMethod.GET)
 	public String listCategories(ModelMap model) {
 		model.addAttribute("categories", cateService.getAllCategories());
 		model.addAttribute("title", "Category");
@@ -89,15 +87,13 @@ public class CategoryController {
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String Save(@ModelAttribute Category category, @RequestParam("file") MultipartFile file, ModelMap model) {
-
-		return cateService.create(category, file, model);
-
+		cateService.create(category, file, model);
+		return "redirect:/Category/";	
 	}
 
 	@RequestMapping(value = "/checkCate/{name}")
 	@ResponseBody
 	public boolean checkCateAvailable(@PathVariable String name, HttpServletRequest request) {
-
 		return cateService.checkCateAvailable(name);
 	}
 
