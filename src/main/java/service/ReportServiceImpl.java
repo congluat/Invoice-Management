@@ -87,4 +87,27 @@ public class ReportServiceImpl implements ReportService {
 		}
 		return list;
 	}
+
+	@Override
+	public List<Object[]> getReportDataByDate(String selectdate) {
+		return reportDao.getReportDataByDate(selectdate);
+	}
+
+	@Override
+	public List<Invoice> getReportDetailByDate(String cateName, String selectdate) {
+		int month = Integer.parseInt(selectdate.substring( 0, 2));
+		int day = Integer.parseInt(selectdate.substring( 3, 5));
+		int year = Integer.parseInt(selectdate.substring(6));
+		return reportDao.getReportDetailByDate(cateName, day, month, year);
+	}
+
+	@Override
+	public List<Object[]> getReportDataByd2d(String fromdate, String todate) {
+		return reportDao.getReportDataByd2d(fromdate, todate);
+	}
+
+	@Override
+	public List<Invoice> getReportDetaild2d(String cateName, String fromdate, String todate) {
+		return reportDao.getReportDetaild2d(cateName, fromdate, todate);
+	}
 }
