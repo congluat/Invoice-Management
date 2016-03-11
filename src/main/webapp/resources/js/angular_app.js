@@ -7,7 +7,7 @@
 	google.load('visualization', '1', {
 		packages : [ 'corechart' ]
 	});
-	var app = angular.module('app', [ 'googlechart' ]);
+	var app = angular.module('app', [ 'googlechart' , 'infinite-scroll']);
 
 	
 
@@ -202,7 +202,9 @@
 		var year = parseInt(now.getYear()) + 1900;
 		console.log("month " + month);
 		console.log("year " + year);
-
+		
+		$scope.invoicesTmp = [];
+		$scope.currentIndex = 0;
 		$scope.invoices = [];
 		$scope.listByMonth = false;
 		$scope.month = month + "/" + year;
@@ -211,11 +213,24 @@
 				function(response) {
 					$scope.listByMonth = true;
 					// $scope.invoices.push(response);
-					$scope.invoices = response;
+					$scope.invoicesTmp = response;
+					for(var i = 0; i < 3; i++){
+						$scope.invoices.push($scope.invoicesTmp[i]);
+						$scope.currentIndex = i;
+					}
 					console.log("invoice ");
 					console.log($scope.invoices[0]);
 
 				});
+		
+		 $scope.loadMore = function() {			  
+			  for(var i = $scope.currentIndex+1; i < $scope.currentIndex+3; i++){
+				  	if(i == $scope.invoicesTmp.length)
+				  		break;
+					$scope.invoices.push($scope.invoicesTmp[i]);
+					$scope.currentIndex = i;
+				}
+		 }
 
 		$scope.onSearchChange = function(searchString) {
 			console.log("search: " + searchString);
