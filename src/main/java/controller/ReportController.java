@@ -63,10 +63,16 @@ public class ReportController {
 		return list;
 	}
 	
+	@RequestMapping(value="/getReportByDate", method= RequestMethod.GET)
+	@ResponseBody
+	public List<Object[]> getReportByDate(@RequestParam String selectdate) {
+		return reportService.getReportDataByDate(selectdate);
+	}
+	
 	@RequestMapping(value="/getReportByMonth", method= RequestMethod.GET)
 	@ResponseBody
-	public List<Object[]> getReportByMonth(@RequestParam String selectdate) {
-		return reportService.getReportDataByMonth(selectdate);
+	public List<Object[]> getReportByMonth(@RequestParam String selectmonth) {
+		return reportService.getReportDataByMonth(selectmonth);
 	}
 	
 	@RequestMapping(value="/getReportByYear", method= RequestMethod.GET)
@@ -76,11 +82,34 @@ public class ReportController {
 		return reportService.getReportDataByYear(year);
 	}
 	
+	@RequestMapping(value="/getReportd2d", method= RequestMethod.GET)
+	@ResponseBody
+	public List<Object[]> getInvoiced2d(
+							@RequestParam String fromdate,
+							@RequestParam String todate) {
+		return reportService.getReportDataByd2d(fromdate, todate);
+	}
+	
+	@RequestMapping(value="/getInvoiceDetailByDate", method= RequestMethod.GET)
+	@ResponseBody
+	public List<Invoice> getReportDetailByDate(@RequestParam String cateName,
+										@RequestParam String selectdate) {
+		return reportService.getReportDetailByDate(cateName, selectdate);
+	}
+	
 	@RequestMapping(value="/getInvoiceDetail", method= RequestMethod.GET)
 	@ResponseBody
 	public List<Invoice> getReportDetail(@RequestParam String cateName,
 										@RequestParam String time) {
 		return reportService.getReportDetail(cateName, time);
+	}
+	
+	@RequestMapping(value="/getInvoiceDetaild2d", method= RequestMethod.GET)
+	@ResponseBody
+	public List<Invoice> getReportDetaild2d(@RequestParam String cateName,
+										@RequestParam String fromdate,
+										@RequestParam String todate) {
+		return reportService.getReportDetaild2d(cateName, fromdate, todate);
 	}
 	
 	@RequestMapping(value="/getInfo", method= RequestMethod.GET)
