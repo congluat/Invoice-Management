@@ -14,9 +14,16 @@
 	display: inline-block;
 }
 </style>
+<script type="text/javascript"
+	src="<c:url value='/resources/nicEditor/nicEdit.js'/>"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		
+		bkLib.onDomLoaded(function() {
+			new nicEditor({
+				iconsPath : '<c:url value='/resources/nicEditor/nicEditorIcons.gif'/>',
+				uploadURI: 'nic-editor/upload'
+			}).panelInstance('description');
+		});
 		var link = '<%=request.getContextPath()%>'
 								+ "/resources/logo/${category.logo}";
 						$("#imagePreview").css("background-image",
@@ -104,7 +111,7 @@
 						<label path="description" class="col-md-2 control-label">Description</label>
 
 						<div class="col-md-10">
-							<form:textarea path="description" class="form-control" rows="3"
+							<form:textarea name="description" path="description" class="form-control" rows="3"
 								maxlength="200" />
 							<span class="help-block">description</span>
 						</div>

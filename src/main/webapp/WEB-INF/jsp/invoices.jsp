@@ -6,13 +6,12 @@
 .timeline>li>.timeline-panel {
 	padding: 5px 5px;
 }
-
 </style>
 
 
 <div class="row"
 	style="margin-top: 10px; margin-left: 5px; margin-right: 5px">
-	<div ng-controller="InvoiceController" ng-app="app">
+	<div ng-controller="InvoiceController" ng-app="app" ng-init="init()">
 		<div class="col-md-6 col-md-offset-6">
 			<div class="input-group input-group-lg">
 
@@ -77,7 +76,7 @@
 						ng-mouseleave="hover(i)">
 						<div class="col-md-10 col-xs-12">
 							<div class="timeline-heading">
-								<h4 class="timeline-title" ng-class="{'isWarning': i.isWarning}" >{{i.name}}</h4>
+								<h4 class="timeline-title" ng-class="{'isWarning': i.isWarning}">{{i.name}}</h4>
 								<p>
 									<small class="text-muted"><i class="fa fa-clock-o"></i>
 										{{i.time | date:"dd/MM/yyyy 'at' h:mma"}} at {{i.place}}</small>
@@ -88,7 +87,7 @@
 								<p>{{i.amount|currency}}</p>
 							</div>
 						</div>
-						<div class="col-md-2 col-xs-12">
+						<div class="col-md-2">
 							<a href="Invoice/edit/{{i.id}}" class="btn btn-success btn-lg">
 								<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 							</a> <a class="btn btn-danger deleteButton btn-lg"
@@ -98,7 +97,8 @@
 						</div>
 
 						<div class="col-md-12 more-info" showonhoverparent>
-							{{i.comment}}
+
+							<p ng-bind-html="i.comment | unsafe"></p>
 							<div ng-repeat="img in i.photos">
 								<img class="col-md-4 col-xs-4" alt="not found"
 									ng-src="<c:url value='/resources/images/'/>{{img.photo}}">

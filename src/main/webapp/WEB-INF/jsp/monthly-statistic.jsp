@@ -17,8 +17,8 @@
 <script type="text/javascript">
 	$(function() {
 		$("#inputDateTime").keydown(false);
-		/* $("#content").hide();
-		$("#loading").show(); */
+		$("#content").hide();
+		$("#loading").show();
 		$('#datetimepicker10').datetimepicker({
 			viewMode : 'months',
 			format : 'MM/YYYY',
@@ -78,52 +78,109 @@ caption {
 	background: url('<c:url value='/ resources/ logo/ loading.gif '/>')
 		no-repeat center center;
 	background-size: 200px 100px;
-
 }
 </style>
 <div class="chartWrapper" ng-controller="MonthlyStatisticController"
 	ng-init="initChart()">
 
 	<div class="row">
-		<div class="col-md-6" style="height: 130px;">
-			<div class="form-group">
-				<div class='input-group date' id='datetimepicker10'>
-					<input id="inputDateTime" type='text' class="form-control"
-						ng-model="timeInput" value="" ng-change="drawChart()" /> <span
-						class="input-group-addon"> <span
-						class="glyphicon glyphicon-calendar"> </span>
-					</span>
+		<div class=" col-md-12">
+			<div class="panel panel-green">
+				<div class="panel-heading">Green Panel</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<label for="inputTime" class="col-sm-2 control-label">Month/Year</label>
+						<div class="col-sm-10 input-group date" id='datetimepicker10'>
+							<input id="inputDateTime" type='text' class="form-control"
+								ng-model="timeInput" value="" ng-change="drawChart()" /> <span
+								class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"> </span>
+							</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class='input-group date' id='datetimepicker10'>
+							<label></label> </span>
+						</div>
+						<div class="form-group">
+							<a ng-click="drawChart()" class="btn btn-success">Update</a>
+						</div>
+					</div>
 				</div>
 
 			</div>
 		</div>
-		<div class="col-md-6">
-			<div class="form-group">
 
-				<a ng-click="drawChart()" class="btn btn-success">Update</a>
-			</div>
-		</div>
 	</div>
 	<div class="col-md-12" id="loading"></div>
+	
 	<div class="col-md-12 row" id="content">
 		<div class="col-md-5">
-			<table class="table table-striped">
-				<caption>Total: {{Total | currency}}</caption>
-				<tr>
-					<th>Category</th>
-					<th>Amount</th>
-				</tr>
-				<tr ng-repeat="a in chart.data" ng-if="$index > 0">
-					<td>{{a[0]}}</td>
-					<td>{{a[1] | currency}}</td>
-				</tr>
-			</table>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						Total: {{Total | currency}}
+						<ul class="rad-panel-action">
+							<li><i class="fa fa-chevron-down"></i></li>
+							<li><i class="fa fa-rotate-right"></i></li>
+							<!-- <li><i class="fa fa-cog"></i> -->
+							<li><i class="fa fa-close"></i></li>
+						</ul>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table table-striped">
+						<caption>Total: {{Total | currency}}</caption>
+						<tr>
+							<th>Category</th>
+							<th>Amount</th>
+						</tr>
+						<tr ng-repeat="a in chart.data" ng-if="$index > 0">
+							<td>{{a[0]}}</td>
+							<td>{{a[1] | currency}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
 		</div>
-		<div google-chart chart="chart" class="drawChartDiv col-md-7"></div>
 
-		<div class="col-md-12">
-			<div ng-init="drawDialyChart()" id="dialyChartDiv"
-				class="drawChartDiv"></div>
+		<div class="col-md-7">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						Pie Chart
+						<ul class="rad-panel-action">
+							<li><i class="fa fa-chevron-down"></i></li>
+							<li><i class="fa fa-rotate-right"></i></li>
+							<!-- <li><i class="fa fa-cog"></i> -->
+							<li><i class="fa fa-close"></i></li>
+						</ul>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div google-chart chart="chart" class="drawChartDiv"></div>
+				</div>
+			</div>
 		</div>
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						Daily
+						<ul class="rad-panel-action">
+							<li><i class="fa fa-chevron-down"></i></li>
+							<li><i class="fa fa-rotate-right"></i></li>
+							<!-- <li><i class="fa fa-cog"></i> -->
+							<li><i class="fa fa-close"></i></li>
+						</ul>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div ng-init="drawDialyChart()" id="dialyChartDiv"
+						class="drawChartDiv"></div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 </div>

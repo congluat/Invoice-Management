@@ -7,7 +7,8 @@
 	href='<c:url value="/resources/libs/bootstrap-dialog/css/bootstrap-dialog.min.css"/>'>
 <link rel="stylesheet" type="text/css"
 	href='<c:url value="/resources/css/style.css"/>'>
-
+<script type="text/javascript"
+	src="<c:url value='/resources/nicEditor/nicEdit.js'/>"></script>
 <style>
 .has-error {
 	color: red;
@@ -36,6 +37,13 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+	bkLib.onDomLoaded(function() {
+		new nicEditor({
+			iconsPath : '<c:url value='/resources/nicEditor/nicEditorIcons.gif'/>',
+			uploadURI: 'nic-editor/upload'
+		}).panelInstance('comment');
+	});
+	
 	$(".file-dropzone").on('dragover', handleDragEnter);
 	$(".file-dropzone").on('dragleave', handleDragLeave);
 	$(".file-dropzone").on('drop', handleDragLeave);
@@ -128,7 +136,7 @@ $(document).ready(function() {
 		var divid = $(this).parents("div").attr("id");
 		$("#confirm button").attr('id',divid);
 	});
-</script> 
+</script>
 
 <script type="text/javascript">
 $(document).on("click","#delete",function() {
@@ -260,17 +268,17 @@ $(document).on("click","#delete",function() {
 							<label path="comment" class="col-md-2 control-label">Comment</label>
 
 							<div class="col-md-10">
-								<form:textarea path="comment" class="form-control" rows="3"
-									maxlength="200" />
+								<form:textarea name="comment" path="comment"
+									class="form-control" rows="3" maxlength="200" />
 								<span class="help-block">comment</span>
 								<div class="has-error">
 									<form:errors path="comment" class="help-inline" />
 								</div>
 							</div>
 						</div>
-						<div class="abc" id ="${invoice.id}">	
-							<c:if test="${edit}">					
-							<script type="text/javascript">
+						<div class="abc" id="${invoice.id}">
+							<c:if test="${edit}">
+								<script type="text/javascript">
 							$(document).ready(function() {							
 									var invoiceid = $(".abc").attr("id");
 									var show ='';
@@ -283,21 +291,26 @@ $(document).on("click","#delete",function() {
 										dataType : 'json',
 										success : function(data) {
 											 $.each(data,function (index) {																													         	
-											 	show+='<div class="col-md-2"> <div class="col-md-12"> <img alt="not found" height="80px" width="80px" src="<%= request.getContextPath()%>/resources/images/'+data[index].photo+'" /></div> <div style="text-align: center;" class="col-md-12" id ='+data[index].id+'> <a class="onclickdelete" data-toggle="modal" data-target="#confirm-delete">Delete</a></div></div> ';						 	
-											 }); 
-											 $('#showimages').html(show);
-										},
-										error: function(XMLHttpRequest, textStatus, errorThrown) {
-									        alert("some error");
-									    }
-									}); 								
-							});
-							</script>
+											 	show+='<div class="col-md-2"> <div class="col-md-12"> <img alt="not found" height="80px" width="80px" src="<%= request.getContextPath()%>/resources/images/'+ data[index].photo	+ '" /></div> <div style="text-align: center;" class="col-md-12" id ='+data[index].id+'> <a class="onclickdelete" data-toggle="modal" data-target="#confirm-delete">Delete</a></div></div> ';
+																						});
+																		$(
+																				'#showimages')
+																				.html(
+																						show);
+																	},
+																	error : function(
+																			XMLHttpRequest,
+																			textStatus,
+																			errorThrown) {
+																		alert("some error");
+																	}
+																});
+													});
+								</script>
 							</c:if>
 						</div>
 
-						<div class="form-group" id="showimages">																													
-						</div>								
+						<div class="form-group" id="showimages"></div>
 						<div>
 							<c:if test="${edit}">
 								<a data-toggle="modal" data-target="#myModalEditPhoto"
@@ -335,8 +348,9 @@ $(document).on("click","#delete",function() {
 				<div class="panel-heading text-center"></div>
 				<div class="panel-body">
 					<div>
-						<form:form modelAttribute="invoice" id="dropzone-form" action="Upload/upload/${invoice.id}"
-							class="dropzone" enctype="multipart/form-data">
+						<form:form modelAttribute="invoice" id="dropzone-form"
+							action="Upload/upload/${invoice.id}" class="dropzone"
+							enctype="multipart/form-data">
 							<div class="dz-default dz-message file-dropzone text-center ">
 
 								<span class="glyphicon glyphicon-paperclip"></span> <span>
@@ -349,7 +363,7 @@ $(document).on("click","#delete",function() {
 						<button id="upload-button" class="btn btn-primary">
 							<span class="glyphicon glyphicon-upload"></span> Upload
 						</button>
-					</div>				
+					</div>
 				</div>
 			</div>
 		</div>
@@ -357,25 +371,26 @@ $(document).on("click","#delete",function() {
 </div>
 
 <div class="col-md-12">
-			<div class="modal fade" id="confirm-delete" tabindex="-1"
-				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="vertical-alignment-helper">
-					<div class="modal-dialog vertical-align-center">
-						<div class="modal-content"
-							style="width: 400px; border-radius: 10px;">
-							<div class="modal-header">Confirm</div>
-							<div class="modal-body">Do you want to delete</div>
-							
-							<div class="modal-footer" id ="confirm">
-								<button id="" type="button" class="btn btn-default"
-									data-dismiss="modal">Cancel</button>
-								<a id="delete" class="btn btn-danger btn-ok" style="margin-top: 0px">Delete</a>
-							</div>
-							
-						</div>
+	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="vertical-alignment-helper">
+			<div class="modal-dialog vertical-align-center">
+				<div class="modal-content"
+					style="width: 400px; border-radius: 10px;">
+					<div class="modal-header">Confirm</div>
+					<div class="modal-body">Do you want to delete</div>
+
+					<div class="modal-footer" id="confirm">
+						<button id="" type="button" class="btn btn-default"
+							data-dismiss="modal">Cancel</button>
+						<a id="delete" class="btn btn-danger btn-ok"
+							style="margin-top: 0px">Delete</a>
 					</div>
+
 				</div>
 			</div>
+		</div>
+	</div>
 </div>
 <script type="text/javascript"
 	src='<c:url value="/resources/libs/bootstrap-dialog/js/bootstrap-dialog.min.js"/>'></script>

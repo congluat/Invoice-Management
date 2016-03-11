@@ -34,20 +34,6 @@
 <link rel="stylesheet" type="text/css"
 	href="//fonts.googleapis.com/icon?family=Material+Icons">
 
-<%-- 
-<link href="<c:url value='/resources/css/simple-sidebar.css' />"
-	rel="stylesheet"></link>
-	 --%>
-
-<link href="<c:url value='/resources/css/sb-admin-2.css' />"
-	rel="stylesheet"></link>
-<link href="<c:url value='/resources/css/metisMenu.css' />"
-	rel="stylesheet"></link>
-<link href="<c:url value='/resources/css/timeline.css' />"
-	rel="stylesheet"></link>
-<link
-	href="<c:url value='/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet'/>"
-	type="text/css">
 
 <!-- Bootstrap -->
 
@@ -81,6 +67,16 @@
 
 
 <!-- ---------------------------My CSS----------- -->
+
+<link href="<c:url value='/resources/css/sb-admin-2.css' />"
+	rel="stylesheet"></link>
+<link href="<c:url value='/resources/css/metisMenu.css' />"
+	rel="stylesheet"></link>
+<link href="<c:url value='/resources/css/timeline.css' />"
+	rel="stylesheet"></link>
+<link
+	href="<c:url value='/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet'/>"
+	type="text/css">
 <link href="<c:url value='/resources/css/mycss.css' />" rel="stylesheet"></link>
 
 <!-- --------------------AngularJS-------------------- -->
@@ -140,11 +136,12 @@
 
 
 
-	<div id="page-wrapper" style="padding-left: 0px;overflow-x:hidden;">
+	<div id="page-wrapper" style="padding-left: 0px; overflow-x: hidden;">
 
 		<tiles:insertAttribute name="body">
 
 		</tiles:insertAttribute>
+		
 		<script type="text/javascript">
 			$(function() {
 				$('[data-toggle="tooltip"]').tooltip()

@@ -1,0 +1,200 @@
+.rad-info-box {
+	
+}
+
+.panel-body {
+	background: #FFF;
+}
+
+.add-button-area {
+	position: fixed;
+	bottom: 5px;
+	right: 5px;
+	height: 100px;
+	width: 100px;
+}
+
+.add-button-area a i {
+	color: white;
+	vertical-align: middle;
+}
+
+#add-button {
+	background: #337ab7;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	z-index: 0;
+}
+
+.addCate {
+	position: absolute;
+	background-color: #009688;
+	right: 20px;
+	bottom: 70px;
+	display: none;
+	right: 20px;
+	z-index: 2;
+}
+
+.addCate:hover {
+	opacity: 0.8 !important;
+	z-index: 2;
+}
+
+.addInvoice {
+	position: absolute;
+	background-color: #3f51b5;
+	right: 70px;
+	bottom: 20px;
+	display: none;
+	z-index: 2;
+}
+
+.addInvoice:hover {
+	opacity: 0.8 !important;
+	z-index: 2;
+}
+
+.add-button i {
+	color: #FFF;
+}
+
+#add-button:hover {
+	background: red !important;
+	z-index: 0;
+}
+
+.well {
+	-moz-box-shadow: 10px 10px 5px #888;
+	-webkit-box-shadow: 10px 10px 5px #888;
+	box-shadow: 10px 3px 20px #888;
+	border-radius: 15px;
+	border: none;
+	height: 100% !important;
+	-moz-box-shadow: 10px 10px 5px #888;
+	padding: 7px;
+	min-height: 70px;
+}
+
+.more-info {
+	display: none;
+}
+
+.category-panel {
+	/* border: 2px solid; */
+	/* border-color: aqua; */
+	border-radius: 10px;
+	color: white;
+	margin: 1.5em 1.5em;
+	padding: 0px 0px;
+	position: relative;
+	display: inline-block;
+	overflow: hidden;
+}
+
+.category-panel .panel-body {
+	padding: 0px 0px;
+	margin: 0px 0px;
+	height: 100%;
+	margin: 0px 0px;
+}
+
+.category-panel .panel-body .image {
+	padding: 3px 3px;
+}
+
+.category-panel .panel-body .content {
+	padding: 3px 3px;
+	font-size: 1.6em;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.description {
+	background-color: #FFF;
+	opacity: 0.9;
+	color: black;
+	border-radius: 10px;
+	width: 60%;
+	float: right;
+	height: 104%;
+	overflow: hidden;
+	position: absolute;
+	top: -2px;
+	right: -5px;
+	display: none;
+}
+
+.list-invoices {
+	margin: auto 20px;
+	width: auto;
+	text-align: center;
+}
+
+.list-invoices a {
+	text-decoration: none;
+}
+
+.list-invoices ul li {
+	list-style: none;
+	list-style-type: none;
+}
+
+.warning {
+	background-color: #ff5722;
+	color: white;
+}
+
+.invoice-tab {
+	margin: 1em;
+	min-height: 70px;
+	padding: 0px;
+	z-index: 20px;
+}
+
+.vertical-alignment-helper {
+	display: table;
+	height: 100%;
+	width: 100%;
+	pointer-events: none;
+	/* This makes sure that we can still click outside of the modal to close it */
+}
+
+.vertical-align-center {
+	/* To center vertically */
+	display: table-cell;
+	vertical-align: middle;
+	pointer-events: none;
+}
+
+.modal-content {
+	/* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+	width: inherit;
+	height: inherit;
+	/* To center horizontally */
+	margin: 0 auto;
+	pointer-events: all;
+}
+
+.timeline-title {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	width: 70%;
+	border-radius: 20px;
+	background-color: #4caf50;
+	color: #FFF;
+	text-align: center;
+}
+
+li.timeline-inverted  .timeline-title {
+	
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.isWarning {
+	background-color: #f44336;
+}
