@@ -78,7 +78,12 @@ caption {
 	background: url('<c:url value='/ resources/ logo/ loading.gif '/>')
 		no-repeat center center;
 	background-size: 200px 100px;
-
+}
+.btn{
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+	vertical-align: middle;
 }
 </style>
 <div class="chartWrapper" ng-controller="MonthlyStatisticController"

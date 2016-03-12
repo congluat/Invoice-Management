@@ -26,7 +26,12 @@
 </script>
 
 <style>
-
+.btn{
+	text-align: left;
+	vertical-align: middle;
+	font-weight: bold;
+	font-size: 14px;
+}
 .alertForm {
 	background: inherit;
 	font-size: 15px;
