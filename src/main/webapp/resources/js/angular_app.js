@@ -202,7 +202,9 @@
 		var year = parseInt(now.getYear()) + 1900;
 		console.log("month " + month);
 		console.log("year " + year);
-
+		
+		$scope.invoicesTmp = [];
+		$scope.currentIndex = 0;
 		$scope.invoices = [];
 		$scope.listByMonth = false;
 		$scope.month = month + "/" + year;
@@ -211,11 +213,24 @@
 				function(response) {
 					$scope.listByMonth = true;
 					// $scope.invoices.push(response);
-					$scope.invoices = response;
+					$scope.invoicesTmp = response;
+					for(var i = 0; i < 3; i++){
+						$scope.invoices.push($scope.invoicesTmp[i]);
+						$scope.currentIndex = i;
+					}
 					console.log("invoice ");
 					console.log($scope.invoices[0]);
 
 				});
+		
+		 $scope.loadMore = function() {			  
+			  for(var i = $scope.currentIndex+1; i < $scope.currentIndex+3; i++){
+				  	if(i == $scope.invoicesTmp.length)
+				  		break;
+					$scope.invoices.push($scope.invoicesTmp[i]);
+					$scope.currentIndex = i;
+				}
+		 }
 
 		$scope.onSearchChange = function(searchString) {
 			console.log("search: " + searchString);
@@ -402,12 +417,14 @@
 	});
 	
 	app.controller('reportCtrl', function($scope, $http) {
+
 		$scope.showtableCM = false;
 		$scope.showtableM2M = false;
 		$scope.showtableReport = false;
 		$scope.showtableReportbyYear = false;
 		$scope.getInvoice = function() {
-			if ($scope.categoryCM == null || $scope.month == null) {
+			if ($scope.categoryCM == null || $scope.month == null
+					|| $scope.categoryCM == '' || $scope.month == '') {
 				alert("Please select Category and month");
 			}
 			else if ($scope.month < 1) {
@@ -437,7 +454,8 @@
 
 		$scope.getInvoiced2d = function() {
 			if ($scope.categoryM2M == null || $scope.startdate == null 
-					|| $scope.endate == null) {
+					|| $scope.endate == null || $scope.categoryM2M == '' 
+					|| $scope.startdate == '' || $scope.endate == '') {
 				alert ("Please select Category and startdate and endate!");
 			}
 			else {
@@ -461,35 +479,62 @@
 				}
 			});
 		}};
-
-		$scope.getReportByMonth = function() {
-			if ($scope.selectdate == null){
+		
+		
+		$scope.getReportByDate = function() {
+			if ($scope.selectdate == null || $scope.selectdate == ''){
 				alert("Please select date!");
 			}
 			else {
 			$http.get(
-					"Report/getReportByMonth?selectdate=" + $scope.selectdate).
+					"Report/getReportByDate?selectdate=" + $scope.selectdate).
+					then(function(response) {
+						$scope.sumRpByDate = 0;
+						var data = response.data;
+						if (data.length > 0) {
+							$scope.showtableReportByDate = true;
+							$scope.dataReportByDate = data;
+							$scope.countRpByDate = data.length;
+							$(data).each(function(i, item) {
+								$scope.sumRpByDate += item[2];
+							})
+						}
+					else {
+						$scope.showtableReportByDate = false;
+						$scope.countRpByDate = 0;
+						$scope.sumRpByDate = 0;
+					}
+					});
+		}};
+
+		$scope.getReportByMonth = function() {
+			if ($scope.selectmonth == null || $scope.selectmonth == ''){
+				alert("Please select month!");
+			}
+			else {
+			$http.get(
+					"Report/getReportByMonth?selectmonth=" + $scope.selectmonth).
 					then(function(response) {
 						$scope.sumRp = 0;
 						var data = response.data;
 						if (data.length > 0) {
-							$scope.showtableReport = true;
-							$scope.dataReport = data;
-							$scope.countRp = data.length;
+							$scope.showtableReportByMonth = true;
+							$scope.dataReportByMonth = data;
+							$scope.countRpByMonth = data.length;
 							$(data).each(function(i, item) {
-								$scope.sumRp += item[2];
+								$scope.sumRpByMonth += item[2];
 							})
 						}
 					else {
-						$scope.showtableReport = false;
-						$scope.countRp = 0;
-						$scope.sumRp = 0;
+						$scope.showtableReportByMonth = false;
+						$scope.countRpByMonth = 0;
+						$scope.sumRpByMonth = 0;
 					}
 					});
 		}};
 		
 		$scope.getReportByYear = function() {
-			if ($scope.selectyear == null){
+			if ($scope.selectyear == null || $scope.selectyear == ''){
 				alert("Please select year!");
 			}
 			else {
@@ -512,12 +557,36 @@
 						}
 					});
 		}};
-		
-		$scope.detail = function(cateName) {
+		$scope.getReportd2d = function() {
+			if ($scope.fromdate == null || $scope.fromdate == ''
+				 || $scope.todate == null || $scope.todate == ''){
+				alert("Please select date!");
+			}
+			else {
+			$http.get(
+					"Report/getReportd2d?fromdate=" + $scope.fromdate +"&todate=" + $scope.todate).
+					then(function(response) {
+						$scope.sumRpd2d = 0;
+						var data = response.data;
+						if (data.length > 0) {
+							$scope.showtableReportd2d = true;
+							$scope.dataReportd2d = data;
+							$scope.countRpd2d = data.length;
+							$(data).each(function(i, item) {
+								$scope.sumRpd2d += item[2];
+							})
+						} else {
+							$scope.showtableReportd2d = false;
+							$scope.countRpd2d = 0;
+							$scope.sumRpd2d = 0;
+						}
+					});
+		}};
+		$scope.detailByDate = function(cateName) {
 			$scope.cateName = cateName;
 			$scope.month = $scope.selectdate;
 			$scope.countDetail = 0;
-			$http.get("Report/getInvoiceDetail?cateName=" + cateName +"&time=" + $scope.selectdate)
+			$http.get("Report/getInvoiceDetailByDate?cateName=" + cateName +"&selectdate=" + $scope.selectdate)
 				.then(function(response) {
 					$scope.sumDetail = 0;
 					var data = response.data;
@@ -531,6 +600,42 @@
 			
 		};
 		
+		$scope.detail = function(cateName) {
+			$scope.cateName = cateName;
+			$scope.month = $scope.selectmonth;
+			$scope.countDetail = 0;
+			$http.get("Report/getInvoiceDetail?cateName=" + cateName +"&time=" + $scope.selectmonth)
+				.then(function(response) {
+					$scope.sumDetail = 0;
+					var data = response.data;
+					$scope.countDetail = data.length;
+					$scope.invoicedetails = data;
+					$(data).each(function(i, item) {
+						$scope.sumDetail += item.amount;
+					})
+					$('#tallModal').modal('show');
+				});
+			
+		};
+		$scope.detaild2d = function(cateName) {
+			$scope.cateName = cateName;
+			$scope.month = $scope.fromdate + ' - ' + $scope.todate;
+			$scope.countDetail = 0;
+			$http.get("Report/getInvoiceDetaild2d?cateName=" 
+						+ cateName +"&fromdate=" + $scope.fromdate
+						+ "&todate=" + $scope.todate)
+				.then(function(response) {
+					$scope.sumDetail = 0;
+					var data = response.data;
+					$scope.countDetail = data.length;
+					$scope.invoicedetails = data;
+					$(data).each(function(i, item) {
+						$scope.sumDetail += item.amount;
+					})
+					$('#tallModal').modal('show');
+				});
+			
+		};
 		$scope.info = function(cateName, month) {
 			$scope.cateName = cateName;
 			$scope.month = month;

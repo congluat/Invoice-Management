@@ -20,9 +20,12 @@ public interface ReportDAO {
 
 	// get list invoice by category and d2d
 	public List<Invoice> getInvoiceD2D(Integer cateId, String startdate, String endate);
-	
+		
 	//get data report every Month group by category
 	public List<Object[]> getReportDataEveryMonth();
+	
+	//get data report follow date
+	public List<Object[]> getReportDataByDate(String selectdate);
 	
 	//get data report by month and year
 	public List<Object[]> getReportDataByMonth(int month, int year);
@@ -30,9 +33,17 @@ public interface ReportDAO {
 	//get data report by year
 	public List<Object[]> getReportDataByYear(int year);
 	
+	//get data report by date to date
+	public List<Object[]> getReportDataByd2d(String fromdate, String todate);
+	
 	//get list invoice detail by category and month-year
 	public List<Invoice> getReportDetail(String cateName, int month, int year);
 	
+	//get list invoice detail by category and date
+	public List<Invoice> getReportDetailByDate(String cateName, int day ,int month, int year);
+	
+	//get list invoice detail by category and date to date
+	public List<Invoice> getReportDetaild2d(String cateName, String fromdate ,String todate);
 
 	/**
 	 * @param month

@@ -33,105 +33,100 @@
 
 
 	<!--====================CONTENT=============== -->
-	<h1 style="margin-left: 10px">Dashboard</h1>
-	<div class="col-md-12">
-		<div class="col-lg-4 col-md-6">
-			<div class="panel panel-total" ng-init="getTotalAmount()">
-				<div class="panel-heading">
-					<div class="row">
-						<div class="col-xs-3">
-							<span style="font-size: 70px" class="glyphicon glyphicon-usd"></span>
-						</div>
-						<div class="col-xs-9 text-right">
-							<div style="font-size: 20px">{{amount}}</div>
-							<div style="position: absolute; bottom: -50px; right: 6px">Money</div>
-						</div>
-					</div>
+	<header class="rad-page-title">
+		<span>Dashboard</span>
+
+	</header>
+	<div class="row">
+
+		<div class="col-lg-4  col-md-4 col-xs-12">
+			<a href="Revenue/monthly-statistic">
+				<div class="rad-info-box rad-txt-success" ng-init="getTotalAmount()">
+					<i class="fa fa-usd"></i> <span class="heading">Money</span> <span
+						class="value"><span>{{amount}}</span></span>
 				</div>
-				<a href="Revenue/monthly-statistic">
-					<div class="panel-footer">
-						<span class="pull-left">View Details</span> <span
-							class="pull-right"><i
-							class="glyphicon glyphicon-triangle-right"></i></span>
-						<div class="clearfix"></div>
-					</div>
-				</a>
-			</div>
+			</a>
 		</div>
 
 
-		<div class="col-lg-4 col-md-6">
-			<div class="panel panel-invoice" ng-init="getToltalInvoiceThisMonth()">
-				<div class="panel-heading">
-					<div class="row">
-						<div class="col-xs-3">
-							<span style="font-size: 70px"
-								class="glyphicon glyphicon-list-alt"></span>
-						</div>
-						<div class="col-xs-9 text-right">
-							<div class="huge">{{month}}</div>
-							<div>Invoices</div>
-						</div>
-					</div>
+		<div class="col-lg-4 col-md-4 col-xs-12">
+			<a href="Invoice/">
+				<div class="rad-info-box rad-txt-primary"
+					ng-init="getToltalInvoiceThisMonth()">
+					<i class="fa fa-italic"></i> <span class="heading">Invoices</span>
+					<span class="value"><span>{{month}}</span></span>
 				</div>
-				<a href="Invoice/">
-					<div class="panel-footer">
-						<span class="pull-left">View Details</span> <span
-							class="pull-right"><i
-							class="glyphicon glyphicon-triangle-right"></i></span>
-						<div class="clearfix"></div>
-					</div>
-				</a>
-			</div>
+			</a>
 		</div>
 
-		<div class="col-lg-4 col-md-6">
-			<div class="panel panel-red" ng-init="getToltalDangerInvoiceThisMonth()">
-				<div class="panel-heading">
-					<div class="row">
-						<div class="col-xs-3">
-							<span style="font-size: 70px"
-								class="glyphicon glyphicon-list-alt"></span>
-						</div>
-						<div class="col-xs-9 text-right">
-							<div class="huge">{{danger}}</div>
-							<div>Danger Invoices</div>
-						</div>
-					</div>
+		<div class="col-lg-4 col-md-4 col-xs-12">
+			<a href="Invoice/warning">
+				<div class="rad-info-box rad-txt-danger"
+					ng-init="getToltalDangerInvoiceThisMonth()">
+					<i class="fa fa-bell"></i> <span class="heading">Danger
+						Invoices</span> <span class="value"><span>{{danger}}</span></span>
 				</div>
-				<a href="Invoice/warning">
-					<div class="panel-footer">
-						<span class="pull-left">View Details</span> <span
-							class="pull-right"><i
-							class="glyphicon glyphicon-triangle-right"></i></span>
-						<div class="clearfix"></div>
-					</div>
-				</a>
-			</div>
+			</a>
+
 		</div>
 	</div>
-	<div class="col-md-12" style="margin-top: 50px; background-color: #FFF"
-		ng-init="drawChart()">
+	<div class="row" style="margin-top: 50px" ng-init="drawChart()">
 
 		<!-- <div class="col-md-7" google-chart chart="chart" style="min-width: 300px"></div> -->
-		<div class="col-md-5">
-			<table class="table table-striped">
-				<caption>Total: {{Total | currency}}</caption>
 
-				<tr>
-					<th>Category</th>
-					<th>Amount</th>
-				</tr>
-				<tr ng-repeat="a in chart.data" ng-if="$index > 0">
-					<td>{{a[0]}}</td>
-					<td>{{a[1] | currency}}</td>
-				</tr>
+		<div class="col-md-5 col-xs-12">
 
-			</table>
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					Total: {{Total | currency}}
+					<ul class="rad-panel-action">
+						<li><i class="fa fa-chevron-down"></i></li>
+						<li><i class="fa fa-rotate-right"></i></li>
+						<!-- <li><i class="fa fa-cog"></i> -->
+						<li><i class="fa fa-close"></i></li>
+					</ul>
+				</h3>
+			</div>
+
+			<div class="panel-body">
+				<div>
+					<table class="table table-striped">
+						<caption>Total: {{Total | currency}}</caption>
+
+						<tr>
+							<th>Category</th>
+							<th>Amount</th>
+						</tr>
+						<tr ng-repeat="a in chart.data" ng-if="$index > 0">
+							<td>{{a[0]}}</td>
+							<td>{{a[1] | currency}}</td>
+						</tr>
+
+					</table>
+				</div>
+			</div>
 		</div>
-		<div class="col-md-7">
-			<div ng-init="drawDialyChart()" id="dialyChartDiv"
-				class="drawChartDiv"></div>
+
+		<div class="col-md-7 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						Bar Chart
+						<ul class="rad-panel-action">
+							<li><i class="fa fa-chevron-down"></i></li>
+							<li><i class="fa fa-rotate-right"></i></li>
+							<!-- <li><i class="fa fa-cog"></i> -->
+							<li><i class="fa fa-close"></i></li>
+						</ul>
+					</h3>
+				</div>
+				<div class="panel-body chartWrapper" ng-init="drawDialyChart()"
+					id="dialyChartDiv">
+					<div id="barChart3" class="rad-chart drawChartDiv"></div>
+				</div>
+			</div>
+
 		</div>
 	</div>
+</div>
 </div>

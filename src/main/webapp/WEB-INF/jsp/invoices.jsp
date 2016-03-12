@@ -6,13 +6,12 @@
 .timeline>li>.timeline-panel {
 	padding: 5px 5px;
 }
-
 </style>
 
 
 <div class="row"
 	style="margin-top: 10px; margin-left: 5px; margin-right: 5px">
-	<div ng-controller="InvoiceController" ng-app="app">
+	<div ng-controller="InvoiceController" ng-app="app" ng-init="init()">
 		<div class="col-md-6 col-md-offset-6">
 			<div class="input-group input-group-lg">
 
@@ -25,22 +24,7 @@
 					ng-model-options="{debounce: 500}">
 
 			</div>
-		</div>
-		<!-- /.col-lg-6 -->
-		<!-- 
-		<script type="text/javascript">
-			var app = angular.module('app', invoices);
-			app.controller('InvoiceController', function($scope) {
-
-				$scope.totalDisplayed = 2;
-
-				$scope.loadMore = function() {
-					$scope.totalDisplayed += 2;
-				};
-
-				$scope.invoices = invoices;
-			});
-		</script> -->
+		</div>		
 
 		<div class="col-md-12">
 			<div class="modal fade" id="confirm-delete" tabindex="-1"
@@ -63,11 +47,8 @@
 
 			<h1>{{month}}</h1>
 
-
+		<div infinite-scroll='loadMore()' infinite-scroll-distance='0'>
 			<ul class="timeline">
-
-				<!-- <li ng-repeat="i in invoices | limitTo:totalDisplayed"> -->
-
 				<li ng-repeat="i in invoices" ng-class-odd="'timeline-inverted'"><img
 					class="timeline-badge" height="50px" width="50px" alt="not found"
 					ng-src="<c:url value='/resources/logo/'/>{{i.category.logo}}"
@@ -77,7 +58,7 @@
 						ng-mouseleave="hover(i)">
 						<div class="col-md-10 col-xs-12">
 							<div class="timeline-heading">
-								<h4 class="timeline-title" ng-class="{'isWarning': i.isWarning}" >{{i.name}}</h4>
+								<h4 class="timeline-title" ng-class="{'isWarning': i.isWarning}">{{i.name}}</h4>
 								<p>
 									<small class="text-muted"><i class="fa fa-clock-o"></i>
 										{{i.time | date:"dd/MM/yyyy 'at' h:mma"}} at {{i.place}}</small>
@@ -88,7 +69,7 @@
 								<p>{{i.amount|currency}}</p>
 							</div>
 						</div>
-						<div class="col-md-2 col-xs-12">
+						<div class="col-md-2">
 							<a href="Invoice/edit/{{i.id}}" class="btn btn-success btn-lg">
 								<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 							</a> <a class="btn btn-danger deleteButton btn-lg"
@@ -98,7 +79,8 @@
 						</div>
 
 						<div class="col-md-12 more-info" showonhoverparent>
-							{{i.comment}}
+
+							<p ng-bind-html="i.comment | unsafe"></p>
 							<div ng-repeat="img in i.photos">
 								<img class="col-md-4 col-xs-4" alt="not found"
 									ng-src="<c:url value='/resources/images/'/>{{img.photo}}">
@@ -107,7 +89,7 @@
 					</div></li>
 
 			</ul>
-
+		</div>
 
 		</div>
 	</div>

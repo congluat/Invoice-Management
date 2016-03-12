@@ -5,7 +5,7 @@
 
 <tiles-definitions>
 
-	<definition name="*" template="/WEB-INF/jsp/template.jsp">
+	<definition name="*" template="/WEB-INF/jsp/template2.jsp">
 		<put-attribute name="body" value="/WEB-INF/jsp/{1}.jsp" />
 	</definition>
 	<definition name="error/*" template="/WEB-INF/jsp/error/template.jsp">

@@ -3,20 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <style>
-.description {
-	background-color: #FFF;
-	opacity: 0.7;
-	color: black;
-	border-radius: 10px;
-	width: 60%;
-	float: right;
-	height: 104%;
-	overflow: hidden;
-	position: absolute;
-	top: -2px;
-	right: -5px;
-	display: none;
-}
 </style>
 
 <script type="text/javascript">
@@ -62,7 +48,7 @@
 			// this callback function will be called once for each matching element
 			return this.id;
 		}); */
-		$(".category-panel").each(function(i, e) {
+		$(".panel-body").each(function(i, e) {
 			/* you can use e.id instead of $(e).attr('id') */
 			cateIds.push($(e).attr('id'));
 		});
@@ -100,11 +86,13 @@
 	});
 </script>
 
-<div class="col-md-12 col-xs-12 container" style="text-align: center;" ng-controller="CategoryController as cateCtrl">
+<div class="col-md-12 col-xs-12 container"
+	style="text-align: center; margin-top: 2em;"
+	ng-controller="CategoryController as cateCtrl">
 
 	<a href="Category/save">
 		<div class="panel panel-default col-md-3 col-xs-10 category-panel"
-			style="background: white; border: 1px solid #009688; height: 94px; line-height: 90px">
+			style="background: white;">
 			<div class="panel-body row">
 				<div class="col-md-12 col-xs-12 content">
 					<span class="glyphicon glyphicon-plus"
@@ -118,9 +106,8 @@
 	<c:forEach items="${categories}" var="category">
 
 		<a href="Category/edit/${category.id}">
-			<div class="panel panel-default col-md-3 col-xs-10 category-panel"
-				id="${category.id}">
-				<div class="panel-body row"; position:relative;">
+			<div class="panel panel-default col-md-3 col-xs-10 category-panel">
+				<div id="${category.id}" class="panel-body row"; position:relative;">
 					<div class="col-md-6 col-xs-6 image">
 						<img height="80px" width="80px" alt="not found"
 							src="<c:url value='/resources/logo/'/>${category.logo}"
@@ -134,47 +121,6 @@
 		</a>
 	</c:forEach>
 </div>
-<%-- 
-<div class="col-md-6">
-<form:form class="form-horizontal" modelAttribute="category" method="POST"
-					enctype="multipart/form-data">
-  <fieldset>
-    <legend>CATEGORY FORM</legend>
-    ${message}
-    <form:input type="hidden" path="id"/>
-    <div class="form-group">
-      <form:label path="name" class="col-md-2 control-label">Name</label>
-      <div class="col-md-10">
-        <form:input class="form-control" path="name"  placeholder="name" type="text"/>
-      </div>
-    </div>
 
-    <div class="form-group">
-      <label for="inputFile" class="col-md-2 control-label">Logo</form:label>
-
-      <div class="col-md-10">
-        <input readonly="readonly" class="form-control" placeholder="Browse..." type="text">
-        <input id="inputFile" multiple="" name ="file" type="file">
-        <form:hidden path="logo"/>
-      </div>
-    </div>
-    <div class="form-group">
-      <form:label path="description" class="col-md-2 control-label">Description</form:label>
-
-      <div class="col-md-10">
-        <form:textarea path="description" class="form-control" rows="3"/>
-        <span class="help-block">description</span>
-      </div>
-    </div>
-  
-   
-    <div class="form-group">
-      <div class="col-md-10 col-md-offset-2">
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </div>
-    </div>
-  </fieldset>
-</form:form>
-</div> --%>
 
 <%-- http://spring.io/blog/2010/01/25/ajax-simplifications-in-spring-3-0/--%>

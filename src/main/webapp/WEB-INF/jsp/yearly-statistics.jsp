@@ -17,8 +17,8 @@
 <script type="text/javascript">
 	$(function() {
 		$("#inputDateTime").keydown(false);
-		/* $("#content").hide();
-		$("#loading").show(); */
+		$("#content").hide();
+		$("#loading").show();
 
 	});
 </script>
@@ -28,7 +28,6 @@
 	height: 100%;
 	/* width: 100%; */
 	margin: 0px 0px;
-	background: #fff;
 	text-align: center;
 }
 
@@ -39,10 +38,8 @@
 	margin: 0px 0px;
 	padding-top: 10px;
 	padding-left: 10px;
-	background: #fff;
 	text-align: center;
 	vertical-align: middle;
-	background: #fff;
 }
 
 th {
@@ -87,25 +84,76 @@ caption {
 		</div>
 	</div>
 	<div class="col-md-12" id="loading"></div>
-	<div class="col-md-12 row" id="content">
+	<div class="col-md-12 row panel-body" id="content">
+
 		<div class="col-md-5">
-			<table class="table table-striped">
-				<caption>Total: {{Total | currency}}</caption>
-				<tr>
-					<th>Category</th>
-					<th>Amount</th>
-				</tr>
-				<tr ng-repeat="a in chart.data" ng-if="$index > 0">
-					<td>{{a[0]}}</td>
-					<td>{{a[1] | currency}}</td>
-				</tr>
-			</table>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						Total: {{Total | currency}}
+						<ul class="rad-panel-action">
+							<li><i class="fa fa-chevron-down"></i></li>
+							<li><i class="fa fa-rotate-right"></i></li>
+							<!-- <li><i class="fa fa-cog"></i> -->
+							<li><i class="fa fa-close"></i></li>
+						</ul>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table table-striped">
+
+						<tr>
+							<th>Category</th>
+							<th>Amount</th>
+						</tr>
+						<tr ng-repeat="a in chart.data" ng-if="$index > 0">
+							<td>{{a[0]}}</td>
+							<td>{{a[1] | currency}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
 		</div>
-		<div google-chart chart="chart" class="drawChartDiv col-md-7"></div>
+		<div class="col-md-7">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						Pie Chart
+						<ul class="rad-panel-action">
+							<li><i class="fa fa-chevron-down"></i></li>
+							<li><i class="fa fa-rotate-right"></i></li>
+							<!-- <li><i class="fa fa-cog"></i> -->
+							<li><i class="fa fa-close"></i></li>
+						</ul>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div google-chart chart="chart" class="drawChartDiv "></div>
+				</div>
+			</div>
+		</div>
+
 
 		<div class="col-md-12">
-			<div ng-init="drawDialyChart()" id="monthlyChartDiv"
-				class="drawChartDiv"></div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						Monthly
+						<ul class="rad-panel-action">
+							<li><i class="fa fa-chevron-down"></i></li>
+							<li><i class="fa fa-rotate-right"></i></li>
+							<!-- <li><i class="fa fa-cog"></i> -->
+							<li><i class="fa fa-close"></i></li>
+						</ul>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div ng-init="drawDialyChart()" id="monthlyChartDiv"
+						class="drawChartDiv"></div>
+				</div>
+			</div>
 		</div>
+
 	</div>
 </div>
