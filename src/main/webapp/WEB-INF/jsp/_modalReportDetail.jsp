@@ -69,7 +69,7 @@ body p {
 									<td>{{invoice.name}}</td>
 									<td>{{invoice.time | date:"dd/MM/yyyy | h:mma"}}</td>
 									<td>{{invoice.place}}</td>
-									<td>{{invoice.comment}}</td>
+									<td ng-bind-html="invoice.comment | unsafe"></td>
 									<td>{{invoice.amount | currency}}</td>
 
 

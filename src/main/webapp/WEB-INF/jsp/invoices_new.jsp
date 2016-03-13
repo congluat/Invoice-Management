@@ -134,10 +134,6 @@
 .timeline>li>.timeline-panel {
 	padding: 5px 5px;
 }
-
-.btn {
-	padding: 2px;
-}
 </style>
 
 <div style="margin-top: 10px; margin-left: 5px; margin-right: 5px">

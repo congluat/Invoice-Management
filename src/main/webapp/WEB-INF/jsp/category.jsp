@@ -86,8 +86,8 @@
 	});
 </script>
 
-<div class="col-md-12 col-xs-12 container"
-	style="text-align: center; margin-top: 2em;"
+<div class="row"
+	style="text-align: center; margin-top: 2em; margin-left: 10%"
 	ng-controller="CategoryController as cateCtrl">
 
 	<a href="Category/save">

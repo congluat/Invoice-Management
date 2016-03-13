@@ -24,7 +24,7 @@
 					ng-model-options="{debounce: 500}">
 
 			</div>
-		</div>		
+		</div>
 
 		<div class="col-md-12">
 			<div class="modal fade" id="confirm-delete" tabindex="-1"
@@ -47,49 +47,50 @@
 
 			<h1>{{month}}</h1>
 
-		<div infinite-scroll='loadMore()' infinite-scroll-distance='0'>
-			<ul class="timeline">
-				<li ng-repeat="i in invoices" ng-class-odd="'timeline-inverted'"><img
-					class="timeline-badge" height="50px" width="50px" alt="not found"
-					ng-src="<c:url value='/resources/logo/'/>{{i.category.logo}}"
-					onError="this.onerror=null;this.src='<c:url value='/resources/logo/abc.png'/>';">
+			<div infinite-scroll='loadMore()' infinite-scroll-distance='0'>
+				<ul class="timeline">
+					<li ng-repeat="i in invoices" ng-class-odd="'timeline-inverted'"><img
+						class="timeline-badge" height="50px" width="50px" alt="not found"
+						ng-src="<c:url value='/resources/logo/'/>{{i.category.logo}}"
+						onError="this.onerror=null;this.src='<c:url value='/resources/logo/abc.png'/>';">
 
-					<div class="timeline-panel" ng-mouseenter="hover(i)"
-						ng-mouseleave="hover(i)">
-						<div class="col-md-10 col-xs-12">
-							<div class="timeline-heading">
-								<h4 class="timeline-title" ng-class="{'isWarning': i.isWarning}">{{i.name}}</h4>
-								<p>
-									<small class="text-muted"><i class="fa fa-clock-o"></i>
-										{{i.time | date:"dd/MM/yyyy 'at' h:mma"}} at {{i.place}}</small>
-								</p>
+						<div class="timeline-panel" ng-mouseenter="hover(i)"
+							ng-mouseleave="hover(i)">
+							<div class="col-md-10 col-xs-12">
+								<div class="timeline-heading">
+									<h4 class="timeline-title"
+										ng-class="{'isWarning': i.isWarning}">{{i.name}}</h4>
+									<p>
+										<small class="text-muted"><i class="fa fa-clock-o"></i>
+											{{i.time | date:"dd/MM/yyyy 'at' h:mma"}} at {{i.place}}</small>
+									</p>
+								</div>
+
+								<div class="timeline-body ">
+									<p>{{i.amount|currency}}</p>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<a href="Invoice/edit/{{i.id}}" class="btn btn-success btn-lg">
+									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+								</a> <a class="btn btn-danger deleteButton btn-lg"
+									data-toggle="modal" data-target="#confirm-delete"
+									ng-click="deleteFunc(i.id)"> <span
+									class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
 							</div>
 
-							<div class="timeline-body ">
-								<p>{{i.amount|currency}}</p>
+							<div class="col-md-12 more-info" showonhoverparent>
+
+								<p ng-bind-html="i.comment | unsafe"></p>
+								<div ng-repeat="img in i.photos">
+									<img class="col-md-4 col-xs-4" alt="not found"
+										ng-src="<c:url value='/resources/images/'/>{{img.photo}}">
+								</div>
 							</div>
-						</div>
-						<div class="col-md-2">
-							<a href="Invoice/edit/{{i.id}}" class="btn btn-success btn-lg">
-								<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-							</a> <a class="btn btn-danger deleteButton btn-lg"
-								data-toggle="modal" data-target="#confirm-delete"
-								ng-click="deleteFunc(i.id)"> <span
-								class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-						</div>
+						</div></li>
 
-						<div class="col-md-12 more-info" showonhoverparent>
-
-							<p ng-bind-html="i.comment | unsafe"></p>
-							<div ng-repeat="img in i.photos">
-								<img class="col-md-4 col-xs-4" alt="not found"
-									ng-src="<c:url value='/resources/images/'/>{{img.photo}}">
-							</div>
-						</div>
-					</div></li>
-
-			</ul>
-		</div>
+				</ul>
+			</div>
 
 		</div>
 	</div>

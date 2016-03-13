@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
 
+
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation"
 	style="margin-bottom: 0; z-index: 100">
@@ -20,7 +21,7 @@
   $(document).ready(function () {
     $('.selectpicker').selectpicker({   	
         size : false,
-        mobile : true
+        mobile : true,
     });
   });
 </script>
@@ -66,14 +67,14 @@
 		<div class="sidebar-nav navbar-collapse" style="overflow-x:hidden;">
 			<ul class="nav" id="side-menu">			
 				<li><select id="select" style="color: black"
-					class="selectpicker form-control" data-style="btn-primary">
+					class="selectpicker form-control">
 						<option data-icon="glyphicon glyphicon-search">Name</option>
 						<option data-icon="glyphicon glyphicon-search">Place</option>
 						<option data-icon="glyphicon glyphicon-search">Amount</option>
 						<option data-icon="glyphicon glyphicon-search">Time</option>
 				</select></li>
-				<li id="form"><input
-					class="form-control ng-pristine ng-untouched ng-valid ng-empty"
+				<li id="aaa"><input
+					class="form-control"
 					id="invoice" placeholder="Search Invoice(s) ..." /></li>
 				<li id="MyEdit"></li>
 			

@@ -66,6 +66,7 @@ public class CategoryController {
 		Category cate = cateService.getById(id);
 		model.addAttribute("category", cate);
 		model.addAttribute("title", cate.getName());
+		model.addAttribute("edit",true);
 
 		return "save-cate";
 	}
@@ -73,22 +74,22 @@ public class CategoryController {
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
 	public String UpdateCategoryById(@ModelAttribute Category category, @RequestParam("file") MultipartFile file,
 			ModelMap model) {
+		model.addAttribute("edit",true);
 		return cateService.update(category, file, model);
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.GET)
 	public String InsertCate(ModelMap model) {
 		Category category = new Category();
-
 		model.addAttribute("category", category);
 		model.addAttribute("title", "Add category");
+		model.addAttribute("edit",false);
 		return "save-cate";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String Save(@ModelAttribute Category category, @RequestParam("file") MultipartFile file, ModelMap model) {
-		cateService.create(category, file, model);
-		return "redirect:/Category/";	
+		return cateService.create(category, file, model);
 	}
 
 	@RequestMapping(value = "/checkCate/{name}")

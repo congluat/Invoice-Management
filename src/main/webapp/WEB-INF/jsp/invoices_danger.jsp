@@ -7,9 +7,6 @@
 	padding: 5px 5px;
 }
 
-.btn {
-	padding: 2px;
-}
 </style>
 
 
