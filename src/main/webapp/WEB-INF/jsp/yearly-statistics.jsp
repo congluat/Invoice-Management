@@ -82,7 +82,7 @@ caption {
 					<div class="form-group">
 
 						<div class="input-group col-md-2">
-							<a href="Revenue/yearly-statistics" class="btn btn-success">View
+							<a href="Revenue/monthly-statistic" class="btn btn-success">View
 								Chart by Month</a>
 						</div>
 					</div>
