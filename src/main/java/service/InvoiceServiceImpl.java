@@ -1,6 +1,7 @@
 package service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -85,18 +86,19 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public double calAverage(Category category) {
 		List<Invoice> list = getTop10IsNotWarning(category);
 		int listSize = list.size();
-		if (listSize == 0) {
-			listSize = 1;
-		}
+
 		BigDecimal avg = BigDecimal.valueOf(0.0d);
 		Iterator it = list.iterator();
 		while (it.hasNext()) {
 			Invoice invoice = (Invoice) it.next();
 			avg = avg.add(invoice.getAmount());
 		}
-		//chua co invoice nao` trong category nay
-		
-		return Double.parseDouble(avg.divide(BigDecimal.valueOf(listSize)).toString());
+		// chua co invoice nao` trong category nay
+		if (listSize == 0) {
+			listSize = 1;
+		}
+		// avg =0 chia cho 1 cũng bang 0
+		return Double.parseDouble(avg.divide(BigDecimal.valueOf(listSize), RoundingMode.HALF_UP).toString());
 	}
 
 	@Override
@@ -113,10 +115,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public boolean checkIsWarning(BigDecimal amount, Category category) {
 		double amountDouble = Double.parseDouble(amount.toString());
 		double avg = calAverage(category) * 1.7;
-		//la invoice dau` tien trong category
+		// la invoice dau` tien trong category
 		if (avg == 0) {
 			return false;
-		} else
+		}
 		// kiem tra invoice
 		if (amountDouble > (avg)) { // invoice co the bi canh bao
 			List<Invoice> list = invoiceDao.getTop10(category);
@@ -153,7 +155,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	public List<Invoice> searchAnyString(String keyword) {
-		
+
 		return invoiceDao.searchAnyString(keyword);
 	}
 }
