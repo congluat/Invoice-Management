@@ -78,12 +78,12 @@ public class CategoryServiceImpl implements CategoryService {
 					InputStream input = file.getInputStream();
 					if (ImageIO.read(input) == null) {
 						model.addAttribute("error_image", "File is not image");
-						model.addAttribute("edit",false);
+						model.addAttribute("edit", false);
 						return "save-cate";
 					}
 				} catch (Exception e) {
 					model.addAttribute("error_image", "Not load file");
-					model.addAttribute("edit",false);
+					model.addAttribute("edit", false);
 					return "save-cate";
 				}
 
@@ -104,14 +104,15 @@ public class CategoryServiceImpl implements CategoryService {
 
 			dao.create(category);
 
-			//model.addAttribute("category", new Category());
-			//model.addAttribute("message", category.getName().toUpperCase() + " category save " + " success!");
+			// model.addAttribute("category", new Category());
+			// model.addAttribute("message", category.getName().toUpperCase() +
+			// " category save " + " success!");
 
 			return "redirect:/Category/";
 
 		} else {
 			model.addAttribute("error", "Name existed!");
-			model.addAttribute("edit",false);
+			model.addAttribute("edit", false);
 			return "save-cate";
 		}
 	}
@@ -119,19 +120,18 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public String update(Category category, MultipartFile file, ModelMap model) {
 		Category cateFindByName = getByName(category.getName());
-		if ((category.getId() == cateFindByName.getId())) {
-			
+		if (cateFindByName == null || category.getId() == cateFindByName.getId()) {
 			try {
 				if (!file.isEmpty()) {
 					try (InputStream input = file.getInputStream()) {
 						if (ImageIO.read(input) == null) {
 							model.addAttribute("error_image", "File is not image");
-							model.addAttribute("edit",true);
+							model.addAttribute("edit", true);
 							return "save-cate";
 						}
 					} catch (Exception e) {
 						model.addAttribute("error_image", "Not load file");
-						model.addAttribute("edit",true);
+						model.addAttribute("edit", true);
 						return "save-cate";
 					}
 					String logo = file.getOriginalFilename();
@@ -145,12 +145,14 @@ public class CategoryServiceImpl implements CategoryService {
 					}
 				}
 			} catch (Exception e) {
+				model.addAttribute("edit", true);
+				return "save-cate";
 			}
 			dao.update(category);
-			return "redirect:/Category/listCategories";
+			return "redirect:/Category/";
 		} else {
 			model.addAttribute("error", "Name existed!");
-			model.addAttribute("edit",true);
+			model.addAttribute("edit", true);
 			return "save-cate";
 		}
 
@@ -168,4 +170,12 @@ public class CategoryServiceImpl implements CategoryService {
 		return result;
 	}
 
+	@Override
+	public boolean checkCateAndIdAvailable(String name, Integer id) {
+		Category cate  = getByName(name);
+		if (cate.getId() == id) {
+			return true;
+		} else
+			return false;
+	}
 }

@@ -65,7 +65,29 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#buttonclick").on("click", function() {			
-			$("#NewCategoryForm").submit();													
+			var catename = $.trim($("#cateName").val());
+			var cateid = $.trim($("#cateId").val());
+			var show='';
+			$.ajax({
+				url : "Category/checkCateAndId/" + catename+"/"+cateid,
+				type : 'get',
+				success : function(data) {
+					if (data == false) {
+						show+='<label style="color: red">Name existed!</label>';
+						$("#errorname").html(show);
+						setTimeout(function() {
+							$("#errorname").html('');
+						}, 3000);
+					}
+					else{
+						$("#NewCategoryForm").submit();
+					}
+						
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					alert("some error");				
+				}
+			});													
 		});
 	});
 </script>
@@ -84,7 +106,7 @@
 						show+='<label style="color: red">Name existed!</label>';
 						$("#errorname").html(show);
 						setTimeout(function() {
-							$("#errorname").hide();
+							$("#errorname").html('');
 						}, 3000);
 					}
 					else{
@@ -113,7 +135,7 @@
 				method="POST" enctype="multipart/form-data" id="NewCategoryForm">
 				<fieldset>
 					<h4>${message}</h4>
-					<form:input type="hidden" path="id" />
+					<form:input type="hidden" path="id" id="cateId"/>
 					<div class="form-group">
 						<label path="name" class="col-md-2 control-label">Name</label>
 						<div class="col-md-10">

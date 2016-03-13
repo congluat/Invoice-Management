@@ -24,4 +24,6 @@ public interface CategoryService {
 	
 	public boolean checkCateAvailable(String name);
 	
+	public boolean checkCateAndIdAvailable(String name,Integer id);
+	
 }

@@ -97,5 +97,10 @@ public class CategoryController {
 	public boolean checkCateAvailable(@PathVariable String name, HttpServletRequest request) {
 		return cateService.checkCateAvailable(name);
 	}
+	@RequestMapping(value = "/checkCateAndId/{name}/{id}")
+	@ResponseBody
+	public boolean checkCateAndIdAvailable(@PathVariable("name") String name,@PathVariable("id") Integer id, HttpServletRequest request) {
+		return cateService.checkCateAndIdAvailable(name,id);
+	}
 
 }
