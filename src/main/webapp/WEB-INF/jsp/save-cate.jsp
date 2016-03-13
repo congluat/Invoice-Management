@@ -61,6 +61,16 @@
 
 					});
 </script>
+<c:if test="${edit}">
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#buttonclick").on("click", function() {			
+			$("#NewCategoryForm").submit();													
+		});
+	});
+</script>
+</c:if>
+<c:if test="${!edit}">
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#buttonclick").on("click", function() {
@@ -89,6 +99,8 @@
 		});
 	});
 </script>
+</c:if>
+
 <div class="panel panel-primary">
 	<div id="categoryFromResponse"></div>
 	<div class="panel-heading">
