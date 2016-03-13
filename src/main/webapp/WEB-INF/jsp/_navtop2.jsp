@@ -7,21 +7,17 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+
 <script>
 	$(document).ready(function() {
 		$('.selectpicker').selectpicker({
 			size : false,
 			mobile : true,
-			style:""
 		});
 	});
 </script>
 
 <style>
-.btn {
-	margin-top: 0px
-}
-
 .alertForm {
 	background: inherit;
 	font-size: 15px;
@@ -116,18 +112,18 @@
 				<ul class="pull-right links">
 					<li class="rad-dropdown"><a class="rad-menu-item" href="#"><i
 							class="fa fa-search "></i></a>
-						<ul class="rad-dropmenu-item" style="float: left; ">
+						<ul class="rad-dropmenu-item">
 							<li class="rad-notification-item text-left"><select
 								id="select" style="color: black"
 								class="selectpicker form-control" data-style="btn-primary">
-									<option data-icon="glyphicon glyphicon-search">Name</option>
-									<option data-icon="glyphicon glyphicon-search">Place</option>
-									<option data-icon="glyphicon glyphicon-search">Amount</option>
-									<option data-icon="glyphicon glyphicon-search">Time</option>
+									<option>Name</option>
+									<option>Place</option>
+									<option>Amount</option>
+									<option>Time</option>
 							</select></li>
 
 							<li class="rad-notification-item text-left"><input
-								class="form-control ng-pristine ng-untouched ng-valid ng-empty"
+								class="form-control"
 								id="invoice" placeholder="Search Invoice(s) ..." /></li>
 
 						</ul></li>

@@ -159,20 +159,10 @@
 
 		}
 		$(document).ready(function() {
-			$(function() {
-				$("#invoice")
-						.autocomplete(
-
-								{
-									source : function(request,
-											response) {
-										//alert($("#select").val());
-										$
-												.ajax({
-													url : "/InvoiceManagement/getSearchValue/"
-															+ $(
-																	"#select")
-																	.val(),
+			$(function(){$("#invoice").autocomplete({
+									source : function(request,response) {
+										$.ajax({
+													url : "/InvoiceManagement/getSearchValue/"+ $("#select").val(),
 													type : "POST",
 													data : {
 														term : request.term
@@ -180,21 +170,15 @@
 													dataType : "json",
 													success : function(data) {
 														response($.map(data,
-																		function(
-																				item,
-																				i) {
+																		function(item,i){
 																			if (i < 10) {
-																				if ($(
-																						"#select")
-																						.val() == "Name") {
+																				if ($("#select").val() == "Name") {
 																					return {
 																						value : item.name,
 																						desc : item.name
 																					}
 																				}
-																				if ($(
-																						"#select")
-																						.val() == "Place") {
+																				if ($("#select").val() == "Place") {
 																					return {
 																						value : item.place,
 																						desc : item.place

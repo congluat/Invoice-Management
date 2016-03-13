@@ -189,7 +189,7 @@ $(document).ready(function() {
 			}
 		});
 	});	
-	$("#amountId").focusout(function(){
+	$("#amountId").on("change",function(){
 		money = $.trim($("#amountId").val());	
 		var show='';
 		$.ajax({
