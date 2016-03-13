@@ -116,7 +116,8 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public String update(Category category, MultipartFile file, ModelMap model) {
 		Category cateFindByName = getByName(category.getName());
-		if (checkCateAvailable(category.getName()) && (category.getId() == cateFindByName.getId())) {
+		if ((category.getId() != cateFindByName.getId())) {
+			
 			try {
 				if (!file.isEmpty()) {
 					try (InputStream input = file.getInputStream()) {
