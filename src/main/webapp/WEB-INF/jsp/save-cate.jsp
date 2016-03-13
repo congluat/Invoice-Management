@@ -153,7 +153,7 @@
 						</div>
 
 						<div class="col-md-5">
-							<button id="buttonclick" class="btn btn-raised btn-success">Submit</button>
+							<button type="submit" id="buttonclick" class="btn btn-raised btn-success">Submit</button>
 						</div>
 			</div>
 		</div>

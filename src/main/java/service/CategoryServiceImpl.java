@@ -70,6 +70,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public String create(Category category, MultipartFile file, ModelMap model) {
+		System.out.println("create run");
 		if (!checkCateAvailable(category.getName())) {
 			String logo = file.getOriginalFilename();
 			category.setLogo("abc.png");
@@ -115,38 +116,39 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public String update(Category category, MultipartFile file, ModelMap model) {
+		System.out.println("update run");
 		Category cateFindByName = getByName(category.getName());
-		if ((category.getId() != cateFindByName.getId())) {
-			
-			try {
-				if (!file.isEmpty()) {
-					try (InputStream input = file.getInputStream()) {
-						if (ImageIO.read(input) == null) {
-							model.addAttribute("error_image", "File is not image");
-							return "save-cate";
-						}
-					} catch (Exception e) {
-						model.addAttribute("error_image", "Not load file");
+		// if ((category.getId() != cateFindByName.getId())) {
+
+		try {
+			if (!file.isEmpty()) {
+				try (InputStream input = file.getInputStream()) {
+					if (ImageIO.read(input) == null) {
+						model.addAttribute("error_image", "File is not image");
 						return "save-cate";
 					}
-					String logo = file.getOriginalFilename();
-					Date now = new Date();
-					String name = now.toString().replaceAll(" ", "").replaceAll(":", "");
-					logo = name + logo;
-					String path = application.getRealPath("/resources/logo/") + logo;
-					if (!logo.equals("")) {
-						file.transferTo(new File(path));
-						category.setLogo(logo);
-					}
+				} catch (Exception e) {
+					model.addAttribute("error_image", "Not load file");
+					return "save-cate";
 				}
-			} catch (Exception e) {
+				String logo = file.getOriginalFilename();
+				Date now = new Date();
+				String name = now.toString().replaceAll(" ", "").replaceAll(":", "");
+				logo = name + logo;
+				String path = application.getRealPath("/resources/logo/") + logo;
+				if (!logo.equals("")) {
+					file.transferTo(new File(path));
+					category.setLogo(logo);
+				}
 			}
-			dao.update(category);
-			return "redirect:/Category/listCategories";
-		} else {
-			model.addAttribute("error", "Name existed!");
-			return "save-cate";
+		} catch (Exception e) {
 		}
+		dao.update(category);
+		return "redirect:/Category/listCategories";
+		// } else {
+		// model.addAttribute("error", "Name existed!");
+		// return "save-cate";
+		// }
 
 	}
 
