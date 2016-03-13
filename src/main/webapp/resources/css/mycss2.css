@@ -202,3 +202,7 @@ a:hover {
 .isWarning {
 	background-color: #f44336;
 }
+
+.rad-navigation {
+	z-index: 1000;
+}

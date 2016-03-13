@@ -6,11 +6,12 @@
 <style>
 .modal.modal-wide .modal-dialog {
 	width: 90%;
+	z-index: 12000;
 }
 
 .modal-wide .modal-body {
 	max-height: calc(100vh - 210px);
-    overflow-y: auto;
+	overflow-y: auto;
 }
 
 /* irrelevant styling */
@@ -25,10 +26,10 @@ body p {
 </style>
 
 <script type="text/javascript">
-$(".modal-wide").on("show.bs.modal", function() {
-	  var height = $(window).height() - 200;
-	  $(this).find(".modal-body").css("max-height", height);
-});
+	$(".modal-wide").on("show.bs.modal", function() {
+		var height = $(window).height() - 200;
+		$(this).find(".modal-body").css("max-height", height);
+	});
 </script>
 
 <div ng-controller="reportCtrl">
@@ -41,7 +42,8 @@ $(".modal-wide").on("show.bs.modal", function() {
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
 					<h3 class="modal-title">Invoice List</h3>
-					<ul style="list-style-type:none;"><h4>Selecting: </h4>
+					<ul style="list-style-type: none;">
+						<h4>Selecting:</h4>
 						<li><h4>Category Name: {{cateName}}</h4></li>
 						<li><h4>Time: {{month}}</h4></li>
 					</ul>
