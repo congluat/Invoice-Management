@@ -17,6 +17,9 @@
 <script type="text/javascript"
 	src="<c:url value='/resources/nicEditor/nicEdit.js'/>"></script>
 <script type="text/javascript">
+$(document).ready(function() {
+	$("#errorname").hide();
+});
 	$(document).ready(function() {
 		bkLib.onDomLoaded(function() {
 			new nicEditor({
@@ -67,16 +70,15 @@
 		$("#buttonclick").on("click", function() {			
 			var catename = $.trim($("#cateName").val());
 			var cateid = $.trim($("#cateId").val());
-			var show='';
 			$.ajax({
 				url : "Category/checkCateAndId/" + catename+"/"+cateid,
 				type : 'get',
 				success : function(data) {
 					if (data == false) {
 						show+='<label style="color: red">Name existed!</label>';
-						$("#errorname").html(show);
+						$("#errorname").show();
 						setTimeout(function() {
-							$("#errorname").html('');
+							$("#errorname").hide();
 						}, 3000);
 					}
 					else{
@@ -97,16 +99,14 @@
 	$(document).ready(function() {
 		$("#buttonclick").on("click", function() {
 			var catename = $.trim($("#cateName").val());
-			var show='';
 			$.ajax({
 				url : "Category/checkCate/" + catename,
 				type : 'get',
 				success : function(data) {
 					if (data == true) {
-						show+='<label style="color: red">Name existed!</label>';
-						$("#errorname").html(show);
+						$("#errorname").show();
 						setTimeout(function() {
-							$("#errorname").html('');
+							$("#errorname").hide();
 						}, 3000);
 					}
 					else{
@@ -142,6 +142,7 @@
 							<form:input class="form-control" path="name" required="required"
 								maxlength="100" placeholder="name" type="text" id="cateName" />
 								<div id="errorname">
+									<label style="color: red">Name existed!</label>
 								</div>
 							<c:if test='${not empty "${error}"}'>
 								<label style="color: red">${error}</label>
@@ -185,7 +186,6 @@
 							<a href="Category/listCategories"
 								class="btn  btn-raised btn-warning"">Cancel</a>
 						</div>
-
 						<div class="col-md-5">
 							<button id="buttonclick" class="btn btn-raised btn-success">Submit</button>
 						</div>

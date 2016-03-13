@@ -173,7 +173,7 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public boolean checkCateAndIdAvailable(String name, Integer id) {
 		Category cate  = getByName(name);
-		if (cate.getId() == id) {
+		if (cate == null || cate.getId() == id) {
 			return true;
 		} else
 			return false;
