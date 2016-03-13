@@ -24,9 +24,8 @@
 				uploadURI: 'nic-editor/upload'
 			}).panelInstance('description');
 		});
-		var link = '<%=request.getContextPath()%>
-	'
-								+ "/resources/logo/${category.logo}";
+		var link = '<%=request.getContextPath()%>'						
+			+ "/resources/logo/${category.logo}";
 						$("#imagePreview").css("background-image",
 								"url(" + link + ")");
 
