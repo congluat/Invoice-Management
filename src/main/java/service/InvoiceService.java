@@ -40,5 +40,9 @@ public interface InvoiceService {
 	public List<Invoice> getInvoiceAttribute(String attribute, String empname, int page);
 	
 	public List<Invoice> searchAnyString(String keyword);
+	
+	public List<Invoice> sortList(List<Invoice> tmp, String empname, String attribute);
+	
+	public void getDataInvoiceAndTemp(List<Invoice> invoices , List<Invoice> invoiceTmp , String attribute ,String empname ,String page);
 
 }

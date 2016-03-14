@@ -2,6 +2,9 @@ package service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -103,12 +106,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public List<Invoice> getTop10(Category category) {
 		return invoiceDao.getTop10(category);
 	}
-
-	// @Override
-	// public List<Invoice> getInvoiceAttribute(String attribute) {
-	// return invoiceDao.getInvoiceAttribute(attribute);
-	// }
-
+	
 	@Override
 	public boolean checkIsWarning(BigDecimal amount, Category category) {
 		double amountDouble = Double.parseDouble(amount.toString());
@@ -155,5 +153,86 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public List<Invoice> searchAnyString(String keyword) {
 
 		return invoiceDao.searchAnyString(keyword);
+	}
+	
+	@Override
+	public List<Invoice> sortList(List<Invoice> tmp, String empname, String attribute) {
+		List<Invoice> invoices = new ArrayList<Invoice>();
+		String[] str = new String[tmp.size()];
+		int i = 0;
+		for (Invoice t : tmp) {
+			if (attribute.equals("Name"))
+				str[i] = t.getName();
+			if (attribute.equals("Place"))
+				str[i] = t.getPlace();
+			i++;
+		}
+
+		Arrays.sort(str, new Comparator<String>() {
+
+			@Override
+			public int compare(String o1, String o2) {
+
+				boolean o1_has_keyWord = o1.indexOf(empname.charAt(0)) == 0 && o1.contains(empname);
+				boolean o2_has_keyWord = o2.indexOf(empname.charAt(0)) == 0 && o2.contains(empname);
+
+				if (o1_has_keyWord && o2_has_keyWord) {
+					if (o1.length() == o2.length()) {
+						if (o1.indexOf(empname.charAt(0)) > o2.indexOf(empname.charAt(0))) {
+							return -1;
+						} else if (o1.indexOf(empname.charAt(0)) == o2.indexOf(empname.charAt(0))) {
+							return 0;
+						} else {
+							return 1;
+						}
+					} else if (o1.length() > o2.length()) {
+						return 1;
+					} else {
+						return -1;
+					}
+				} else if (o1_has_keyWord && !o2_has_keyWord) {
+					return -1;
+				} else if (!o1_has_keyWord && o2_has_keyWord) {
+					return 1;
+				}
+				return 0;
+			}
+		});
+		for (int j = 0; j < str.length; j++) {
+			for (Invoice t : tmp) {
+				if (attribute.equals("Name")) {
+					if (t.getName().equals(str[j])) {
+						invoices.add(t);
+						tmp.remove(t);
+						break;
+					}
+				}
+				if (attribute.equals("Place")) {
+					if (t.getPlace().equals(str[j])) {
+						invoices.add(t);
+						tmp.remove(t);
+						break;
+					}
+				}
+			}
+		}
+		return invoices;
+	}
+
+	@Override
+	public void getDataInvoiceAndTemp(List<Invoice> invoices, List<Invoice> invoiceTmp , String attribute ,String empname ,String page) {
+		List<Invoice> temp ;
+		if (attribute.equals("Name") || attribute.equals("Place")) {
+			temp = sortList(getInvoiceAttribute(attribute, empname, Integer.parseInt(page)), empname, attribute);
+			invoices.addAll(temp);
+			temp = getInvoiceAttribute(attribute, empname, 0);
+			invoiceTmp.addAll(temp);
+		}
+		if (attribute.equals("Amount") || attribute.equals("IsWarning") || attribute.equals("Time")){
+			temp = getInvoiceAttribute(attribute, empname, Integer.parseInt(page));
+			invoices.addAll(temp);
+			temp = getInvoiceAttribute(attribute, empname, 0);
+			invoiceTmp.addAll(temp);
+		}
 	}
 }
