@@ -3,8 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
-
-<script src="<c:url value='/resources/js/rCate-Months-ng.js'/>"></script>
+<script src="<c:url value='/resources/js/validate_date.js'/>"></script>
 
 <style type="text/css">
 .red {
@@ -37,8 +36,8 @@
 						<tr>
 							<th>CateName</th>
 							<th>Month</th>
-							<th>Count</th>
-							<th>SUM</th>
+							<th>Number of Invoices</th>
+							<th>SUMARY</th>
 							<th></th>
 						</tr>
 						<c:forEach var="array" items="${datalist}">
@@ -77,6 +76,7 @@
 						</div>
 						
 					</div>
+					<div id="empty-invoice-date"></div>
 					<div class="row" ng-show="showtableReportByDate">
 						<h2>TABLE REPORT</h2>
 						<div class="table-responsive" style="border-left: 1px solid #ddd">
@@ -138,6 +138,7 @@
 								class="btn btn-primary">SEARCH</button>
 						</div>
 					</div>
+					<div id="empty-invoice-month"></div>
 					<div class="row" ng-show="showtableReportByMonth">
 						<h2>TABLE REPORT</h2>
 						<div class="table-responsive" style="border-left: 1px solid #ddd">
@@ -195,10 +196,11 @@
 								<div id="error-selectYear"></div>
 						</div>
 						<div class="form-group">
-							<button type="button" ng-click="getReportByYear()"
+							<button type="button" ng-click="getReportByYear()"  disabled
 								id="selectYear" class="btn btn-primary">SEARCH</button>
 						</div>
 					</div>
+					<div id="empty-invoice-year"></div>
 					<div class="row" ng-show="showtableReportbyYear">
 						<h2>TABLE REPORT</h2>
 						<div class="table-responsive" style="border-left: 1px solid #ddd">
@@ -248,19 +250,22 @@
 				<div class="panel-body">
 					<div class="col-md-3">
 						<div class="form-group">
-							<label>From Date: </label> <input type="text"
-								class="form-control datepicker" ng-model="fromdate">
+							<label>Start Date: </label> <input type="text" id="startdate"
+								class="form-control datepicker" ng-model="startdate" onchange="ValidateDate(this.value,this.id)" required>
+							<div id="error-startdate"></div>
 						</div>
 
 						<div class="form-group">
-							<label>To Date: </label> <input type="text"
-								class="form-control datepicker" ng-model="todate">
+							<label>End Date: </label> <input type="text" id="enddate"
+								class="form-control datepicker" ng-model="enddate" onchange="ValidateDate(this.value,this.id)" required>
+						<div id="error-enddate"></div>
 						</div>
 						<div class="form-group">
-							<button type="button" ng-click="getReportd2d()"
+							<button type="button" ng-click="getReportd2d()" id="d2d"
 								class="btn btn-primary">SEARCH</button>
 						</div>
 					</div>
+					<div id="empty-invoice-d2d"></div>
 					<div class="row" ng-show="showtableReportd2d">
 						<h2>TABLE REPORT</h2>
 						<div class="table-responsive" style="border-left: 1px solid #ddd">
@@ -322,19 +327,22 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label>From Date: </label> <input type="text"
-								class="form-control datepicker" ng-model="startdate">
+							<label>Start Date: </label> <input type="text" id="fromdate"
+								class="form-control datepicker" ng-model="fromdate" onchange="ValidateDate(this.value, this.id)">
+							<div id="error-fromdate"></div>
 						</div>
 
 						<div class="form-group">
-							<label>To Date: </label> <input type="text"
-								class="form-control datepicker" ng-model="endate">
+							<label>End Date: </label> <input type="text" id ="endate"
+								class="form-control datepicker" ng-model="endate" onchange="ValidateDate(this.value,this.id)">
+							<div id="error-endate"></div>
 						</div>
 						<div class="form-group">
 							<button type="button" ng-click="getInvoiced2d()"
 								class="btn btn-primary">SEARCH</button>
 						</div>
 					</div>
+					<div id="empty-invoice-CatD2D"></div>
 					<div class="row" ng-show="showtableM2M">
 						<h2>Invoice Infomation</h2>
 						<div class="table-responsive" style="border-left: 1px solid #ddd">
@@ -408,6 +416,7 @@
 								class="btn btn-primary">SEARCH</button>
 						</div>
 					</div>
+					<div id="empty-invoice-CatM"></div>
 					<div class="row" ng-show="showtableCM">
 						<h2>Invoice Infomation</h2>
 						<div class="table-responsive" style="border-left: 1px solid #ddd">

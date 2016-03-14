@@ -457,6 +457,7 @@
 							$scope.sumCM = 0;
 							var data = response.data;
 							if (data.length > 0) {
+								$("#empty-invoice-CatM").html('');
 								$scope.showtableCM = true;
 								$scope.invoicesCM = data;
 								$scope.countCM = data.length;
@@ -464,6 +465,7 @@
 									$scope.sumCM += item.amount;
 								})
 							} else {
+								$("#empty-invoice-CatM").html('<b>Not Existing Invoice!</b>');
 								$scope.showtableCM = false;
 								$scope.countCM = 0;
 								$scope.sumCM = 0;
@@ -474,18 +476,28 @@
 		};
 
 		$scope.getInvoiced2d = function() {
-			if ($scope.categoryM2M == null || $scope.startdate == null
+			if ($scope.categoryM2M == null || $scope.fromdate == null
 					|| $scope.endate == null || $scope.categoryM2M == ''
-					|| $scope.startdate == '' || $scope.endate == '') {
-				alert("Please select Category and startdate and endate!");
+					|| $scope.fromdate == '' || $scope.endate == '') {
+				alert("Please select all filed!");
 			} else {
+				var startDate = new Date($scope.fromdate);
+				var endDate = new Date($scope.endate);
+				if (startDate > endDate) {
+					$("#error-endate").html(
+							'EndDate must be greater than Startdate!');
+					$('#error-endate').css("color", "red");
+					return false;
+				}
+				$("#error-endate").html('');
 				$http.get(
 						"Report/cateMd2d?cateId=" + $scope.categoryM2M
-								+ "&startdate=" + $scope.startdate + "&endate="
+								+ "&startdate=" + $scope.fromdate + "&endate="
 								+ $scope.endate).then(function(response) {
 					$scope.sumM2M = 0;
 					var data = response.data;
 					if (data.length > 0) {
+						$("#empty-invoice-CatD2D").html('');
 						$scope.showtableM2M = true;
 						$scope.invoicesM2M = data;
 						$scope.countM2M = data.length;
@@ -493,6 +505,7 @@
 							$scope.sumM2M += item.amount;
 						})
 					} else {
+						$("#empty-invoice-CatD2D").html('<b>Not Existing Invoice!</b>');
 						$scope.showtableM2M = false;
 						$scope.countM2M = 0;
 						$scope.sumM2M = 0;
@@ -511,6 +524,7 @@
 					$scope.sumRpByDate = 0;
 					var data = response.data;
 					if (data.length > 0) {
+						$("#empty-invoice-date").html('');
 						$scope.showtableReportByDate = true;
 						$scope.dataReportByDate = data;
 						$scope.countRpByDate = data.length;
@@ -518,6 +532,7 @@
 							$scope.sumRpByDate += item[2];
 						})
 					} else {
+						$("#empty-invoice-date").html('<b>Not Existing Invoice!</b>');
 						$scope.showtableReportByDate = false;
 						$scope.countRpByDate = 0;
 						$scope.sumRpByDate = 0;
@@ -536,6 +551,7 @@
 					$scope.sumRp = 0;
 					var data = response.data;
 					if (data.length > 0) {
+						$("#empty-invoice-month").html('');
 						$scope.showtableReportByMonth = true;
 						$scope.dataReportByMonth = data;
 						$scope.countRpByMonth = data.length;
@@ -543,6 +559,7 @@
 							$scope.sumRpByMonth += item[2];
 						})
 					} else {
+						$("#empty-invoice-month").html('<b>Not Existing Invoice!</b>');
 						$scope.showtableReportByMonth = false;
 						$scope.countRpByMonth = 0;
 						$scope.sumRpByMonth = 0;
@@ -561,6 +578,7 @@
 					$scope.sumRpbyYear = 0;
 					var data = response.data;
 					if (data.length > 0) {
+						$("#empty-invoice-year").html('');
 						$scope.showtableReportbyYear = true;
 						$scope.dataReportbyYear = data;
 						$scope.countRpbyYear = data.length;
@@ -568,6 +586,7 @@
 							$scope.sumRpbyYear += item[2];
 						})
 					} else {
+						$("#empty-invoice-year").html('<b>Not Existing Invoice!</b>');
 						$scope.showtableReportbyYear = false;
 						$scope.countRpbyYear = 0;
 						$scope.sumRpbyYear = 0;
@@ -576,30 +595,43 @@
 			}
 		};
 		$scope.getReportd2d = function() {
-			if ($scope.fromdate == null || $scope.fromdate == ''
-					|| $scope.todate == null || $scope.todate == '') {
+			if ($scope.startdate == null || $scope.startdate == ''
+					|| $scope.enddate == null || $scope.enddate == '') {
 				alert("Please select date!");
 			} else {
-				$http.get(
-						"Report/getReportd2d?fromdate=" + $scope.fromdate
-								+ "&todate=" + $scope.todate).then(
-						function(response) {
-							$scope.sumRpd2d = 0;
-							var data = response.data;
-							if (data.length > 0) {
-								$scope.showtableReportd2d = true;
-								$scope.dataReportd2d = data;
-								$scope.countRpd2d = data.length;
-								$(data).each(function(i, item) {
-									$scope.sumRpd2d += item[2];
-								})
-							} else {
-								$scope.showtableReportd2d = false;
-								$scope.countRpd2d = 0;
+				var startDate = new Date($scope.startdate);
+				var endDate = new Date($scope.enddate);
+				if (startDate > endDate) {
+					$("#error-enddate").html(
+							'EndDate must be greater than Startdate!');
+					$('#error-enddate').css("color", "red");
+					return false;
+				} else {
+					$("#error-enddate").html('');
+					$http.get(
+							"Report/getReportd2d?fromdate=" + $scope.startdate
+									+ "&todate=" + $scope.enddate).then(
+							function(response) {
 								$scope.sumRpd2d = 0;
-							}
-						});
+								var data = response.data;
+								if (data.length > 0) {
+									$("#empty-invoice-d2d").html('');
+									$scope.showtableReportd2d = true;
+									$scope.dataReportd2d = data;
+									$scope.countRpd2d = data.length;
+									$(data).each(function(i, item) {
+										$scope.sumRpd2d += item[2];
+									})
+								} else {
+									$("#empty-invoice-d2d").html('<b>Not Existing Invoice!</b>');
+									$scope.showtableReportd2d = false;
+									$scope.countRpd2d = 0;
+									$scope.sumRpd2d = 0;
+								}
+							});
+				}
 			}
+			;
 		};
 		$scope.detailByDate = function(cateName) {
 			$scope.cateName = cateName;
@@ -641,12 +673,12 @@
 		};
 		$scope.detaild2d = function(cateName) {
 			$scope.cateName = cateName;
-			$scope.month = $scope.fromdate + ' - ' + $scope.todate;
+			$scope.month = $scope.startdate + ' - ' + $scope.enddate;
 			$scope.countDetail = 0;
 			$http.get(
 					"Report/getInvoiceDetaild2d?cateName=" + cateName
-							+ "&fromdate=" + $scope.fromdate + "&todate="
-							+ $scope.todate).then(function(response) {
+							+ "&fromdate=" + $scope.startdate + "&todate="
+							+ $scope.enddate).then(function(response) {
 				$scope.sumDetail = 0;
 				var data = response.data;
 				$scope.countDetail = data.length;
@@ -660,7 +692,8 @@
 		};
 		$scope.info = function(cateName, month) {
 			$scope.cateName = cateName;
-			$scope.month = month;
+			$scope.month = (month<10)?'0'+month:month ;
+			$scope.month += "/" + new Date().getFullYear();
 			$scope.countDetail = 0;
 			$http
 					.get(
