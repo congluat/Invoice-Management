@@ -2,6 +2,7 @@ package dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -41,7 +42,7 @@ public class ReminderDAOImpl implements ReminderDAO {
 	}
 
 	@Override
-	public void udpate(Reminder reminder) {
+	public void update(Reminder reminder) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		try {
@@ -82,6 +83,17 @@ public class ReminderDAOImpl implements ReminderDAO {
 		List<Reminder> list = session.createQuery("FROM Reminder WHERE TIME =" + day).list();
 		session.close();
 		return list;
+	}
+
+	@Override
+	public Reminder getReminder(int id) {
+		Session session = sessionFactory.openSession();
+		String hql = "From Reminder where id =:id";
+		Query query = session.createQuery(hql);
+		query.setParameter("id", id);
+		Reminder reminder = (Reminder) query.uniqueResult();
+		session.close();
+		return reminder;
 	}
 
 }

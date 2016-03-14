@@ -13,7 +13,6 @@
 		<div class="col-md-8">
 			<form:form class="form-horizontal" modelAttribute="reminder"
 				method="POST">
-				<fieldset>
 					<h4>${message}</h4>
 					<form:input type="hidden" path="id" />
 					<div class="form-group">
@@ -54,9 +53,7 @@
 			</div>
 		</div>
 		<div class="col-md-2"></div>
-					
-				</fieldset>
-			</form:form>
+		</form:form>
 			
 			
 	</div>

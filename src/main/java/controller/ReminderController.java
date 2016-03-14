@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import model.Category;
 import model.Reminder;
@@ -43,8 +45,28 @@ public class ReminderController {
 		return "save-reminder";
 	}
 	
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public String EditReminderGet(ModelMap model, @PathVariable Integer id) {
+		Reminder reminder = reService.getReminder(id);
+		model.addAttribute("reminder", reminder);
+		return "save-reminder";
+	}
+	
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+	public String EditReminderPost(ModelMap model, @ModelAttribute Reminder reminder) {
+		reService.update(reminder, model);
+		return "save-reminder";
+	}
+	
+	@RequestMapping("/getReminder-byNow")
+	@ResponseBody
+	public List<Reminder> listReminder(){
+		return reService.getByDay();
+	}
 	@ModelAttribute("categories")
 	public List<Category> getAllCates() {
 		return cateService.getAllCategories();
 	}
+	
+	
 }
