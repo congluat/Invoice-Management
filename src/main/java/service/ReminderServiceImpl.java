@@ -27,13 +27,19 @@ public class ReminderServiceImpl implements ReminderService {
 	}
 
 	@Override
-	public void create(Reminder reminder) {
-		dao.create(reminder);
+	public String create(Reminder reminder, ModelMap model) {
+		Reminder remin = dao.getByCategory(reminder.getCategory().getId());
+		if (remin == null) {
+			dao.create(reminder);
+			model.addAttribute("message", "Insert Success!");
+			return "save-reminder";
+		}
+		model.addAttribute("message", "Reminder has Exist!");
+		return "save-reminder";
 	}
 
 	@Override
-	public void update(Reminder reminder, ModelMap model) {
-		
+	public void update(Reminder reminder) {
 		dao.update(reminder);
 	}
 
@@ -58,5 +64,7 @@ public class ReminderServiceImpl implements ReminderService {
 	public Reminder getById(int id) {
 		return dao.getById(id);
 	}
+
+	
 
 }

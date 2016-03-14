@@ -6,7 +6,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Repository;
 
 import model.Reminder;
@@ -89,6 +89,17 @@ public class ReminderDAOImpl implements ReminderDAO {
 	public Reminder getById(int id) {
 		Session session = sessionFactory.openSession();
 		Reminder reminder = (Reminder) session.get(Reminder.class, id);
+		session.close();
+		return reminder;
+	}
+
+	@Override
+	public Reminder getByCategory(int CatId) {
+		Session session = sessionFactory.openSession();
+		String hql = "From Reminder where category.id =:cateId";
+		Query query = session.createQuery(hql);
+		query.setParameter("cateId", CatId);
+		Reminder reminder = (Reminder) query.uniqueResult();
 		session.close();
 		return reminder;
 	}

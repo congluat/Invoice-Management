@@ -44,21 +44,22 @@ public class ReminderController {
 
 	@RequestMapping(value = "/save-reminder", method = RequestMethod.POST)
 	public String saveReminderS(ModelMap model, @ModelAttribute Reminder reminder) {
-		reService.create(reminder);
-		model.addAttribute("message", "Insert Successfully!");
-		return "save-reminder";
+		return reService.create(reminder, model);
 	}
 
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String EditReminderGet(ModelMap model, @PathVariable Integer id) {
 		Reminder reminder = reService.getById(id);
+		model.addAttribute("edit", true);
+		model.addAttribute("cateName", reminder.getCategory().getName());
 		model.addAttribute("reminder", reminder);
 		return "save-reminder";
 	}
 
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
 	public String EditReminderPost(ModelMap model, @ModelAttribute Reminder reminder) {
-		reService.update(reminder, model);
+		reService.update(reminder);
+		model.addAttribute("message", "Update Success!");
 		return "save-reminder";
 	}
 

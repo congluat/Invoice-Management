@@ -21,7 +21,7 @@
 </script>
 
 <div class="panel panel-green">
-	<div class="panel-heading">Ramainders</div>
+	<div class="panel-heading">Reminders</div>
 	<div class="panel-body">
 
 
@@ -41,7 +41,7 @@
 						<td>${reminder.category.name}</td>
 						<td>${reminder.time}</td>
 						<td>${reminder.comment}</td>
-						<td><a class="btn btn-info"><span
+						<td><a href="${pageContext.request.contextPath}/Reminder/edit/${reminder.id}"class="btn btn-info"><span
 								class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
 						<td id="${reminder.id}"><a
 							class="btn btn-danger deleteButton" data-toggle="modal"
