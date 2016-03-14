@@ -123,9 +123,9 @@
 							</select></li>
 
 							<li class="rad-notification-item text-left"><input
-								class="form-control"
+								class="form-control" style="margin-bottom: -15px"
 								id="invoice" placeholder="Search Invoice(s) ..." /></li>
-
+							<li id="MyEdit"></li>
 						</ul></li>
 				</ul>
 

@@ -37,7 +37,7 @@ public interface InvoiceService {
 
 	public boolean checkIsWarning(BigDecimal amount, Category category);
 
-	public List<Invoice> getInvoiceAttribute(String attribute, String empname);
+	public List<Invoice> getInvoiceAttribute(String attribute, String empname, int page);
 	
 	public List<Invoice> searchAnyString(String keyword);
 

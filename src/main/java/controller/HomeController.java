@@ -73,7 +73,7 @@ public class HomeController {
 
 	private List<Invoice> suggestSearchResult(String attribute, String empName) {
 		List<Invoice> result = new ArrayList<Invoice>();
-		result = invoiceService.getInvoiceAttribute(attribute, empName);
+		result = invoiceService.getInvoiceAttribute(attribute, empName, 0);
 		// System.out.println(attribute + empName);
 
 		int count = result.size();

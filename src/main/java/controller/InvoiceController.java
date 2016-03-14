@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import model.Category;
@@ -190,18 +191,29 @@ public class InvoiceController {
 		return categories;
 	}
 
-	@RequestMapping(value = "/search/{empname}/{attribute}", method = RequestMethod.GET)
-	public String Search(@PathVariable String empname, @PathVariable String attribute, ModelMap model) {
+	@RequestMapping(value = "/search/{attribute}", method = RequestMethod.GET)
+	public String Search(@RequestParam(value = "empname", required = false) String empname, @RequestParam(value = "page", required = false) String page, @PathVariable String attribute, ModelMap model) {		
 		List<Invoice> invoices = new ArrayList<Invoice>();
+		List<Invoice> invoiceTmp = new ArrayList<Invoice>();
 		if (attribute.equals("Name") || attribute.equals("Place")) {
-			invoices = sortList(invoiceService.getInvoiceAttribute(attribute, empname), empname, attribute);
+			invoices = sortList(invoiceService.getInvoiceAttribute(attribute, empname, Integer.parseInt(page)), empname, attribute);
+			invoiceTmp = invoiceService.getInvoiceAttribute(attribute, empname, 0);
 		}
-		if (attribute.equals("Amount") || attribute.equals("IsWarning") || attribute.equals("Time"))
-			invoices = invoiceService.getInvoiceAttribute(attribute, empname);
+		if (attribute.equals("Amount") || attribute.equals("IsWarning") || attribute.equals("Time")){
+			invoices = invoiceService.getInvoiceAttribute(attribute, empname, Integer.parseInt(page));
+			invoiceTmp = invoiceService.getInvoiceAttribute(attribute, empname, 0);
+		}
+		int startpage = (int) (Integer.parseInt(page) - 5 > 0?Integer.parseInt(page) - 5:1);
+	    double endpage = startpage + 10;
+	    if(endpage > (invoiceTmp.size()/3))
+	    	endpage = (int)(invoiceTmp.size()/3) + 1;
+	    model.addAttribute("startpage",startpage);
+	    model.addAttribute("endpage",endpage);
+	    model.addAttribute("empname",empname);
+	    model.addAttribute("attribute",attribute);
 		model.addAttribute("invoices", invoices);
 		model.addAttribute("title", "Invoices");
 		return "invoices_new";
-
 	}
 
 	private List<Invoice> sortList(List<Invoice> tmp, String empname, String attribute) {

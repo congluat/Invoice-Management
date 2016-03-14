@@ -197,7 +197,7 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 	}
 
 	@Override
-	public List<Invoice> getInvoiceAttribute(String attribute, String empname) {
+	public List<Invoice> getInvoiceAttribute(String attribute, String empname, int page) {
 		Session session = sessionFactory.openSession();
 		String hql = null;
 		if (attribute.equals("Name") || attribute.equals("Place"))
@@ -218,7 +218,14 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 			} else
 				return null;
 		}
-		List<Invoice> invoices = session.createQuery(hql).list();
+		int limitResultsPerPage = 3;
+		Query q = session.createQuery(hql);
+		if(page != 0){
+			q.setFirstResult((page - 1) * limitResultsPerPage);
+			q.setMaxResults(limitResultsPerPage);
+		}
+		List<Invoice> invoices = (List<Invoice>)q.list();
+		//List<Invoice> invoices = session.createQuery(hql).list();
 		session.close();
 		return invoices;
 	}

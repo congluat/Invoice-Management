@@ -213,8 +213,6 @@
 						console.log("month " + month);
 						console.log("year " + year);
 
-						$scope.invoicesTmp = [];
-						$scope.currentIndex = 0;
 						$scope.invoices = [];
 						$scope.listByMonth = false;
 						$scope.month = month + "/" + year;
@@ -223,27 +221,24 @@
 								.get("Invoice/getByMonth/" + month + "-" + year)
 								.success(
 										function(response) {
-											$scope.listByMonth = true;
-											// $scope.invoices.push(response);
-											$scope.invoicesTmp = response;
-											for (var i = 0; i < 3; i++) {
-												$scope.invoices
-														.push($scope.invoicesTmp[i]);
-												$scope.currentIndex = i;
-											}
+											$scope.listByMonth = true;					
+											$scope.invoices = response;											
 											console.log("invoice ");
 											console.log($scope.invoices[0]);
 
 										});
 
-						$scope.loadMore = function() {
-							for (var i = $scope.currentIndex + 1; i < $scope.currentIndex + 3; i++) {
-								if (i == $scope.invoicesTmp.length)
-									break;
-								$scope.invoices.push($scope.invoicesTmp[i]);
-								$scope.currentIndex = i;
-							}
-						}
+
+						$scope.itemPerLoad = 10;
+						$scope.totalDisplayed = $scope.itemPerLoad;
+						$scope.MoreInvoices = "More Invoice...";  
+					    $scope.loadMore = function () {
+					      $scope.totalDisplayed += $scope.itemPerLoad;
+					      if($scope.totalDisplayed >= $scope.invoices.length)
+					    	  $scope.MoreInvoices = "No More Invoice";
+					      else
+					    	  $scope.MoreInvoices = "More Invoice...";
+					    }
 
 						$scope.onSearchChange = function(searchString) {
 							console.log("search: " + searchString);
@@ -320,6 +315,17 @@
 					$scope.invoices_danger = response;
 					console.log(response);
 				});
+		
+		$scope.itemPerLoad = 10;
+		$scope.totalDisplayed = $scope.itemPerLoad;
+		$scope.MoreInvoices = "More Invoice...";  
+	    $scope.loadMore = function () {
+	      $scope.totalDisplayed += $scope.itemPerLoad;
+	      if($scope.totalDisplayed >= $scope.invoices_danger.length)
+	    	  $scope.MoreInvoices = "No More Invoice";
+	      else
+	    	  $scope.MoreInvoices = "More Invoice...";
+	    };
 
 		this.getInvoiceByMonth = function() {
 

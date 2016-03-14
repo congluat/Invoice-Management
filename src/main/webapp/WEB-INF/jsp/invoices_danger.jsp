@@ -90,7 +90,14 @@
 					</div></li>
 
 			</ul>
-
+			<div class="row">
+				<div class =  "col-md-4"></div>
+				<btn class="col-md-4 btn btn-primary" ng-click="loadMore()"><strong>{{MoreInvoices}}</strong></btn>
+				<div class =  "col-md-1 text-primary"><strong>Per Load:</strong></div>
+				<label class="col-md-1">
+				    <input type="number" name="input" ng-model="itemPerLoad" min="0" max="99" required>
+	 			</label>
+ 		    </div>
 
 		</div>
 	</div>
