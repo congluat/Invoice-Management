@@ -90,6 +90,7 @@
 	<bean id="photoDao" class="dao.PhotoDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+
 	<bean id="reportDao" class="dao.ReportDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
@@ -97,8 +98,13 @@
 	</bean>
 
 	<bean id="reportService" class="service.ReportServiceImpl">
+	
 	</bean>
-
+		<bean id="reminderDao" class="dao.ReminderDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="reminderService" class="service.ReminderServiceImpl">
+	</bean>
 
 
 	<bean id="viewResolver"
