@@ -2,10 +2,12 @@ package service;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +27,6 @@ public class PhotoServiceImpl implements PhotoService {
 	@Qualifier("photoDao")
 	private PhotoDAO dao;
 
-	/*
-	 * @Override public void create(Photo photo) { dao.saveFile(photo); }
-	 */
-
 	@Override
 	public Photo findById(Integer id) {
 		return dao.getById(id);
@@ -44,6 +42,15 @@ public class PhotoServiceImpl implements PhotoService {
 		Date now = new Date();
 		String name = now.toString().replaceAll(" ", "").replaceAll(":", "");
 		for (MultipartFile multipartFile : map.values()) {
+			try {
+				InputStream input = multipartFile.getInputStream();
+				if (ImageIO.read(input) == null) {
+					throw new IOException();
+				}
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			String fileName = name + multipartFile.getOriginalFilename();
 			File f = new File(application.getRealPath("/resources/images/"));
 			if (f.exists() && f.isDirectory()) {
