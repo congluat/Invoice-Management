@@ -84,6 +84,7 @@ public class ReminderController {
 	public String showReminder(ModelMap model, HttpServletRequest request) {
 
 		model.addAttribute("reminders", reminderService.getAll());
+		model.addAttribute("title", "Reminders");
 		return "reminders";
 	}
 }
