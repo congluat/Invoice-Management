@@ -44,7 +44,7 @@ public class ReminderServiceImpl implements ReminderService {
 
 	@Override
 	public List<Reminder> getAll() {
-		
+
 		return dao.getAll();
 	}
 
@@ -55,9 +55,8 @@ public class ReminderServiceImpl implements ReminderService {
 	}
 
 	@Override
-	public Reminder getReminder(int id) {
-		// TODO Auto-generated method stub
-		return dao.getReminder(id);
+	public Reminder getById(int id) {
+		return dao.getById(id);
 	}
 
 }

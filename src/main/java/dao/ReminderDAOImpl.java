@@ -14,7 +14,6 @@ import model.Reminder;
 @Repository
 public class ReminderDAOImpl implements ReminderDAO {
 
-	
 	private SessionFactory sessionFactory;
 
 	public SessionFactory getSessionFactory() {
@@ -42,6 +41,7 @@ public class ReminderDAOImpl implements ReminderDAO {
 	}
 
 	@Override
+
 	public void update(Reminder reminder) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
@@ -86,14 +86,11 @@ public class ReminderDAOImpl implements ReminderDAO {
 	}
 
 	@Override
-	public Reminder getReminder(int id) {
+	public Reminder getById(int id) {
 		Session session = sessionFactory.openSession();
-		String hql = "From Reminder where id =:id";
-		Query query = session.createQuery(hql);
-		query.setParameter("id", id);
-		Reminder reminder = (Reminder) query.uniqueResult();
+		Reminder reminder = (Reminder) session.get(Reminder.class, id);
 		session.close();
 		return reminder;
 	}
 
-}
+
