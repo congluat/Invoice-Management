@@ -38,12 +38,7 @@
 							<span class="help-block">Comment</span>
 						</div>
 					</div>
-
-
-				</fieldset>
-			</form:form>
-			
-			<div class="form-group">
+					<div class="form-group">
 
 				<div class="col-md-2"></div>
 
@@ -59,6 +54,10 @@
 			</div>
 		</div>
 		<div class="col-md-2"></div>
-
+					
+				</fieldset>
+			</form:form>
+			
+			
 	</div>
 </div>

@@ -16,10 +16,14 @@ import model.Category;
 import model.Reminder;
 import model.User;
 import service.CategoryService;
+import service.ReminderService;
 
 @Controller
 @RequestMapping("/Reminder")
 public class ReminderController {
+	@Autowired
+	@Qualifier("reminderService")
+	ReminderService reService;
 	
 	@Autowired
 	@Qualifier("categoryService")
@@ -29,6 +33,13 @@ public class ReminderController {
 	public String saveReminder(ModelMap model, HttpServletRequest request) {
 		Reminder reminder = new Reminder();
 		model.addAttribute("reminder", reminder);
+		return "save-reminder";
+	}
+	
+	@RequestMapping(value = "/save-reminder", method = RequestMethod.POST)
+	public String saveReminderS(ModelMap model, @ModelAttribute Reminder reminder) {
+		reService.create(reminder);
+		model.addAttribute("message", "Insert Successfully!");
 		return "save-reminder";
 	}
 	
