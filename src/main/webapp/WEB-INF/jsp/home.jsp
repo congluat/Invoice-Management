@@ -70,7 +70,45 @@
 
 		</div>
 	</div>
-	<div class="row" style="margin-top: 50px" ng-init="drawChart()">
+
+	<div class="row">
+		<div class="col-md-7 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						Reminders
+						<ul class="rad-panel-action">
+							<li><i class="fa fa-chevron-down"></i></li>
+							<li><i class="fa fa-rotate-right"></i></li>
+							<!-- <li><i class="fa fa-cog"></i> -->
+							<li><i class="fa fa-close"></i></li>
+						</ul>
+					</h3>
+				</div>
+				<div class="panel-body" ng-init="">aaaaaa</div>
+			</div>
+
+		</div>
+		<div class="col-md-5 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						Reminders
+						<ul class="rad-panel-action">
+							<li><i class="fa fa-chevron-down"></i></li>
+							<li><i class="fa fa-rotate-right"></i></li>
+							<!-- <li><i class="fa fa-cog"></i> -->
+							<li><i class="fa fa-close"></i></li>
+						</ul>
+					</h3>
+				</div>
+				<div class="panel-body" ng-init="">aaaaaa</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="row" style="" ng-init="drawChart()">
 
 		<!-- <div class="col-md-7" google-chart chart="chart" style="min-width: 300px"></div> -->
 
@@ -127,6 +165,7 @@
 			</div>
 
 		</div>
+
 	</div>
 </div>
 </div>
