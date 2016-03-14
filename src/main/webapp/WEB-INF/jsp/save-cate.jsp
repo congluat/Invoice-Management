@@ -2,7 +2,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
-
+<script type="text/javascript"
+	src="<c:url value='/resources/nicEditor/nicEdit.js'/>"></script>
 
 <style>
 #imagePreview {
@@ -14,18 +15,11 @@
 	display: inline-block;
 }
 </style>
-<script type="text/javascript"
-	src="<c:url value='/resources/nicEditor/nicEdit.js'/>"></script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
-		bkLib.onDomLoaded(function() {
-			new nicEditor({
-				iconsPath : '<c:url value='/resources/nicEditor/nicEditorIcons.gif'/>',
-				uploadURI: 'nic-editor/upload'
-			}).panelInstance('description');
-		});
-		var link = '<%=request.getContextPath()%>
-	'
+		
+		var link = '<%=request.getContextPath()%>'
 								+ "/resources/logo/${category.logo}";
 						$("#imagePreview").css("background-image",
 								"url(" + link + ")");
@@ -67,6 +61,7 @@
 		$(document)
 				.ready(
 						function() {
+
 							$("#buttonclick")
 									.on(
 											"click",
@@ -262,4 +257,13 @@
 
 	</div>
 </div>
-
+<script>
+	/* bkLib
+			.onDomLoaded(function() {
+				new nicEditor(
+						{
+							iconsPath : '<c:url value='/resources/nicEditor/nicEditorIcons.gif'/>',
+							uploadURI : 'nic-editor/upload'
+						}).panelInstance('description');
+			}); */
+</script>

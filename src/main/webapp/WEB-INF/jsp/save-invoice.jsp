@@ -177,7 +177,7 @@ Dropzone.options.dropzoneForm = {
 						<div class="form-group">
 							<label path="amount" class="col-md-2 control-label">Amount</label>
 							<div class="col-md-10">
-								<form:input id="amountId" class="form-control" path="amount" onkeypress="return isNumber(event)"/>
+								<form:input required="required" id="amountId" class="form-control" path="amount" onkeypress="return isNumber(event)"/>
 								<div id="errorname">
 								</div>
 								<div class="has-error">
