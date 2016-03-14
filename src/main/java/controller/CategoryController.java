@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -38,8 +37,7 @@ public class CategoryController {
 
 	@RequestMapping(value = "/getAllCategories", method = RequestMethod.GET)
 	public @ResponseBody List<Category> getAllCategories() throws IOException {
-		List<Category> list = new ArrayList<Category>();
-
+		List<Category> list;
 		list = cateService.getAllCategories();
 		for (Category category : list) {
 			System.out.println("category: " + category.getName());

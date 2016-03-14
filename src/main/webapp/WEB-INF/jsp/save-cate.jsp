@@ -94,7 +94,7 @@
 						
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
-					alert("some error");				
+
 				}
 			});													
 		});
@@ -133,7 +133,7 @@
 						
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
-					alert("some error");				
+			
 				}
 			});
 		});

@@ -5,9 +5,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -90,8 +88,6 @@ public class InvoiceController {
 	@RequestMapping(value = "/getGroupByMonth")
 	@ResponseBody
 	public Map<String, List<Invoice>> getGroupByMonth(HttpServletRequest request) throws ParseException {
-		Map<String, List<Invoice>> map = invoiceService.getInvoicesGroupbyMonth();
-
 		return invoiceService.getInvoicesGroupbyMonth();
 	}
 
@@ -195,14 +191,7 @@ public class InvoiceController {
 	public String Search(@RequestParam(value = "empname", required = false) String empname, @RequestParam(value = "page", required = false) String page, @PathVariable String attribute, ModelMap model) {		
 		List<Invoice> invoices = new ArrayList<Invoice>();
 		List<Invoice> invoiceTmp = new ArrayList<Invoice>();
-		if (attribute.equals("Name") || attribute.equals("Place")) {
-			invoices = sortList(invoiceService.getInvoiceAttribute(attribute, empname, Integer.parseInt(page)), empname, attribute);
-			invoiceTmp = invoiceService.getInvoiceAttribute(attribute, empname, 0);
-		}
-		if (attribute.equals("Amount") || attribute.equals("IsWarning") || attribute.equals("Time")){
-			invoices = invoiceService.getInvoiceAttribute(attribute, empname, Integer.parseInt(page));
-			invoiceTmp = invoiceService.getInvoiceAttribute(attribute, empname, 0);
-		}
+		invoiceService.getDataInvoiceAndTemp(invoices, invoiceTmp, attribute, empname, page);
 		int startpage = (int) (Integer.parseInt(page) - 5 > 0?Integer.parseInt(page) - 5:1);
 	    double endpage = startpage + 10;
 	    if(endpage > (invoiceTmp.size()/3))
@@ -214,74 +203,5 @@ public class InvoiceController {
 		model.addAttribute("invoices", invoices);
 		model.addAttribute("title", "Invoices");
 		return "invoices_new";
-	}
-
-	private List<Invoice> sortList(List<Invoice> tmp, String empname, String attribute) {
-		List<Invoice> invoices = new ArrayList<Invoice>();
-		String[] str = new String[tmp.size()];
-		int i = 0;
-		for (Invoice t : tmp) {
-			if (attribute.equals("Name"))
-				str[i] = t.getName();
-			if (attribute.equals("Place"))
-				str[i] = t.getPlace();
-			i++;
-		}
-
-		Arrays.sort(str, new Comparator<String>() {
-
-			@Override
-			public int compare(String o1, String o2) {
-
-				boolean o1_has_keyWord = o1.indexOf(empname.charAt(0)) == 0 && o1.contains(empname);
-				boolean o2_has_keyWord = o2.indexOf(empname.charAt(0)) == 0 && o2.contains(empname);
-
-				if (o1_has_keyWord && o2_has_keyWord) {
-					if (o1.length() == o2.length()) {
-						if (o1.indexOf(empname.charAt(0)) > o2.indexOf(empname.charAt(0))) {
-							return -1;
-						} else if (o1.indexOf(empname.charAt(0)) == o2.indexOf(empname.charAt(0))) {
-							return 0;
-						} else {
-							return 1;
-						}
-					} else if (o1.length() > o2.length()) {
-						return 1;
-					} else {
-						return -1;
-					}
-				} else if (o1_has_keyWord && !o2_has_keyWord) {
-					return -1;
-				} else if (!o1_has_keyWord && o2_has_keyWord) {
-					return 1;
-				}
-
-				return 0;
-
-				// Code to sort array according to need
-
-			}
-		});
-
-		for (int j = 0; j < str.length; j++) {
-			for (Invoice t : tmp) {
-				if (attribute.equals("Name")) {
-					if (t.getName().equals(str[j])) {
-						invoices.add(t);
-						tmp.remove(t);
-						break;
-					}
-				}
-				if (attribute.equals("Place")) {
-					if (t.getPlace().equals(str[j])) {
-						invoices.add(t);
-						tmp.remove(t);
-						break;
-					}
-				}
-			}
-		}
-
-		return invoices;
 	}
 }
