@@ -13,65 +13,7 @@ $(document).ready(function() {
 		this.classList.remove('drag-over');
 	}
 
-	// "dropzoneForm" is the camel-case version of the form id "dropzone-form"
 	
-	Dropzone.options.dropzoneForm = {
-		acceptedFiles: "image/jpeg,image/png,image/gif",
-		autoProcessQueue : false,
-		uploadMultiple : true,
-		maxFilesize : 256, // MB
-		parallelUploads : 100,
-		maxFiles : 100,
-		addRemoveLinks : true,
-		previewsContainer : ".dropzone-previews",
-
-		// The setting up of the dropzone
-		init : function() {
-
-			var myDropzone = this;
-			
-			// first set autoProcessQueue = false
-			$('#upload-button').on("click", function(e) {
-				
-				myDropzone.processQueue();
-			});
-						
-			// customizing the default progress bar
-			this.on("uploadprogress", function(file, progress) {
-
-				progress = parseFloat(progress).toFixed(0);
-
-				var progressBar = file.previewElement.getElementsByClassName("dz-upload")[0];
-				progressBar.innerHTML = progress + "%";
-			});
-
-			// displaying the uploaded files information in a Bootstrap dialog		
-			this.on("complete", function(files) {	
-				$('#myModalEditPhoto').modal('hide');
-				var invoiceid = $(".abc").attr("id");
-				var show='';
-				$('#showimages').html(show);
-			
-				$.ajax({
-					url : "Upload/getPhoto",
-					type : 'post',
-					data : {
-						id : invoiceid
-					},
-					dataType : 'json',
-					success : function(data) {
-						 $.each(data,function (index) {																													         	
-						 	show+='<div class="col-md-2"> <div class="col-md-12"> <img alt="not found" height="80px" width="80px" src="<%= request.getContextPath()%>/resources/images/'+data[index].photo+'" /></div> <div style="text-align: center;" class="col-md-12" id ='+data[index].id+'> <a class="onclickdelete" data-toggle="modal" data-target="#confirm-delete">Delete</a></div></div> ';						 	
-						 }); 
-						 $('#showimages').html(show);
-					},
-					error: function(XMLHttpRequest, textStatus, errorThrown) {
-
-				    }
-				}); 
-			});		
-		}
-	}
 });
 
 	function isValid(evt) {
