@@ -75,7 +75,7 @@ caption {
 	height: 100%;
 	min-height: 300px;
 	min-width: 300px;
-	background: url('<c:url value='/ resources/ logo/ loading.gif '/>')
+	background: url('<c:url value='/ resources/ logo/ loading.svg '/>')
 		no-repeat center center;
 	background-size: 200px 200px;
 }
@@ -89,13 +89,20 @@ caption {
 				<div class="panel-heading">Chart</div>
 				<div class="panel-body">
 					<div class="form-group">
-						<label for="inputTime" class="col-sm-2 control-label">Month/Year</label>
+						<label for="inputTime" class="col-sm-2 control-label">Year</label>
 						<div class="col-sm-10 input-group date" id='datetimepicker10'>
 							<input id="inputDateTime" type='text' class="form-control"
 								ng-model="timeInput" value="" ng-change="drawChart()" /> <span
 								class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"> </span>
 							</span>
+						</div>
+					</div>
+					<div class="form-group">
+
+						<div class="input-group col-md-2">
+							<a href="Revenue/yearly-statistics" class="btn btn-success">View
+								Chart by Year</a>
 						</div>
 					</div>
 					<div class="form-group">

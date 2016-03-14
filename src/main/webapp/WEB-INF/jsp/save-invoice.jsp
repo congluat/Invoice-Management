@@ -154,7 +154,7 @@ $(document).on("click","#delete",function() {
 	});		
 });
 </script>
-	
+
 <script type="text/javascript">
 function isNumber(evt) {
 	evt = (evt) ? evt : window.event;
@@ -231,7 +231,7 @@ $(document).ready(function() {
 						<label path="name" class="col-md-2 control-label">Category</label>
 						<div class="col-md-10">
 							<form:select path="category.id" items="${categories}"
-								itemValue="id" itemLabel="name" class="form-control" id="cateId"/>
+								itemValue="id" itemLabel="name" class="form-control" id="cateId" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -317,9 +317,9 @@ $(document).ready(function() {
 						<div class="form-group">
 							<label path="amount" class="col-md-2 control-label">Amount</label>
 							<div class="col-md-10">
-								<form:input id="amountId" class="form-control" path="amount" onkeypress="return isNumber(event)"/>
-								<div id="errorname">
-								</div>
+								<form:input id="amountId" class="form-control" path="amount"
+									onkeypress="return isNumber(event)" />
+								<div id="errorname"></div>
 								<div class="has-error">
 									<form:errors path="amount" class="help-inline" />
 								</div>
@@ -352,7 +352,10 @@ $(document).ready(function() {
 										dataType : 'json',
 										success : function(data) {
 											 $.each(data,function (index) {																													         	
-											 	show+='<div class="col-md-2"> <div class="col-md-12"> <img alt="not found" height="80px" width="80px" src="<%= request.getContextPath()%>/resources/images/'+ data[index].photo	+ '" /></div> <div style="text-align: center;" class="col-md-12" id ='+data[index].id+'> <a class="onclickdelete" data-toggle="modal" data-target="#confirm-delete">Delete</a></div></div> ';
+											 	show+='<div class="col-md-2"> <div class="col-md-12"> <img alt="not found" height="80px" width="80px" src="<%= request.getContextPath()%>
+									/resources/images/'
+																									+ data[index].photo
+																									+ '" /></div> <div style="text-align: center;" class="col-md-12" id ='+data[index].id+'> <a class="onclickdelete" data-toggle="modal" data-target="#confirm-delete">Delete</a></div></div> ';
 																						});
 																		$(
 																				'#showimages')

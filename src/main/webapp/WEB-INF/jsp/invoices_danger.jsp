@@ -6,13 +6,12 @@
 .timeline>li>.timeline-panel {
 	padding: 5px 5px;
 }
-
 </style>
 
 
 <div class="row"
 	style="margin-top: 10px; margin-left: 5px; margin-right: 5px">
-	<div ng-controller="InvoiceDangerController" ng-app="app">
+	<div ng-controller="InvoiceDangerController">
 		<div class="col-md-6 col-md-offset-6">
 			<div class="input-group input-group-lg">
 				<span class="input-group-addon" id="sizing-addon1"><i
@@ -24,15 +23,14 @@
 		</div>
 		<!-- /.col-lg-6 -->
 
-		
+
 
 		<div class="col-md-12">
 			<div class="modal fade" id="confirm-delete" tabindex="-1"
 				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="vertical-alignment-helper col-md-4">
 					<div class="modal-dialog vertical-align-center">
-						<div class="modal-content"
-							style=" border-radius: 10px;">
+						<div class="modal-content" style="border-radius: 10px;">
 							<div class="modal-header">Confirm</div>
 							<div class="modal-body">Do you want to delete</div>
 							<div class="modal-footer">
@@ -57,11 +55,11 @@
 					ng-src="<c:url value='/resources/logo/'/>{{i.category.logo}}"
 					onError="this.onerror=null;this.src='<c:url value='/resources/logo/abc.png'/>';">
 
-					<div class="timeline-panel" ng-class="{'isWarning': i.isWarning}"
-						ng-mouseenter="hover(i)" ng-mouseleave="hover(i)">
+					<div class="timeline-panel" ng-mouseenter="hover(i)"
+						ng-mouseleave="hover(i)">
 						<div class="col-md-8">
 							<div class="timeline-heading">
-								<h4 class="timeline-title">{{i.name}}</h4>
+								<h4 class="timeline-title" ng-class="{'isWarning': i.isWarning}">{{i.name}}</h4>
 								<p>
 									<small class="text-muted"><i class="fa fa-clock-o"></i>
 										{{i.time | date:"dd/MM/yyyy 'at' h:mma"}} at {{i.place}}</small>
@@ -81,7 +79,7 @@
 						</div>
 
 						<div class="col-md-12 more-info" showonhoverparent>
-							{{i.comment}}
+							<p ng-bind-html="i.comment | unsafe"></p>
 							<div ng-repeat="img in i.photos">
 								<img class="col-md-4 col-xs-4" alt="not found"
 									ng-src="<c:url value='/resources/images/'/>{{img.photo}}">
@@ -91,13 +89,15 @@
 
 			</ul>
 			<div class="row">
-				<div class =  "col-md-4"></div>
-				<btn class="col-md-4 btn btn-primary" ng-click="loadMore()"><strong>{{MoreInvoices}}</strong></btn>
-				<div class =  "col-md-1 text-primary"><strong>Per Load:</strong></div>
-				<label class="col-md-1">
-				    <input type="number" name="input" ng-model="itemPerLoad" min="0" max="99" required>
-	 			</label>
- 		    </div>
+				<div class="col-md-4"></div>
+				<btn class="col-md-4 btn btn-primary" ng-click="loadMore()"> <strong>{{MoreInvoices}}</strong></btn>
+				<div class="col-md-1 text-primary">
+					<strong>Per Load:</strong>
+				</div>
+				<label class="col-md-1"> <input type="number" name="input"
+					ng-model="itemPerLoad" min="0" max="99" required>
+				</label>
+			</div>
 
 		</div>
 	</div>

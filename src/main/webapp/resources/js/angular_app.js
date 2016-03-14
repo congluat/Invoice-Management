@@ -112,11 +112,11 @@
 						} else if (response.length > 6) {
 							response = response.substring(0,
 									response.length - 6);
-							response = response + " milions";
+							response = response + " M";
 						} else if (response.length > 3) {
 							response = response.substring(0,
 									response.length - 3);
-							response = response + " thousands";
+							response = response + " K";
 						}
 
 						$scope.amount = response;
@@ -197,99 +197,91 @@
 
 	});
 
-	app
-			.controller(
-					'InvoiceController',
-					function($scope, $http) {
+	app.controller('InvoiceController', function($scope, $http) {
 
-						$scope.deleteFunc = function(id) {
-							$scope.deleteId = id;
+		$scope.deleteFunc = function(id) {
+			$scope.deleteId = id;
 
-						};
+		};
 
-						var now = new Date();
-						var month = parseInt(now.getMonth()) + 1;
-						var year = parseInt(now.getYear()) + 1900;
-						console.log("month " + month);
-						console.log("year " + year);
+		$scope.init = function() {
 
+			var now = new Date();
+			var month = parseInt(now.getMonth()) + 1;
+			var year = parseInt(now.getYear()) + 1900;
+			console.log("month " + month);
+			console.log("year " + year);
+
+			$scope.invoices = [];
+			$scope.listByMonth = false;
+			$scope.month = month + "/" + year;
+			$http.get("Invoice/getByMonth/" + month + "-" + year).success(
+					function(response) {
+						$scope.listByMonth = true;
 						$scope.invoices = [];
-						$scope.listByMonth = false;
-						$scope.month = month + "/" + year;
+						$scope.invoices = response;
+						console.log("INVOICE CTRL INIT");
+						console.log("invoice ");
+						console.log($scope.invoices);
 
-						$http
-								.get("Invoice/getByMonth/" + month + "-" + year)
-								.success(
-										function(response) {
-											$scope.listByMonth = true;					
-											$scope.invoices = response;											
-											console.log("invoice ");
-											console.log($scope.invoices[0]);
-
-										});
-
-
-						$scope.itemPerLoad = 10;
-						$scope.totalDisplayed = $scope.itemPerLoad;
-						$scope.MoreInvoices = "More Invoice...";  
-					    $scope.loadMore = function () {
-					      $scope.totalDisplayed += $scope.itemPerLoad;
-					      if($scope.totalDisplayed >= $scope.invoices.length)
-					    	  $scope.MoreInvoices = "No More Invoice";
-					      else
-					    	  $scope.MoreInvoices = "More Invoice...";
-					    }
-
-						$scope.onSearchChange = function(searchString) {
-							console.log("search: " + searchString);
-							console.log("list by month: " + $scope.listByMonth);
-
-							if (searchString.length != 0) {
-								$http.get(
-										"Invoice/searchAnyString/"
-												+ searchString).success(
-										function(response) {
-											$scope.listByMonth = false;
-											// $scope.invoices.push(response);
-											$scope.month = searchString;
-											$scope.invoices = response;
-											console.log("invoice ");
-											console.log(response);
-										}).error(function(error) {
-									$scope.invoices = error;
-								});
-
-							}
-
-							else {
-								if (searchString.length == 0) {
-									$scope.month = month + "/" + year;
-									$http
-											.get(
-													"Invoice/getByMonth/"
-															+ month + "-"
-															+ year)
-											.success(
-													function(response) {
-														$scope.listByMonth = true;
-														// $scope.invoices.push(response);
-														$scope.invoices = response;
-														console.log("invoice ");
-														console
-																.log($scope.invoices[0]);
-													});
-								}
-							}
-						};
-						this.getInvoiceByMonth = function() {
-
-							$http.get("Invoice/getByMonth/").success(
-									function(response) {
-										console.log(response);
-									});
-						};
-						// Search Invoice
 					});
+		};
+
+		$scope.itemPerLoad = 10;
+		$scope.totalDisplayed = $scope.itemPerLoad;
+		$scope.MoreInvoices = "More Invoice...";
+		$scope.loadMore = function() {
+			$scope.totalDisplayed += $scope.itemPerLoad;
+			if ($scope.totalDisplayed >= $scope.invoices.length)
+				$scope.MoreInvoices = "No More Invoice";
+			else
+				$scope.MoreInvoices = "More Invoice...";
+		}
+
+		$scope.onSearchChange = function(searchString) {
+			console.log("search: " + searchString);
+			console.log("list by month: " + $scope.listByMonth);
+
+			if (searchString.length != 0) {
+				$http.get("Invoice/searchAnyString/" + searchString).success(
+						function(response) {
+							$scope.invoices = [];
+							// $scope.listByMonth = false;
+							// $scope.invoices.push(response);
+							$scope.month = searchString;
+							$scope.invoices = response;
+							console.log("INVOICE CTRL ON CHANGE SEARCH");
+							console.log("invoice ");
+							console.log(response);
+						}).error(function(error) {
+					// $scope.invoices = error;
+				});
+
+			}
+
+			else {
+				if (searchString.length == 0) {
+					console.log("SEARCH LENGTH = 0 ");
+					$scope.init();
+					/*
+					 * $scope.month = month + "/" + year;
+					 * $http.get("Invoice/getByMonth/" + month + "-" + year)
+					 * .success(function(response) { $scope.listByMonth = true; //
+					 * $scope.invoices.push(response); $scope.invoices =
+					 * response; console.log("invoice ");
+					 * console.log($scope.invoices); });
+					 */
+				}
+			}
+		};
+		/*
+		 * this.getInvoiceByMonth = function() {
+		 * 
+		 * $http.get("Invoice/getByMonth/").success(function(response) {
+		 * console.log(response); }); };
+		 */
+
+	});
 
 	app.controller('InvoiceDangerController', function($scope, $http) {
 
@@ -308,6 +300,7 @@
 		$scope.listByMonth = false;
 		$scope.month = month + "/" + year;
 
+		// get warning Invoice
 		$http.get("Invoice/getDangerByMonth/" + month + "-" + year).success(
 				function(response) {
 					$scope.listByMonth = true;
@@ -315,17 +308,17 @@
 					$scope.invoices_danger = response;
 					console.log(response);
 				});
-		
+
 		$scope.itemPerLoad = 10;
 		$scope.totalDisplayed = $scope.itemPerLoad;
-		$scope.MoreInvoices = "More Invoice...";  
-	    $scope.loadMore = function () {
-	      $scope.totalDisplayed += $scope.itemPerLoad;
-	      if($scope.totalDisplayed >= $scope.invoices_danger.length)
-	    	  $scope.MoreInvoices = "No More Invoice";
-	      else
-	    	  $scope.MoreInvoices = "More Invoice...";
-	    };
+		$scope.MoreInvoices = "More Invoice...";
+		$scope.loadMore = function() {
+			$scope.totalDisplayed += $scope.itemPerLoad;
+			if ($scope.totalDisplayed >= $scope.invoices_danger.length)
+				$scope.MoreInvoices = "No More Invoice";
+			else
+				$scope.MoreInvoices = "More Invoice...";
+		};
 
 		this.getInvoiceByMonth = function() {
 

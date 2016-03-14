@@ -11,7 +11,7 @@
 
 <div class="row"
 	style="margin-top: 10px; margin-left: 5px; margin-right: 5px">
-	<div ng-controller="InvoiceController" ng-app="app" ng-init="init()">
+	<div ng-controller="InvoiceController" ng-init="init()">
 		<div class="col-md-6 col-md-offset-6">
 			<div class="input-group input-group-lg">
 
@@ -91,13 +91,16 @@
 
 				</ul>
 			<div class="row">
-				<div class =  "col-md-4"></div>
-				<btn class="col-md-4 btn btn-primary" ng-click="loadMore()"><strong>{{MoreInvoices}}</strong></btn>
-				<div class =  "col-md-1 text-primary"><strong>Per Load:</strong></div>
-				<label class="col-md-1">
-				    <input type="number" name="input" ng-model="itemPerLoad" min="0" max="99" required>
-	 			</label>
- 		    </div>
+				<div class="col-md-4"></div>
+				<btn class="col-md-4 btn btn-primary" ng-click="loadMore()">
+				<strong>{{MoreInvoices}}</strong></btn>
+				<div class="col-md-1 text-primary">
+					<strong>Per Load:</strong>
+				</div>
+				<label class="col-md-1"> <input type="number" name="input"
+					ng-model="itemPerLoad" min="0" max="99" required>
+				</label>
+			</div>
 
 		</div>
 	</div>
