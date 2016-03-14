@@ -119,7 +119,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 		if (amountDouble > (avg)) { // invoice co the bi canh bao
 			List<Invoice> list = invoiceDao.getTop10(category);
 			System.out.println(list.size());
-			if (list.size() < 10) {
+			if (list.size() < 11) {
 				return true;
 			}
 			Iterator it = list.iterator();

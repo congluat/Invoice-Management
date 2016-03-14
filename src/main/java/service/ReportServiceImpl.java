@@ -1,6 +1,5 @@
 package service;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -33,16 +32,14 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public List<Object[]> getMoneyUsePerDay(int month, int year) {
 		List<Object[]> list = reportDao.getMoneyUsePerDay(month, year);
-		List<Object[]> result = new ArrayList<>();
 		for (Object[] object : list) {
 			object[0] = object[0].toString();
-
 		}
 		return list;
 	}
 
 	@Override
-	public List getReportDataEveryMonth() {
+	public List<Object[]> getReportDataEveryMonth() {
 		return reportDao.getReportDataEveryMonth();
 	}
 
@@ -80,7 +77,6 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public List<Object[]> getMoneyUseEachMonthInYear(int year) {
 		List<Object[]> list = reportDao.getMoneyUseEachMonthInYear(year);
-		List<Object[]> result = new ArrayList<>();
 		for (Object[] object : list) {
 			object[0] = object[0].toString();
 		}

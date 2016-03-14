@@ -1,7 +1,6 @@
 package scheduledtask;
 
 import java.io.File;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -29,8 +28,6 @@ public class CleanupImages {
 	 */
 	public void run() {
 		try {
-
-			Date date = new Date();
 			List<String> photosOnDB = photoService.getAllPhotos();
 			String path = application.getRealPath("/resources/images/");
 			System.out.println("path" + path);

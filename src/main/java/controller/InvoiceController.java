@@ -5,9 +5,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -90,8 +88,6 @@ public class InvoiceController {
 	@RequestMapping(value = "/getGroupByMonth")
 	@ResponseBody
 	public Map<String, List<Invoice>> getGroupByMonth(HttpServletRequest request) throws ParseException {
-		Map<String, List<Invoice>> map = invoiceService.getInvoicesGroupbyMonth();
-
 		return invoiceService.getInvoicesGroupbyMonth();
 	}
 
