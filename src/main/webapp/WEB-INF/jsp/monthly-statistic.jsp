@@ -77,7 +77,7 @@ caption {
 	min-width: 300px;
 	background: url('<c:url value='/ resources/ logo/ loading.gif '/>')
 		no-repeat center center;
-	background-size: 200px 100px;
+	background-size: 200px 200px;
 }
 </style>
 <div class="chartWrapper" ng-controller="MonthlyStatisticController"
@@ -86,7 +86,7 @@ caption {
 	<div class="row">
 		<div class=" col-md-12">
 			<div class="panel panel-green">
-				<div class="panel-heading">Green Panel</div>
+				<div class="panel-heading">Chart</div>
 				<div class="panel-body">
 					<div class="form-group">
 						<label for="inputTime" class="col-sm-2 control-label">Month/Year</label>
@@ -99,9 +99,7 @@ caption {
 						</div>
 					</div>
 					<div class="form-group">
-						<div class='input-group date' id='datetimepicker10'>
-							<label></label> </span>
-						</div>
+
 						<div class="form-group">
 							<a ng-click="drawChart()" class="btn btn-success">Update</a>
 						</div>
@@ -113,7 +111,7 @@ caption {
 
 	</div>
 	<div class="col-md-12" id="loading"></div>
-	
+
 	<div class="col-md-12 row" id="content">
 		<div class="col-md-5">
 			<div class="panel panel-default">

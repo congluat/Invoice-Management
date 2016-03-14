@@ -206,7 +206,3 @@ a:hover {
 .rad-navigation {
 	z-index: 1000;
 }
-
-td {
-	white-space: nowrap;
-}
