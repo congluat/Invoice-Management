@@ -66,8 +66,17 @@
 	$(document).ready(function() {
 		$("#buttonclick").on("click", function() {			
 			var catename = $.trim($("#cateName").val());
-			var cateid = $.trim($("#cateId").val());
 			var show='';
+				if(catename==""){
+					show+='<label style="color: red">Type the name!</label>';
+					$("#errorname").html(show);
+					setTimeout(function() {
+						$("#errorname").html('');
+					}, 3000);
+					return;
+				}
+			var cateid = $.trim($("#cateId").val());
+			
 			$.ajax({
 				url : "Category/checkCateAndId/" + catename+"/"+cateid,
 				type : 'get',
@@ -98,6 +107,15 @@
 		$("#buttonclick").on("click", function() {
 			var catename = $.trim($("#cateName").val());
 			var show='';
+			if(catename==""){
+				show+='<label style="color: red">Type the name!</label>';
+				$("#errorname").html(show);
+				setTimeout(function() {
+					$("#errorname").html('');
+				}, 3000);
+				return;
+			}
+			
 			$.ajax({
 				url : "Category/checkCate/" + catename,
 				type : 'get',
