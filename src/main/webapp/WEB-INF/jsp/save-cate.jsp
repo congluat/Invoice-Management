@@ -18,12 +18,12 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		bkLib.onDomLoaded(function() {
+		/* bkLib.onDomLoaded(function() {
 			new nicEditor({
 				iconsPath : '<c:url value='/resources/nicEditor/nicEditorIcons.gif'/>',
 				uploadURI: 'nic-editor/upload'
 			}).panelInstance('description');
-		});
+		}); */
 		var link = '<%=request.getContextPath()%>'						
 			+ "/resources/logo/${category.logo}";
 		
