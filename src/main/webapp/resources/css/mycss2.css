@@ -206,3 +206,7 @@ a:hover {
 .rad-navigation {
 	z-index: 1000;
 }
+
+.panel-primary .panel-title {
+	color: #FFF;
+}

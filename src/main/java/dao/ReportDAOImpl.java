@@ -1,5 +1,7 @@
 package dao;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -81,8 +83,17 @@ public class ReportDAOImpl implements ReportDAO {
 				+ " Order By time ASC";
 		Query query = session.createQuery(hql);
 		query.setParameter("cateId", cateId);
-		query.setParameter("startdate", new Date(startdate));
-		query.setParameter("endate", new Date(endate));
+		try {
+			query.setParameter("startdate", new SimpleDateFormat("MM/dd/yyyy HH:mm:ss")
+											.parse(startdate + " 00:00:00"));
+			query.setParameter("endate", new SimpleDateFormat("MM/dd/yyyy HH:mm:ss")
+					.parse(endate + " 23:59:59"));
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			session.close();
+			e.printStackTrace();
+		}
 		List<Invoice> invoiceList = query.list();
 		session.close();
 		return invoiceList;
@@ -242,8 +253,17 @@ public class ReportDAOImpl implements ReportDAO {
 				+ "	GROUP BY category.name "
 				+ " Order By category.name ASC";
 		Query query = session.createQuery(hql);
-		query.setParameter("fromdate", new Date(fromdate));
-		query.setParameter("todate", new Date(todate));
+		try {
+			query.setParameter("fromdate", new SimpleDateFormat("MM/dd/yyyy HH:mm:ss")
+											.parse(fromdate + " 00:00:00"));
+			query.setParameter("todate", new SimpleDateFormat("MM/dd/yyyy HH:mm:ss")
+					.parse(todate + " 23:59:59"));
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			session.close();
+			e.printStackTrace();
+		}
 		List<Object[]> list = query.list();
 		session.close();
 		return list;
@@ -259,8 +279,17 @@ public class ReportDAOImpl implements ReportDAO {
 				+ " Order By time ASC";
 		Query query = session.createQuery(hql);
 		query.setParameter("cateName", cateName);
-		query.setParameter("fromdate", new Date(fromdate));
-		query.setParameter("todate", new Date(todate));
+		try {
+			query.setParameter("fromdate", new SimpleDateFormat("MM/dd/yyyy HH:mm:ss")
+											.parse(fromdate + " 00:00:00"));
+			query.setParameter("todate", new SimpleDateFormat("MM/dd/yyyy HH:mm:ss")
+					.parse(todate + " 23:59:59"));
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			session.close();
+			e.printStackTrace();
+		}
 		List<Invoice> invoiceList = query.list();
 		session.close();
 		return invoiceList;

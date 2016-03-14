@@ -72,7 +72,7 @@ caption {
 				<div class="panel-heading">Chart</div>
 				<div class="panel-body">
 					<div class="form-group">
-						<label for="inputTime" class="col-sm-2 control-label">Month/Year</label>
+						<label for="inputTime" class="col-sm-2 control-label">Year</label>
 						<div class="col-sm-10 input-group date" id='datetimepicker10'>
 							<input type="number" id='inputDateTime' class="form-control"
 								ng-model="timeInput" value="{{timeInput}}"
@@ -82,7 +82,7 @@ caption {
 					<div class="form-group">
 
 						<div class="input-group col-md-2">
-							<a href="Revenue/yearly-statistics" class="btn btn-success">View
+							<a href="Revenue/monthly-statistic" class="btn btn-success">View
 								Chart by Month</a>
 						</div>
 					</div>
