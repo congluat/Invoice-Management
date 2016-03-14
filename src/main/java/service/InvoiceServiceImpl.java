@@ -139,8 +139,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public List<Invoice> getInvoiceAttribute(String attribute, String empname, int page) {
-		return invoiceDao.getInvoiceAttribute(attribute, empname, page);
+	public List<Invoice> getInvoiceAttribute(String attribute, String empname) {
+		return invoiceDao.getInvoiceAttribute(attribute, empname);
 	}
 
 	@Override
@@ -220,19 +220,58 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public void getDataInvoiceAndTemp(List<Invoice> invoices, List<Invoice> invoiceTmp , String attribute ,String empname ,String page) {
-		List<Invoice> temp ;
-		if (attribute.equals("Name") || attribute.equals("Place")) {
-			temp = sortList(getInvoiceAttribute(attribute, empname, Integer.parseInt(page)), empname, attribute);
-			invoices.addAll(temp);
-			temp = getInvoiceAttribute(attribute, empname, 0);
+	public void getDataInvoiceAndTemp(List<Invoice> invoices, List<Invoice> invoiceTmp , String attribute ,String empname ,String page, int limitResultsPerPage) {
+		List<Invoice> temp ;		
+		int firstResult = (Integer.parseInt(page)-1)*limitResultsPerPage;
+		int maxResult = limitResultsPerPage;
+		if (attribute.equals("Name") || attribute.equals("Place")) {			
+			temp = sortList(getInvoiceAttribute(attribute, empname), empname, attribute);
+			for(int i = firstResult; i < (firstResult+maxResult); i++){
+				if( i >= temp.size())
+					break;					
+				invoices.add(temp.get(i));
+			}			
 			invoiceTmp.addAll(temp);
 		}
 		if (attribute.equals("Amount") || attribute.equals("IsWarning") || attribute.equals("Time")){
-			temp = getInvoiceAttribute(attribute, empname, Integer.parseInt(page));
-			invoices.addAll(temp);
-			temp = getInvoiceAttribute(attribute, empname, 0);
+			temp = getInvoiceAttribute(attribute, empname);
+			for(int i = firstResult; i < (firstResult+maxResult); i++){
+				if( i >= temp.size())
+					break;					
+				invoices.add(temp.get(i));
+			}			
 			invoiceTmp.addAll(temp);
 		}
 	}
+
+	@Override
+	public List<Invoice> suggestSearchResult(String attribute, String empName) {
+		List<Invoice> result = new ArrayList<Invoice>();
+		result = getInvoiceAttribute(attribute, empName);
+		// System.out.println(attribute + empName);
+
+		int count = result.size();
+		for (int i = 0; i < count; i++) {
+			for (int j = i + 1; j < count; j++) {
+				if (attribute.equals("Name")) {
+					if (result.get(i).getName().equals(result.get(j).getName())) {
+						result.remove(j--);
+						count--;
+					}
+				}
+				if (attribute.equals("Place")) {
+					if (result.get(i).getPlace().equals(result.get(j).getPlace())) {
+						result.remove(j--);
+						count--;
+					}
+				}
+			}
+		}
+		// iterate a list and filter by tagName
+		// System.out.println(result.size());
+		return result;
+
+	}
+	
+	
 }
