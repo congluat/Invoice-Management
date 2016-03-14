@@ -203,14 +203,16 @@
 			$scope.deleteId = id;
 
 		};
-
+		var now = new Date();
+		var month = parseInt(now.getMonth()) + 1;
+		var year = parseInt(now.getYear()) + 1900;
 		$scope.init = function() {
-
+/*
 			var now = new Date();
 			var month = parseInt(now.getMonth()) + 1;
 			var year = parseInt(now.getYear()) + 1900;
 			console.log("month " + month);
-			console.log("year " + year);
+			console.log("year " + year);*/
 
 			$scope.invoices = [];
 			$scope.listByMonth = false;
@@ -245,7 +247,6 @@
 			if (searchString.length != 0) {
 				$http.get("Invoice/searchAnyString/" + searchString).success(
 						function(response) {
-							$scope.invoices = [];
 							// $scope.listByMonth = false;
 							// $scope.invoices.push(response);
 							$scope.month = searchString;
@@ -262,15 +263,9 @@
 			else {
 				if (searchString.length == 0) {
 					console.log("SEARCH LENGTH = 0 ");
+
 					$scope.init();
-					/*
-					 * $scope.month = month + "/" + year;
-					 * $http.get("Invoice/getByMonth/" + month + "-" + year)
-					 * .success(function(response) { $scope.listByMonth = true; //
-					 * $scope.invoices.push(response); $scope.invoices =
-					 * response; console.log("invoice ");
-					 * console.log($scope.invoices); });
-					 */
+
 				}
 			}
 		};
@@ -429,6 +424,7 @@
 				$('#myModal').modal('hide');
 			} else {
 				$('#myModal').modal('show');
+
 			}
 
 			console.log(response);
