@@ -10,13 +10,11 @@
 		<th>Comment</th>
 
 	</tr>
-	
-	<c:forEach items="reminders" var="reminder">
+	<c:forEach items="${reminders}" var="reminder">
 		<tr>
 			<td>${reminder.category.name}</td>
 			<td>${reminder.time}</td>
 			<td>${reminder.comment}</td>
 		</tr>
 	</c:forEach>
-	
 </table>
