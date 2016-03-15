@@ -10,6 +10,14 @@
 	var app = angular.module('app', [ 'googlechart' ]);
 
 	app.controller("HomeController", function($scope, $http, $window) {
+
+		$scope.getReminder = function() {
+			$http.get("Reminder/getReminder-byNow").success(function(response) {
+				$scope.reminders = response;
+				console.log($scope.reminders);
+			});
+		};
+
 		$scope.$watch(function() {
 			return $window.innerWidth;
 		}, function(value) {
@@ -207,12 +215,11 @@
 		var month = parseInt(now.getMonth()) + 1;
 		var year = parseInt(now.getYear()) + 1900;
 		$scope.init = function() {
-/*
-			var now = new Date();
-			var month = parseInt(now.getMonth()) + 1;
-			var year = parseInt(now.getYear()) + 1900;
-			console.log("month " + month);
-			console.log("year " + year);*/
+			/*
+			 * var now = new Date(); var month = parseInt(now.getMonth()) + 1;
+			 * var year = parseInt(now.getYear()) + 1900; console.log("month " +
+			 * month); console.log("year " + year);
+			 */
 
 			$scope.invoices = [];
 			$scope.listByMonth = false;
@@ -461,7 +468,8 @@
 									$scope.sumCM += item.amount;
 								})
 							} else {
-								$("#empty-invoice-CatM").html('<b>Not Existing Invoice!</b>');
+								$("#empty-invoice-CatM").html(
+										'<b>Not Existing Invoice!</b>');
 								$scope.showtableCM = false;
 								$scope.countCM = 0;
 								$scope.sumCM = 0;
@@ -489,24 +497,26 @@
 				$http.get(
 						"Report/cateMd2d?cateId=" + $scope.categoryM2M
 								+ "&startdate=" + $scope.fromdate + "&endate="
-								+ $scope.endate).then(function(response) {
-					$scope.sumM2M = 0;
-					var data = response.data;
-					if (data.length > 0) {
-						$("#empty-invoice-CatD2D").html('');
-						$scope.showtableM2M = true;
-						$scope.invoicesM2M = data;
-						$scope.countM2M = data.length;
-						$(data).each(function(i, item) {
-							$scope.sumM2M += item.amount;
-						})
-					} else {
-						$("#empty-invoice-CatD2D").html('<b>Not Existing Invoice!</b>');
-						$scope.showtableM2M = false;
-						$scope.countM2M = 0;
-						$scope.sumM2M = 0;
-					}
-				});
+								+ $scope.endate).then(
+						function(response) {
+							$scope.sumM2M = 0;
+							var data = response.data;
+							if (data.length > 0) {
+								$("#empty-invoice-CatD2D").html('');
+								$scope.showtableM2M = true;
+								$scope.invoicesM2M = data;
+								$scope.countM2M = data.length;
+								$(data).each(function(i, item) {
+									$scope.sumM2M += item.amount;
+								})
+							} else {
+								$("#empty-invoice-CatD2D").html(
+										'<b>Not Existing Invoice!</b>');
+								$scope.showtableM2M = false;
+								$scope.countM2M = 0;
+								$scope.sumM2M = 0;
+							}
+						});
 			}
 		};
 
@@ -516,24 +526,26 @@
 			} else {
 				$http.get(
 						"Report/getReportByDate?selectdate="
-								+ $scope.selectdate).then(function(response) {
-					$scope.sumRpByDate = 0;
-					var data = response.data;
-					if (data.length > 0) {
-						$("#empty-invoice-date").html('');
-						$scope.showtableReportByDate = true;
-						$scope.dataReportByDate = data;
-						$scope.countRpByDate = data.length;
-						$(data).each(function(i, item) {
-							$scope.sumRpByDate += item[2];
-						})
-					} else {
-						$("#empty-invoice-date").html('<b>Not Existing Invoice!</b>');
-						$scope.showtableReportByDate = false;
-						$scope.countRpByDate = 0;
-						$scope.sumRpByDate = 0;
-					}
-				});
+								+ $scope.selectdate).then(
+						function(response) {
+							$scope.sumRpByDate = 0;
+							var data = response.data;
+							if (data.length > 0) {
+								$("#empty-invoice-date").html('');
+								$scope.showtableReportByDate = true;
+								$scope.dataReportByDate = data;
+								$scope.countRpByDate = data.length;
+								$(data).each(function(i, item) {
+									$scope.sumRpByDate += item[2];
+								})
+							} else {
+								$("#empty-invoice-date").html(
+										'<b>Not Existing Invoice!</b>');
+								$scope.showtableReportByDate = false;
+								$scope.countRpByDate = 0;
+								$scope.sumRpByDate = 0;
+							}
+						});
 			}
 		};
 
@@ -543,24 +555,26 @@
 			} else {
 				$http.get(
 						"Report/getReportByMonth?selectmonth="
-								+ $scope.selectmonth).then(function(response) {
-					$scope.sumRp = 0;
-					var data = response.data;
-					if (data.length > 0) {
-						$("#empty-invoice-month").html('');
-						$scope.showtableReportByMonth = true;
-						$scope.dataReportByMonth = data;
-						$scope.countRpByMonth = data.length;
-						$(data).each(function(i, item) {
-							$scope.sumRpByMonth += item[2];
-						})
-					} else {
-						$("#empty-invoice-month").html('<b>Not Existing Invoice!</b>');
-						$scope.showtableReportByMonth = false;
-						$scope.countRpByMonth = 0;
-						$scope.sumRpByMonth = 0;
-					}
-				});
+								+ $scope.selectmonth).then(
+						function(response) {
+							$scope.sumRp = 0;
+							var data = response.data;
+							if (data.length > 0) {
+								$("#empty-invoice-month").html('');
+								$scope.showtableReportByMonth = true;
+								$scope.dataReportByMonth = data;
+								$scope.countRpByMonth = data.length;
+								$(data).each(function(i, item) {
+									$scope.sumRpByMonth += item[2];
+								})
+							} else {
+								$("#empty-invoice-month").html(
+										'<b>Not Existing Invoice!</b>');
+								$scope.showtableReportByMonth = false;
+								$scope.countRpByMonth = 0;
+								$scope.sumRpByMonth = 0;
+							}
+						});
 			}
 		};
 
@@ -570,24 +584,26 @@
 			} else {
 				$http.get(
 						"Report/getReportByYear?selectyear="
-								+ $scope.selectyear).then(function(response) {
-					$scope.sumRpbyYear = 0;
-					var data = response.data;
-					if (data.length > 0) {
-						$("#empty-invoice-year").html('');
-						$scope.showtableReportbyYear = true;
-						$scope.dataReportbyYear = data;
-						$scope.countRpbyYear = data.length;
-						$(data).each(function(i, item) {
-							$scope.sumRpbyYear += item[2];
-						})
-					} else {
-						$("#empty-invoice-year").html('<b>Not Existing Invoice!</b>');
-						$scope.showtableReportbyYear = false;
-						$scope.countRpbyYear = 0;
-						$scope.sumRpbyYear = 0;
-					}
-				});
+								+ $scope.selectyear).then(
+						function(response) {
+							$scope.sumRpbyYear = 0;
+							var data = response.data;
+							if (data.length > 0) {
+								$("#empty-invoice-year").html('');
+								$scope.showtableReportbyYear = true;
+								$scope.dataReportbyYear = data;
+								$scope.countRpbyYear = data.length;
+								$(data).each(function(i, item) {
+									$scope.sumRpbyYear += item[2];
+								})
+							} else {
+								$("#empty-invoice-year").html(
+										'<b>Not Existing Invoice!</b>');
+								$scope.showtableReportbyYear = false;
+								$scope.countRpbyYear = 0;
+								$scope.sumRpbyYear = 0;
+							}
+						});
 			}
 		};
 		$scope.getReportd2d = function() {
@@ -619,7 +635,8 @@
 										$scope.sumRpd2d += item[2];
 									})
 								} else {
-									$("#empty-invoice-d2d").html('<b>Not Existing Invoice!</b>');
+									$("#empty-invoice-d2d").html(
+											'<b>Not Existing Invoice!</b>');
 									$scope.showtableReportd2d = false;
 									$scope.countRpd2d = 0;
 									$scope.sumRpd2d = 0;
@@ -688,7 +705,7 @@
 		};
 		$scope.info = function(cateName, month) {
 			$scope.cateName = cateName;
-			$scope.month = (month<10)?'0'+month:month ;
+			$scope.month = (month < 10) ? '0' + month : month;
 			$scope.month += "/" + new Date().getFullYear();
 			$scope.countDetail = 0;
 			$http
