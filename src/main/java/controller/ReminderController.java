@@ -51,22 +51,23 @@ public class ReminderController {
 
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String EditReminderGet(ModelMap model, @PathVariable Integer id) {
-		Reminder reminder = reService.getReminder(id);
+		Reminder reminder = reService.getById(id);
 		model.addAttribute("reminder", reminder);
 		return "save-reminder";
 	}
-	
+
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
 	public String EditReminderPost(ModelMap model, @ModelAttribute Reminder reminder) {
 		reService.update(reminder, model);
 		return "save-reminder";
 	}
-	
+
 	@RequestMapping("/getReminder-byNow")
 	@ResponseBody
-	public List<Reminder> listReminder(){
+	public List<Reminder> listReminder() {
 		return reService.getByDay();
 	}
+
 	@ModelAttribute("categories")
 	public List<Category> getAllCates() {
 		return cateService.getAllCategories();

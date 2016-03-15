@@ -18,8 +18,6 @@ public interface ReminderService {
 
 	public List<Reminder> getByDay();
 	
-	public Reminder getReminder(int id);
-
 	void update(Reminder reminder, ModelMap model);
 
 	public Reminder getById(int id);
