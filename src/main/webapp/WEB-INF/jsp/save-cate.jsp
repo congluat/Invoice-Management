@@ -17,9 +17,6 @@
 <script type="text/javascript"
 	src="<c:url value='/resources/nicEditor/nicEdit.js'/>"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-	$("#errorname").hide();
-});
 	$(document).ready(function() {
 		bkLib.onDomLoaded(function() {
 			new nicEditor({
@@ -67,18 +64,27 @@ $(document).ready(function() {
 <c:if test="${edit}">
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#buttonclick").on("click", function() {			
+		$("#buttonclick").on("click", function(){		
+			var show ='';
 			var catename = $.trim($("#cateName").val());
+			if(catename == ""){
+				show+='<label style="color: red">Type the name!</label>';
+				$("#errorname").html(show);
+				setTimeout(function() {
+					$("#errorname").html('');
+				}, 3000);
+			}
 			var cateid = $.trim($("#cateId").val());
+			
 			$.ajax({
 				url : "Category/checkCateAndId/" + catename+"/"+cateid,
 				type : 'get',
 				success : function(data) {
 					if (data == false) {
 						show+='<label style="color: red">Name existed!</label>';
-						$("#errorname").show();
+						$("#errorname").html(show);
 						setTimeout(function() {
-							$("#errorname").hide();
+							$("#errorname").html('');
 						}, 3000);
 					}
 					else{
@@ -97,22 +103,32 @@ $(document).ready(function() {
 <c:if test="${!edit}">
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#buttonclick").on("click", function() {
+		$("#buttonclick").on("click", function(){
+			var show ='';
 			var catename = $.trim($("#cateName").val());
+			if(catename == ""){
+				show+='<label style="color: red">Type the name!</label>';
+				$("#errorname").html(show);
+				setTimeout(function() {
+					$("#errorname").html('');
+				}, 3000);
+				return;
+			}			
 			$.ajax({
 				url : "Category/checkCate/" + catename,
 				type : 'get',
 				success : function(data) {
 					if (data == true) {
-						$("#errorname").show();
+						show+='<label style="color: red">Name existed!</label>';
+						$("#errorname").html(show);
 						setTimeout(function() {
-							$("#errorname").hide();
+							$("#errorname").html('');							
 						}, 3000);
+						return;
 					}
 					else{
 						$("#NewCategoryForm").submit();
-					}
-						
+					}					
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					alert("some error");				
@@ -139,10 +155,8 @@ $(document).ready(function() {
 					<div class="form-group">
 						<label path="name" class="col-md-2 control-label">Name</label>
 						<div class="col-md-10">
-							<form:input class="form-control" path="name" required="required"
-								maxlength="100" placeholder="name" type="text" id="cateName" />
-								<div id="errorname">
-									<label style="color: red">Name existed!</label>
+							<form:input class="form-control" path="name" maxlength="100" placeholder="name" type="text" id="cateName" />
+								<div id="errorname">								
 								</div>
 							<c:if test='${not empty "${error}"}'>
 								<label style="color: red">${error}</label>
@@ -187,7 +201,7 @@ $(document).ready(function() {
 								class="btn  btn-raised btn-warning"">Cancel</a>
 						</div>
 						<div class="col-md-5">
-							<button type="submit" id="buttonclick" class="btn btn-raised btn-success">Submit</button>
+							<button id="buttonclick" class="btn btn-raised btn-success">Submit</button>
 						</div>
 			</div>
 		</div>
