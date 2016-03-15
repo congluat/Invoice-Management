@@ -191,11 +191,17 @@ public class InvoiceController {
 	public String Search(@RequestParam(value = "empname", required = false) String empname, @RequestParam(value = "page", required = false) String page, @PathVariable String attribute, ModelMap model) {		
 		List<Invoice> invoices = new ArrayList<Invoice>();
 		List<Invoice> invoiceTmp = new ArrayList<Invoice>();
-		invoiceService.getDataInvoiceAndTemp(invoices, invoiceTmp, attribute, empname, page);
+		int limitResultsPerPage = 5;
+		int numberPage = 9;
+		invoiceService.getDataInvoiceAndTemp(invoices, invoiceTmp, attribute, empname, page, limitResultsPerPage);
 		int startpage = (int) (Integer.parseInt(page) - 5 > 0?Integer.parseInt(page) - 5:1);
-	    double endpage = startpage + 10;
-	    if(endpage > (invoiceTmp.size()/3))
-	    	endpage = (int)(invoiceTmp.size()/3) + 1;
+	    double endpage = startpage + numberPage;
+	    if(endpage > (invoiceTmp.size()/limitResultsPerPage)){
+	    	if(invoiceTmp.size()%limitResultsPerPage != 0){
+	    		endpage = (int)(invoiceTmp.size()/limitResultsPerPage) + 1;
+	    	} else
+	    		endpage = (int)(invoiceTmp.size()/limitResultsPerPage);	
+	    }
 	    model.addAttribute("startpage",startpage);
 	    model.addAttribute("endpage",endpage);
 	    model.addAttribute("empname",empname);

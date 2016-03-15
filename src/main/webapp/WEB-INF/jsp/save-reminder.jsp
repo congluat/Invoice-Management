@@ -16,9 +16,19 @@
 				<fieldset>
 					<h4>${message}</h4>
 					<form:input type="hidden" path="id" />
-
-
-
+					<div class="form-group">
+						<label path="name" class="col-md-2 control-label">Category</label>
+						<div class="col-md-10">
+							<form:select path="category.id" items="${categories}"
+								itemValue="id" itemLabel="name" class="form-control" id="cateId"/>
+						</div>
+					</div>
+					<div class="form-group">
+							<label path="time" class="col-md-2 control-label">Time</label>
+							<div class="col-md-10">
+								<form:input class="form-control" path="time" type="number"  required="required" min="1" max="30"/>
+							</div>
+						</div>
 					<div class="form-group">
 						<label path="comment" class="col-md-2 control-label">Comment</label>
 
@@ -28,12 +38,7 @@
 							<span class="help-block">Comment</span>
 						</div>
 					</div>
-
-
-				</fieldset>
-			</form:form>
-			
-			<div class="form-group">
+					<div class="form-group">
 
 				<div class="col-md-2"></div>
 
@@ -49,6 +54,10 @@
 			</div>
 		</div>
 		<div class="col-md-2"></div>
-
+					
+				</fieldset>
+			</form:form>
+			
+			
 	</div>
 </div>

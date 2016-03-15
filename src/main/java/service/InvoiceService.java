@@ -37,12 +37,13 @@ public interface InvoiceService {
 
 	public boolean checkIsWarning(BigDecimal amount, Category category);
 
-	public List<Invoice> getInvoiceAttribute(String attribute, String empname, int page);
+	public List<Invoice> getInvoiceAttribute(String attribute, String empname);
 	
 	public List<Invoice> searchAnyString(String keyword);
 	
 	public List<Invoice> sortList(List<Invoice> tmp, String empname, String attribute);
 	
-	public void getDataInvoiceAndTemp(List<Invoice> invoices , List<Invoice> invoiceTmp , String attribute ,String empname ,String page);
-
+	public void getDataInvoiceAndTemp(List<Invoice> invoices , List<Invoice> invoiceTmp , String attribute ,String empname ,String page, int limitResultsPerPage);
+	
+	public List<Invoice> suggestSearchResult(String attribute, String empName);
 }
