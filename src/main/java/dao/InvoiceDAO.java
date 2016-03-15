@@ -32,7 +32,7 @@ public interface InvoiceDAO {
 	
 	public List<Invoice> getTop10(Category category);
 	
-	public List<Invoice> getInvoiceAttribute(String attribute, String empname, int page);
+	public List<Invoice> getInvoiceAttribute(String attribute, String empname);
 	
 	public List<Invoice> searchAnyString(String keyword);
 }
