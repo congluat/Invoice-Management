@@ -213,6 +213,7 @@ public class InvoiceController {
 		model.addAttribute("endpage", endpage);
 		model.addAttribute("empname", empname);
 		model.addAttribute("attribute", attribute);
+		model.addAttribute("currentPage", page);
 		model.addAttribute("invoices", invoices);
 		model.addAttribute("title", "Invoices");
 		return "invoices_new";
