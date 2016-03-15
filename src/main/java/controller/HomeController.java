@@ -46,6 +46,8 @@ public class HomeController {
 		model.addAttribute("title", "Dashboard");
 		return "home";
 	}
+	
+
 
 	@RequestMapping(value = "getAmountThisMonth/{time}", method = RequestMethod.GET)
 	@ResponseBody

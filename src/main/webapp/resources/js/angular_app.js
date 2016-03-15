@@ -11,11 +11,23 @@
 
 	app.controller("HomeController", function($scope, $http, $window) {
 
+		
+		
+		$scope.getRecent = function(){
+			$http.get("Invoice/getRecentInvoices").success(function(response) {
+				$scope.recentInvoices = response;
+				console.log($scope.reminders);
+			});
+			var recentH = $("#recent").offsetHeight;
+			console.log(recentH);
+		};
+		
 		$scope.getReminder = function() {
 			$http.get("Reminder/getReminder-byNow").success(function(response) {
 				$scope.reminders = response;
 				console.log($scope.reminders);
 			});
+			
 		};
 
 		$scope.$watch(function() {
@@ -24,6 +36,7 @@
 			$scope.drawPieChart();
 			$scope.drawDialyChart();
 		});
+		
 		$scope.drawDialyChart = function() {
 			var now = new Date();
 			var month = parseInt(now.getMonth()) + 1;

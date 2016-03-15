@@ -245,4 +245,16 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		return deduped;
 	}
 
+	@Override
+	public List<Invoice> getTop5Invoices() {
+		Session session = sessionFactory.openSession();
+		String hql = "FROM Invoice ORDER BY time DESC";
+		Query query = session.createQuery(hql);
+		query.setMaxResults(10);
+		
+		List<Invoice> list = query.list();
+		session.close();
+		return list;
+	}
+
 }
