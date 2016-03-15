@@ -73,8 +73,6 @@ public class CategoryController {
 	public String UpdateCategoryById(@ModelAttribute Category category, @RequestParam("file") MultipartFile file,
 			ModelMap model) {
 		model.addAttribute("edit", true);
-
-		System.out.println("description"+category.getDescription());
 		return cateService.update(category, file, model);
 	}
 

@@ -1,10 +1,12 @@
 package service;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
 import dao.ReminderDAO;
 import model.Reminder;
@@ -30,8 +32,9 @@ public class ReminderServiceImpl implements ReminderService {
 	}
 
 	@Override
-	public void udpate(Reminder reminder) {
-		dao.udpate(reminder);
+	public void update(Reminder reminder, ModelMap model) {
+		
+		dao.update(reminder);
 	}
 
 	@Override
@@ -46,8 +49,8 @@ public class ReminderServiceImpl implements ReminderService {
 	}
 
 	@Override
-	public List<Reminder> getByDay(int day) {
-
+	public List<Reminder> getByDay() {
+		int day = Calendar.getInstance().get(Calendar.DATE);
 		return dao.getByDay(day);
 	}
 
