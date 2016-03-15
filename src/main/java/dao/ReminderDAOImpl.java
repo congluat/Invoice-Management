@@ -13,7 +13,7 @@ import model.Reminder;
 @Repository
 public class ReminderDAOImpl implements ReminderDAO {
 
-	@Autowired
+	
 	private SessionFactory sessionFactory;
 
 	public SessionFactory getSessionFactory() {
