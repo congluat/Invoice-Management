@@ -13,7 +13,6 @@ import model.Reminder;
 @Repository
 public class ReminderDAOImpl implements ReminderDAO {
 
-	
 	private SessionFactory sessionFactory;
 
 	public SessionFactory getSessionFactory() {
@@ -82,6 +81,14 @@ public class ReminderDAOImpl implements ReminderDAO {
 		List<Reminder> list = session.createQuery("FROM Reminder WHERE TIME =" + day).list();
 		session.close();
 		return list;
+	}
+
+	@Override
+	public Reminder getById(int id) {
+		Session session = sessionFactory.openSession();
+		Reminder reminder = (Reminder) session.get(Reminder.class, id);
+		session.close();
+		return reminder;
 	}
 
 }

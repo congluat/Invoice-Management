@@ -41,7 +41,7 @@ public class ReminderServiceImpl implements ReminderService {
 
 	@Override
 	public List<Reminder> getAll() {
-		
+
 		return dao.getAll();
 	}
 
@@ -49,6 +49,11 @@ public class ReminderServiceImpl implements ReminderService {
 	public List<Reminder> getByDay(int day) {
 
 		return dao.getByDay(day);
+	}
+
+	@Override
+	public Reminder getById(int id) {
+		return dao.getById(id);
 	}
 
 }

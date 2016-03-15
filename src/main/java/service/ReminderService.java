@@ -5,7 +5,7 @@ import java.util.List;
 import model.Reminder;
 
 public interface ReminderService {
-	
+
 	public void create(Reminder reminder);
 
 	public void udpate(Reminder reminder);
@@ -15,4 +15,6 @@ public interface ReminderService {
 	public List<Reminder> getAll();
 
 	public List<Reminder> getByDay(int day);
+
+	public Reminder getById(int id);
 }
