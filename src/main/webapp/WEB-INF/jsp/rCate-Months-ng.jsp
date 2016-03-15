@@ -3,56 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
+<script src="<c:url value='/resources/js/validate_date.js'/>"></script>
 
-<script type="text/javascript">
-	$(function() {
-		$(".datepicker").datepicker();
-		$(".datepicker_select").datepicker({
-			dateFormat : 'mm/yy'
-		});
-		$(".datepicker_selectyear").datepicker({
-			dateFormat : 'yy'
-		});
-	})
-
-						
-	function ValidateDate(dtValue, dtId) {
-
-		var dtRegex = new RegExp(/\b\d{1,2}[\/-]\d{1,2}[\/-]\d{4}\b/);
-		if (dtRegex.test(dtValue)) {
-			$("button[id='" + dtId + "']").removeAttr("disabled");
-			$('#error-'+dtId).html('');
-		} else {
-			$('#error-'+dtId).html("Format of date must be dd/mm/yyyy!");
-			$("button[id='" + dtId + "']").attr('disabled', 'disabled');
-		}
-
-	}
-	function ValidateMonth(dtValue, dtId) {
-
-		var dtRegex = new RegExp(/\b\d{1,2}[\/-]\d{4}\b/);
-		if (dtRegex.test(dtValue)) {
-			$("button[id='" + dtId + "']").removeAttr("disabled");
-			$('#error-'+dtId).html('');
-		} else {
-			$("button[id='" + dtId + "']").attr('disabled', 'disabled');
-			$('#error-'+dtId).html('Format of month must be mm/yyyy!');
-		}
-
-	}
-	function ValidateYear(dtValue, dtId) {
-
-		var dtRegex = new RegExp(/\b\d{4}\b/);
-		if (dtRegex.test(dtValue)) {
-			$("button[id='" + dtId + "']").removeAttr("disabled");
-			$('#error-'+dtId).html('');
-		} else {
-			$("button[id='" + dtId + "']").attr('disabled', 'disabled');
-			$('#error-'+dtId).html('Format of year must be yyyy!');
-		}
-
-	}
-</script>
 <style type="text/css">
 .red {
 	color: red;
@@ -84,8 +36,8 @@
 						<tr>
 							<th>CateName</th>
 							<th>Month</th>
-							<th>Count</th>
-							<th>SUM</th>
+							<th>Number of Invoices</th>
+							<th>SUMARY</th>
 							<th></th>
 						</tr>
 						<c:forEach var="array" items="${datalist}">
@@ -95,7 +47,9 @@
 								<td>${array[2]}</td>
 								<td><fmt:formatNumber value="${array[3]}"
 										minFractionDigits="2" maxFractionDigits="2" /></td>
-								<td><a ng-click="info('${array[0]}',${array[1]})">Detail</a></td>
+								<td><a href="" ng-click="info('${array[0]}',${array[1]})">
+								 <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+								Detail</a></td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -124,6 +78,7 @@
 						</div>
 						
 					</div>
+					<div id="empty-invoice-date"></div>
 					<div class="row" ng-show="showtableReportByDate">
 						<h2>TABLE REPORT</h2>
 						<div class="table-responsive" style="border-left: 1px solid #ddd">
@@ -145,7 +100,8 @@
 										<td>{{data[1]}}</td>
 										<td>{{data[3] | currency}}</td>
 										<td>{{data[2] | currency}}</td>
-										<td><a ng-click="detailByDate(data[0])">Detail</a></td>
+										<td><a href="" ng-click="detailByDate(data[0])">
+										<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Detail</a></td>
 									</tr>
 									<tr>
 										<td colspan=3></td>
@@ -185,6 +141,7 @@
 								class="btn btn-primary">SEARCH</button>
 						</div>
 					</div>
+					<div id="empty-invoice-month"></div>
 					<div class="row" ng-show="showtableReportByMonth">
 						<h2>TABLE REPORT</h2>
 						<div class="table-responsive" style="border-left: 1px solid #ddd">
@@ -206,7 +163,8 @@
 										<td>{{data[1]}}</td>
 										<td>{{data[3] | currency}}</td>
 										<td>{{data[2] | currency}}</td>
-										<td><a ng-click="detail(data[0])">Detail</a></td>
+										<td><a href="" ng-click="detail(data[0])">
+										<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Detail</a></td>
 									</tr>
 									<tr>
 										<td colspan=3></td>
@@ -242,10 +200,11 @@
 								<div id="error-selectYear"></div>
 						</div>
 						<div class="form-group">
-							<button type="button" ng-click="getReportByYear()"
+							<button type="button" ng-click="getReportByYear()"  disabled
 								id="selectYear" class="btn btn-primary">SEARCH</button>
 						</div>
 					</div>
+					<div id="empty-invoice-year"></div>
 					<div class="row" ng-show="showtableReportbyYear">
 						<h2>TABLE REPORT</h2>
 						<div class="table-responsive" style="border-left: 1px solid #ddd">
@@ -295,19 +254,22 @@
 				<div class="panel-body">
 					<div class="col-md-3">
 						<div class="form-group">
-							<label>From Date: </label> <input type="text"
-								class="form-control datepicker" ng-model="fromdate">
+							<label>Start Date: </label> <input type="text" id="startdate"
+								class="form-control datepicker" ng-model="startdate" onchange="ValidateDate(this.value,this.id)" required>
+							<div id="error-startdate"></div>
 						</div>
 
 						<div class="form-group">
-							<label>To Date: </label> <input type="text"
-								class="form-control datepicker" ng-model="todate">
+							<label>End Date: </label> <input type="text" id="enddate"
+								class="form-control datepicker" ng-model="enddate" onchange="ValidateDate(this.value,this.id)" required>
+						<div id="error-enddate"></div>
 						</div>
 						<div class="form-group">
-							<button type="button" ng-click="getReportd2d()"
+							<button type="button" ng-click="getReportd2d()" id="d2d"
 								class="btn btn-primary">SEARCH</button>
 						</div>
 					</div>
+					<div id="empty-invoice-d2d"></div>
 					<div class="row" ng-show="showtableReportd2d">
 						<h2>TABLE REPORT</h2>
 						<div class="table-responsive" style="border-left: 1px solid #ddd">
@@ -329,7 +291,8 @@
 										<td>{{data[1]}}</td>
 										<td>{{data[3] | currency}}</td>
 										<td>{{data[2] | currency}}</td>
-										<td><a ng-click="detaild2d(data[0])">Detail</a></td>
+										<td><a href="" ng-click="detaild2d(data[0])">
+										<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Detail</a></td>
 									</tr>
 									<tr>
 										<td colspan=3></td>
@@ -361,7 +324,7 @@
 				<div class="panel-body">
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="sel1">Select list:</label> <select
+							<label for="sel1">Select Category:</label> <select
 								class="form-control" ng-model="categoryM2M">
 								<c:forEach var="c" items="${categories}">
 									<option value="${c.id}" ng-value="${c.id}">${c.name}</option>
@@ -369,19 +332,22 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label>From Date: </label> <input type="text"
-								class="form-control datepicker" ng-model="startdate">
+							<label>Start Date: </label> <input type="text" id="fromdate"
+								class="form-control datepicker" ng-model="fromdate" onchange="ValidateDate(this.value, this.id)">
+							<div id="error-fromdate"></div>
 						</div>
 
 						<div class="form-group">
-							<label>To Date: </label> <input type="text"
-								class="form-control datepicker" ng-model="endate">
+							<label>End Date: </label> <input type="text" id ="endate"
+								class="form-control datepicker" ng-model="endate" onchange="ValidateDate(this.value,this.id)">
+							<div id="error-endate"></div>
 						</div>
 						<div class="form-group">
 							<button type="button" ng-click="getInvoiced2d()"
 								class="btn btn-primary">SEARCH</button>
 						</div>
 					</div>
+					<div id="empty-invoice-CatD2D"></div>
 					<div class="row" ng-show="showtableM2M">
 						<h2>Invoice Infomation</h2>
 						<div class="table-responsive" style="border-left: 1px solid #ddd">
@@ -404,7 +370,7 @@
 										<td>{{invoice.name}}</td>
 										<td>{{invoice.time | date:"dd/MM/yyyy | h:mma"}}</td>
 										<td>{{invoice.place}}</td>
-										<td>{{invoice.comment}}</td>
+										<td ng-bind-html="invoice.comment | unsafe"></td>
 										<td>{{invoice.amount | currency}}</td>
 
 
@@ -439,7 +405,7 @@
 				<div class="panel-body">
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="sel1">Select list:</label> <select
+							<label for="sel1">Select Category:</label> <select
 								class="form-control" ng-model="categoryCM">
 								<c:forEach var="c" items="${categories}">
 									<option value="${c.id}" ng-value="${c.id}">${c.name}</option>
@@ -448,13 +414,14 @@
 						</div>
 						<div class="form-group">
 							<label for="sel1">Input Number of Month before: </label> <input
-								type="number" name="month" value="1" ng-model="month">
+								type="number" name="month" value="1" min="1" ng-model="month">
 						</div>
 						<div class="form-group">
 							<button type="button" ng-click="getInvoice()"
 								class="btn btn-primary">SEARCH</button>
 						</div>
 					</div>
+					<div id="empty-invoice-CatM"></div>
 					<div class="row" ng-show="showtableCM">
 						<h2>Invoice Infomation</h2>
 						<div class="table-responsive" style="border-left: 1px solid #ddd">
@@ -477,7 +444,7 @@
 										<td>{{invoice.name}}</td>
 										<td>{{invoice.time | date:"dd/MM/yyyy | h:mma"}}</td>
 										<td>{{invoice.place}}</td>
-										<td>{{invoice.comment}}</td>
+										<td ng-bind-html="invoice.comment | unsafe"></td>
 										<td>{{invoice.amount | currency}}</td>
 
 

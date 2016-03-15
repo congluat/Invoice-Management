@@ -20,14 +20,12 @@
 		<!--<property name="url" value="jdbc:mysql://20.203.139.12:3306/InvoiceManagement?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" 
 			/> -->
 		<property name="url"
-			value="jdbc:mysql://20.203.139.12:3306/InvoiceManagement?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" />
+			value="jdbc:mysql://localhost:3306/InvoiceManagement?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
-		<property name="hibernate.connection.useUnicode" value="true">
-		</property>
-		<property name="hibernate.connection.characterEncoding"
-			value="UTF-8">
-		</property>
+		<!-- <property name="url" value="jdbc:mysql://localhost:3306/InvoiceManagement?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" 
+			/> <property name="username" value="root" /> <property name="password" value="root" 
+			/> -->
 	</bean>
 
 	<!-- Hibernate session factory -->
@@ -54,7 +52,9 @@
 		base-package="controller, dao, service, interceptor,scheduledtask" />
 
 	<mvc:annotation-driven />
-	
+
+
+
 	<!-- <mvc:annotation-driven> <mvc:message-converters register-defaults="true"> 
 		<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"> 
 		<property name="objectMapper" ref="accomodationObjectMapper" /> </bean> </mvc:message-converters> 
@@ -90,18 +90,19 @@
 	<bean id="photoDao" class="dao.PhotoDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	<bean id="photoService" class="service.PhotoServiceImpl">
+	</bean>
+	
 	<bean id="reportDao" class="dao.ReportDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	<bean id="photoService" class="service.PhotoServiceImpl">
-	</bean>
-
 	<bean id="reportService" class="service.ReportServiceImpl">
 	</bean>
-
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManagement">
-		<property name="dataSource" ref="dataSourceOrg" />
+	
+	<bean id="reminderDao" class="dao.ReminderDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="reminderService" class="service.ReminderServiceImpl">
 	</bean>
 
 
@@ -141,8 +142,9 @@
 		fixed-delay="5000" /> </task:scheduled-tasks> -->
 	<bean id="CleanupImages" class="scheduledtask.CleanupImages" />
 	<task:scheduled-tasks>
-		<!-- <task:scheduled ref="CleanupImages" method="run" cron="*/10 * * * * *" /> -->
-			<task:scheduled ref="CleanupImages" method="run"
+		<!-- <task:scheduled ref="CleanupImages" method="run" cron="*/10 * * * 
+			* *" /> -->
+		<task:scheduled ref="CleanupImages" method="run"
 			cron="59 59 23 * * *" />
 	</task:scheduled-tasks>
 </beans>

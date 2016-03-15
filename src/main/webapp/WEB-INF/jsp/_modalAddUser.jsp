@@ -4,7 +4,16 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
 <div ng-controller="UserController as userCtrl">
-
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#modal').on('show.bs.modal', function() {
+				$('.modal').modal({
+					backdrop : 'static',
+					keyboard : false
+				})
+			})
+		});
+	</script>
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">

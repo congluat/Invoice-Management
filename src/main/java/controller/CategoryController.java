@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -38,8 +37,7 @@ public class CategoryController {
 
 	@RequestMapping(value = "/getAllCategories", method = RequestMethod.GET)
 	public @ResponseBody List<Category> getAllCategories() throws IOException {
-		List<Category> list = new ArrayList<Category>();
-
+		List<Category> list;
 		list = cateService.getAllCategories();
 		for (Category category : list) {
 			System.out.println("category: " + category.getName());
@@ -53,7 +51,7 @@ public class CategoryController {
 		return list;
 	}
 
-	@RequestMapping(value = {"/", "/listCategories"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/", "/listCategories" }, method = RequestMethod.GET)
 	public String listCategories(ModelMap model) {
 		model.addAttribute("categories", cateService.getAllCategories());
 		model.addAttribute("title", "Category");
@@ -66,7 +64,7 @@ public class CategoryController {
 		Category cate = cateService.getById(id);
 		model.addAttribute("category", cate);
 		model.addAttribute("title", cate.getName());
-		model.addAttribute("edit",true);
+		model.addAttribute("edit", true);
 
 		return "save-cate";
 	}
@@ -74,7 +72,7 @@ public class CategoryController {
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
 	public String UpdateCategoryById(@ModelAttribute Category category, @RequestParam("file") MultipartFile file,
 			ModelMap model) {
-		model.addAttribute("edit",true);
+		model.addAttribute("edit", true);
 		return cateService.update(category, file, model);
 	}
 
@@ -83,7 +81,7 @@ public class CategoryController {
 		Category category = new Category();
 		model.addAttribute("category", category);
 		model.addAttribute("title", "Add category");
-		model.addAttribute("edit",false);
+		model.addAttribute("edit", false);
 		return "save-cate";
 	}
 
@@ -97,10 +95,12 @@ public class CategoryController {
 	public boolean checkCateAvailable(@PathVariable String name, HttpServletRequest request) {
 		return cateService.checkCateAvailable(name);
 	}
+
 	@RequestMapping(value = "/checkCateAndId/{name}/{id}")
 	@ResponseBody
-	public boolean checkCateAndIdAvailable(@PathVariable("name") String name,@PathVariable("id") Integer id, HttpServletRequest request) {
-		return cateService.checkCateAndIdAvailable(name,id);
+	public boolean checkCateAndIdAvailable(@PathVariable("name") String name, @PathVariable("id") Integer id,
+			HttpServletRequest request) {
+		return cateService.checkCateAndIdAvailable(name, id);
 	}
 
 }

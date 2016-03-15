@@ -14,11 +14,11 @@
 	width: 100px;
 }
 
-.add-button-area a i {
+/* .add-button-area a i {
 	color: white;
 	vertical-align: middle;
 }
-
+ */
 #add-button {
 	background: #337ab7;
 	position: absolute;
@@ -207,6 +207,10 @@ a:hover {
 	z-index: 1000;
 }
 
-td {
-	white-space: nowrap;
+.rad-sidebar {
+	z-index: 1000;
+}
+
+.panel-primary .panel-title {
+	color: #FFF;
 }

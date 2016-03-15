@@ -24,11 +24,11 @@ public class UserService2Test {
 	@Test
 	public void addUser2Test() {
 		User user = new User();
-		user.setName("Ngo");
+		user.setName("Luat");
 		user.setId(1);
 		user.setAge(25);
 		service.create(user);
-		assertEquals("Ngo Lam", service.getUser().getName());
+		assertEquals("Cong Luat", service.getUser().getName());
 	}
 	
 	@Test

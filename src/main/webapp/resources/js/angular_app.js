@@ -10,6 +10,14 @@
 	var app = angular.module('app', [ 'googlechart' ]);
 
 	app.controller("HomeController", function($scope, $http, $window) {
+
+		$scope.getReminder = function() {
+			$http.get("Reminder/getReminder-byNow").success(function(response) {
+				$scope.reminders = response;
+				console.log($scope.reminders);
+			});
+		};
+
 		$scope.$watch(function() {
 			return $window.innerWidth;
 		}, function(value) {
@@ -112,11 +120,11 @@
 						} else if (response.length > 6) {
 							response = response.substring(0,
 									response.length - 6);
-							response = response + " milions";
+							response = response + " M";
 						} else if (response.length > 3) {
 							response = response.substring(0,
 									response.length - 3);
-							response = response + " thousands";
+							response = response + " K";
 						}
 
 						$scope.amount = response;
@@ -197,104 +205,85 @@
 
 	});
 
-	app
-			.controller(
-					'InvoiceController',
-					function($scope, $http) {
+	app.controller('InvoiceController', function($scope, $http) {
 
-						$scope.deleteFunc = function(id) {
-							$scope.deleteId = id;
+		$scope.deleteFunc = function(id) {
+			$scope.deleteId = id;
 
-						};
+		};
+		var now = new Date();
+		var month = parseInt(now.getMonth()) + 1;
+		var year = parseInt(now.getYear()) + 1900;
+		$scope.init = function() {
+			/*
+			 * var now = new Date(); var month = parseInt(now.getMonth()) + 1;
+			 * var year = parseInt(now.getYear()) + 1900; console.log("month " +
+			 * month); console.log("year " + year);
+			 */
 
-						var now = new Date();
-						var month = parseInt(now.getMonth()) + 1;
-						var year = parseInt(now.getYear()) + 1900;
-						console.log("month " + month);
-						console.log("year " + year);
-
-						$scope.invoicesTmp = [];
-						$scope.currentIndex = 0;
+			$scope.invoices = [];
+			$scope.listByMonth = false;
+			$scope.month = month + "/" + year;
+			$http.get("Invoice/getByMonth/" + month + "-" + year).success(
+					function(response) {
+						$scope.listByMonth = true;
 						$scope.invoices = [];
-						$scope.listByMonth = false;
-						$scope.month = month + "/" + year;
+						$scope.invoices = response;
+						console.log("INVOICE CTRL INIT");
+						console.log("invoice ");
+						console.log($scope.invoices);
 
-						$http
-								.get("Invoice/getByMonth/" + month + "-" + year)
-								.success(
-										function(response) {
-											$scope.listByMonth = true;
-											// $scope.invoices.push(response);
-											$scope.invoicesTmp = response;
-											for (var i = 0; i < 3; i++) {
-												$scope.invoices
-														.push($scope.invoicesTmp[i]);
-												$scope.currentIndex = i;
-											}
-											console.log("invoice ");
-											console.log($scope.invoices[0]);
-
-										});
-
-						$scope.loadMore = function() {
-							for (var i = $scope.currentIndex + 1; i < $scope.currentIndex + 3; i++) {
-								if (i == $scope.invoicesTmp.length)
-									break;
-								$scope.invoices.push($scope.invoicesTmp[i]);
-								$scope.currentIndex = i;
-							}
-						}
-
-						$scope.onSearchChange = function(searchString) {
-							console.log("search: " + searchString);
-							console.log("list by month: " + $scope.listByMonth);
-
-							if (searchString.length != 0) {
-								$http.get(
-										"Invoice/searchAnyString/"
-												+ searchString).success(
-										function(response) {
-											$scope.listByMonth = false;
-											// $scope.invoices.push(response);
-											$scope.month = searchString;
-											$scope.invoices = response;
-											console.log("invoice ");
-											console.log(response);
-										}).error(function(error) {
-									$scope.invoices = error;
-								});
-
-							}
-
-							else {
-								if (searchString.length == 0) {
-									$scope.month = month + "/" + year;
-									$http
-											.get(
-													"Invoice/getByMonth/"
-															+ month + "-"
-															+ year)
-											.success(
-													function(response) {
-														$scope.listByMonth = true;
-														// $scope.invoices.push(response);
-														$scope.invoices = response;
-														console.log("invoice ");
-														console
-																.log($scope.invoices[0]);
-													});
-								}
-							}
-						};
-						this.getInvoiceByMonth = function() {
-
-							$http.get("Invoice/getByMonth/").success(
-									function(response) {
-										console.log(response);
-									});
-						};
-						// Search Invoice
 					});
+		};
+
+		$scope.itemPerLoad = 10;
+		$scope.totalDisplayed = $scope.itemPerLoad;
+		$scope.MoreInvoices = "More Invoice...";
+		$scope.loadMore = function() {
+			$scope.totalDisplayed += $scope.itemPerLoad;
+			if ($scope.totalDisplayed >= $scope.invoices.length)
+				$scope.MoreInvoices = "No More Invoice";
+			else
+				$scope.MoreInvoices = "More Invoice...";
+		}
+
+		$scope.onSearchChange = function(searchString) {
+			console.log("search: " + searchString);
+			console.log("list by month: " + $scope.listByMonth);
+
+			if (searchString.length != 0) {
+				$http.get("Invoice/searchAnyString/" + searchString).success(
+						function(response) {
+							// $scope.listByMonth = false;
+							// $scope.invoices.push(response);
+							$scope.month = searchString;
+							$scope.invoices = response;
+							console.log("INVOICE CTRL ON CHANGE SEARCH");
+							console.log("invoice ");
+							console.log(response);
+						}).error(function(error) {
+					// $scope.invoices = error;
+				});
+
+			}
+
+			else {
+				if (searchString.length == 0) {
+					console.log("SEARCH LENGTH = 0 ");
+
+					$scope.init();
+
+				}
+			}
+		};
+		/*
+		 * this.getInvoiceByMonth = function() {
+		 * 
+		 * $http.get("Invoice/getByMonth/").success(function(response) {
+		 * console.log(response); }); };
+		 */
+
+	});
 
 	app.controller('InvoiceDangerController', function($scope, $http) {
 
@@ -313,6 +302,7 @@
 		$scope.listByMonth = false;
 		$scope.month = month + "/" + year;
 
+		// get warning Invoice
 		$http.get("Invoice/getDangerByMonth/" + month + "-" + year).success(
 				function(response) {
 					$scope.listByMonth = true;
@@ -320,6 +310,17 @@
 					$scope.invoices_danger = response;
 					console.log(response);
 				});
+
+		$scope.itemPerLoad = 10;
+		$scope.totalDisplayed = $scope.itemPerLoad;
+		$scope.MoreInvoices = "More Invoice...";
+		$scope.loadMore = function() {
+			$scope.totalDisplayed += $scope.itemPerLoad;
+			if ($scope.totalDisplayed >= $scope.invoices_danger.length)
+				$scope.MoreInvoices = "No More Invoice";
+			else
+				$scope.MoreInvoices = "More Invoice...";
+		};
 
 		this.getInvoiceByMonth = function() {
 
@@ -430,6 +431,7 @@
 				$('#myModal').modal('hide');
 			} else {
 				$('#myModal').modal('show');
+
 			}
 
 			console.log(response);
@@ -458,6 +460,7 @@
 							$scope.sumCM = 0;
 							var data = response.data;
 							if (data.length > 0) {
+								$("#empty-invoice-CatM").html('');
 								$scope.showtableCM = true;
 								$scope.invoicesCM = data;
 								$scope.countCM = data.length;
@@ -465,6 +468,8 @@
 									$scope.sumCM += item.amount;
 								})
 							} else {
+								$("#empty-invoice-CatM").html(
+										'<b>Not Existing Invoice!</b>');
 								$scope.showtableCM = false;
 								$scope.countCM = 0;
 								$scope.sumCM = 0;
@@ -475,30 +480,43 @@
 		};
 
 		$scope.getInvoiced2d = function() {
-			if ($scope.categoryM2M == null || $scope.startdate == null
+			if ($scope.categoryM2M == null || $scope.fromdate == null
 					|| $scope.endate == null || $scope.categoryM2M == ''
-					|| $scope.startdate == '' || $scope.endate == '') {
-				alert("Please select Category and startdate and endate!");
+					|| $scope.fromdate == '' || $scope.endate == '') {
+				alert("Please select all filed!");
 			} else {
+				var startDate = new Date($scope.fromdate);
+				var endDate = new Date($scope.endate);
+				if (startDate > endDate) {
+					$("#error-endate").html(
+							'EndDate must be greater than Startdate!');
+					$('#error-endate').css("color", "red");
+					return false;
+				}
+				$("#error-endate").html('');
 				$http.get(
 						"Report/cateMd2d?cateId=" + $scope.categoryM2M
-								+ "&startdate=" + $scope.startdate + "&endate="
-								+ $scope.endate).then(function(response) {
-					$scope.sumM2M = 0;
-					var data = response.data;
-					if (data.length > 0) {
-						$scope.showtableM2M = true;
-						$scope.invoicesM2M = data;
-						$scope.countM2M = data.length;
-						$(data).each(function(i, item) {
-							$scope.sumM2M += item.amount;
-						})
-					} else {
-						$scope.showtableM2M = false;
-						$scope.countM2M = 0;
-						$scope.sumM2M = 0;
-					}
-				});
+								+ "&startdate=" + $scope.fromdate + "&endate="
+								+ $scope.endate).then(
+						function(response) {
+							$scope.sumM2M = 0;
+							var data = response.data;
+							if (data.length > 0) {
+								$("#empty-invoice-CatD2D").html('');
+								$scope.showtableM2M = true;
+								$scope.invoicesM2M = data;
+								$scope.countM2M = data.length;
+								$(data).each(function(i, item) {
+									$scope.sumM2M += item.amount;
+								})
+							} else {
+								$("#empty-invoice-CatD2D").html(
+										'<b>Not Existing Invoice!</b>');
+								$scope.showtableM2M = false;
+								$scope.countM2M = 0;
+								$scope.sumM2M = 0;
+							}
+						});
 			}
 		};
 
@@ -508,22 +526,26 @@
 			} else {
 				$http.get(
 						"Report/getReportByDate?selectdate="
-								+ $scope.selectdate).then(function(response) {
-					$scope.sumRpByDate = 0;
-					var data = response.data;
-					if (data.length > 0) {
-						$scope.showtableReportByDate = true;
-						$scope.dataReportByDate = data;
-						$scope.countRpByDate = data.length;
-						$(data).each(function(i, item) {
-							$scope.sumRpByDate += item[2];
-						})
-					} else {
-						$scope.showtableReportByDate = false;
-						$scope.countRpByDate = 0;
-						$scope.sumRpByDate = 0;
-					}
-				});
+								+ $scope.selectdate).then(
+						function(response) {
+							$scope.sumRpByDate = 0;
+							var data = response.data;
+							if (data.length > 0) {
+								$("#empty-invoice-date").html('');
+								$scope.showtableReportByDate = true;
+								$scope.dataReportByDate = data;
+								$scope.countRpByDate = data.length;
+								$(data).each(function(i, item) {
+									$scope.sumRpByDate += item[2];
+								})
+							} else {
+								$("#empty-invoice-date").html(
+										'<b>Not Existing Invoice!</b>');
+								$scope.showtableReportByDate = false;
+								$scope.countRpByDate = 0;
+								$scope.sumRpByDate = 0;
+							}
+						});
 			}
 		};
 
@@ -533,22 +555,26 @@
 			} else {
 				$http.get(
 						"Report/getReportByMonth?selectmonth="
-								+ $scope.selectmonth).then(function(response) {
-					$scope.sumRp = 0;
-					var data = response.data;
-					if (data.length > 0) {
-						$scope.showtableReportByMonth = true;
-						$scope.dataReportByMonth = data;
-						$scope.countRpByMonth = data.length;
-						$(data).each(function(i, item) {
-							$scope.sumRpByMonth += item[2];
-						})
-					} else {
-						$scope.showtableReportByMonth = false;
-						$scope.countRpByMonth = 0;
-						$scope.sumRpByMonth = 0;
-					}
-				});
+								+ $scope.selectmonth).then(
+						function(response) {
+							$scope.sumRp = 0;
+							var data = response.data;
+							if (data.length > 0) {
+								$("#empty-invoice-month").html('');
+								$scope.showtableReportByMonth = true;
+								$scope.dataReportByMonth = data;
+								$scope.countRpByMonth = data.length;
+								$(data).each(function(i, item) {
+									$scope.sumRpByMonth += item[2];
+								})
+							} else {
+								$("#empty-invoice-month").html(
+										'<b>Not Existing Invoice!</b>');
+								$scope.showtableReportByMonth = false;
+								$scope.countRpByMonth = 0;
+								$scope.sumRpByMonth = 0;
+							}
+						});
 			}
 		};
 
@@ -558,49 +584,67 @@
 			} else {
 				$http.get(
 						"Report/getReportByYear?selectyear="
-								+ $scope.selectyear).then(function(response) {
-					$scope.sumRpbyYear = 0;
-					var data = response.data;
-					if (data.length > 0) {
-						$scope.showtableReportbyYear = true;
-						$scope.dataReportbyYear = data;
-						$scope.countRpbyYear = data.length;
-						$(data).each(function(i, item) {
-							$scope.sumRpbyYear += item[2];
-						})
-					} else {
-						$scope.showtableReportbyYear = false;
-						$scope.countRpbyYear = 0;
-						$scope.sumRpbyYear = 0;
-					}
-				});
-			}
-		};
-		$scope.getReportd2d = function() {
-			if ($scope.fromdate == null || $scope.fromdate == ''
-					|| $scope.todate == null || $scope.todate == '') {
-				alert("Please select date!");
-			} else {
-				$http.get(
-						"Report/getReportd2d?fromdate=" + $scope.fromdate
-								+ "&todate=" + $scope.todate).then(
+								+ $scope.selectyear).then(
 						function(response) {
-							$scope.sumRpd2d = 0;
+							$scope.sumRpbyYear = 0;
 							var data = response.data;
 							if (data.length > 0) {
-								$scope.showtableReportd2d = true;
-								$scope.dataReportd2d = data;
-								$scope.countRpd2d = data.length;
+								$("#empty-invoice-year").html('');
+								$scope.showtableReportbyYear = true;
+								$scope.dataReportbyYear = data;
+								$scope.countRpbyYear = data.length;
 								$(data).each(function(i, item) {
-									$scope.sumRpd2d += item[2];
+									$scope.sumRpbyYear += item[2];
 								})
 							} else {
-								$scope.showtableReportd2d = false;
-								$scope.countRpd2d = 0;
-								$scope.sumRpd2d = 0;
+								$("#empty-invoice-year").html(
+										'<b>Not Existing Invoice!</b>');
+								$scope.showtableReportbyYear = false;
+								$scope.countRpbyYear = 0;
+								$scope.sumRpbyYear = 0;
 							}
 						});
 			}
+		};
+		$scope.getReportd2d = function() {
+			if ($scope.startdate == null || $scope.startdate == ''
+					|| $scope.enddate == null || $scope.enddate == '') {
+				alert("Please select date!");
+			} else {
+				var startDate = new Date($scope.startdate);
+				var endDate = new Date($scope.enddate);
+				if (startDate > endDate) {
+					$("#error-enddate").html(
+							'EndDate must be greater than Startdate!');
+					$('#error-enddate').css("color", "red");
+					return false;
+				} else {
+					$("#error-enddate").html('');
+					$http.get(
+							"Report/getReportd2d?fromdate=" + $scope.startdate
+									+ "&todate=" + $scope.enddate).then(
+							function(response) {
+								$scope.sumRpd2d = 0;
+								var data = response.data;
+								if (data.length > 0) {
+									$("#empty-invoice-d2d").html('');
+									$scope.showtableReportd2d = true;
+									$scope.dataReportd2d = data;
+									$scope.countRpd2d = data.length;
+									$(data).each(function(i, item) {
+										$scope.sumRpd2d += item[2];
+									})
+								} else {
+									$("#empty-invoice-d2d").html(
+											'<b>Not Existing Invoice!</b>');
+									$scope.showtableReportd2d = false;
+									$scope.countRpd2d = 0;
+									$scope.sumRpd2d = 0;
+								}
+							});
+				}
+			}
+			;
 		};
 		$scope.detailByDate = function(cateName) {
 			$scope.cateName = cateName;
@@ -642,12 +686,12 @@
 		};
 		$scope.detaild2d = function(cateName) {
 			$scope.cateName = cateName;
-			$scope.month = $scope.fromdate + ' - ' + $scope.todate;
+			$scope.month = $scope.startdate + ' - ' + $scope.enddate;
 			$scope.countDetail = 0;
 			$http.get(
 					"Report/getInvoiceDetaild2d?cateName=" + cateName
-							+ "&fromdate=" + $scope.fromdate + "&todate="
-							+ $scope.todate).then(function(response) {
+							+ "&fromdate=" + $scope.startdate + "&todate="
+							+ $scope.enddate).then(function(response) {
 				$scope.sumDetail = 0;
 				var data = response.data;
 				$scope.countDetail = data.length;
@@ -661,7 +705,8 @@
 		};
 		$scope.info = function(cateName, month) {
 			$scope.cateName = cateName;
-			$scope.month = month;
+			$scope.month = (month < 10) ? '0' + month : month;
+			$scope.month += "/" + new Date().getFullYear();
 			$scope.countDetail = 0;
 			$http
 					.get(

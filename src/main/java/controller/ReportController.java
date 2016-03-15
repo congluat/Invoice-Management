@@ -40,6 +40,7 @@ public class ReportController {
 	public String pageGetCateMonths(ModelMap model) {
 		List<Object[]> list = reportService.getReportDataEveryMonth();
 		model.addAttribute("datalist", list);
+		model.addAttribute("title", "Reports");
 		return "rCate-Months-ng";
 	}
 	

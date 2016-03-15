@@ -1,4 +1,4 @@
-	$(document).on('keydown', '#form', function(event) {
+	$(document).on('keydown', '#invoice', function(event) {
 							if (event.keyCode == 13) {
 								var name = document.getElementById('invoice').value;
 								var attribute = document
@@ -21,8 +21,8 @@
 												name = name
 														.replace(/[/]/g, '-');
 											}
-											window.location = "Invoice/search/"
-													+ name + "/" + attribute;
+											
+											window.location = "Invoice/search/"+ attribute + "/" + "?empname="+ name+"&page=1";
 										} else {
 											var html = [
 													'<li>',
@@ -37,8 +37,7 @@
 									}
 									if (attribute == "Amount") {
 										if (isNaN(name) == false)
-											window.location = "Invoice/search/"
-													+ name + "/" + attribute;
+											window.location = "Invoice/search/"+ attribute + "/" + "?empname="+ name+"&page=1";
 										else {
 											var html = [
 													'<li>',
@@ -53,11 +52,8 @@
 									}
 									if (attribute == "Name"
 											|| attribute == "Place") {
-										if (name.indexOf("/") < 0
-												&& name.indexOf("?") < 0
-												&& name.indexOf("%") < 0) {
-											window.location = "Invoice/search/"
-													+ name + "/" + attribute;
+										if (name.indexOf("&") < 0) {
+											window.location = "Invoice/search/"+ attribute + "/" + "?empname="+ name+"&page=1";
 										} else {
 											var html = [
 													'<li>',
@@ -68,12 +64,11 @@
 											setTimeout(function() {
 												$("#danger-alert").hide();
 											}, 5000);
-										}
+										}										
 									}
 									if (attribute == "IsWarning") {
 										if (name == 1 || name == 0) {
-											window.location = "Invoice/search/"
-													+ name + "/" + attribute;
+											window.location = "Invoice/search/"+ attribute + "/" + "?empname="+ name+"&page=1";
 										} else {
 											var html = [
 													'<li>',
@@ -159,10 +154,20 @@
 
 		}
 		$(document).ready(function() {
-			$(function(){$("#invoice").autocomplete({
-									source : function(request,response) {
-										$.ajax({
-													url : "/InvoiceManagement/getSearchValue/"+ $("#select").val(),
+			$(function() {
+				$("#invoice")
+						.autocomplete(
+
+								{
+									source : function(request,
+											response) {
+										//alert($("#select").val());
+										$
+												.ajax({
+													url : "/InvoiceManagement/getSearchValue/"
+															+ $(
+																	"#select")
+																	.val(),
 													type : "POST",
 													data : {
 														term : request.term
@@ -170,15 +175,21 @@
 													dataType : "json",
 													success : function(data) {
 														response($.map(data,
-																		function(item,i){
+																		function(
+																				item,
+																				i) {
 																			if (i < 10) {
-																				if ($("#select").val() == "Name") {
+																				if ($(
+																						"#select")
+																						.val() == "Name") {
 																					return {
 																						value : item.name,
 																						desc : item.name
 																					}
 																				}
-																				if ($("#select").val() == "Place") {
+																				if ($(
+																						"#select")
+																						.val() == "Place") {
 																					return {
 																						value : item.place,
 																						desc : item.place
@@ -198,10 +209,7 @@
 										var name = ui.item.value;
 										var attribute = document
 												.getElementById('select').value;
-										window.location = "Invoice/search/"
-												+ name
-												+ "/"
-												+ attribute;
+										window.location = "Invoice/search/"+ attribute + "/" + "?empname="+ name+"&page=1";
 									}
 								}).data("uiAutocomplete")._renderItem = function(
 						ul, item) {
@@ -211,7 +219,7 @@
 					var reg = new RegExp(page, "gi");
 					var res = str.replace(reg, page.fontcolor(
 							"blue").bold().fontsize(4));
-					return $("<li></li>").data(
+					return $("<li ></li>").data(
 							"item.autocomplete", item).append(
 							res).appendTo(ul);
 				};

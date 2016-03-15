@@ -9,6 +9,9 @@
 	href='<c:url value="/resources/css/style.css"/>'>
 <script type="text/javascript"
 	src="<c:url value='/resources/nicEditor/nicEdit.js'/>"></script>
+	
+<script src="<c:url value='/resources/js/save_invoice.js'/>"></script>
+
 <style>
 .has-error {
 	color: red;
@@ -36,184 +39,58 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-
 	bkLib.onDomLoaded(function() {
 		new nicEditor({
 			iconsPath : '<c:url value='/resources/nicEditor/nicEditorIcons.gif'/>',
 			uploadURI: 'nic-editor/upload'
 		}).panelInstance('comment');
 	});
-	
-	$(".file-dropzone").on('dragover', handleDragEnter);
-	$(".file-dropzone").on('dragleave', handleDragLeave);
-	$(".file-dropzone").on('drop', handleDragLeave);
-
-	function handleDragEnter(e) {
-
-		this.classList.add('drag-over');
-	}
-
-	function handleDragLeave(e) {
-
-		this.classList.remove('drag-over');
-	}
-
-	// "dropzoneForm" is the camel-case version of the form id "dropzone-form"
-	
-	Dropzone.options.dropzoneForm = {
-		acceptedFiles: "image/jpeg,image/png,image/gif",
-		autoProcessQueue : false,
-		uploadMultiple : true,
-		maxFilesize : 256, // MB
-		parallelUploads : 100,
-		maxFiles : 100,
-		addRemoveLinks : true,
-		previewsContainer : ".dropzone-previews",
-
-		// The setting up of the dropzone
-		init : function() {
-
-			var myDropzone = this;
-			
-			// first set autoProcessQueue = false
-			$('#upload-button').on("click", function(e) {
-				
-				myDropzone.processQueue();
-			});
-						
-			// customizing the default progress bar
-			this.on("uploadprogress", function(file, progress) {
-
-				progress = parseFloat(progress).toFixed(0);
-
-				var progressBar = file.previewElement.getElementsByClassName("dz-upload")[0];
-				progressBar.innerHTML = progress + "%";
-			});
-
-			// displaying the uploaded files information in a Bootstrap dialog		
-			this.on("complete", function(files) {	
-				$('#myModalEditPhoto').modal('hide');
-				var invoiceid = $(".abc").attr("id");
-				var show='';
-				$('#showimages').html(show);
-			
-				$.ajax({
-					url : "Upload/getPhoto",
-					type : 'post',
-					data : {
-						id : invoiceid
-					},
-					dataType : 'json',
-					success : function(data) {
-						 $.each(data,function (index) {																													         	
-						 	show+='<div class="col-md-2"> <div class="col-md-12"> <img alt="not found" height="80px" width="80px" src="<%= request.getContextPath()%>/resources/images/'+data[index].photo+'" /></div> <div style="text-align: center;" class="col-md-12" id ='+data[index].id+'> <a class="onclickdelete" data-toggle="modal" data-target="#confirm-delete">Delete</a></div></div> ';						 	
-						 }); 
-						 $('#showimages').html(show);
-					},
-					error: function(XMLHttpRequest, textStatus, errorThrown) {
-				        alert("some error");
-				    }
-				}); 
-			});		
-		}
-	}
-});
-</script>
-
-<script type="text/javascript">
-	function isValid(evt) {
-		evt = (evt) ? evt : window.event;
-		var charCode = (evt.which) ? evt.which : evt.keyCode;
-		if (charCode >= 32 && charCode <= 254) {
-			return false;
-		}
-		return true;
-	}
-</script>
-
-<script type="text/javascript">
-	$(document).on("click",".onclickdelete",function() {
-		var divid = $(this).parents("div").attr("id");
-		$("#confirm button").attr('id',divid);
-	});
-</script>
-
-<script type="text/javascript">
-$(document).on("click","#delete",function() {
-	$('#confirm-delete').modal('hide');
-	var photoid = $("#confirm button").attr("id");
-	$.ajax({
-		url : "Upload/delete",
-		type : 'post',
-		data : {
-			id : photoid
-		},
-		success : function(result) {
-			$('#' + photoid).parents(".col-md-2").remove();
-		}
-	});		
-});
-</script>
-	
-<script type="text/javascript">
-function isNumber(evt) {
-	evt = (evt) ? evt : window.event;
-	var charCode = (evt.which) ? evt.which : evt.keyCode;
-	if ((charCode >= 48 && charCode <= 57) || charCode == 32 || charCode == 46 || charCode == 8) {
-		return true;
-	}
-	return false;
-}
-
-$(document).ready(function() {
-	var cateid = $.trim($("#cateId").val());
-	var money = $.trim($("#amountId").val());
-	$("#cateId").on("change",function(){
-		cateid = $.trim($("#cateId").val());
-		money = $.trim($("#amountId").val());	
-		var show='';
-		$.ajax({
-			url : "Invoice/get-all-invoices/" + money+"/"+cateid,
-			type : 'get',
-			success : function(data) {
-				if (data == true) {
-					show+='<label style="color: red">Your money is too big!</label>';
-					$("#errorname").html(show);
-					setTimeout(function() {
-						$("#errorname").html('');
-					}, 2000);
-				}				
-			},
-			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				alert("some error");				
+Dropzone.options.dropzoneForm = {
+				acceptedFiles: "image/jpeg,image/png,image/gif",
+				autoProcessQueue : false,
+				uploadMultiple : true,
+				maxFilesize : 256, // MB
+				parallelUploads : 100,
+				maxFiles : 100,
+				addRemoveLinks : true,
+				previewsContainer : ".dropzone-previews",
+				// The setting up of the dropzone
+				init : function() {
+					var myDropzone = this;		
+					// first set autoProcessQueue = false
+					$('#upload-button').on("click", function(e) {			
+						myDropzone.processQueue();
+					});					
+					// customizing the default progress bar
+					this.on("uploadprogress", function(file, progress) {
+						progress = parseFloat(progress).toFixed(0);
+						var progressBar = file.previewElement.getElementsByClassName("dz-upload")[0];
+						progressBar.innerHTML = progress + "%";
+					});
+					// displaying the uploaded files information in a Bootstrap dialog		
+					this.on("complete", function(files) {	
+						$('#myModalEditPhoto').modal('hide');
+						var invoiceid = $(".abc").attr("id");
+						var show='';
+						$('#showimages').html(show);		
+						$.ajax({
+							url : "Upload/getPhoto",
+							type : 'post',
+							data : { id : invoiceid	},
+							dataType : 'json',
+							success : function(data) {
+								 $.each(data,function (index) {																													         	
+								 	show+='<div class="col-md-2"> <div class="col-md-12"> <img alt="not found" height="80px" width="80px" src="<%= request.getContextPath()%>/resources/images/'+data[index].photo+'" /></div> <div style="text-align: center;" class="col-md-12" id ='+data[index].id+'> <a class="onclickdelete" data-toggle="modal" data-target="#confirm-delete">Delete</a></div></div> ';						 	
+								 }); 
+								 $('#showimages').html(show);
+							},				
+						}); 
+					});		
+				}
 			}
-		});
-	});	
-	$("#amountId").on("change",function(){
-		money = $.trim($("#amountId").val());	
-		var show='';
-		$.ajax({
-			url : "Invoice/get-all-invoices/" + money+"/"+cateid,
-			type : 'get',
-			success : function(data) {
-				if (data == true) {
-					show+='<label style="color: red">Your money is too big!</label>';
-					$("#errorname").html(show);
-					setTimeout(function() {
-						$("#errorname").html('');
-					}, 6000);
-				}				
-			},
-			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				alert("some error");				
-			}
-		});
-	});
 });
-
-
 </script>
-
+	
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h1 class="panel-title center">INVOICE FORM</h1>
@@ -243,7 +120,6 @@ $(document).ready(function() {
 								<form:errors path="name" class="help-inline" />
 							</div>
 						</div>
-
 						<div class="form-group">
 
 							<c:if test="${!edit}">
@@ -260,34 +136,20 @@ $(document).ready(function() {
 
 							<c:if test="${edit}">
 								<script type="text/javascript">
-									$(document)
-											.ready(
-													function() {
-
-														var strTime = '${invoice.time}';
-														var time = moment(
-																strTime)
-																.format(
-																		'MM/DD/YYYY hh:mm A');
-														console.log("strTime: "
-																+ strTime);
-														console.log("time: "
-																+ time);
-
-														$(function() {
-															$("#select-time")
-																	.datetimepicker(
-																			{
-
-																				defaultDate : time
-																			});
-
-														});
-														$("#timeInput").val(
-																time);
-														$("#timeInput").attr(
-																"value", time);
-													});
+									$(document).ready(function() {
+										var strTime = '${invoice.time}';
+										var time = moment(strTime).format('MM/DD/YYYY hh:mm A');
+										console.log("strTime: "	+ strTime);
+										console.log("time: "	+ time);
+										$(function() {
+											$("#select-time").datetimepicker(
+											{
+												defaultDate : time
+											});
+										});
+											$("#timeInput").val(time);
+											$("#timeInput").attr("value", time);
+									});
 								</script>
 							</c:if>
 							<label path="time" class="col-md-2 control-label">Time</label>
@@ -301,8 +163,6 @@ $(document).ready(function() {
 										class="glyphicon glyphicon-calendar"></span>
 									</span>
 								</div>
-
-
 							</div>
 						</div>
 						<div class="form-group">
@@ -317,7 +177,7 @@ $(document).ready(function() {
 						<div class="form-group">
 							<label path="amount" class="col-md-2 control-label">Amount</label>
 							<div class="col-md-10">
-								<form:input id="amountId" class="form-control" path="amount" onkeypress="return isNumber(event)"/>
+								<form:input required="required" id="amountId" class="form-control" path="amount" onkeypress="return isNumber(event)"/>
 								<div id="errorname">
 								</div>
 								<div class="has-error">
@@ -338,8 +198,8 @@ $(document).ready(function() {
 							</div>
 						</div>
 						<div class="abc" id="${invoice.id}">
-							<c:if test="${edit}">
-								<script type="text/javascript">
+						<c:if test="${edit}">
+						<script type="text/javascript">
 							$(document).ready(function() {							
 									var invoiceid = $(".abc").attr("id");
 									var show ='';
@@ -351,24 +211,16 @@ $(document).ready(function() {
 										},
 										dataType : 'json',
 										success : function(data) {
-											 $.each(data,function (index) {																													         	
+											$.each(data,function (index) {																													         	
 											 	show+='<div class="col-md-2"> <div class="col-md-12"> <img alt="not found" height="80px" width="80px" src="<%= request.getContextPath()%>/resources/images/'+ data[index].photo	+ '" /></div> <div style="text-align: center;" class="col-md-12" id ='+data[index].id+'> <a class="onclickdelete" data-toggle="modal" data-target="#confirm-delete">Delete</a></div></div> ';
-																						});
-																		$(
-																				'#showimages')
-																				.html(
-																						show);
-																	},
-																	error : function(
-																			XMLHttpRequest,
-																			textStatus,
-																			errorThrown) {
-																		alert("some error");
-																	}
-																});
-													});
-								</script>
-							</c:if>
+											});
+											$('#showimages').html(show);
+										},
+										error : function(XMLHttpRequest,textStatus,errorThrown){}
+									});
+							});
+						</script>
+						</c:if>
 						</div>
 
 						<div class="form-group" id="showimages"></div>

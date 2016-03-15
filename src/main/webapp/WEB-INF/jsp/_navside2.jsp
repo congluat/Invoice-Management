@@ -12,6 +12,10 @@
 			<li><a href="Category/listCategories" class="snooz"><i
 					class="fa fa-th-large"><span class="icon-bg rad-bg-primary"></span></i><span
 					class="rad-sidebar-item">Categories</span></a></li>
+			<li><a href="Reminder/"> <i
+					class="glyphicon glyphicon-calendar"><span class="icon-bg rad-bg-black"></span></i>
+					<span class="rad-sidebar-item">Reminder</span>
+			</a></li>
 			<li><a href="Report/" class="done"><i
 					class="fa fa-file-excel-o"><span class="icon-bg rad-bg-warning"></span></i><span
 					class="rad-sidebar-item">Report</span></a></li>
@@ -19,6 +23,7 @@
 					class="fa fa-area-chart"><span class="icon-bg rad-bg-violet"></span></i>
 					<span class="rad-sidebar-item">Chart</span>
 			</a></li>
+
 		</ul>
 	</nav>
 </aside>

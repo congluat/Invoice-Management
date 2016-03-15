@@ -65,19 +65,40 @@
 <!-- ===============================MY CSS=========================== -->
 <link href="<c:url value='/resources/css/mycss2.css' />"
 	rel="stylesheet"></link>
-
+<link href="<c:url value='/resources/css/material-button.css' />"
+	rel="stylesheet"></link>
 
 
 <!-- --------------------AngularJS-------------------- -->
 
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+<!-- Angular Material requires Angular.js Libraries -->
 <script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-cookies.js"></script>
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-cookies.js">
+	
+</script>
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+
+<!-- Angular Material Library -->
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js">
+	
+</script>
+
+
 <script src="https://www.google.com/jsapi" type="text/javascript"></script>
+
 <script type="text/javascript"
 	src="<c:url value='/resources/js/angular_app.js' />"></script>
-
+<script type="text/javascript"
+	src="<c:url value='/resources/js/angular_interceptor.js' />"></script>
 <script
 	src="http://bouil.github.io/angular-google-chart/ng-google-chart.js"></script>
 
@@ -90,7 +111,7 @@
 	<jsp:include page="_modalAddUser.jsp"></jsp:include>
 
 
-
+	<!-- 
 	<div class="add-button-area">
 		<a href="Invoice/save" id="add-button"
 			class="btn btn-primary btn-circle btn-lg"> <i
@@ -105,7 +126,55 @@
 			data-toggle="tooltip" data-placement="left" title="Add Invoice">
 			<i class="glyphicon glyphicon-tags"></i>
 		</a>
+	</div> -->
+
+	<div class="add-button-area">
+		<input type="checkbox" href="#" class="menu-open" name="menu-open"
+			id="menu-open" /> <label class="menu-open-button" for="menu-open">
+			<span class="hamburger hamburger-1"></span> <span
+			class="hamburger hamburger-2"></span> <span
+			class="hamburger hamburger-3"></span>
+		</label> <a href="Category/save" class="menu-item" data-toggle="tooltip"
+			data-placement="left" title="Add
+				Category"> <i
+			class="glyphicon glyphicon-tasks"></i>
+		</a> <a href="Invoice/save" class="menu-item" data-toggle="tooltip"
+			data-placement="left" title="Add Invoice"> <i
+			class="glyphicon glyphicon-tags"></i></a>
+
+
+		<!-- 	<a href="#" class="menu-item"> <i class="fa fa-bar-chart"></i></a> 
+		<a href="#" class="menu-item"> <i class="fa fa-plus"></i></a> -->
+
+
 	</div>
+
+	<!-- filters -->
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <defs>
+      <filter id="shadowed-goo">
+          
+          <feGaussianBlur in="SourceGraphic" result="blur"
+			stdDeviation="10" />
+          <feColorMatrix in="blur" mode="matrix"
+			values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+          <feGaussianBlur in="goo" stdDeviation="3" result="shadow" />
+          <feColorMatrix in="shadow" mode="matrix"
+			values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 -0.2"
+			result="shadow" />
+          <feOffset in="shadow" dx="1" dy="1" result="shadow" />
+          <feBlend in2="shadow" in="goo" result="goo" />
+          <feBlend in2="goo" in="SourceGraphic" result="mix" />
+      </filter>
+      <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" result="blur"
+			stdDeviation="10" />
+          <feColorMatrix in="blur" mode="matrix"
+			values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+          <feBlend in2="goo" in="SourceGraphic" result="mix" />
+      </filter>
+    </defs>
+</svg>
 
 
 

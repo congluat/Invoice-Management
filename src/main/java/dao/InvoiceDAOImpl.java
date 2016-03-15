@@ -1,13 +1,12 @@
 package dao;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -217,8 +216,9 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 						+ " Order by DAY(Time) DESC";
 			} else
 				return null;
-		}
-		List<Invoice> invoices = session.createQuery(hql).list();
+		}		
+		Query q = session.createQuery(hql);
+		List<Invoice> invoices = (List<Invoice>)q.list();
 		session.close();
 		return invoices;
 	}
@@ -231,9 +231,9 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		System.out.println(hql);
 		List<Invoice> invoices = new ArrayList<>();
 		invoices.addAll(session.createQuery(hql).list());
-		hql = "FROM Invoice WHERE category.name LIKE '%" + keyword+"%'";
+		hql = "FROM Invoice WHERE category.name LIKE '%" + keyword + "%'";
 		invoices.addAll(session.createQuery(hql).list());
-		hql = "FROM Invoice WHERE Time LIKE '%"+keyword+"%'";
+		hql = "FROM Invoice WHERE Time LIKE '%" + keyword + "%'";
 		invoices.addAll(session.createQuery(hql).list());
 		hql = "FROM Invoice WHERE place LIKE '%" + keyword + "%'";
 		invoices.addAll(session.createQuery(hql).list());
@@ -241,7 +241,8 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		invoices.addAll(session.createQuery(hql).list());
 
 		session.close();
-		return invoices;
+		List<Invoice> deduped = invoices.stream().distinct().collect(Collectors.toList());
+		return deduped;
 	}
 
 }

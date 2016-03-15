@@ -43,3 +43,12 @@ CREATE TABLE Photos(
     PRIMARY KEY (Id),
     CONSTRAINT FK_invoicephotos_Invoice FOREIGN KEY(InvoiceId) REFERENCES Invoices(Id) ON DELETE CASCADE
 );
+
+CREATE TABLE Reminders(
+	Id INT NOT NULL AUTO_INCREMENT,
+	Time INT NOT NULL,
+    CategoryId INT NOT NULL,
+    Comment NVARCHAR(200),
+    PRIMARY KEY (Id),
+    CONSTRAINT FK_reminders_cate FOREIGN KEY(CategoryId) REFERENCES Categories(Id)
+);
