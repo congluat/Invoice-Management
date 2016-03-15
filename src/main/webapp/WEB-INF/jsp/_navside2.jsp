@@ -12,7 +12,7 @@
 			<li><a href="Category/listCategories" class="snooz"><i
 					class="fa fa-th-large"><span class="icon-bg rad-bg-primary"></span></i><span
 					class="rad-sidebar-item">Categories</span></a></li>
-			<li><a href="Revenue/monthly-statistic"> <i
+			<li><a href="Reminder/"> <i
 					class="glyphicon glyphicon-calendar"><span class="icon-bg rad-bg-black"></span></i>
 					<span class="rad-sidebar-item">Reminder</span>
 			</a></li>

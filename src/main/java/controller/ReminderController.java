@@ -17,7 +17,6 @@ import model.Category;
 import model.Reminder;
 import service.ReminderService;
 import service.CategoryService;
-import service.ReminderService;
 
 @Controller
 @RequestMapping("/Reminder")
@@ -25,11 +24,11 @@ public class ReminderController {
 	@Autowired
 	@Qualifier("reminderService")
 	ReminderService reService;
-	
+
 	@Autowired
 	@Qualifier("categoryService")
 	CategoryService cateService;
-	
+
 	@Autowired
 	@Qualifier("reminderService")
 	ReminderService reminderService;
@@ -40,22 +39,23 @@ public class ReminderController {
 		model.addAttribute("reminder", reminder);
 		return "save-reminder";
 	}
-	
+
 	@RequestMapping(value = "/save-reminder", method = RequestMethod.POST)
 	public String saveReminderS(ModelMap model, @ModelAttribute Reminder reminder) {
 		reService.create(reminder);
 		model.addAttribute("message", "Insert Successfully!");
 		return "save-reminder";
 	}
-	
+
 	@ModelAttribute("categories")
 	public List<Category> getAllCates() {
 		return cateService.getAllCategories();
 	}
+
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String deleteReminder(@PathVariable int id, ModelMap model, HttpServletRequest request) {
 		reminderService.delete(reminderService.getById(id));
-		return "reminders";
+		return "redirect:/reminders";
 	}
 
 	@RequestMapping(value = { "/", "reminders" }, method = RequestMethod.GET)
