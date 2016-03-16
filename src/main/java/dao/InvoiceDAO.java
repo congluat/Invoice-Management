@@ -35,4 +35,6 @@ public interface InvoiceDAO {
 	public List<Invoice> getInvoiceAttribute(String attribute, String empname);
 	
 	public List<Invoice> searchAnyString(String keyword);
+	
+	public List<Invoice> getTop5Invoices();
 }

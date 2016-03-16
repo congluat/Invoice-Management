@@ -90,7 +90,7 @@
 			</ul>
 			<div class="row">
 				<div class="col-md-4"></div>
-				<btn class="col-md-4 btn btn-primary" ng-click="loadMore()"> <strong>{{MoreInvoices}}</strong></btn>
+				<btn class="col-md-4 btn btn-primary" ng-click="loadMore()" ng-disabled="isDisabled" ng-model="isDisabled"> <strong>{{MoreInvoices}}</strong></btn>
 				<div class="col-md-1 text-primary">
 					<strong>Per Load:</strong>
 				</div>

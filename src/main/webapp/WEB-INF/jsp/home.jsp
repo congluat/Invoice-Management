@@ -72,7 +72,7 @@
 	</div>
 
 	<div class="row">
-		<div class="col-md-7 col-xs-12">
+		<div class="col-md-7 col-xs-12" id="reminder">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">
@@ -85,15 +85,30 @@
 						</ul>
 					</h3>
 				</div>
-				<div class="panel-body" ng-init="">aaaaaa</div>
+				<div class="panel-body" ng-init="getReminder()">
+					<div class="table-responsive">
+						<table class="table table-hover">
+							<tr>
+								<th class="col-md-2">Day</th>
+								<th class="col-md-4">Category</th>
+								<th class="col-md-6">Comment</th>
+							</tr>
+							<tr ng-repeat="reminder in reminders">
+								<td>{{reminder.time}}</td>
+								<td>{{reminder.category.name}}</td>
+								<td>{{reminder.comment}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
 			</div>
 
 		</div>
-		<div class="col-md-5 col-xs-12">
+		<div class="col-md-5 col-xs-12" id="recent">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">
-						Reminders
+						Recent
 						<ul class="rad-panel-action">
 							<li><i class="fa fa-chevron-down"></i></li>
 							<li><i class="fa fa-rotate-right"></i></li>
@@ -102,7 +117,22 @@
 						</ul>
 					</h3>
 				</div>
-				<div class="panel-body" ng-init="">aaaaaa</div>
+				<div class="panel-body" ng-init="getRecent()">
+					<div class="table-responsive">
+						<table class="table table-hover">
+							<tr>
+								<th class="col-md-4">Name</th>
+								<th class="col-md-5">Category</th>
+								<th class="col-md-3">Amount</th>
+							</tr>
+							<tr ng-repeat="i in recentInvoices" ng-show="{{$index<3}}">
+								<td>{{i.name}}</td>
+								<td>{{i.category.name}}</td>
+								<td>{{i.amount}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
 			</div>
 
 		</div>

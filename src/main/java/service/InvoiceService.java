@@ -46,4 +46,6 @@ public interface InvoiceService {
 	public void getDataInvoiceAndTemp(List<Invoice> invoices , List<Invoice> invoiceTmp , String attribute ,String empname ,String page, int limitResultsPerPage);
 	
 	public List<Invoice> suggestSearchResult(String attribute, String empName);
+	
+	public List<Invoice> getTop5Invoices();
 }

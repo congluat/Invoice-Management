@@ -15,13 +15,29 @@
 				method="POST">
 					<h4>${message}</h4>
 					<form:input type="hidden" path="id" />
-					<div class="form-group">
+					<c:choose>
+						<c:when test="${edit}">
+						<form:input type="hidden" path = "category.id"/>
+						<div class="form-group">
 						<label path="name" class="col-md-2 control-label">Category</label>
 						<div class="col-md-10">
-							<form:select path="category.id" items="${categories}"
-								itemValue="id" itemLabel="name" class="form-control" id="cateId"/>
+							<input readonly="true" value="${cateName}">			
 						</div>
-					</div>
+						</div>
+						</c:when>					
+						<c:otherwise>
+						<div class="form-group">
+							<label path="name" class="col-md-2 control-label">Category</label>
+							<div class="col-md-10">
+								<form:select path="category.id" items="${categories}"
+									itemValue="id" itemLabel="name" class="form-control" id="cateId"/>
+							</div>
+						</div>
+						</c:otherwise>
+						</c:choose>
+					
+					
+					
 					<div class="form-group">
 							<label path="time" class="col-md-2 control-label">Time</label>
 							<div class="col-md-10">
@@ -42,7 +58,7 @@
 				<div class="col-md-2"></div>
 
 				<div class="col-md-5">
-					<a href="Category/listCategories"
+					<a href="${pageContext.request.contextPath}/Reminder/"
 						class="btn  btn-raised btn-warning">Cancel</a>
 				</div>
 

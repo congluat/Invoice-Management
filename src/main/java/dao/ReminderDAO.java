@@ -15,7 +15,8 @@ public interface ReminderDAO {
 
 	public List<Reminder> getByDay(int day);
 	
-
 	public Reminder getById(int id);
+	
+	public Reminder getByCategory(int CatId);
 	
 }
