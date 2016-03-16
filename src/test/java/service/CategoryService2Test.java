@@ -5,8 +5,11 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -25,8 +28,15 @@ import model.Category;
 @Transactional
 public class CategoryService2Test {
 	
-	@Autowired
-	private CategoryService categoryService;
+	static private CategoryService categoryService;
+	
+	static CategoryDAO dao;
+	
+	@BeforeClass
+	public static void setUp(){
+		dao = Mockito.mock(CategoryDAO.class);
+		categoryService = new CategoryServiceImpl(dao);	
+	}
 
 	@Test
 	public void createCategory2Test () {
@@ -77,21 +87,25 @@ public class CategoryService2Test {
 	public void getById(){
 		Category cate = new Category();
 		cate.setId(1);
-		CategoryDAO dao = Mockito.mock(CategoryDAO.class);
 		Mockito.when(dao.getById(1)).thenReturn(cate);
 		Category test = categoryService.getById(1);
-		assertEquals(cate.getId(), test.getId());
+		assertEquals(cate, test);
 	}
 	
 	@Test
 	public void getByName(){
 		Category cate = new Category();
-		cate.setName(new String("a"));	
-		CategoryDAO dao = Mockito.mock(CategoryDAO.class);
-		Mockito.when(dao.getByName(new String("a"))).thenReturn(cate);
-		Category test = categoryService.getByName(new String("a"));
-		Mockito.verify(dao).getByName(new String("a"));
-		assertEquals(cate, test);
+		cate.setName("a");
+	
+		Mockito.when(dao.getByName("a")).thenReturn(cate);
+		
+		Category test = categoryService.getByName("a");
+		
+		assertEquals(test, cate);
+		
+		
+				
+		
 	}
 	
 }

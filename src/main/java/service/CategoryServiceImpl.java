@@ -26,7 +26,14 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Autowired
 	ServletContext application;
-
+	
+	public CategoryServiceImpl() {}
+	
+	
+	public CategoryServiceImpl(CategoryDAO CateDao) {
+		this.dao = CateDao;
+		// TODO Auto-generated constructor stub
+	}
 	@Override
 	public void delete(Category category) {
 		// TODO Auto-generated method stub
@@ -36,6 +43,14 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<Category> getAllCategories() {
 		return dao.getAllCategories();
+	}
+
+	public CategoryDAO getDao() {
+		return dao;
+	}
+
+	public void setDao(CategoryDAO dao) {
+		this.dao = dao;
 	}
 
 	@Override

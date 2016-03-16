@@ -17,6 +17,12 @@ public class ReminderServiceImpl implements ReminderService {
 	@Autowired
 	@Qualifier("reminderDao")
 	private ReminderDAO dao;
+	
+	public ReminderServiceImpl() {}
+	public ReminderServiceImpl(ReminderDAO dao) {
+		this.dao = dao;
+	}
+	
 
 	public ReminderDAO getDao() {
 		return dao;
