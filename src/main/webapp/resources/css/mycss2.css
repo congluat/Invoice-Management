@@ -207,6 +207,10 @@ a:hover {
 	z-index: 1000;
 }
 
+.rad-sidebar {
+	z-index: 1000;
+}
+
 .panel-primary .panel-title {
 	color: #FFF;
 }

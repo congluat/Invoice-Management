@@ -6,58 +6,15 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Repository;
 
-import model.Category;
+import model.Reminder;
 
 @Repository
-public class CategoryDAOImpl implements CategoryDAO {
-	@Autowired
+public class ReminderDAOImpl implements ReminderDAO {
+
 	private SessionFactory sessionFactory;
-
-	@Override
-	public void create(Category category) {
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		try {
-			session.save(category);
-			tx.commit();
-		} catch (Exception e) {
-			tx.rollback();
-		} finally {
-			session.close();
-		}
-	}
-
-	@Override
-	public void update(Category category) {
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		try {
-			session.saveOrUpdate(category);
-			tx.commit();
-		} catch (Exception e) {
-			tx.rollback();
-		} finally {
-			session.close();
-		}
-
-	}
-
-	@Override
-	public void delete(Category category) {
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		try {
-			session.delete(category);
-			tx.commit();
-		} catch (Exception e) {
-			tx.rollback();
-		} finally {
-			session.close();
-		}
-	}
 
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
@@ -68,33 +25,84 @@ public class CategoryDAOImpl implements CategoryDAO {
 	}
 
 	@Override
-	public List<Category> getAllCategories() {
+	public void create(Reminder reminder) {
+
 		Session session = sessionFactory.openSession();
-		String hql = "from Category";
-		List<Category> categories = session.createQuery(hql).list();
-		session.close();
-		return categories;
+		Transaction tx = session.beginTransaction();
+		try {
+			session.save(reminder);
+			tx.commit();
+		} catch (Exception e) {
+			tx.rollback();
+		} finally {
+			session.close();
+		}
+
 	}
 
 	@Override
-	public Category getById(int id) {
-		Session session = sessionFactory.openSession();
 
-		Category cate = (Category) session.get(Category.class, id);
-		session.close();
-		return cate;
+	public void update(Reminder reminder) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		try {
+			session.saveOrUpdate(reminder);
+			tx.commit();
+		} catch (Exception e) {
+			tx.rollback();
+		} finally {
+			session.close();
+		}
 	}
 
 	@Override
-	public Category getByName(String name) {
+	public void delete(Reminder reminder) {
 		Session session = sessionFactory.openSession();
-		String hql = "FROM Category where name = :pname";
+		Transaction tx = session.beginTransaction();
+		try {
+			session.delete(reminder);
+			tx.commit();
+		} catch (Exception e) {
+			tx.rollback();
+		} finally {
+			session.close();
+		}
+	}
+
+	@Override
+	public List<Reminder> getAll() {
+		Session session = sessionFactory.openSession();
+		List<Reminder> list = session.createQuery("FROM Reminder").list();
+		session.close();
+		return list;
+	}
+
+	@Override
+	public List<Reminder> getByDay(int day) {
+		Session session = sessionFactory.openSession();
+		List<Reminder> list = session.createQuery("FROM Reminder WHERE TIME =" + day).list();
+		session.close();
+		return list;
+	}
+
+	@Override
+	public Reminder getById(int id) {
+		Session session = sessionFactory.openSession();
+		Reminder reminder = (Reminder) session.get(Reminder.class, id);
+		session.close();
+		return reminder;
+	}
+
+	@Override
+	public Reminder getByCategory(int CatId) {
+		Session session = sessionFactory.openSession();
+		String hql = "From Reminder where category.id =:cateId";
 		Query query = session.createQuery(hql);
-		query.setParameter("pname", name);
-		// get category
-		Category cate = (Category) query.uniqueResult();
+		query.setParameter("cateId", CatId);
+		Reminder reminder = (Reminder) query.uniqueResult();
 		session.close();
-		return cate;
+		return reminder;
 	}
 
 }
+

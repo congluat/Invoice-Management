@@ -324,7 +324,7 @@
 				<div class="panel-body">
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="sel1">Select list:</label> <select
+							<label for="sel1">Select Category:</label> <select
 								class="form-control" ng-model="categoryM2M">
 								<c:forEach var="c" items="${categories}">
 									<option value="${c.id}" ng-value="${c.id}">${c.name}</option>
@@ -370,7 +370,7 @@
 										<td>{{invoice.name}}</td>
 										<td>{{invoice.time | date:"dd/MM/yyyy | h:mma"}}</td>
 										<td>{{invoice.place}}</td>
-										<td>{{invoice.comment}}</td>
+										<td ng-bind-html="invoice.comment | unsafe"></td>
 										<td>{{invoice.amount | currency}}</td>
 
 
@@ -405,7 +405,7 @@
 				<div class="panel-body">
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="sel1">Select list:</label> <select
+							<label for="sel1">Select Category:</label> <select
 								class="form-control" ng-model="categoryCM">
 								<c:forEach var="c" items="${categories}">
 									<option value="${c.id}" ng-value="${c.id}">${c.name}</option>
@@ -414,7 +414,7 @@
 						</div>
 						<div class="form-group">
 							<label for="sel1">Input Number of Month before: </label> <input
-								type="number" name="month" value="1" ng-model="month">
+								type="number" name="month" value="1" min="1" ng-model="month">
 						</div>
 						<div class="form-group">
 							<button type="button" ng-click="getInvoice()"
@@ -444,7 +444,7 @@
 										<td>{{invoice.name}}</td>
 										<td>{{invoice.time | date:"dd/MM/yyyy | h:mma"}}</td>
 										<td>{{invoice.place}}</td>
-										<td>{{invoice.comment}}</td>
+										<td ng-bind-html="invoice.comment | unsafe"></td>
 										<td>{{invoice.amount | currency}}</td>
 
 

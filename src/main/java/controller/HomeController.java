@@ -46,6 +46,8 @@ public class HomeController {
 		model.addAttribute("title", "Dashboard");
 		return "home";
 	}
+	
+
 
 	@RequestMapping(value = "getAmountThisMonth/{time}", method = RequestMethod.GET)
 	@ResponseBody
@@ -66,37 +68,10 @@ public class HomeController {
 	public @ResponseBody List<Invoice> getInvoices(@PathVariable String attribute, @RequestParam String term,
 			HttpServletResponse response) {
 		if (attribute.equals("Name") || attribute.equals("Place"))
-			return suggestSearchResult(attribute, term);
+			return invoiceService.suggestSearchResult(attribute, term);
 		return null;
 
 	}
-
-	private List<Invoice> suggestSearchResult(String attribute, String empName) {
-		List<Invoice> result = new ArrayList<Invoice>();
-		result = invoiceService.getInvoiceAttribute(attribute, empName, 0);
-		// System.out.println(attribute + empName);
-
-		int count = result.size();
-		for (int i = 0; i < count; i++) {
-			for (int j = i + 1; j < count; j++) {
-				if (attribute.equals("Name")) {
-					if (result.get(i).getName().equals(result.get(j).getName())) {
-						result.remove(j--);
-						count--;
-					}
-				}
-				if (attribute.equals("Place")) {
-					if (result.get(i).getPlace().equals(result.get(j).getPlace())) {
-						result.remove(j--);
-						count--;
-					}
-				}
-			}
-		}
-		// iterate a list and filter by tagName
-		// System.out.println(result.size());
-		return result;
-
-	}
+	
 
 }

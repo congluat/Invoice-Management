@@ -65,217 +65,40 @@
 <!-- ===============================MY CSS=========================== -->
 <link href="<c:url value='/resources/css/mycss2.css' />"
 	rel="stylesheet"></link>
+<link href="<c:url value='/resources/css/material-button.css' />"
+	rel="stylesheet"></link>
 
-<style type="text/css">
-h1, h2, h3, h4 {
-	margin: 0;
-	margin-bottom: 10px;
-	margin-top: 10px;
-}
-
-h1 {
-	font-size: 3em;
-}
-
-.menu {
-	-webkit-filter: url("#shadowed-goo");
-	filter: url("#shadowed-goo");
-}
-
-.menu-item, .menu-open-button {
-	background: #23AE89;
-	border-radius: 100%;
-	width: 60px;
-	height: 60px;
-	margin-left: 0px;
-	position: absolute;
-	top: 20px;
-	color: white;
-	text-align: center;
-	line-height: 60px;
-	-webkit-transform: translate3d(0, 0, 0);
-	transform: translate3d(0, 0, 0);
-	-webkit-transition: -webkit-transform ease-out 200ms;
-	transition: -webkit-transform ease-out 200ms;
-	transition: transform ease-out 200ms;
-	transition: transform ease-out 200ms, -webkit-transform ease-out 200ms;
-	font-size: 20px;
-}
-
-.menu-open {
-	display: none;
-}
-
-.hamburger {
-	width: 25px;
-	height: 3px;
-	background: white;
-	display: block;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-left: -12.5px;
-	margin-top: -1.5px;
-	-webkit-transition: -webkit-transform 200ms;
-	transition: -webkit-transform 200ms;
-	transition: transform 200ms;
-	transition: transform 200ms, -webkit-transform 200ms;
-}
-
-.hamburger-1 {
-	-webkit-transform: translate3d(0, -8px, 0);
-	transform: translate3d(0, -8px, 0);
-}
-
-.hamburger-2 {
-	-webkit-transform: translate3d(0, 0, 0);
-	transform: translate3d(0, 0, 0);
-}
-
-.hamburger-3 {
-	-webkit-transform: translate3d(0, 8px, 0);
-	transform: translate3d(0, 8px, 0);
-}
-
-.menu-open:checked+.menu-open-button .hamburger-1 {
-	-webkit-transform: translate3d(0, 0, 0) rotate(45deg);
-	transform: translate3d(0, 0, 0) rotate(45deg);
-}
-
-.menu-open:checked+.menu-open-button .hamburger-2 {
-	-webkit-transform: translate3d(0, 0, 0) scale(0.1, 1);
-	transform: translate3d(0, 0, 0) scale(0.1, 1);
-}
-
-.menu-open:checked+.menu-open-button .hamburger-3 {
-	-webkit-transform: translate3d(0, 0, 0) rotate(-45deg);
-	transform: translate3d(0, 0, 0) rotate(-45deg);
-}
-
-.menu {
-	position: absolute;
-	left: 50%;
-	margin-left: -190px;
-	padding-top: 20px;
-	padding-left: 190px;
-	width: 380px;
-	height: 250px;
-	box-sizing: border-box;
-	font-size: 20px;
-	text-align: left;
-}
-
-.menu-item:hover {
-	color: #23AE89;
-	background: white;
-}
-
-.menu-item i:hover {
-	color: #23AE89;
-	background: white;
-}
-
-.menu-item:nth-child(3) {
-	-webkit-transition-duration: 70ms;
-	transition-duration: 70ms;
-}
-
-.menu-item:nth-child(4) {
-	-webkit-transition-duration: 130ms;
-	transition-duration: 130ms;
-}
-
-.menu-item:nth-child(5) {
-	-webkit-transition-duration: 190ms;
-	transition-duration: 190ms;
-}
-
-.menu-item:nth-child(6) {
-	-webkit-transition-duration: 250ms;
-	transition-duration: 250ms;
-}
-
-.menu-item:nth-child(7) {
-	-webkit-transition-duration: 310ms;
-	transition-duration: 310ms;
-}
-
-.menu-open-button {
-	z-index: 2;
-	-webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-	transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-	-webkit-transition-duration: 400ms;
-	transition-duration: 400ms;
-	-webkit-transform: scale(1.1, 1.1) translate3d(0, 0, 0);
-	transform: scale(1.1, 1.1) translate3d(0, 0, 0);
-	cursor: pointer;
-}
-
-.menu-open-button:hover {
-	-webkit-transform: scale(1.2, 1.2) translate3d(0, 0, 0);
-	transform: scale(1.2, 1.2) translate3d(0, 0, 0);
-}
-
-.menu-open:checked+.menu-open-button {
-	-webkit-transition-timing-function: linear;
-	transition-timing-function: linear;
-	-webkit-transition-duration: 200ms;
-	transition-duration: 200ms;
-	-webkit-transform: scale(0.8, 0.8) translate3d(0, 0, 0);
-	transform: scale(0.8, 0.8) translate3d(0, 0, 0);
-}
-
-.menu-open:checked ~ .menu-item {
-	-webkit-transition-timing-function: cubic-bezier(0.935, 0, 0.34, 1.33);
-	transition-timing-function: cubic-bezier(0.935, 0, 0.34, 1.33);
-}
-
-.menu-open:checked ~ .menu-item:nth-child(3) {
-	-webkit-transition-duration: 160ms;
-	transition-duration: 160ms;
-	-webkit-transform: translate3d(114.42548px, 11.48084px, 0);
-	transform: translate3d(-80px, -20px, 0);
-}
-
-.menu-open:checked ~ .menu-item:nth-child(4) {
-	-webkit-transition-duration: 240ms;
-	transition-duration: 240ms;
-	-webkit-transform: translate3d(77.18543px, 85.2491px, 0);
-	transform: translate3d(-20px, -80px, 0);
-}
-
-.menu-open:checked ~ .menu-item:nth-child(5) {
-	-webkit-transition-duration: 320ms;
-	transition-duration: 320ms;
-	-webkit-transform: translate3d(0.09158px, 114.99996px, 0);
-	transform: translate3d(0.09158px, 114.99996px, 0);
-}
-
-.menu-open:checked ~ .menu-item:nth-child(6) {
-	-webkit-transition-duration: 400ms;
-	transition-duration: 400ms;
-	-webkit-transform: translate3d(-77.04956px, 85.37192px, 0);
-	transform: translate3d(-77.04956px, 85.37192px, 0);
-}
-
-.menu-open:checked ~ .menu-item:nth-child(7) {
-	-webkit-transition-duration: 480ms;
-	transition-duration: 480ms;
-	-webkit-transform: translate3d(114.40705px, 11.66307px, 0);
-	transform: translate3d(114.40705px, 11.66307px, 0);
-}
-</style>
 
 <!-- --------------------AngularJS-------------------- -->
 
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+<!-- Angular Material requires Angular.js Libraries -->
 <script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-cookies.js"></script>
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-cookies.js">
+	
+</script>
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+
+<!-- Angular Material Library -->
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js">
+	
+</script>
+
+
 <script src="https://www.google.com/jsapi" type="text/javascript"></script>
+
 <script type="text/javascript"
 	src="<c:url value='/resources/js/angular_app.js' />"></script>
-
+<script type="text/javascript"
+	src="<c:url value='/resources/js/angular_interceptor.js' />"></script>
 <script
 	src="http://bouil.github.io/angular-google-chart/ng-google-chart.js"></script>
 
@@ -304,31 +127,26 @@ h1 {
 			<i class="glyphicon glyphicon-tags"></i>
 		</a>
 	</div> -->
-	
+
 	<div class="add-button-area">
 		<input type="checkbox" href="#" class="menu-open" name="menu-open"
 			id="menu-open" /> <label class="menu-open-button" for="menu-open">
 			<span class="hamburger hamburger-1"></span> <span
 			class="hamburger hamburger-2"></span> <span
 			class="hamburger hamburger-3"></span>
-		</label> 
-		<a href="Category/save"
-			class="menu-item"
-			data-toggle="tooltip" data-placement="left" title="Add
-				Category">
-			<i class="glyphicon glyphicon-tasks"></i>
-		</a>
-		
-		<a href="Invoice/save"
-			class="menu-item"
-			data-toggle="tooltip" data-placement="left" title="Add Invoice">
-			<i class="glyphicon glyphicon-tags"></i></a>
-			
-			
-	<!-- 	<a href="#" class="menu-item"> <i class="fa fa-bar-chart"></i></a> 
+		</label> <a href="Category/save" class="menu-item" data-toggle="tooltip"
+			data-placement="left" title="Add
+				Category"> <i
+			class="glyphicon glyphicon-tasks"></i>
+		</a> <a href="Invoice/save" class="menu-item" data-toggle="tooltip"
+			data-placement="left" title="Add Invoice"> <i
+			class="glyphicon glyphicon-tags"></i></a>
+
+
+		<!-- 	<a href="#" class="menu-item"> <i class="fa fa-bar-chart"></i></a> 
 		<a href="#" class="menu-item"> <i class="fa fa-plus"></i></a> -->
-		
-		
+
+
 	</div>
 
 	<!-- filters -->

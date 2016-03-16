@@ -36,6 +36,10 @@ public class Category implements Serializable {
 	@JsonIgnore
 	Collection<Invoice> invoices;
 
+	@OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
+	@JsonIgnore
+	Collection<Reminder> reminders;
+
 	public Integer getId() {
 		return id;
 	}
@@ -67,12 +71,12 @@ public class Category implements Serializable {
 	public void setLogo(String logo) {
 		this.logo = logo;
 	}
-	
+
 	@JsonIgnore
 	public Collection<Invoice> getInvoices() {
 		return invoices;
 	}
-	
+
 	public void setInvoices(Collection<Invoice> invoices) {
 		this.invoices = invoices;
 	}
