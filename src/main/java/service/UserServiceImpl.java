@@ -19,6 +19,14 @@ public class UserServiceImpl implements UserService {
 	@Qualifier("categoryService")
 	CategoryService cateService;
 
+	public UserDAO getDao() {
+		return dao;
+	}
+
+	public void setDao(UserDAO dao) {
+		this.dao = dao;
+	}
+
 	@Override
 	public boolean create(User user) {
 		boolean result = false;

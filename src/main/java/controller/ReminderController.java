@@ -77,7 +77,7 @@ public class ReminderController {
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String deleteReminder(@PathVariable int id, ModelMap model, HttpServletRequest request) {
 		reminderService.delete(reminderService.getById(id));
-		return "redirect:/reminders";
+		return "redirect:/Reminder/";
 	}
 
 	@RequestMapping(value = { "/", "reminders" }, method = RequestMethod.GET)
