@@ -30,11 +30,19 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return invoiceDao.getAllInvoices();
 	}
 
+	public InvoiceServiceImpl(){
+		
+	}
+	
+	public InvoiceServiceImpl(InvoiceDAO dao) {
+		this.invoiceDao = dao;
+	}
+
 	@Override
-	public List<Invoice> getAllInvoices(int Uid) {
+	public List<Invoice> getAllInvoices(int uId) {
 		List<Invoice> invoices = null;
 		try {
-			invoices = invoiceDao.getAllInvoices(Uid);
+			invoices = invoiceDao.getAllInvoices(uId);
 		} catch (Exception e) {
 			invoices = null;
 		}
@@ -106,7 +114,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public List<Invoice> getTop10(Category category) {
 		return invoiceDao.getTop10(category);
 	}
-	
+
 	@Override
 	public boolean checkIsWarning(BigDecimal amount, Category category) {
 		double amountDouble = Double.parseDouble(amount.toString());
@@ -154,7 +162,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 		return invoiceDao.searchAnyString(keyword);
 	}
-	
+
 	@Override
 	public List<Invoice> sortList(List<Invoice> tmp, String empname, String attribute) {
 		List<Invoice> invoices = new ArrayList<Invoice>();
@@ -220,26 +228,27 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public void getDataInvoiceAndTemp(List<Invoice> invoices, List<Invoice> invoiceTmp , String attribute ,String empname ,String page, int limitResultsPerPage) {
-		List<Invoice> temp ;		
-		int firstResult = (Integer.parseInt(page)-1)*limitResultsPerPage;
+	public void getDataInvoiceAndTemp(List<Invoice> invoices, List<Invoice> invoiceTmp, String attribute,
+			String empname, String page, int limitResultsPerPage) {
+		List<Invoice> temp;
+		int firstResult = (Integer.parseInt(page) - 1) * limitResultsPerPage;
 		int maxResult = limitResultsPerPage;
-		if (attribute.equals("Name") || attribute.equals("Place")) {			
+		if (attribute.equals("Name") || attribute.equals("Place")) {
 			temp = sortList(getInvoiceAttribute(attribute, empname), empname, attribute);
-			for(int i = firstResult; i < (firstResult+maxResult); i++){
-				if( i >= temp.size())
-					break;					
+			for (int i = firstResult; i < (firstResult + maxResult); i++) {
+				if (i >= temp.size())
+					break;
 				invoices.add(temp.get(i));
-			}			
+			}
 			invoiceTmp.addAll(temp);
 		}
-		if (attribute.equals("Amount") || attribute.equals("IsWarning") || attribute.equals("Time")){
+		if (attribute.equals("Amount") || attribute.equals("IsWarning") || attribute.equals("Time")) {
 			temp = getInvoiceAttribute(attribute, empname);
-			for(int i = firstResult; i < (firstResult+maxResult); i++){
-				if( i >= temp.size())
-					break;					
+			for (int i = firstResult; i < (firstResult + maxResult); i++) {
+				if (i >= temp.size())
+					break;
 				invoices.add(temp.get(i));
-			}			
+			}
 			invoiceTmp.addAll(temp);
 		}
 	}
@@ -272,6 +281,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return result;
 
 	}
-	
-	
+
+	@Override
+	public List<Invoice> getTop5Invoices() {
+
+		return invoiceDao.getTop5Invoices();
+	}
+
 }

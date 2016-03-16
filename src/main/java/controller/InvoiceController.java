@@ -44,6 +44,12 @@ public class InvoiceController {
 	@Qualifier("invoiceService")
 	InvoiceService invoiceService;
 
+	@RequestMapping(value = "/getRecentInvoices", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Invoice> get5InvoicesRecent() {
+		return invoiceService.getTop5Invoices();
+	}
+
 	@RequestMapping(value = "/getByMonth/{time}")
 	@ResponseBody
 	public List<Invoice> getByMonth(@PathVariable String time, HttpServletRequest request) throws ParseException {
@@ -117,7 +123,6 @@ public class InvoiceController {
 	public String getDangerInvoices(HttpServletRequest request, ModelMap model) {
 		return "invoices_danger";
 	}
-	
 
 	@RequestMapping(value = { "/get-all-invoices/{amount}/{cateId}" }, method = RequestMethod.GET)
 	@ResponseBody
@@ -188,24 +193,27 @@ public class InvoiceController {
 	}
 
 	@RequestMapping(value = "/search/{attribute}", method = RequestMethod.GET)
-	public String Search(@RequestParam(value = "empname", required = false) String empname, @RequestParam(value = "page", required = false) String page, @PathVariable String attribute, ModelMap model) {		
+	public String Search(@RequestParam(value = "empname", required = false) String empname,
+			@RequestParam(value = "page", required = false) String page, @PathVariable String attribute,
+			ModelMap model) {
 		List<Invoice> invoices = new ArrayList<Invoice>();
 		List<Invoice> invoiceTmp = new ArrayList<Invoice>();
 		int limitResultsPerPage = 5;
 		int numberPage = 9;
 		invoiceService.getDataInvoiceAndTemp(invoices, invoiceTmp, attribute, empname, page, limitResultsPerPage);
-		int startpage = (int) (Integer.parseInt(page) - 5 > 0?Integer.parseInt(page) - 5:1);
-	    double endpage = startpage + numberPage;
-	    if(endpage > (invoiceTmp.size()/limitResultsPerPage)){
-	    	if(invoiceTmp.size()%limitResultsPerPage != 0){
-	    		endpage = (int)(invoiceTmp.size()/limitResultsPerPage) + 1;
-	    	} else
-	    		endpage = (int)(invoiceTmp.size()/limitResultsPerPage);	
-	    }
-	    model.addAttribute("startpage",startpage);
-	    model.addAttribute("endpage",endpage);
-	    model.addAttribute("empname",empname);
-	    model.addAttribute("attribute",attribute);
+		int startpage = (int) (Integer.parseInt(page) - 5 > 0 ? Integer.parseInt(page) - 5 : 1);
+		double endpage = startpage + numberPage;
+		if (endpage > (invoiceTmp.size() / limitResultsPerPage)) {
+			if (invoiceTmp.size() % limitResultsPerPage != 0) {
+				endpage = (int) (invoiceTmp.size() / limitResultsPerPage) + 1;
+			} else
+				endpage = (int) (invoiceTmp.size() / limitResultsPerPage);
+		}
+		model.addAttribute("startpage", startpage);
+		model.addAttribute("endpage", endpage);
+		model.addAttribute("empname", empname);
+		model.addAttribute("attribute", attribute);
+		model.addAttribute("currentPage", page);
 		model.addAttribute("invoices", invoices);
 		model.addAttribute("title", "Invoices");
 		return "invoices_new";

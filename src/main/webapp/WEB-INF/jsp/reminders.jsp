@@ -4,29 +4,40 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
 <script>
-	$(document).ready(function() {
-		$(".deleteButton").click(function() {
-			var id = $(this).parents("td").attr("id");
+$(document).on("click",".deleteButton",function() {
+	var divid = $(this).parents("td").attr("id");
+	$("#confirm button").attr('id',divid);
+});
 
-			console.log(id);
+	$(document).ready(function() {
+		$("#btDelete").click(function() {
+			var id = $("#confirm button").attr("id");
+			var a = document.getElementById(""+id);
+			$('#confirm-delete').modal('hide');
+			
+			/* console.log(id);
 			//console.log("Delete button clicked");
 			//var url = $('#deleteButton').data('href');
 			var url = "<c:url value='Reminder/delete/'/>" + id;
-
 			console.log(url);
-			$('#confirm-delete .btn-ok').attr('href', url);
-		});
+			$('#confirm-delete .btn-ok').attr('href', url); */
 
+			$.ajax({
+				url : "Reminder/delete/" + id,
+				type : 'get',
+				success : function(data) {
+					a.parentNode.remove();
+				}
+			}); 
+		});
 	});
 </script>
 
 <div class="panel panel-green">
 	<div class="panel-heading">Reminders</div>
 	<div class="panel-body">
-
-
 		<div class="table-responsive">
-			<table class="table table-hover">
+			<table class="table table-hover" id="myTable">
 				<tr>
 					<th class="col-md-1">#</th>
 					<th class="col-md-3">Category</th>
@@ -41,8 +52,10 @@
 						<td>${reminder.category.name}</td>
 						<td>${reminder.time}</td>
 						<td>${reminder.comment}</td>
-						<td><a href="${pageContext.request.contextPath}/Reminder/edit/${reminder.id}"class="btn btn-info"><span
-								class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+						<td><a
+							href="${pageContext.request.contextPath}/Reminder/edit/${reminder.id}"
+							class="btn btn-info"><span class="glyphicon glyphicon-pencil"
+								aria-hidden="true"></span></a></td>
 						<td id="${reminder.id}"><a
 							class="btn btn-danger deleteButton" data-toggle="modal"
 							data-target="#confirm-delete"><span
@@ -60,10 +73,7 @@
 			</table>
 		</div>
 	</div>
-
 </div>
-
-
 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="vertical-alignment-helper col-md-4">
@@ -71,9 +81,9 @@
 			<div class="modal-content" style="border-radius: 10px;">
 				<div class="modal-header">Confirm</div>
 				<div class="modal-body">Do you want to delete</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<a class="btn btn-danger btn-ok" style="margin-top: 0px" href="">Delete</a>
+				<div class="modal-footer" id="confirm">
+					<button id="" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<a id="btDelete" class="btn btn-danger btn-ok" style="margin-top: 0px" href="">Delete</a>
 				</div>
 			</div>
 		</div>

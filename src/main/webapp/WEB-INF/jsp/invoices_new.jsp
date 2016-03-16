@@ -112,10 +112,18 @@
 <div class="row">
 	<div class="col-md-6 col-md-offset-6">
 		<ul class="pagination text-xs-right">
-			<li><c:forEach begin="${startpage}" end="${endpage}" var="p">
-					<a href="Invoice/search/${attribute}/?empname=${empname}&page=${p}">${p}
-					</a>
-				</c:forEach></li>
+			<li>
+				<c:forEach begin="${startpage}" end="${endpage}" var="p">
+					<c:choose>          
+			           <c:when test="${currentPage eq p}">
+			           		<a  class="disabled">${p}</a>
+			           </c:when>            
+			           <c:otherwise>
+			           		<a href="Invoice/search/${attribute}/?empname=${empname}&page=${p}">${p}</a>
+			           </c:otherwise>   
+		           </c:choose>					
+			  </c:forEach>
+		  </li>
 		</ul>
 	</div>
 </div>

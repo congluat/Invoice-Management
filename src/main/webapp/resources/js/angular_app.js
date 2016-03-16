@@ -11,11 +11,23 @@
 
 	app.controller("HomeController", function($scope, $http, $window) {
 
+		
+		
+		$scope.getRecent = function(){
+			$http.get("Invoice/getRecentInvoices").success(function(response) {
+				$scope.recentInvoices = response;
+				console.log($scope.reminders);
+			});
+			var recentH = $("#recent").offsetHeight;
+			console.log(recentH);
+		};
+		
 		$scope.getReminder = function() {
 			$http.get("Reminder/getReminder-byNow").success(function(response) {
 				$scope.reminders = response;
 				console.log($scope.reminders);
 			});
+			
 		};
 
 		$scope.$watch(function() {
@@ -24,6 +36,7 @@
 			$scope.drawPieChart();
 			$scope.drawDialyChart();
 		});
+		
 		$scope.drawDialyChart = function() {
 			var now = new Date();
 			var month = parseInt(now.getMonth()) + 1;
@@ -220,7 +233,11 @@
 			 * var year = parseInt(now.getYear()) + 1900; console.log("month " +
 			 * month); console.log("year " + year);
 			 */
-
+			
+			$scope.itemPerLoad = 10;
+			$scope.totalDisplayed = $scope.itemPerLoad;
+			$scope.isDisabled = false;		
+			$scope.MoreInvoices = "More Invoice...";
 			$scope.invoices = [];
 			$scope.listByMonth = false;
 			$scope.month = month + "/" + year;
@@ -229,20 +246,25 @@
 						$scope.listByMonth = true;
 						$scope.invoices = [];
 						$scope.invoices = response;
+						if($scope.invoices.length > $scope.itemPerLoad){							
+							$scope.MoreInvoices = "More Invoice...";
+						} else {
+							$scope.isDisabled = true;
+							$scope.MoreInvoices = "No More Invoice";
+						}
 						console.log("INVOICE CTRL INIT");
 						console.log("invoice ");
 						console.log($scope.invoices);
 
 					});
 		};
-
-		$scope.itemPerLoad = 10;
-		$scope.totalDisplayed = $scope.itemPerLoad;
-		$scope.MoreInvoices = "More Invoice...";
+		
 		$scope.loadMore = function() {
 			$scope.totalDisplayed += $scope.itemPerLoad;
-			if ($scope.totalDisplayed >= $scope.invoices.length)
+			if ($scope.totalDisplayed >= $scope.invoices.length){
 				$scope.MoreInvoices = "No More Invoice";
+				 $scope.isDisabled = true;
+			}
 			else
 				$scope.MoreInvoices = "More Invoice...";
 		}
@@ -298,6 +320,10 @@
 		console.log("month " + month);
 		console.log("year " + year);
 
+		$scope.itemPerLoad = 10;
+		$scope.totalDisplayed = $scope.itemPerLoad;
+		$scope.isDisabled = false;
+		$scope.MoreInvoices = "More Invoice...";
 		$scope.invoices_danger = [];
 		$scope.listByMonth = false;
 		$scope.month = month + "/" + year;
@@ -308,16 +334,21 @@
 					$scope.listByMonth = true;
 					// $scope.invoices.push(response);
 					$scope.invoices_danger = response;
+					if($scope.invoices_danger.length > $scope.itemPerLoad){						
+						$scope.MoreInvoices = "More Invoice...";
+					} else {
+						$scope.isDisabled = true;
+						$scope.MoreInvoices = "No More Invoice";
+					}
 					console.log(response);
 				});
-
-		$scope.itemPerLoad = 10;
-		$scope.totalDisplayed = $scope.itemPerLoad;
-		$scope.MoreInvoices = "More Invoice...";
+		
 		$scope.loadMore = function() {
 			$scope.totalDisplayed += $scope.itemPerLoad;
-			if ($scope.totalDisplayed >= $scope.invoices_danger.length)
+			if ($scope.totalDisplayed >= $scope.invoices_danger.length){
 				$scope.MoreInvoices = "No More Invoice";
+				 $scope.isDisabled = true;
+			}
 			else
 				$scope.MoreInvoices = "More Invoice...";
 		};
