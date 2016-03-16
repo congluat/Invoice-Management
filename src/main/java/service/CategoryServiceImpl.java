@@ -27,6 +27,15 @@ public class CategoryServiceImpl implements CategoryService {
 	@Autowired
 	ServletContext application;
 
+	public CategoryServiceImpl(){
+		
+	}
+	
+	public CategoryServiceImpl(CategoryDAO dao) {
+		this.dao = dao;
+
+	}
+
 	@Override
 	public void delete(Category category) {
 		// TODO Auto-generated method stub
@@ -172,7 +181,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public boolean checkCateAndIdAvailable(String name, Integer id) {
-		Category cate  = getByName(name);
+		Category cate = getByName(name);
 		if (cate.getId() == id) {
 			return true;
 		} else
