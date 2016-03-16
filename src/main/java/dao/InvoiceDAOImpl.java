@@ -200,7 +200,7 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		Session session = sessionFactory.openSession();
 		String hql = null;
 		if (attribute.equals("Name") || attribute.equals("Place"))
-			hql = "FROM Invoice where " + attribute + " LIKE '%" + empname + "%'";
+			hql = "FROM Invoice where " + attribute + " LIKE '%" + empname + "%'" + " ORDER BY time DESC";
 		if (attribute.equals("Amount"))
 			hql = "FROM Invoice where " + attribute + " >= " + empname + " ORDER BY Amount ASC";
 		if (attribute.equals("IsWarning"))
@@ -210,10 +210,10 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 			String[] parts = empname.split("-");
 			if (parts.length == 3) {
 				hql = "FROM Invoice WHERE DAY(Time) = " + parts[0] + " AND MONTH(Time) = " + parts[1]
-						+ " AND YEAR(Time) = " + parts[2] + " Order by DAY(Time) DESC";
+						+ " AND YEAR(Time) = " + parts[2] + " ORDER BY time DESC";
 			} else if (parts.length == 2) {
 				hql = "FROM Invoice WHERE MONTH(Time) = " + parts[0] + " AND YEAR(Time) = " + parts[1]
-						+ " Order by DAY(Time) DESC";
+						+ " ORDER BY time DESC";
 			} else
 				return null;
 		}		

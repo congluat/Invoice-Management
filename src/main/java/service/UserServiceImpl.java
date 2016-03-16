@@ -19,6 +19,15 @@ public class UserServiceImpl implements UserService {
 	@Qualifier("categoryService")
 	CategoryService cateService;
 
+	@Autowired
+	public UserServiceImpl(UserDAO dao) {
+		this.dao = dao;
+	}
+
+	public UserServiceImpl(){
+		
+	}
+	
 	public UserDAO getDao() {
 		return dao;
 	}

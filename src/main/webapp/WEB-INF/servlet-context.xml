@@ -137,7 +137,6 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 
-	<!-- Configure the multipart resolver -->
 
 
 	<!-- <task:scheduled-tasks> <task:scheduled ref="runScheduler" method="run" 
