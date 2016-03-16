@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
 				travel.setName("Du lịch");
 				travel.setDescription("Chi phí du lịch");
 				travel.setLogo("travel.png");
-				cateService.create(water);
+				cateService.create(travel);
 
 				Category shopping = new Category();
 				shopping.setName("Mua sắm");
