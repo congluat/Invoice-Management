@@ -31,10 +31,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public List<Invoice> getAllInvoices(int Uid) {
+	public List<Invoice> getAllInvoices(int uId) {
 		List<Invoice> invoices = null;
 		try {
-			invoices = invoiceDao.getAllInvoices(Uid);
+			invoices = invoiceDao.getAllInvoices(uId);
 		} catch (Exception e) {
 			invoices = null;
 		}

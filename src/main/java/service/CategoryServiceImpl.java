@@ -43,6 +43,7 @@ public class CategoryServiceImpl implements CategoryService {
 		return dao.getById(id);
 	}
 
+	@Override
 	public Category getByName(String name) {
 		return dao.getByName(name);
 	}
@@ -103,10 +104,6 @@ public class CategoryServiceImpl implements CategoryService {
 			}
 
 			dao.create(category);
-
-			// model.addAttribute("category", new Category());
-			// model.addAttribute("message", category.getName().toUpperCase() +
-			// " category save " + " success!");
 
 			return "redirect:/Category/";
 
