@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import model.Category;
@@ -42,8 +44,14 @@ public class ReminderController {
 	}
 
 	@RequestMapping(value = "/save-reminder", method = RequestMethod.POST)
-	public String saveReminderS(ModelMap model, @ModelAttribute Reminder reminder) {
-		return reService.create(reminder, model);
+	@ResponseBody
+	public boolean saveReminder(@RequestParam("id") Integer id ,@RequestParam("time")Integer time , @RequestParam("comment")String comment) {
+		Reminder reminder = new Reminder();
+		Category category = cateService.getById(id);
+		reminder.setCategory(category);
+		reminder.setComment(comment);
+		reminder.setTime(time);
+		return reminderService.create(reminder);
 	}
 
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -81,8 +89,9 @@ public class ReminderController {
 
 	@RequestMapping(value = { "/", "reminders" }, method = RequestMethod.GET)
 	public String showReminder(ModelMap model, HttpServletRequest request) {
-
+		Reminder reminder = new Reminder();
 		model.addAttribute("reminders", reminderService.getAll());
+		model.addAttribute("reminder",reminder);
 		model.addAttribute("title", "Reminders");
 		return "reminders";
 	}

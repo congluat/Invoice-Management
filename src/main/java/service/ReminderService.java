@@ -8,7 +8,7 @@ import model.Reminder;
 
 public interface ReminderService {
 
-	public String create(Reminder reminder, ModelMap model);
+	public boolean create(Reminder reminder);
 
 	public void delete(Reminder reminder);
 

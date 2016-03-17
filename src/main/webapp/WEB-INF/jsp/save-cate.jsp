@@ -119,12 +119,6 @@
 																			.submit();
 																}
 
-															},
-															error : function(
-																	XMLHttpRequest,
-																	textStatus,
-																	errorThrown) {
-
 															}
 														});
 											});
@@ -179,12 +173,6 @@
 																			"#NewCategoryForm")
 																			.submit();
 																}
-
-															},
-															error : function(
-																	XMLHttpRequest,
-																	textStatus,
-																	errorThrown) {
 
 															}
 														});
