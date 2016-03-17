@@ -52,3 +52,4 @@ CREATE TABLE Reminders(
     PRIMARY KEY (Id),
     CONSTRAINT FK_reminders_cate FOREIGN KEY(CategoryId) REFERENCES Categories(Id)
 );
+

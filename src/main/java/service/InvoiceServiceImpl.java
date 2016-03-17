@@ -30,6 +30,14 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return invoiceDao.getAllInvoices();
 	}
 
+	public InvoiceServiceImpl(){
+		
+	}
+	
+	public InvoiceServiceImpl(InvoiceDAO dao) {
+		this.invoiceDao = dao;
+	}
+
 	@Override
 	public List<Invoice> getAllInvoices(int uId) {
 		List<Invoice> invoices = null;

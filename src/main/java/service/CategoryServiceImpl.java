@@ -26,14 +26,16 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Autowired
 	ServletContext application;
-	
-	public CategoryServiceImpl() {}
-	
-	
-	public CategoryServiceImpl(CategoryDAO CateDao) {
-		this.dao = CateDao;
-		// TODO Auto-generated constructor stub
+
+	public CategoryServiceImpl(){
+		
 	}
+	
+	public CategoryServiceImpl(CategoryDAO dao) {
+		this.dao = dao;
+
+	}
+
 	@Override
 	public void delete(Category category) {
 		// TODO Auto-generated method stub
@@ -45,20 +47,11 @@ public class CategoryServiceImpl implements CategoryService {
 		return dao.getAllCategories();
 	}
 
-	public CategoryDAO getDao() {
-		return dao;
-	}
-
-	public void setDao(CategoryDAO dao) {
-		this.dao = dao;
-	}
-
 	@Override
 	public Category getById(int id) {
 		return dao.getById(id);
 	}
 
-	@Override
 	public Category getByName(String name) {
 		return dao.getByName(name);
 	}
@@ -119,6 +112,10 @@ public class CategoryServiceImpl implements CategoryService {
 			}
 
 			dao.create(category);
+
+			// model.addAttribute("category", new Category());
+			// model.addAttribute("message", category.getName().toUpperCase() +
+			// " category save " + " success!");
 
 			return "redirect:/Category/";
 
@@ -184,7 +181,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public boolean checkCateAndIdAvailable(String name, Integer id) {
-		Category cate  = getByName(name);
+		Category cate = getByName(name);
 		if (cate.getId() == id) {
 			return true;
 		} else
