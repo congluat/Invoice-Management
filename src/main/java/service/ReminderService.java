@@ -2,13 +2,11 @@ package service;
 
 import java.util.List;
 
-import org.springframework.ui.ModelMap;
-
 import model.Reminder;
 
 public interface ReminderService {
 
-	public String create(Reminder reminder, ModelMap model);
+	public boolean create(Reminder reminder);
 
 	public void delete(Reminder reminder);
 
@@ -16,7 +14,7 @@ public interface ReminderService {
 
 	public List<Reminder> getByDay();
 	
-	public void update(Reminder reminder);
+	public boolean update(Reminder reminder);
 
 	public Reminder getById(int id);
 }

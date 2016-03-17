@@ -42,14 +42,16 @@ public class ReminderDAOImpl implements ReminderDAO {
 
 	@Override
 
-	public void update(Reminder reminder) {
+	public boolean update(Reminder reminder) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		try {
 			session.saveOrUpdate(reminder);
 			tx.commit();
+			return true;
 		} catch (Exception e) {
 			tx.rollback();
+			return false;
 		} finally {
 			session.close();
 		}
