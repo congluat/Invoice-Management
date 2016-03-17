@@ -1,10 +1,13 @@
 $(function() {
 		$(".datepicker").datepicker();
 		$(".datepicker_select").datepicker({
-			dateFormat : 'mm/yy'
+			dateFormat : 'mm/yy',
+			changeMonth: true,
+			changeYear: true,
 		});
 		$(".datepicker_selectyear").datepicker({
-			dateFormat : 'yy'
+			dateFormat : 'yy',
+			changeYear: true,
 		});
 	})
 

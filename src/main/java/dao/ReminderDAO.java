@@ -7,7 +7,7 @@ import model.Reminder;
 public interface ReminderDAO {
 	public void create(Reminder reminder);
 
-	public void update(Reminder reminder);
+	public boolean update(Reminder reminder);
 
 	public void delete(Reminder reminder);
 

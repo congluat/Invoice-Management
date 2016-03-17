@@ -9,17 +9,38 @@
 		$("#confirm button").attr('id', divid);
 	});
 	
+	$(document).on("click", "#btAdd", function() {
+		$("#ID").attr("value" ,(-1));
+	});
+	
+	$(document).on("click", ".editButton", function() {
+		
+		var reminderId = $(this).parents("td").attr("id");
+		$.ajax({
+			url:"Reminder/edit/"+reminderId,
+			type:"get",
+			success : function(data){
+				$("#ID").attr("value" ,data.id);
+				$('#cateId').val(data.category.id);
+				$("#time").val(data.time);
+				$("#comment").val(data.comment);
+			}
+		});
+	});
+	
 	$(document).on("click", "#buttonclick", function() {
 		var id = $.trim($("#cateId").val());
 		var time = $("#time").val();
 		var comment = $("#comment").val();
+		var ID = $("#ID").val();
 		var show ='';
 			 	$.ajax({
 				type:"post",
 			    data:{
 			    	id : id,
 			    	time : time,
-			    	comment : comment
+			    	comment : comment,
+			    	ID : ID
 			    },
 			    url:"Reminder/save-reminder",
 			    dataType: "json",
@@ -86,10 +107,9 @@
 						<td>${reminder.category.name}</td>
 						<td>${reminder.time}</td>
 						<td>${reminder.comment}</td>
-						<td><a
-							href="${pageContext.request.contextPath}/Reminder/edit/${reminder.id}"
-							class="btn btn-info"><span class="glyphicon glyphicon-pencil"
-								aria-hidden="true"></span></a></td>
+						<td id="${reminder.id}"><a class="btn btn-info editButton" data-toggle="modal" data-target="#myReminder"> <span
+								class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+						</td>
 						<td id="${reminder.id}"><a
 							class="btn btn-danger deleteButton" data-toggle="modal"
 							data-target="#confirm-delete"><span
@@ -99,7 +119,7 @@
 				<tr>
 					<td colspan="6"
 						style="text-align: center; font-size: 42px; color: #23AE89; vertical-align: middle;">
-						<a data-toggle="modal" data-target="#myReminder"> <span
+						<a id="btAdd" data-toggle="modal" data-target="#myReminder"> <span
 							class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 					</a>
 					</td>
@@ -141,18 +161,7 @@
 							method="POST">
 							<div id ="message">
 							</div>
-							<form:input type="hidden" path="id" /> 
-							<c:choose>
-								<c:when test="${edit}">
-									<form:input type="hidden" path="category.id" id ="cateId"/>
-									<div class="form-group">
-										<label path="name" class="col-md-2 control-label">Category</label>
-										<div class="col-md-10">
-											<input readonly="true" value="${cateName}">
-										</div>
-									</div>
-								</c:when>
-								<c:otherwise>
+							<form:input type="hidden" path="id" id="ID" value="" /> 						
 									<div class="form-group">
 										<label path="name" class="col-md-2 control-label">Category</label>
 										<div class="col-md-10">
@@ -160,10 +169,7 @@
 												itemValue="id" itemLabel="name" class="form-control"
 												id="cateId" />
 										</div>
-									</div>
-								</c:otherwise>
-							</c:choose>
-
+									</div>							
 							<div class="form-group">
 								<label path="time" class="col-md-2 control-label">Time</label>
 								<div class="col-md-10">
@@ -183,9 +189,7 @@
 							<div class="col-md-2"></div>
 						</form:form>
 						<div class="form-group">
-
 								<div class="col-md-2"></div>
-
 								<div class="col-md-5">
 									<a href="${pageContext.request.contextPath}/Reminder/"
 										class="btn  btn-raised btn-warning">Cancel</a>
@@ -201,5 +205,4 @@
 			</div>
 		</div>
 	</div>
-</div>
 </div>

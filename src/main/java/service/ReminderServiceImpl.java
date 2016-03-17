@@ -45,8 +45,8 @@ public class ReminderServiceImpl implements ReminderService {
 	}
 
 	@Override
-	public void update(Reminder reminder) {
-		dao.update(reminder);
+	public boolean update(Reminder reminder) {
+		return dao.update(reminder);
 	}
 
 	@Override

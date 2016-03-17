@@ -45,30 +45,38 @@ public class ReminderController {
 
 	@RequestMapping(value = "/save-reminder", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean saveReminder(@RequestParam("id") Integer id ,@RequestParam("time")Integer time , @RequestParam("comment")String comment) {
-		Reminder reminder = new Reminder();
-		Category category = cateService.getById(id);
-		reminder.setCategory(category);
-		reminder.setComment(comment);
-		reminder.setTime(time);
-		return reminderService.create(reminder);
+	public boolean saveReminder(@RequestParam("id") Integer id ,@RequestParam("time")Integer time , @RequestParam("comment")String comment ,@RequestParam("ID")Integer ID) {
+		if(ID==-1){
+			Reminder reminder = new Reminder();
+			Category category = cateService.getById(id);
+			reminder.setCategory(category);
+			reminder.setComment(comment);
+			reminder.setTime(time);
+			return reminderService.create(reminder);
+		}
+		else{
+			Reminder reminder = reminderService.getById(ID);
+			Category category = cateService.getById(id);
+			reminder.setCategory(category);
+			reminder.setComment(comment);
+			reminder.setTime(time);
+			return reminderService.update(reminder);
+		}
 	}
 
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-	public String EditReminderGet(ModelMap model, @PathVariable Integer id) {
+	@ResponseBody
+	public Reminder EditReminderGet(@PathVariable Integer id) {
 		Reminder reminder = reService.getById(id);
-		model.addAttribute("edit", true);
-		model.addAttribute("cateName", reminder.getCategory().getName());
-		model.addAttribute("reminder", reminder);
-		return "save-reminder";
+		return reminder;
 	}
 
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
 	public String EditReminderPost(ModelMap model, @ModelAttribute Reminder reminder) {
 		reService.update(reminder);
 		model.addAttribute("message", "Update Success!");
 		return "save-reminder";
-	}
+	}*/
 
 	@RequestMapping("/getReminder-byNow")
 	@ResponseBody
