@@ -103,4 +103,11 @@ public class ReminderController {
 		model.addAttribute("title", "Reminders");
 		return "reminders";
 	}
+	
+	@RequestMapping(value="/getAllReminder" , method =RequestMethod.GET)
+	@ResponseBody
+	public List<Reminder> getAllReminder(){
+		List<Reminder> list = reminderService.getAll();
+		return list;
+	}
 }
