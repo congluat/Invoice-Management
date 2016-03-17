@@ -43,14 +43,12 @@ public class ReminderService2Test {
 		reminder.setCategory(cate);
 		
 		Mockito.when(reminDao.getByCategory(Mockito.anyInt())).thenReturn(null);
-		ModelMap model = Mockito.mock(ModelMap.class);
-		reminService.create(reminder, model);
 		
-		Mockito.verify(model).addAttribute("message", "Insert Success!");
+		Assert.assertTrue(reminService.create(reminder));
 	}
 	
 	@Test
-	public void TestInsert_Fail(){
+	public void TestInsert_False(){
 		reminService = new ReminderServiceImpl(reminDao);
 		
 		Reminder reminder = new Reminder();
@@ -59,15 +57,14 @@ public class ReminderService2Test {
 		reminder.setCategory(cate);
 		
 		Mockito.when(reminDao.getByCategory(Mockito.anyInt())).thenReturn(reminder);
-		ModelMap model = Mockito.mock(ModelMap.class);
-		reminService.create(reminder, model);
 		
-		Mockito.verify(model).addAttribute("message", "Reminder has Exist!");
+		
+		Assert.assertFalse(reminService.create(reminder));
 	}
 	
 	
 	@Test
-	public void UpdateTest_success() throws Exception{
+	public void UpdateTest_success(){
 		reminService = new ReminderServiceImpl(reminDao);
 		
 		listReminder.add(new Reminder());
@@ -76,9 +73,10 @@ public class ReminderService2Test {
 		Reminder remintest = listReminder.get(0);
 		remintest.setTime(10);
 		
-		Mockito.doNothing().when(reminDao).update(remintest);
-
-		reminService.update(remintest);
+		//Mockito.doNothing().when(reminDao).update(remintest);
+		Mockito.when(reminDao.update(remintest)).thenReturn(true);
+		
+		Assert.assertTrue(reminService.update(remintest));
 	}
 	
 	@Test
