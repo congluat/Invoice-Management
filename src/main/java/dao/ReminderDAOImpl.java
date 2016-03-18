@@ -82,7 +82,7 @@ public class ReminderDAOImpl implements ReminderDAO {
 	@Override
 	public List<Reminder> getByDay(int day) {
 		Session session = sessionFactory.openSession();
-		List<Reminder> list = session.createQuery("FROM Reminder WHERE TIME =" + day).list();
+		List<Reminder> list = session.createQuery("FROM Reminder WHERE TIME <=" + day).list();
 		session.close();
 		return list;
 	}

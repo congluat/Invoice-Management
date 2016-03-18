@@ -4,6 +4,14 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
 <script>
+function isNumberValid(evt) {
+	evt = (evt) ? evt : window.event;
+	var charCode = (evt.which) ? evt.which : evt.keyCode;
+	if (charCode >= 48 && charCode <= 57) {
+		return true;
+	}
+	return false;
+}
 	$(document).on("click", ".deleteButton", function() {
 		var divid = $(this).parents("td").attr("id");
 		$("#confirm button").attr('id', divid);
@@ -190,7 +198,7 @@
 								<label path="time" class="col-md-2 control-label">Time</label>
 								<div class="col-md-10">
 									<form:input class="form-control" path="time" type="number" id ="time"
-										required="required" min="1" max="30" />
+										required="required" min="1" max="30" onkeypress="return isNumberValid(event)" />
 								</div>
 							</div>
 							<div class="form-group">
