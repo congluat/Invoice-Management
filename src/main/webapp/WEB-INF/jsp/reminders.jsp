@@ -166,7 +166,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title" id="myModalLabel">Upload Images</h4>
+				<h4 class="modal-title" id="myModalLabel">Reminder</h4>
 			</div>
 			<div class="panel panel-default">
 				<div class="panel-heading text-center"></div>
