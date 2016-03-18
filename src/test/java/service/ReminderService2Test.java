@@ -44,7 +44,7 @@ public class ReminderService2Test {
 		
 		Mockito.when(reminDao.getByCategory(Mockito.anyInt())).thenReturn(null);
 		ModelMap model = Mockito.mock(ModelMap.class);
-		reminService.create(reminder);
+		//reminService.create(reminder, model);
 		
 		Mockito.verify(model).addAttribute("message", "Insert Success!");
 	}
@@ -60,7 +60,7 @@ public class ReminderService2Test {
 		
 		Mockito.when(reminDao.getByCategory(Mockito.anyInt())).thenReturn(reminder);
 		ModelMap model = Mockito.mock(ModelMap.class);
-		reminService.create(reminder);
+		//reminService.create(reminder, model);
 		
 		Mockito.verify(model).addAttribute("message", "Reminder has Exist!");
 	}

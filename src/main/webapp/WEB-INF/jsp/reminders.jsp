@@ -51,6 +51,22 @@
 			    	   setTimeout(function() {
 			    		   $("#message").html('');
 								},3000);
+			    	   $.ajax({
+							type:"get",
+							dataType : "json",
+						    url:"Reminder/getAllReminder",
+						    dataType: "json",
+						    success: function(data){
+						    	var count =1;
+						    	show='<table class="table table-hover"><tbody><tr> <th class="col-md-1">#</th> <th class="col-md-3">Category</th><th class="col-md-1">Day</th><th class="col-md-5">Comment</th>	<th class="col-md-1">Edit</th><th class="col-md-1">Delete</th>';
+						    	$("#loadTable").html('');
+						    	$.each(data,function (index){					    	
+						    	show+='<tr><td>'+ count++ +'</td> <td>'+data[index].category.name+'</td><td>'+data[index].time+'</td><td>'+data[index].comment+'</td><td id='+data[index].id+'><a class="btn btn-info editButton" data-toggle="modal" data-target="#myReminder"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td><td id='+data[index].id+'><a class="btn btn-danger deleteButton" data-toggle="modal" data-target="#confirm-delete"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td></tr>';				    	
+						    	});
+						    	show+='<tr><td colspan="6" style="text-align: center; font-size: 42px; color: #23AE89; vertical-align: middle;"><a id="btAdd" data-toggle="modal" data-target="#myReminder"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>	</a></td></tr></tbody></table>';
+						    	$("#loadTable").html(show);
+						    }
+			       		});
 			       }
 			       else{
 			    	   show+='<h4>Failed</h4>';
@@ -91,7 +107,7 @@
 <div class="panel panel-green">
 	<div class="panel-heading">Reminders</div>
 	<div class="panel-body">
-		<div class="table-responsive">
+		<div class="table-responsive" id="loadTable">
 			<table class="table table-hover">
 				<tr>
 					<th class="col-md-1">#</th>

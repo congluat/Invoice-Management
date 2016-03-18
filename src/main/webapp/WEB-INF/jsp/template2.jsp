@@ -104,7 +104,7 @@
 
 </head>
 
-<body>
+<body style="overflow-y: auto;">
 	<jsp:include page="_navtop2.jsp"></jsp:include>
 	<jsp:include page="_navside2.jsp"></jsp:include>
 	<jsp:include page="_main2.jsp"></jsp:include>
