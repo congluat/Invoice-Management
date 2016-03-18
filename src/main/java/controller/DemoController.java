@@ -83,6 +83,24 @@ public class DemoController {
 				
 				break;
 			}
+			case 5:{
+				createInvoice(category, "Ăn sáng", 35000d, 2016, 3, 18, false, user);
+				createInvoice(category, "Ăn sáng", 30000d, 2016, 3, 17, false, user);
+				createInvoice(category, "Ăn sáng", 32000d, 2016, 3, 16, false, user);
+				createInvoice(category, "Ăn sáng", 31000d, 2016, 3, 15, false, user);
+				createInvoice(category, "Ăn sáng", 25000d, 2016, 3, 14, false, user);
+				createInvoice(category, "Ăn sáng", 20000d, 2016, 3, 13, false, user);
+				
+				break;
+			}
+			case 6:{
+				
+				break;
+			}
+			case 7:{
+				
+				break;
+			}
 
 			}
 		}
