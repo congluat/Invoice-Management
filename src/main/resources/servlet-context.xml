@@ -17,12 +17,12 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<!--<property name="url" value="jdbc:mysql://20.203.139.12:3306/InvoiceManagement?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" 
+		<!--<property name="url" value="mysql://b99170c938b3e0:38f74892@us-cdbr-iron-east-05.cleardb.net/heroku_9d869e40327e024?reconnect=true;autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" 
 			/> -->
 		<property name="url"
-			value="jdbc:mysql://20.203.139.12:3306/InvoiceManagement?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" />
-		<property name="username" value="root" />
-		<property name="password" value="root" />
+			value="mysql://b99170c938b3e0:38f74892@us-cdbr-iron-east-05.cleardb.net/heroku_9d869e40327e024?reconnect=true;autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" />
+		<property name="username" value="b99170c938b3e0" />
+		<property name="password" value="38f74892" />
 		<!-- <property name="url" value="jdbc:mysql://localhost:3306/InvoiceManagement?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8" 
 			/> <property name="username" value="root" /> <property name="password" value="root" 
 			/> -->
